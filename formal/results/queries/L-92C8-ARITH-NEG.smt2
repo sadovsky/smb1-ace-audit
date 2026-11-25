@@ -1,10 +1,4 @@
-; benchmark generated from python API
-(set-info :status unknown)
 (declare-fun v () (_ BitVec 8))
-(assert
- (let (($x75 (= v (_ bv0 8))))
-(let ((?x153 (ite $x75 (_ bv8 8) v)))
-(let ((?x146 (bvsub ?x153 (_ bv1 8))))
-(let (($x131 (bvule ?x146 (_ bv7 8))))
-(not $x131))))))
+(assert (let ((a!1 (bvule (bvsub (ite (= v #x00) #x08 v) #x01) #x07)))
+  (not a!1)))
 (check-sat)

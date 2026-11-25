@@ -24,6 +24,32 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QUERIES = os.path.join(ROOT, "results", "queries")
 
 
+#: Query files are written only when this is set, which `formal.run` does.
+#: Tests and ad-hoc callers must not overwrite the artifacts the manifest's
+#: hashes refer to.
+SAVE_QUERIES = False
+
+
+def smtlib(assertions) -> str:
+    """Deterministic SMT-LIB 2 text for a list of assertions.
+
+    `Solver.to_smt2` names shared subterms after internal AST ids, which vary
+    from process to process, so its output cannot be hashed reproducibly.
+    """
+    seen, constants, pending = set(), {}, list(assertions)
+    while pending:
+        term = pending.pop()
+        if term.get_id() in seen:
+            continue
+        seen.add(term.get_id())
+        if z3.is_const(term) and term.decl().kind() == z3.Z3_OP_UNINTERPRETED:
+            constants[term.decl().name()] = term.decl()
+        pending.extend(term.children())
+    lines = [d.sexpr() for _, d in sorted(constants.items())]
+    lines += [f"(assert {a.sexpr()})" for a in assertions]
+    return "\n".join(lines + ["(check-sat)"]) + "\n"
+
+
 @dataclass
 class Check:
     """One validity query: is `hypotheses => claim` valid?"""
@@ -78,10 +104,10 @@ def check_valid(name: str, claim, hypotheses=(), *, timeout_ms: int = 60000,
     solver.set("timeout", timeout_ms)
     solver.add(*hypotheses)
     solver.add(z3.Not(claim))
-    text = solver.to_smt2()
+    text = smtlib(solver.assertions())
     digest = hashlib.sha256(text.encode()).hexdigest()
     artifact = None
-    if save:
+    if save and SAVE_QUERIES:
         os.makedirs(QUERIES, exist_ok=True)
         suffix = ".rom.smt2" if rom_derived else ".smt2"
         path = os.path.join(QUERIES, name + suffix)

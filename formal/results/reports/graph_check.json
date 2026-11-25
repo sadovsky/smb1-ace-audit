@@ -1,0 +1,49 @@
+{
+  "coverage_queries": 10366,
+  "dispatch_sites_checked_against_the_engine_entry": 18,
+  "feasibility_queries": 11933,
+  "findings": [],
+  "findings_total": 0,
+  "instruction_starts_in_N": 10708,
+  "mismatches": 0,
+  "nodes_checked": 10366,
+  "nodes_excluded": {
+    "halt": 2,
+    "indirect_jump": 1,
+    "return": 337,
+    "unstable_undocumented": 2
+  },
+  "obligation": "GRAPH-EDGES",
+  "queries": {
+    "by_kind": {
+      "successor_coverage": 10366,
+      "successor_feasibility": 11933
+    },
+    "cross_check": "clean",
+    "distinct_queries": 21173,
+    "distinct_rechecked": 21173,
+    "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+    "query_digest": "39ae32376f98fc9a34a2e7f1cf02329335fdb5f3dbc59f493f579c5712d4c8eb",
+    "relied_on_unsat": 10366,
+    "second_solver": {
+      "bitwuzla": {
+        "agree": 21173
+      },
+      "cvc5": {
+        "agree": 21173
+      }
+    },
+    "solver_queries": 22299,
+    "z3_no_answer": 0,
+    "z3_sat": 11933
+  },
+  "recorded_edges_compared": 11933,
+  "recorded_edges_not_compared": {
+    "dispatch": 247,
+    "return_point": 593
+  },
+  "recorded_edges_shown_feasible": 11933,
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "solver_no_answer": 0,
+  "status": "proved"
+}

@@ -113,12 +113,31 @@ proves nothing.
 
 ## Trusted base and known gaps
 
-- Z3 and cvc5. No independently checkable certificate is produced; agreement
-  of two solvers is the cross-check.
-- Slice-based results are checked by Z3 only and their queries are not saved.
+- Z3, cvc5 and Bitwuzla. No independently checkable certificate is produced;
+  agreement of three solvers is the cross-check.
+- Slice-based results are cross-checked too (`verify/crosscheck.py`). Every
+  answer the slicer relies on -- the `unsat` that closes a suffix and the
+  `unsat` that makes a symbolic PC unique -- is rendered as SMT-LIB with its
+  symbols renamed canonically, hashed, counted, and re-asked of cvc5 and
+  Bitwuzla in a worker pool. Each obligation's `detail.slice_queries` carries
+  the query count, a digest over the distinct query hashes and the per-solver
+  tally; a disagreement demotes the obligation to `unknown` and a
+  second-solver timeout is reported as one. Identical query texts are
+  re-checked once, and both the total and the distinct count are reported.
 - Queries that embed image bytes are written as `*.rom.smt2`, which is ignored
   by git so the image is not redistributed; the manifest keeps their SHA-256.
-- `analysis/cfg.py` for everything that lists `J-LOCATION`.
+  Slice queries are not written by default -- there are tens of thousands --
+  but `SMB1_SAVE_SLICE_QUERIES=1` writes them, and `SMB1_SLICE_QUERY_DIR`
+  puts them outside the tree.
+- `analysis/cfg.py` for everything that lists `J-LOCATION`. Its *successor*
+  relation is now machine-checked against the model, instruction by
+  instruction (`GRAPH-EDGES`, `properties/graph_check.py`): for every node
+  whose own bytes decide where control goes, the recorded successors are
+  exactly the ones `cpu.step` allows from an unconstrained state, and each
+  recorded edge is shown feasible. What that leaves assumed is the
+  completeness of the predecessor relation for the transfers it excludes --
+  `RTS`/`RTI` and the JumpEngine's indirect jump, i.e. `LOC-RETURN` and
+  `LOC-DISPATCH`.
 
 ## Milestones
 
@@ -128,21 +147,25 @@ proves nothing.
 | M1 local lemmas | done, with negative tests |
 | M2 validated model | done on a finite sample; gaps listed above |
 | M3 first program-point invariant | not established; obligations explicit (`P6-071F-PP`, `INIT-071F`, `W-071F-*`) |
-| M4 routine contracts | not started (calls are inlined when small, otherwise havoc) |
+| M4 routine contracts | in progress; a contract language and checker exist in the working tree but are not committed: the checker has known soundness gaps (`lean/FINDINGS.md`) |
 | M5 dispatch and return | dispatch contracts proved; returns open |
-| M6 joint invariant | not started; components named, none checked jointly |
+| M6 joint invariant | designed (`lean/` mechanises the soundness argument for an abstract machine); no checked certificate is recorded in the manifest. The route is opt-in (`SMB1_JOINT=1`) until the checker gaps are closed |
 | M7 global theorem | `unknown`, with its dependency list |
-| M8 replication, M9 report | not started; no literature review, no novelty claim |
+| M8 replication, M9 report | replication scripts in `replicate/`, not yet run; report draft in `paper/`; literature review in `results/reports/literature.md` |
 
 ## Running
 
     export SMB1_ROM=/path/to/verified/image
     python3 formal/tools/fetch_vectors.py ~/big/smb1-formal/harte   # optional
     python3 -m formal.validate_model        # about 4 minutes
-    python3 -m formal.run                   # about 3 minutes
-    python3 -m unittest formal.tests.test_formal
+    python3 -m formal.run                   # about 10 minutes
+    python3 -m unittest formal.tests.test_formal formal.tests.test_graph_check
 
-Needs `z3-solver`; `cvc5` and `py65` are used when installed.
+Needs `z3-solver`; `cvc5`, `bitwuzla` and `py65` are used when installed.
+Hashing every slice query and re-asking it elsewhere roughly doubles what the
+slice modules take. The re-check runs in four worker processes;
+`SMB1_CROSSCHECK_WORKERS` changes that, and `SMB1_CROSSCHECK=0` turns it off
+-- which every obligation that would have carried a re-check then says.
 
 The plan this track follows was supplied with the repository's prior review
 material. Attribution, including ChatGPT (OpenAI), is in the paper's author

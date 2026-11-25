@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import unittest
 
 import z3
@@ -21,8 +22,9 @@ from analysis.cfg import CFG
 from formal.model import cpu, transitions
 from formal.model.cpu import State
 from formal.model.memory import FlatMemory, NESMemory, as_int
+from formal.verify import crosscheck
 from formal.verify.obligations import Ledger, Obligation, check_valid
-from formal.verify.symexec import Slicer
+from formal.verify.symexec import Slicer, havoc_state
 
 try:
     from rom import image
@@ -248,6 +250,112 @@ class SlicerTests(unittest.TestCase):
             z3.And(z3.ULT(a, 0x2000), z3.Extract(10, 0, a) == 0x700)
             for a, _ in writes])
         self.assertFalse(Slicer(graph, prg).prove_never(0x9002, hit).holds)
+
+
+class CrossCheckTests(unittest.TestCase):
+    """Every unsat the slicer leans on is hashed and re-asked elsewhere."""
+
+    def test_the_text_does_not_depend_on_the_havoc_counter(self):
+        prg = bytes(0x8000)
+        texts = []
+        for _ in range(2):
+            havoc_state(0x9000, prg)        # burn a counter value
+            state = havoc_state(0x9000, prg)
+            texts.append(crosscheck.canonical_smtlib(
+                [z3.ULE(state.a, 8), state.mem.ram_byte(0x071F) == state.x]))
+        self.assertEqual(texts[0], texts[1])
+        declared = re.findall(r"\(declare-fun (\S+) ", texts[0])
+        self.assertTrue(declared)
+        for name in declared:                 # no raw Z3 counter names left
+            self.assertRegex(name, r"^v!\d+$")
+
+    def test_an_ambiguous_name_is_refused_rather_than_hashed(self):
+        clash = [z3.BitVec("same", 8) == 0, z3.BitVec("same", 16) == 0]
+        with self.assertRaises(ValueError):
+            crosscheck.canonical_smtlib(clash)
+
+    def test_both_second_solvers_answer_a_trivial_query(self):
+        _, answers = crosscheck.second_opinions(
+            ("x", "(assert false)\n(check-sat)\n", 5000,
+             crosscheck.SECOND_SOLVERS))
+        self.assertEqual(set(answers.values()), {"unsat"})
+
+    def test_a_proved_slice_records_its_queries_and_agrees(self):
+        graph, prg = synthetic(bytes.fromhex("2907" "8d0003" "60"))
+        with crosscheck.collect("probe") as queries:
+            outcome = Slicer(graph, prg).prove_never(
+                0x9002, store_above(7, 0x0300))
+        self.assertTrue(outcome.holds)
+        summary = queries.summary()
+        self.assertGreater(summary["relied_on_unsat"], 0)
+        self.assertEqual(summary["solver_queries"], outcome.solver_calls)
+        self.assertRegex(summary["query_digest"], r"^[0-9a-f]{64}$")
+        self.assertEqual(summary["cross_check"], "clean")
+        for solver in crosscheck.SECOND_SOLVERS:
+            with self.subTest(solver=solver):
+                tally = summary["second_solver"][solver]
+                self.assertGreater(tally["agree"], 0)
+                self.assertNotIn("disagree", tally)
+                self.assertNotIn("unavailable", tally)
+
+    def test_a_nested_block_also_counts_towards_the_aggregate(self):
+        graph, prg = synthetic(bytes.fromhex("2907" "8d0003" "60"))
+        slicer = Slicer(graph, prg)
+        with crosscheck.collect("outer") as outer:
+            with crosscheck.collect("inner") as inner:
+                slicer.prove_never(0x9002, store_above(7, 0x0300))
+            slicer.prove_never(0x9002, store_above(7, 0x0300))
+        self.assertGreater(inner.total, 0)
+        self.assertGreater(outer.total, inner.total)
+
+    def test_a_query_outside_a_block_is_still_counted(self):
+        before = crosscheck.UNATTRIBUTED.total
+        graph, prg = synthetic(bytes.fromhex("2907" "8d0003" "60"))
+        Slicer(graph, prg).prove_never(0x9002, store_above(7, 0x0300))
+        self.assertGreater(crosscheck.UNATTRIBUTED.total, before)
+
+    def test_a_contradicting_second_solver_demotes_the_result(self):
+        from formal.properties.state_domains import outcome_fields
+
+        graph, prg = synthetic(bytes.fromhex("2907" "8d0003" "60"))
+        with crosscheck.collect("probe") as queries:
+            outcome = Slicer(graph, prg).prove_never(
+                0x9002, store_above(7, 0x0300))
+        status, assumptions, detail = outcome_fields(outcome, queries)
+        self.assertEqual(status, "conditional")
+
+        unsat = [h for h in sorted(queries.rechecked)
+                 if queries.answers[h] == "unsat"]
+        poisoned = unsat[0]
+        kept = dict(crosscheck._ANSWERS[poisoned])
+        crosscheck._ANSWERS[poisoned] = {**kept, "bitwuzla": "sat"}
+        try:
+            status, assumptions, detail = outcome_fields(outcome, queries)
+        finally:
+            crosscheck._ANSWERS[poisoned] = kept
+        self.assertEqual(status, "unknown")
+        self.assertEqual(assumptions, [])
+        self.assertIn("demoted", detail)
+        self.assertEqual(
+            detail["slice_queries"]["second_solver"]["bitwuzla"]["disagree"],
+            1)
+        self.assertIn("disagreement",
+                      detail["slice_queries"]["cross_check"])
+
+    def test_a_timeout_is_reported_as_a_timeout(self):
+        graph, prg = synthetic(bytes.fromhex("2907" "8d0003" "60"))
+        with crosscheck.collect("probe") as queries:
+            Slicer(graph, prg).prove_never(0x9002, store_above(7, 0x0300))
+        stalled = sorted(queries.rechecked)[0]
+        kept = dict(crosscheck._ANSWERS[stalled])
+        crosscheck._ANSWERS[stalled] = {**kept, "cvc5": "unknown"}
+        try:
+            summary = queries.summary()
+        finally:
+            crosscheck._ANSWERS[stalled] = kept
+        self.assertEqual(summary["second_solver"]["cvc5"]["timeout"], 1)
+        self.assertIn("timeout", summary["cross_check"])
+        self.assertTrue(queries.clean)      # a timeout is not a contradiction
 
 
 @unittest.skipUnless(os.path.isdir(VECTORS), f"{VECTORS} absent")

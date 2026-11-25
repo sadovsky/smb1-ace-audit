@@ -26,6 +26,16 @@ J-STACK     a called routine returns to the instruction after its `JSR` with
             the stack pointer restored.  Used only by suffixes that step over
             a call; what the callee did to registers and RAM is then treated
             as completely unknown.
+
+Every solver answer this module relies on goes through
+`verify/crosscheck.record`, which hashes the query canonically, counts it for
+whichever obligation is being built, and re-asks it of cvc5 and Bitwuzla.
+There are two such answers: the `unsat` in `_bad_at` that says the bad
+condition cannot hold at the end of a suffix, and the `unsat` in `resolve_pc`
+that says the path admits only one value of the program counter.  The other
+solver call -- `resolve_pc` asking whether the path is feasible at all --
+carries nothing: an answer other than `sat` makes the caller fall back to the
+havoc summary, which is an over-approximation either way.
 """
 from __future__ import annotations
 
@@ -40,6 +50,7 @@ from analysis.decoder import Flow
 from ..model import cpu
 from ..model.cpu import State
 from ..model.memory import NESMemory, fresh
+from . import crosscheck
 
 Bad = Callable[[State, tuple], z3.BoolRef]
 
@@ -123,8 +134,12 @@ class Slicer:
         if solver.check() != z3.sat:
             return None
         value = solver.model().eval(state.pc, model_completion=True).as_long()
-        solver.add(state.pc != value)
-        if solver.check() != z3.unsat:
+        elsewhere = state.pc != value
+        solver.add(elsewhere)
+        answer = solver.check()
+        crosscheck.record(list(conditions) + [elsewhere], str(answer),
+                          "pc_uniqueness")
+        if answer != z3.unsat:
             return None
         return replace(state, pc=value)
 
@@ -208,11 +223,14 @@ class Slicer:
                 writes = ()
             else:
                 writes = cpu.step(state)[0].state.mem.writes[before:]
+            claim = bad(state, writes)
             solver = z3.Solver()
             solver.set("timeout", self.timeout_ms)
             solver.add(*conditions)
-            solver.add(bad(state, writes))
+            solver.add(claim)
             answer = solver.check()
+            crosscheck.record(list(conditions) + [claim], str(answer),
+                              "bad_condition")
             if answer == z3.sat:
                 model = solver.model()
                 return "sat", {str(d): str(model[d]) for d in model.decls()

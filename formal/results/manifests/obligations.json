@@ -1,9 +1,10 @@
 {
   "counts": {
     "abstract_counterexample": 40,
-    "conditional": 25,
-    "proved": 24,
-    "refuted": 3,
+    "conditional": 28,
+    "observed": 1,
+    "proved": 43,
+    "refuted": 6,
     "unknown": 7
   },
   "instruction_starts_N": 10708,
@@ -24,11 +25,75 @@
     {
       "assumptions": [],
       "dependencies": [],
+      "detail": {
+        "coverage_queries": 10366,
+        "dispatch_sites_checked_against_the_engine_entry": 18,
+        "feasibility_queries": 11933,
+        "findings": [],
+        "findings_total": 0,
+        "instruction_starts_in_N": 10708,
+        "length_check_is_not_independent": "formal/model/cpu.py imports OPCODES from analysis/decoder.py, so the model's instruction lengths and the graph's are the same table; the comparison catches a stale graph, not a wrong table",
+        "method": "exhaustive execution of the CPU model from an unconstrained state, one instruction start at a time, with one coverage query and one feasibility query per recorded edge",
+        "mismatches": 0,
+        "nodes_checked": 10366,
+        "nodes_excluded": {
+          "halt": 2,
+          "indirect_jump": 1,
+          "return": 337,
+          "unstable_undocumented": 2
+        },
+        "recorded_edges_compared": 11933,
+        "recorded_edges_not_compared": {
+          "dispatch": 247,
+          "return_point": 593
+        },
+        "recorded_edges_shown_feasible": 11933,
+        "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "successor_coverage": 10366,
+            "successor_feasibility": 11933
+          },
+          "cross_check": "clean",
+          "distinct_queries": 21173,
+          "distinct_rechecked": 21173,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "39ae32376f98fc9a34a2e7f1cf02329335fdb5f3dbc59f493f579c5712d4c8eb",
+          "relied_on_unsat": 10366,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 21173
+            },
+            "cvc5": {
+              "agree": 21173
+            }
+          },
+          "solver_queries": 22299,
+          "z3_no_answer": 0,
+          "z3_sat": 11933
+        },
+        "solver_no_answer": 0,
+        "what_this_does_not_close": "J-LOCATION is the completeness of the graph's predecessor relation.  The predecessors are derived from the successors, so this result plus LOC-DIRECT says the recorded successors are exactly the model's for every node whose bytes decide them; what remains open are the transfers this check excludes, which are LOC-RETURN and LOC-DISPATCH, and that is where J-LOCATION still rests on analysis/cfg.py"
+      },
+      "id": "GRAPH-EDGES",
+      "independent_check": "cvc5: agree 21173; bitwuzla: agree 21173",
+      "query_artifact": null,
+      "query_sha256": "39ae32376f98fc9a34a2e7f1cf02329335fdb5f3dbc59f493f579c5712d4c8eb",
+      "result_artifact": null,
+      "scope": "the control-flow graph checked against the machine model",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "for every instruction start in N whose successors its own bytes decide, the graph's recorded successors are exactly the ones the machine model allows, and the graph's instruction lengths agree with the model's",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
       "detail": {},
       "id": "L-92C8-ARITH",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/L-92C8-ARITH.smt2",
-      "query_sha256": "38bc0ae4539303295ae065e6ed6557dd1f76e017e65d31846a7886dc151ffa44",
+      "query_sha256": "38285b649e5287e54d64fc68bb37cfc94cc790ac922a5da04273cb651a219f76",
       "result_artifact": null,
       "scope": "local arithmetic lemma (no program bytes involved)",
       "solver": "z3",
@@ -41,14 +106,14 @@
       "dependencies": [],
       "detail": {
         "counterexample": {
-          "v": "16"
+          "v": "32"
         },
         "purpose": "shows the precondition is doing the work; a 'proved' here would mean the check is vacuous"
       },
       "id": "L-92C8-ARITH-NEG",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/L-92C8-ARITH-NEG.smt2",
-      "query_sha256": "2ed6bc79fe3d15be82a5d3cf76415e07caee993883594b3ee730d8b7cb1c2b56",
+      "query_sha256": "9c392ef10020504b4a3715ec1b80e1ff706cd89032a17c99553ca02e56ab762c",
       "result_artifact": null,
       "scope": "negative regression test: the lemma without its precondition",
       "solver": "z3",
@@ -68,7 +133,7 @@
       "id": "L-92C8-ROM-EXACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/L-92C8-ROM-EXACT.smt2",
-      "query_sha256": "7c127b3482f4e82067dc11311770b8054bdd2dba5ad0f3428cfdf1846d268d8e",
+      "query_sha256": "fb8eed2b40d78772684f06d65e5380b686e02a8df5ccab08022e7b74524b3b75",
       "result_artifact": null,
       "scope": "local lemma over program bytes",
       "solver": "z3",
@@ -88,7 +153,7 @@
       "id": "L-92C8-ROM",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/L-92C8-ROM.smt2",
-      "query_sha256": "5154019e8f21a2c5ee70badd35153ad839da9fc3d19ea8f4394c02fc1d3cf051",
+      "query_sha256": "886361a63b863ecc33f2d2c3f30521723e0e62a11fc362d09774aa34801e6c8d",
       "result_artifact": null,
       "scope": "local lemma over program bytes",
       "solver": "z3",
@@ -105,7 +170,7 @@
       "id": "L-92C8-ROM-NEG",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/L-92C8-ROM-NEG.smt2",
-      "query_sha256": "388045debfc6b22d3251c9fe006402a1129d0122b6359437aa33e2f1528d62d9",
+      "query_sha256": "25c457e97f9f7fc2b9ab53dfd400f38e5c174e75af7d4edb655506e38c876995",
       "result_artifact": null,
       "scope": "negative regression test over program bytes",
       "solver": "z3",
@@ -125,7 +190,7 @@
       "id": "D-8215-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-8215-CONTRACT.rom.smt2",
-      "query_sha256": "89706f5bdb7d608f4f9f6be4776dac66777e324be1fe6aea6470bb29926bb7a7",
+      "query_sha256": "2650161ac0163d447ff3ee9e65928747c94cc40e5fcc4a54aa058ff4fdb0b49c",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -145,7 +210,7 @@
       "id": "D-8234-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-8234-CONTRACT.rom.smt2",
-      "query_sha256": "20a1a397162944375fc69938c0fb5705a035aaeadd07f1f65b0aa5abd338e573",
+      "query_sha256": "31ba2ef26a09bae678f5637caca6c2cd811dc29f0ef78140aa618a3671e1435c",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -165,7 +230,7 @@
       "id": "D-83A3-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-83A3-CONTRACT.rom.smt2",
-      "query_sha256": "1c58f4edfa2dda8ac12e173c15b7e980bdf692cd38f0c2b951e6d86c7c3fcdc0",
+      "query_sha256": "4391ab752cfd7ff43fbf27c7e3672e0d7b8225b420c2dd59e2c9ad6a18684b1a",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -185,7 +250,7 @@
       "id": "D-856A-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-856A-CONTRACT.rom.smt2",
-      "query_sha256": "c5d662412a6ad37525c075e9299c96a509af1f573c3478c396f36c2f3201b396",
+      "query_sha256": "c298a904a301c90e04be90df2b8bf6c1f2f30a898a45540aa8b9e3b3f4816767",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -205,7 +270,7 @@
       "id": "D-921B-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-921B-CONTRACT.rom.smt2",
-      "query_sha256": "76c677cac843e6b5d6c5d498e72ed39cb36e32b7f5df3aec30f2914fb6f89116",
+      "query_sha256": "9ba6951293e9870969106042128cac3cc1040e98602e9fcd5cd4e196df440213",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -225,7 +290,7 @@
       "id": "D-92C8-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-92C8-CONTRACT.rom.smt2",
-      "query_sha256": "f6fa6902650a6b7055a632514c7acafa32b6da541b22d10476ee69b30e8685d0",
+      "query_sha256": "30639a7dc404badae3c5a7790306c5c3e57e117a31a215c35c70cddedefd8e2f",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -240,15 +305,15 @@
         "counterexample": {
           "A": "8",
           "S": "128",
-          "bus!10": "0",
-          "bus!11": "0"
+          "bus!963": "0",
+          "bus!964": "0"
         },
         "purpose": "index 8 reads the two bytes after the table and leaves it"
       },
       "id": "D-92C8-CONTRACT-NEG",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/D-92C8-CONTRACT-NEG.rom.smt2",
-      "query_sha256": "d39fc0f47e5b15d4fb0520e3008c60febbfdfa347a78cae404025fe8f2c34898",
+      "query_sha256": "38684fd3eb598cffe89224d67387160aa2a26127ccb3e40d72cf6e30ccbc520d",
       "result_artifact": null,
       "scope": "negative regression test: one index past the table",
       "solver": "z3",
@@ -268,7 +333,7 @@
       "id": "D-9664-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-9664-CONTRACT.rom.smt2",
-      "query_sha256": "47f30e190582582e037920678cf3583a509003de8dcfec58a63b5621282e9917",
+      "query_sha256": "ecaab2e700e5caf659bd2890f6bd33832ded172f2906d5a9d8c41b912b411687",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -288,7 +353,7 @@
       "id": "D-9743-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-9743-CONTRACT.rom.smt2",
-      "query_sha256": "54fb20a017cb618a0f9b751f932d110877c352bbff5365b55b2df54ff4a6644f",
+      "query_sha256": "e6b5257ee2dbcca3058e65b01caf033004239c076e0d5aa640d7360763fe27b3",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -308,7 +373,7 @@
       "id": "D-AEDF-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-AEDF-CONTRACT.rom.smt2",
-      "query_sha256": "fe3baa633bcd3646486c4e18fcb83e6e16b3cd15dd3ea8627f15072234b9da83",
+      "query_sha256": "6f5c7a1b460c38a6157b95baddf48f0b33ab5d1390ad969104fb4820b8c18811",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -328,7 +393,7 @@
       "id": "D-B04C-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-B04C-CONTRACT.rom.smt2",
-      "query_sha256": "a5938530f10f16e9138b3aa8b02392f3e889073d96ea842926dc567044320b3a",
+      "query_sha256": "ff802310f4438ca71643ab28bc18dc49af6f22bbc2fa7552cc982261d8a93627",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -348,7 +413,7 @@
       "id": "D-B34E-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-B34E-CONTRACT.rom.smt2",
-      "query_sha256": "813710dcab8c0c1164a235e39536e16d3f986b9b41ba6cca0eb1186f9f4f91ba",
+      "query_sha256": "357e2ddafbc112ca074f2f6ef513a1f49193ee6f1c1d527b5c795a387e6c48e6",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -368,7 +433,7 @@
       "id": "D-BDBD-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-BDBD-CONTRACT.rom.smt2",
-      "query_sha256": "aeb55c31b559809947b1481159909583d79d5aeda3bc1ecb19875c937f229a56",
+      "query_sha256": "dc8563b0ea85a58a979de620fdfd965a3e0b64a9855b3b742cf4eb3a4786b32d",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -388,7 +453,7 @@
       "id": "D-C27F-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C27F-CONTRACT.rom.smt2",
-      "query_sha256": "8607630b100c0f9bf062bd0d2b926c25fa86bfc9149e2b92ea23c86e90a6472f",
+      "query_sha256": "cc4375acababad8821fa01556dec8282310847e86cf857eadc1b7fd79baf5a08",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -408,7 +473,7 @@
       "id": "D-C7A8-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C7A8-CONTRACT.rom.smt2",
-      "query_sha256": "907641e8cd95376826344aa53df2fecabb8791a107906b7924270f01f2ba8a0a",
+      "query_sha256": "beeac481f23bd7ca320ec10320a49a84e919ba2a222c881b02518ac08b97c0fc",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -428,7 +493,7 @@
       "id": "D-C88F-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C88F-CONTRACT.rom.smt2",
-      "query_sha256": "47c2eae5f6638fdf33f3e0bdf71181eef960522dbd0be7aea9817453bbef32af",
+      "query_sha256": "670547da3a89ff38a7b796e0b38b048faaa4edc726e847d38a27b2c6ea2b65ab",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -448,7 +513,7 @@
       "id": "D-C907-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C907-CONTRACT.rom.smt2",
-      "query_sha256": "ed3eab559128fac4f4e0fe185a9e7dac176d345722e1a3775d9a9523701b11da",
+      "query_sha256": "9128b9da84d1fecad181565840fadcaa2056bd8d93a1f5c3ea2203088655d12a",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -468,7 +533,7 @@
       "id": "D-C987-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C987-CONTRACT.rom.smt2",
-      "query_sha256": "dcef6e65ccc38535f1d365056453bf0cdbbc24ca254dc89e253b6ead68938a7b",
+      "query_sha256": "08ca8a90ba7dc8c3bd7a91b1768d5aa1ab2a44c07d4b6b1176a168d55ec3c559",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -488,7 +553,7 @@
       "id": "D-D2E5-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-D2E5-CONTRACT.rom.smt2",
-      "query_sha256": "df0b1ba7ad0865cb380a62cd3a278f6b705b980f287fafc8c92b5f201a4df828",
+      "query_sha256": "481522507b75b1f4cbf1ce3f2bc7d0294bcdc67929904c3ae9f7d70d59cb39ff",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -501,12 +566,34 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h13_S": "128"
+          "h10721_S": "128"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "2220ea35513f23c47079df5f461adb7e6cb232637f410ea9730cd941e0a8cc20",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 4,
@@ -528,9 +615,9 @@
         ]
       },
       "id": "P6-8215-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "2220ea35513f23c47079df5f461adb7e6cb232637f410ea9730cd941e0a8cc20",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -543,14 +630,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus!58": "0",
-          "bus!59": "0",
-          "h27_S": "128"
+          "bus!1011": "0",
+          "bus!1012": "0",
+          "h10735_S": "128"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "647a67fbd0172237cb7fe17152d515b365ca353ad4ec45d4500c65c35dce0edb",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 4,
@@ -572,9 +681,9 @@
         ]
       },
       "id": "P6-8234-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "647a67fbd0172237cb7fe17152d515b365ca353ad4ec45d4500c65c35dce0edb",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -587,14 +696,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus!80": "0",
-          "bus!81": "0",
-          "h41_S": "128"
+          "bus!1033": "0",
+          "bus!1034": "0",
+          "h10749_S": "128"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "7f64ef4e930f73ea019911e874ba967cf7c1c0b27bce86ea1b684b868afb5953",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 5,
@@ -616,9 +747,9 @@
         ]
       },
       "id": "P6-83A3-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "7f64ef4e930f73ea019911e874ba967cf7c1c0b27bce86ea1b684b868afb5953",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -631,16 +762,38 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus!122": "0",
-          "bus!123": "0",
-          "bus!124": "0",
-          "bus!125": "0",
-          "h55_S": "128"
+          "bus!1075": "0",
+          "bus!1076": "0",
+          "bus!1077": "0",
+          "bus!1078": "0",
+          "h10763_S": "24"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "8ca117e181957dc7930ed700a51c52afafa28922dd9e8749126800aec768dc1c",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 15,
@@ -662,9 +815,9 @@
         ]
       },
       "id": "P6-856A-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "8ca117e181957dc7930ed700a51c52afafa28922dd9e8749126800aec768dc1c",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -677,14 +830,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus!148": "0",
-          "bus!149": "0",
-          "h69_S": "128"
+          "bus!1101": "0",
+          "bus!1102": "0",
+          "h10777_S": "128"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "dd436d27c99545f12a2792563dfb00493a77d7fa057d2c34117c98bcad982e1e",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 3,
@@ -706,9 +881,9 @@
         ]
       },
       "id": "P6-921B-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "dd436d27c99545f12a2792563dfb00493a77d7fa057d2c34117c98bcad982e1e",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -721,12 +896,34 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h85_A": "128"
+          "h10793_A": "128"
         },
         "longest_suffix": 6,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 16
+          },
+          "cross_check": "clean",
+          "distinct_queries": 16,
+          "distinct_rechecked": 16,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "4af14db2885cc4c5917aac51e0b353effd8d450d9646e8b3cd587b72e8b45c32",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 16
+            },
+            "cvc5": {
+              "agree": 16
+            }
+          },
+          "solver_queries": 16,
+          "z3_no_answer": 0,
+          "z3_sat": 15
+        },
         "solver_calls": 16,
         "suffixes_proved": 1,
         "table_entries": 8,
@@ -748,9 +945,9 @@
         ]
       },
       "id": "P6-92C8-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 16; bitwuzla: agree 16",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "4af14db2885cc4c5917aac51e0b353effd8d450d9646e8b3cd587b72e8b45c32",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -763,14 +960,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h99_A": "0",
-          "h99_S": "128",
-          "h99_X": "169"
+          "h10807_A": "0",
+          "h10807_S": "16",
+          "h10807_X": "176"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 10
+          },
+          "cross_check": "clean",
+          "distinct_queries": 17,
+          "distinct_rechecked": 17,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "321a5cceb7d504140965ddc1ee209cae7a7ce7c5e4514a878db4584bfdf6060f",
+          "relied_on_unsat": 10,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 17
+            },
+            "cvc5": {
+              "agree": 17
+            }
+          },
+          "solver_queries": 24,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 47,
@@ -792,9 +1012,9 @@
         ]
       },
       "id": "P6-9664-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 17; bitwuzla: agree 17",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "321a5cceb7d504140965ddc1ee209cae7a7ce7c5e4514a878db4584bfdf6060f",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -807,16 +1027,39 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus!172": "0",
-          "bus!173": "0",
-          "h113_A": "0",
-          "h113_S": "128",
-          "h113_X": "209"
+          "bus!1125": "0",
+          "bus!1126": "0",
+          "h10821_A": "0",
+          "h10821_S": "7",
+          "h10821_X": "209"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 17,
+          "distinct_rechecked": 17,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "546c5f2c4d78c7586eb2233ec22bf56f4b8653ca58c6c3ceba07bdcfbd03226b",
+          "relied_on_unsat": 8,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 17
+            },
+            "cvc5": {
+              "agree": 17
+            }
+          },
+          "solver_queries": 22,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 3,
@@ -838,9 +1081,9 @@
         ]
       },
       "id": "P6-9743-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 17; bitwuzla: agree 17",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "546c5f2c4d78c7586eb2233ec22bf56f4b8653ca58c6c3ceba07bdcfbd03226b",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -853,14 +1096,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus!196": "0",
-          "bus!197": "0",
-          "h127_S": "128"
+          "bus!1149": "0",
+          "bus!1150": "0",
+          "h10835_S": "128"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "267d798e54f061f199514d50ca61473c424ed269a591d38f91a278f8e74e49b4",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 4,
@@ -882,9 +1147,9 @@
         ]
       },
       "id": "P6-AEDF-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "267d798e54f061f199514d50ca61473c424ed269a591d38f91a278f8e74e49b4",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -897,16 +1162,38 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus!231": "220",
-          "bus!232": "174",
-          "bus!233": "0",
-          "bus!234": "0",
-          "h141_S": "128"
+          "bus!1184": "220",
+          "bus!1185": "174",
+          "bus!1186": "0",
+          "bus!1187": "0",
+          "h10849_S": "128"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "6e6b7645d8c41489fb8d7cca0d619c750bb5f876592e5ae02d60537ca9590a82",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 13,
@@ -928,9 +1215,9 @@
         ]
       },
       "id": "P6-B04C-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "6e6b7645d8c41489fb8d7cca0d619c750bb5f876592e5ae02d60537ca9590a82",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -947,6 +1234,29 @@
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 18
+          },
+          "cross_check": "clean",
+          "distinct_queries": 25,
+          "distinct_rechecked": 25,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a728420b6bff05690f775244facb7897f17b9b037b4ac06a695c0a0fff28525d",
+          "relied_on_unsat": 18,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 25
+            },
+            "cvc5": {
+              "agree": 25
+            }
+          },
+          "solver_queries": 32,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 4,
@@ -968,9 +1278,9 @@
         ]
       },
       "id": "P6-B34E-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 25; bitwuzla: agree 25",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "a728420b6bff05690f775244facb7897f17b9b037b4ac06a695c0a0fff28525d",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -988,14 +1298,37 @@
         "longest_suffix": 7,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 13,
+            "pc_uniqueness": 15
+          },
+          "cross_check": "clean",
+          "distinct_queries": 28,
+          "distinct_rechecked": 28,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "b3f908f43d9d8825c189a44d7b74ef94e28ea59eba8971ab508a4b30e2d0f910",
+          "relied_on_unsat": 21,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 28
+            },
+            "cvc5": {
+              "agree": 28
+            }
+          },
+          "solver_queries": 28,
+          "z3_no_answer": 0,
+          "z3_sat": 7
+        },
         "solver_calls": 9,
         "suffixes_proved": 2,
         "table_entries": 9
       },
       "id": "P6-BDBD-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 28; bitwuzla: agree 28",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "b3f908f43d9d8825c189a44d7b74ef94e28ea59eba8971ab508a4b30e2d0f910",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -1008,13 +1341,35 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h193_A": "192",
-          "h193_X": "237"
+          "h10901_A": "192",
+          "h10901_X": "237"
         },
         "longest_suffix": 10,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 23
+          },
+          "cross_check": "clean",
+          "distinct_queries": 23,
+          "distinct_rechecked": 23,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "78a55c47ce35de3cb4dc32cea16fc88a4e605339fb8700929356eabcc34f7701",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 23
+            },
+            "cvc5": {
+              "agree": 23
+            }
+          },
+          "solver_queries": 23,
+          "z3_no_answer": 0,
+          "z3_sat": 22
+        },
         "solver_calls": 23,
         "suffixes_proved": 1,
         "table_entries": 55,
@@ -1036,9 +1391,9 @@
         ]
       },
       "id": "P6-C27F-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 23; bitwuzla: agree 23",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "78a55c47ce35de3cb4dc32cea16fc88a4e605339fb8700929356eabcc34f7701",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -1051,14 +1406,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h207_A": "61",
-          "h207_S": "128",
-          "h207_X": "232"
+          "h10915_A": "58",
+          "h10915_S": "128",
+          "h10915_X": "232"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "19fdb07c1e3a8019e73636079722327a0fce3d673214fd2130cbf42f3544cc24",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 6,
@@ -1080,9 +1457,9 @@
         ]
       },
       "id": "P6-C7A8-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "19fdb07c1e3a8019e73636079722327a0fce3d673214fd2130cbf42f3544cc24",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -1095,13 +1472,35 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h221_A": "1",
-          "h221_S": "0"
+          "h10929_A": "1",
+          "h10929_S": "0"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "3df605e21a39827109d045993e8c2acb84c96fc886696f508faaed70b95a6586",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 34,
@@ -1123,9 +1522,9 @@
         ]
       },
       "id": "P6-C88F-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "3df605e21a39827109d045993e8c2acb84c96fc886696f508faaed70b95a6586",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -1138,14 +1537,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h607_S": "33",
-          "h609_X": "55",
-          "h658_X": "234"
+          "h11315_S": "129",
+          "h11317_X": "19",
+          "h11366_X": "234"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 1212
+          },
+          "cross_check": "clean",
+          "distinct_queries": 71,
+          "distinct_rechecked": 71,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "b679ff64f58b23495f48afbbb571feca5871d2335f8f438ce10be228a87089a5",
+          "relied_on_unsat": 1207,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 71
+            },
+            "cvc5": {
+              "agree": 71
+            }
+          },
+          "solver_queries": 1226,
+          "z3_no_answer": 0,
+          "z3_sat": 19
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 21,
@@ -1167,9 +1589,9 @@
         ]
       },
       "id": "P6-C907-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 71; bitwuzla: agree 71",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "b679ff64f58b23495f48afbbb571feca5871d2335f8f438ce10be228a87089a5",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -1182,16 +1604,39 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus!6040": "0",
-          "bus!6041": "0",
-          "h709_S": "128",
-          "h709_Y": "106",
-          "h712_X": "234"
+          "bus!6993": "0",
+          "bus!6994": "0",
+          "h11417_S": "64",
+          "h11417_Y": "38",
+          "h11420_X": "234"
         },
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 113
+          },
+          "cross_check": "clean",
+          "distinct_queries": 50,
+          "distinct_rechecked": 50,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "15e5c84750c339cce1d1e2a79087e0b2d668c564abb784b0d00e7397df934589",
+          "relied_on_unsat": 113,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 50
+            },
+            "cvc5": {
+              "agree": 50
+            }
+          },
+          "solver_queries": 127,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "table_entries": 7,
@@ -1213,9 +1658,9 @@
         ]
       },
       "id": "P6-C987-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 50; bitwuzla: agree 50",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "15e5c84750c339cce1d1e2a79087e0b2d668c564abb784b0d00e7397df934589",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -1233,14 +1678,36 @@
         "longest_suffix": 3,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 3
+          },
+          "cross_check": "clean",
+          "distinct_queries": 3,
+          "distinct_rechecked": 3,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a9abad58185aab6be7048326b3012e3a8d4d819deb00126d55deda5b6518dadd",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 3
+            },
+            "cvc5": {
+              "agree": 3
+            }
+          },
+          "solver_queries": 3,
+          "z3_no_answer": 0,
+          "z3_sat": 2
+        },
         "solver_calls": 3,
         "suffixes_proved": 1,
         "table_entries": 5
       },
       "id": "P6-D2E5-INDEX",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 3; bitwuzla: agree 3",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "a9abad58185aab6be7048326b3012e3a8d4d819deb00126d55deda5b6518dadd",
       "result_artifact": null,
       "scope": "program-point invariant",
       "solver": "z3",
@@ -1260,13 +1727,35 @@
         "longest_suffix": 6,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "3e0e4f8de8da499bfbbf342e5084e42fff4ad935d9c4e0d885e864c7087d0d20",
+          "relied_on_unsat": 2,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 6
+        },
         "solver_calls": 8,
         "suffixes_proved": 2
       },
       "id": "P6-92C8-INDEX-GIVEN-071F",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 8; bitwuzla: agree 8",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "3e0e4f8de8da499bfbbf342e5084e42fff4ad935d9c4e0d885e864c7087d0d20",
       "result_artifact": null,
       "scope": "program-point invariant, relative to another",
       "solver": "z3",
@@ -1279,14 +1768,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11445_A": "248",
-          "h11445_X": "60"
+          "h22153_A": "250",
+          "h22153_X": "60"
         },
         "instruction": "STA $06E4,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "6153c0afc43f9f3a024173b140a361c6e7a0027771b4f5bf173ab9925541d080",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1307,9 +1818,9 @@
         ]
       },
       "id": "W-071F-81E2",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "6153c0afc43f9f3a024173b140a361c6e7a0027771b4f5bf173ab9925541d080",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1322,15 +1833,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11459_A": "233",
-          "h11459_X": "49",
-          "h11459_Y": "60"
+          "h22167_A": "233",
+          "h22167_X": "49",
+          "h22167_Y": "60"
         },
         "instruction": "STA $06F1,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "89a3cd1882b9591b536c6c877e233d82ed095a4848bc20adb2e3aff0896f453e",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1351,9 +1884,9 @@
         ]
       },
       "id": "W-071F-81FC",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "89a3cd1882b9591b536c6c877e233d82ed095a4848bc20adb2e3aff0896f453e",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1366,15 +1899,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11473_A": "233",
-          "h11473_X": "48",
-          "h11473_Y": "59"
+          "h22181_A": "233",
+          "h22181_X": "48",
+          "h22181_Y": "59"
         },
         "instruction": "STA $06F2,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a4d13fb1c1fc58d5210ff9c5285cffc583b225c178cee85ddc8891d00190323a",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1395,9 +1950,9 @@
         ]
       },
       "id": "W-071F-8202",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "a4d13fb1c1fc58d5210ff9c5285cffc583b225c178cee85ddc8891d00190323a",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1410,15 +1965,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11487_A": "0",
-          "h11487_X": "47",
-          "h11487_Y": "22"
+          "h22195_A": "0",
+          "h22195_X": "47",
+          "h22195_Y": "22"
         },
         "instruction": "STA $06F3,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "22602215fdd0e8fb515ce589a76f5d7e0409d88803506786b26d0e0a68cae450",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1439,9 +2016,9 @@
         ]
       },
       "id": "W-071F-8208",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "22602215fdd0e8fb515ce589a76f5d7e0409d88803506786b26d0e0a68cae450",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1454,15 +2031,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus_2007!7110": "24",
-          "bus_2007!7111": "25",
-          "h11508_Y": "255"
+          "bus_2007!8063": "24",
+          "bus_2007!8064": "64",
+          "h22216_Y": "255"
         },
         "instruction": "STA ($00),Y",
         "longest_suffix": 12,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 21
+          },
+          "cross_check": "clean",
+          "distinct_queries": 19,
+          "distinct_rechecked": 19,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "5a8e0a6fa739608ff23ac9aaabdffe8814f5ab0939c000d4a3d9bd7caf5d2c31",
+          "relied_on_unsat": 2,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 19
+            },
+            "cvc5": {
+              "agree": 19
+            }
+          },
+          "solver_queries": 21,
+          "z3_no_answer": 0,
+          "z3_sat": 19
+        },
         "solver_calls": 21,
         "suffixes_proved": 2,
         "unclosed_suffix": [
@@ -1483,9 +2082,9 @@
         ]
       },
       "id": "W-071F-871C",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 19; bitwuzla: agree 19",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "5a8e0a6fa739608ff23ac9aaabdffe8814f5ab0939c000d4a3d9bd7caf5d2c31",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1498,17 +2097,39 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "bus!7116": "1",
-          "h11522_A": "6",
-          "h11522_S": "0",
-          "h11522_X": "35",
-          "h11522_Y": "2"
+          "bus!8069": "1",
+          "h22230_A": "6",
+          "h22230_S": "0",
+          "h22230_X": "35",
+          "h22230_Y": "2"
         },
         "instruction": "STA $06FC,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a5feb900f3b25aced95c2e6debd4b9429e50d98eda1fa05f24799809292a8dcd",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1529,9 +2150,9 @@
         ]
       },
       "id": "W-071F-8E7B",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "a5feb900f3b25aced95c2e6debd4b9429e50d98eda1fa05f24799809292a8dcd",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1550,13 +2171,35 @@
         "longest_suffix": 8,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "701e0cdc507edc903719a05887221e4d281457b6f062db552078839eea99d849",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 7
+        },
         "solver_calls": 8,
         "suffixes_proved": 1
       },
       "id": "W-071F-8E89",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 8; bitwuzla: agree 8",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "701e0cdc507edc903719a05887221e4d281457b6f062db552078839eea99d849",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1569,13 +2212,35 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11544_X": "62"
+          "h22252_X": "62"
         },
         "instruction": "STA $06E4,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "192123a4eb4df78daa457a40235c0a52c7fbc2af629def9d440547587b85ed11",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1596,9 +2261,9 @@
         ]
       },
       "id": "W-071F-90AE",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "192123a4eb4df78daa457a40235c0a52c7fbc2af629def9d440547587b85ed11",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1611,15 +2276,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11558_A": "24",
-          "h11558_X": "1",
-          "h11558_Y": "16"
+          "h22266_A": "9",
+          "h22266_X": "1",
+          "h22266_Y": "16"
         },
         "instruction": "STA ($06),Y",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "142b729f6fe862632e5628973e8db2e268afc925ed9a9b6bd49248fdff36166d",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1640,9 +2327,9 @@
         ]
       },
       "id": "W-071F-90DC",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "142b729f6fe862632e5628973e8db2e268afc925ed9a9b6bd49248fdff36166d",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1661,13 +2348,35 @@
         "longest_suffix": 2,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 2,
+          "distinct_rechecked": 2,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a2dac6105a28593551ff43a99429c2c1fe7a05ae2311cf4194bcbd8801526e3b",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 2
+            },
+            "cvc5": {
+              "agree": 2
+            }
+          },
+          "solver_queries": 2,
+          "z3_no_answer": 0,
+          "z3_sat": 1
+        },
         "solver_calls": 2,
         "suffixes_proved": 1
       },
       "id": "W-071F-92B7",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 2; bitwuzla: agree 2",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "a2dac6105a28593551ff43a99429c2c1fe7a05ae2311cf4194bcbd8801526e3b",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1685,6 +2394,28 @@
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "80feebf96596ac38841243292217a81b8fd6194f8af2d20be5cc68fcf6d04a5e",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1705,9 +2436,9 @@
         ]
       },
       "id": "W-071F-92BF",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "80feebf96596ac38841243292217a81b8fd6194f8af2d20be5cc68fcf6d04a5e",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1726,13 +2457,35 @@
         "longest_suffix": 9,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 12
+          },
+          "cross_check": "clean",
+          "distinct_queries": 12,
+          "distinct_rechecked": 12,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "ae4418db841c633a1bf635165b44ea8527c73d9c7cdd343c11866b84347decd4",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 12
+            },
+            "cvc5": {
+              "agree": 12
+            }
+          },
+          "solver_queries": 12,
+          "z3_no_answer": 0,
+          "z3_sat": 8
+        },
         "solver_calls": 12,
         "suffixes_proved": 4
       },
       "id": "W-071F-9408",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 12; bitwuzla: agree 12",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "ae4418db841c633a1bf635165b44ea8527c73d9c7cdd343c11866b84347decd4",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1745,14 +2498,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11613_X": "255",
-          "h11613_Y": "125"
+          "h22321_X": "255",
+          "h22321_Y": "125"
         },
         "instruction": "STA $06A1,Y",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "3f0961b7c58d3f08d44cc90c0f2d98c1c35486920d69b40493659902b69b87f6",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1773,9 +2548,9 @@
         ]
       },
       "id": "W-071F-9448",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "3f0961b7c58d3f08d44cc90c0f2d98c1c35486920d69b40493659902b69b87f6",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1788,13 +2563,35 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11627_X": "124"
+          "h22335_X": "124"
         },
         "instruction": "STA $06A1,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "bdcdce7e4d0937ad3927b557c8ed3a7d76bd26ab5be9b25ca6d1e972a8702727",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1815,9 +2612,9 @@
         ]
       },
       "id": "W-071F-9464",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "bdcdce7e4d0937ad3927b557c8ed3a7d76bd26ab5be9b25ca6d1e972a8702727",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1830,14 +2627,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11645_X": "126",
-          "h11645_Y": "248"
+          "h22353_X": "126",
+          "h22353_Y": "248"
         },
         "instruction": "STA $06A1,X",
         "longest_suffix": 12,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 18
+          },
+          "cross_check": "clean",
+          "distinct_queries": 18,
+          "distinct_rechecked": 18,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "144c26064ade6e0d630386799f2488ec4f15d4add4ae5351c49c755a535ea00c",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 18
+            },
+            "cvc5": {
+              "agree": 18
+            }
+          },
+          "solver_queries": 18,
+          "z3_no_answer": 0,
+          "z3_sat": 17
+        },
         "solver_calls": 18,
         "suffixes_proved": 1,
         "unclosed_suffix": [
@@ -1858,9 +2677,9 @@
         ]
       },
       "id": "W-071F-94B3",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 18; bitwuzla: agree 18",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "144c26064ade6e0d630386799f2488ec4f15d4add4ae5351c49c755a535ea00c",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1873,14 +2692,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11660_X": "12",
-          "h11660_Y": "239"
+          "h22368_X": "12",
+          "h22368_Y": "255"
         },
         "instruction": "STA ($06),Y",
         "longest_suffix": 3,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 15
+          },
+          "cross_check": "clean",
+          "distinct_queries": 15,
+          "distinct_rechecked": 15,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "bc780c366105070b4e5077b3635acb20927d219dd46f9f98eeaf8f4f9271391a",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 15
+            },
+            "cvc5": {
+              "agree": 15
+            }
+          },
+          "solver_queries": 15,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 15,
         "suffixes_proved": 1,
         "unclosed_suffix": [
@@ -1901,9 +2742,9 @@
         ]
       },
       "id": "W-071F-94F7",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 15; bitwuzla: agree 15",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "bc780c366105070b4e5077b3635acb20927d219dd46f9f98eeaf8f4f9271391a",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1922,13 +2763,36 @@
         "longest_suffix": 12,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 16,
+            "pc_uniqueness": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 17,
+          "distinct_rechecked": 17,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "1dead009da5b11e84eb8f28c7f75f25ad31b50e3fc48519b45e95e5a31296b62",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 17
+            },
+            "cvc5": {
+              "agree": 17
+            }
+          },
+          "solver_queries": 18,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 16,
         "suffixes_proved": 2
       },
       "id": "W-071F-976B",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 17; bitwuzla: agree 17",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "1dead009da5b11e84eb8f28c7f75f25ad31b50e3fc48519b45e95e5a31296b62",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1947,13 +2811,36 @@
         "longest_suffix": 11,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 11,
+            "pc_uniqueness": 3
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "56101afdc57c42c2e30080a432d40dc42de6e59169bbffc193f4b98069e309d4",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 10
+        },
         "solver_calls": 11,
         "suffixes_proved": 1
       },
       "id": "W-071F-979B",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "56101afdc57c42c2e30080a432d40dc42de6e59169bbffc193f4b98069e309d4",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -1966,13 +2853,35 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11701_X": "81"
+          "h22409_X": "0"
         },
         "instruction": "STA $06A1,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "deafac4afa8a341cdbab8aae6d77940db423c6150188a7bb5f2d01d215d357d6",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -1993,9 +2902,9 @@
         ]
       },
       "id": "W-071F-97A5",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "deafac4afa8a341cdbab8aae6d77940db423c6150188a7bb5f2d01d215d357d6",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2008,14 +2917,36 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11715_X": "125",
-          "h11715_Y": "251"
+          "h22423_X": "125",
+          "h22423_Y": "251"
         },
         "instruction": "STA $06A1,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "7d4a26ad5e404848a0d99380cbb5ba6d381eab3c72aa5420440f9b4d2810a8ed",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -2036,9 +2967,9 @@
         ]
       },
       "id": "W-071F-981E",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "7d4a26ad5e404848a0d99380cbb5ba6d381eab3c72aa5420440f9b4d2810a8ed",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2057,13 +2988,36 @@
         "longest_suffix": 5,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 5,
+            "pc_uniqueness": 1
+          },
+          "cross_check": "clean",
+          "distinct_queries": 6,
+          "distinct_rechecked": 6,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "705b33ac62753a911bd6e64f254432808c6286ac05591f89238ff44d30badda5",
+          "relied_on_unsat": 2,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 6
+            },
+            "cvc5": {
+              "agree": 6
+            }
+          },
+          "solver_queries": 6,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
         "solver_calls": 5,
         "suffixes_proved": 1
       },
       "id": "W-071F-9879",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 6; bitwuzla: agree 6",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "705b33ac62753a911bd6e64f254432808c6286ac05591f89238ff44d30badda5",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2082,13 +3036,36 @@
         "longest_suffix": 7,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 7,
+            "pc_uniqueness": 1
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "2866fa6c74d0d79bab998a72e8e96c03579dfd0d0fb3947778d592002d921243",
+          "relied_on_unsat": 2,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 6
+        },
         "solver_calls": 7,
         "suffixes_proved": 1
       },
       "id": "W-071F-987E",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 8; bitwuzla: agree 8",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "2866fa6c74d0d79bab998a72e8e96c03579dfd0d0fb3947778d592002d921243",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2107,13 +3084,35 @@
         "longest_suffix": 2,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 2,
+          "distinct_rechecked": 2,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "1573e786ca9634b0b09e12f91e7486bc078d68e2229e4f6e6b73f8cb3efe4eeb",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 2
+            },
+            "cvc5": {
+              "agree": 2
+            }
+          },
+          "solver_queries": 2,
+          "z3_no_answer": 0,
+          "z3_sat": 1
+        },
         "solver_calls": 2,
         "suffixes_proved": 1
       },
       "id": "W-071F-9892",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 2; bitwuzla: agree 2",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "1573e786ca9634b0b09e12f91e7486bc078d68e2229e4f6e6b73f8cb3efe4eeb",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2126,14 +3125,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11752_X": "192",
-          "h11753_X": "126"
+          "h22460_X": "192",
+          "h22461_X": "126"
         },
         "instruction": "STA $06A1,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 130
+          },
+          "cross_check": "clean",
+          "distinct_queries": 92,
+          "distinct_rechecked": 92,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "4051d31d2476fd848f12d54c568d7103d0fd3ca6ceec0b04c699a89ee2723213",
+          "relied_on_unsat": 130,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 92
+            },
+            "cvc5": {
+              "agree": 92
+            }
+          },
+          "solver_queries": 144,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -2154,9 +3176,9 @@
         ]
       },
       "id": "W-071F-98D3",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 92; bitwuzla: agree 92",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "4051d31d2476fd848f12d54c568d7103d0fd3ca6ceec0b04c699a89ee2723213",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2169,14 +3191,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11774_Y": "0",
-          "h11775_X": "125"
+          "h22482_Y": "0",
+          "h22483_X": "125"
         },
         "instruction": "STA $06A2,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 104
+          },
+          "cross_check": "clean",
+          "distinct_queries": 66,
+          "distinct_rechecked": 66,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "8d9e83f630d0465507038aebe8c6869efb2d3cfda2eef35bd8113c6f17c3a272",
+          "relied_on_unsat": 104,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 66
+            },
+            "cvc5": {
+              "agree": 66
+            }
+          },
+          "solver_queries": 118,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -2197,9 +3242,9 @@
         ]
       },
       "id": "W-071F-98D9",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 66; bitwuzla: agree 66",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "8d9e83f630d0465507038aebe8c6869efb2d3cfda2eef35bd8113c6f17c3a272",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2212,15 +3257,38 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11789_A": "0",
-          "h11789_S": "128",
-          "h11789_X": "201"
+          "h22497_A": "0",
+          "h22497_S": "128",
+          "h22497_X": "201"
         },
         "instruction": "STA $06A1,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 28,
+          "distinct_rechecked": 28,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "53f874c6529aca7c33b34421a48d40f088f25bf970c39b3ef463ac68f7dc520d",
+          "relied_on_unsat": 14,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 28
+            },
+            "cvc5": {
+              "agree": 28
+            }
+          },
+          "solver_queries": 28,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -2241,9 +3309,9 @@
         ]
       },
       "id": "W-071F-992C",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 28; bitwuzla: agree 28",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "53f874c6529aca7c33b34421a48d40f088f25bf970c39b3ef463ac68f7dc520d",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2262,13 +3330,36 @@
         "longest_suffix": 8,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 11,
+            "pc_uniqueness": 15
+          },
+          "cross_check": "clean",
+          "distinct_queries": 23,
+          "distinct_rechecked": 23,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "8b972bb0d6eab41be68fe162ce8b8d0c5de15fdef1cb7517d4d3ac2d3c9202f4",
+          "relied_on_unsat": 19,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 23
+            },
+            "cvc5": {
+              "agree": 23
+            }
+          },
+          "solver_queries": 26,
+          "z3_no_answer": 0,
+          "z3_sat": 7
+        },
         "solver_calls": 9,
         "suffixes_proved": 2
       },
       "id": "W-071F-9975",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 23; bitwuzla: agree 23",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "8b972bb0d6eab41be68fe162ce8b8d0c5de15fdef1cb7517d4d3ac2d3c9202f4",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2287,13 +3378,36 @@
         "longest_suffix": 9,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 21
+          },
+          "cross_check": "clean",
+          "distinct_queries": 29,
+          "distinct_rechecked": 29,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "8e7e7b0e0844bab8bc0283b7f8baa1e29acc1d2ba50301b76ec3d2480a62faef",
+          "relied_on_unsat": 27,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 29
+            },
+            "cvc5": {
+              "agree": 29
+            }
+          },
+          "solver_queries": 35,
+          "z3_no_answer": 0,
+          "z3_sat": 8
+        },
         "solver_calls": 11,
         "suffixes_proved": 3
       },
       "id": "W-071F-9989",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 29; bitwuzla: agree 29",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "8e7e7b0e0844bab8bc0283b7f8baa1e29acc1d2ba50301b76ec3d2480a62faef",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2312,13 +3426,36 @@
         "longest_suffix": 4,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 4,
+            "pc_uniqueness": 1
+          },
+          "cross_check": "clean",
+          "distinct_queries": 5,
+          "distinct_rechecked": 5,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "7deec3e55341f2521fbdfdc90cb8bfd2c97a4285988efcadbebb9f39389068a3",
+          "relied_on_unsat": 2,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 5
+            },
+            "cvc5": {
+              "agree": 5
+            }
+          },
+          "solver_queries": 5,
+          "z3_no_answer": 0,
+          "z3_sat": 3
+        },
         "solver_calls": 4,
         "suffixes_proved": 1
       },
       "id": "W-071F-9A70",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 5; bitwuzla: agree 5",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "7deec3e55341f2521fbdfdc90cb8bfd2c97a4285988efcadbebb9f39389068a3",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2337,13 +3474,36 @@
         "longest_suffix": 9,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 9,
+            "pc_uniqueness": 1
+          },
+          "cross_check": "clean",
+          "distinct_queries": 10,
+          "distinct_rechecked": 10,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "584b40a162ae697cfe643946dd90a1920e1ee9a8e3ee3823349f7c6144f9c437",
+          "relied_on_unsat": 2,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 10
+            },
+            "cvc5": {
+              "agree": 10
+            }
+          },
+          "solver_queries": 10,
+          "z3_no_answer": 0,
+          "z3_sat": 8
+        },
         "solver_calls": 9,
         "suffixes_proved": 1
       },
       "id": "W-071F-9A79",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 10; bitwuzla: agree 10",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "584b40a162ae697cfe643946dd90a1920e1ee9a8e3ee3823349f7c6144f9c437",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2356,15 +3516,38 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11836_A": "0",
-          "h11836_S": "128",
-          "h11836_X": "201"
+          "h22544_A": "0",
+          "h22544_S": "128",
+          "h22544_X": "200"
         },
         "instruction": "STA $06A1,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 4
+          },
+          "cross_check": "clean",
+          "distinct_queries": 18,
+          "distinct_rechecked": 18,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "936d786bc7c6626394efbe1c0723f59138040b570be51b38bd1becb1898d05d5",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 18
+            },
+            "cvc5": {
+              "agree": 18
+            }
+          },
+          "solver_queries": 18,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -2385,9 +3568,9 @@
         ]
       },
       "id": "W-071F-9AF8",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 18; bitwuzla: agree 18",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "936d786bc7c6626394efbe1c0723f59138040b570be51b38bd1becb1898d05d5",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2400,15 +3583,38 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11850_A": "0",
-          "h11850_S": "128",
-          "h11850_X": "248"
+          "h22558_A": "0",
+          "h22558_S": "128",
+          "h22558_X": "200"
         },
         "instruction": "STA $06A2,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 16,
+          "distinct_rechecked": 16,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "21b874449cfb64c4fd329986d6a7a06a60f68d57cc158ed30abefa281f25aa69",
+          "relied_on_unsat": 2,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 16
+            },
+            "cvc5": {
+              "agree": 16
+            }
+          },
+          "solver_queries": 16,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -2429,9 +3635,9 @@
         ]
       },
       "id": "W-071F-9AFD",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 16; bitwuzla: agree 16",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "21b874449cfb64c4fd329986d6a7a06a60f68d57cc158ed30abefa281f25aa69",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2444,15 +3650,37 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11864_A": "12",
-          "h11864_X": "126",
-          "h11864_Y": "84"
+          "h22572_A": "9",
+          "h22572_X": "126",
+          "h22572_Y": "84"
         },
         "instruction": "STA $06A1,X",
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14
+          },
+          "cross_check": "clean",
+          "distinct_queries": 14,
+          "distinct_rechecked": 14,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "18ee27ab77b935c3c3fd3e29ee4c0e2ae6b0d17e1743027c6aacd981eaa5dcde",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 14
+            },
+            "cvc5": {
+              "agree": 14
+            }
+          },
+          "solver_queries": 14,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -2473,9 +3701,9 @@
         ]
       },
       "id": "W-071F-9B9D",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 14; bitwuzla: agree 14",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "18ee27ab77b935c3c3fd3e29ee4c0e2ae6b0d17e1743027c6aacd981eaa5dcde",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2493,6 +3721,29 @@
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 14,
+            "pc_uniqueness": 11
+          },
+          "cross_check": "clean",
+          "distinct_queries": 22,
+          "distinct_rechecked": 22,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "93520fe4bb9e22b914fe645c67b54350f73a564c2132c5e8073ca39b4a2cb4d2",
+          "relied_on_unsat": 11,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 22
+            },
+            "cvc5": {
+              "agree": 22
+            }
+          },
+          "solver_queries": 25,
+          "z3_no_answer": 0,
+          "z3_sat": 14
+        },
         "solver_calls": 14,
         "suffixes_proved": 0,
         "unclosed_suffix": [
@@ -2513,9 +3764,9 @@
         ]
       },
       "id": "W-071F-B9B5",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 22; bitwuzla: agree 22",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "93520fe4bb9e22b914fe645c67b54350f73a564c2132c5e8073ca39b4a2cb4d2",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2534,13 +3785,35 @@
         "longest_suffix": 11,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 12
+          },
+          "cross_check": "clean",
+          "distinct_queries": 12,
+          "distinct_rechecked": 12,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "ec6f23fca2024583b60dd6e7118a8e051b20a23b0cadad559adc40d4c7026055",
+          "relied_on_unsat": 2,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 12
+            },
+            "cvc5": {
+              "agree": 12
+            }
+          },
+          "solver_queries": 12,
+          "z3_no_answer": 0,
+          "z3_sat": 10
+        },
         "solver_calls": 12,
         "suffixes_proved": 2
       },
       "id": "W-071F-BAB0",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 12; bitwuzla: agree 12",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "ec6f23fca2024583b60dd6e7118a8e051b20a23b0cadad559adc40d4c7026055",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2553,15 +3826,38 @@
       "dependencies": [],
       "detail": {
         "abstract_state": {
-          "h11912_S": "16",
-          "h11912_X": "162",
-          "h11912_Y": "93"
+          "h22620_S": "16",
+          "h22620_X": "72",
+          "h22620_Y": "93"
         },
         "instruction": "STA ($06),Y",
         "longest_suffix": 12,
         "method": "backward-deepening symbolic execution",
         "reason": "still satisfiable at depth 14",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 16,
+            "pc_uniqueness": 13
+          },
+          "cross_check": "clean",
+          "distinct_queries": 21,
+          "distinct_rechecked": 21,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "3bd0953e61f5395fa7af844a52a8c9717e07f18206d5133db6c145bd499b0a17",
+          "relied_on_unsat": 13,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 21
+            },
+            "cvc5": {
+              "agree": 21
+            }
+          },
+          "solver_queries": 29,
+          "z3_no_answer": 0,
+          "z3_sat": 16
+        },
         "solver_calls": 17,
         "suffixes_proved": 1,
         "unclosed_suffix": [
@@ -2582,9 +3878,9 @@
         ]
       },
       "id": "W-071F-BD4B",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 21; bitwuzla: agree 21",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "3bd0953e61f5395fa7af844a52a8c9717e07f18206d5133db6c145bd499b0a17",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2603,13 +3899,35 @@
         "longest_suffix": 2,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 2,
+          "distinct_rechecked": 2,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "69cdaba35619766317e9acf2a32fdc5570475c6b1692b077c5a38fe29c8f6e21",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 2
+            },
+            "cvc5": {
+              "agree": 2
+            }
+          },
+          "solver_queries": 2,
+          "z3_no_answer": 0,
+          "z3_sat": 1
+        },
         "solver_calls": 2,
         "suffixes_proved": 1
       },
       "id": "W-071F-BE35",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 2; bitwuzla: agree 2",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "69cdaba35619766317e9acf2a32fdc5570475c6b1692b077c5a38fe29c8f6e21",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2628,13 +3946,35 @@
         "longest_suffix": 7,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 7
+          },
+          "cross_check": "clean",
+          "distinct_queries": 7,
+          "distinct_rechecked": 7,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "9f624f811b51eba1cb18aa323ab66fb729c954b68c0b1039a15b88594b31b182",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 7
+            },
+            "cvc5": {
+              "agree": 7
+            }
+          },
+          "solver_queries": 7,
+          "z3_no_answer": 0,
+          "z3_sat": 6
+        },
         "solver_calls": 7,
         "suffixes_proved": 1
       },
       "id": "W-071F-BEF4",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 7; bitwuzla: agree 7",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "9f624f811b51eba1cb18aa323ab66fb729c954b68c0b1039a15b88594b31b182",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2653,13 +3993,35 @@
         "longest_suffix": 2,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 2,
+          "distinct_rechecked": 2,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "c06dce55ce30ee641457fd4af06c704bdb596d207d8a26fdd015d595fec29e91",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 2
+            },
+            "cvc5": {
+              "agree": 2
+            }
+          },
+          "solver_queries": 2,
+          "z3_no_answer": 0,
+          "z3_sat": 1
+        },
         "solver_calls": 2,
         "suffixes_proved": 1
       },
       "id": "W-071F-D7E6",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 2; bitwuzla: agree 2",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "c06dce55ce30ee641457fd4af06c704bdb596d207d8a26fdd015d595fec29e91",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2678,13 +4040,35 @@
         "longest_suffix": 2,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 2,
+          "distinct_rechecked": 2,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a0aaa5f176ded9d2c569d2a52f52db9d8bfc2477e2f5148330368e3de7335d00",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 2
+            },
+            "cvc5": {
+              "agree": 2
+            }
+          },
+          "solver_queries": 2,
+          "z3_no_answer": 0,
+          "z3_sat": 1
+        },
         "solver_calls": 2,
         "suffixes_proved": 1
       },
       "id": "W-071F-D7FC",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 2; bitwuzla: agree 2",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "a0aaa5f176ded9d2c569d2a52f52db9d8bfc2477e2f5148330368e3de7335d00",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2703,13 +4087,35 @@
         "longest_suffix": 2,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 2,
+          "distinct_rechecked": 2,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "69cdaba35619766317e9acf2a32fdc5570475c6b1692b077c5a38fe29c8f6e21",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 2
+            },
+            "cvc5": {
+              "agree": 2
+            }
+          },
+          "solver_queries": 2,
+          "z3_no_answer": 0,
+          "z3_sat": 1
+        },
         "solver_calls": 2,
         "suffixes_proved": 1
       },
       "id": "W-071F-DE20",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 2; bitwuzla: agree 2",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "69cdaba35619766317e9acf2a32fdc5570475c6b1692b077c5a38fe29c8f6e21",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2728,13 +4134,35 @@
         "longest_suffix": 2,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 2,
+          "distinct_rechecked": 2,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "69cdaba35619766317e9acf2a32fdc5570475c6b1692b077c5a38fe29c8f6e21",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 2
+            },
+            "cvc5": {
+              "agree": 2
+            }
+          },
+          "solver_queries": 2,
+          "z3_no_answer": 0,
+          "z3_sat": 1
+        },
         "solver_calls": 2,
         "suffixes_proved": 1
       },
       "id": "W-071F-E007",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 2; bitwuzla: agree 2",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "69cdaba35619766317e9acf2a32fdc5570475c6b1692b077c5a38fe29c8f6e21",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2753,13 +4181,35 @@
         "longest_suffix": 3,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 2,
+          "distinct_rechecked": 2,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "5fefe9972aed4cd824174360566f5a83032a515d6be9b066013187b890bd24a2",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 2
+            },
+            "cvc5": {
+              "agree": 2
+            }
+          },
+          "solver_queries": 2,
+          "z3_no_answer": 0,
+          "z3_sat": 2
+        },
         "solver_calls": 3,
         "suffixes_proved": 1
       },
       "id": "W-071F-F3B1",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 2; bitwuzla: agree 2",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "5fefe9972aed4cd824174360566f5a83032a515d6be9b066013187b890bd24a2",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2778,13 +4228,35 @@
         "longest_suffix": 9,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "ccc7197d0f802f1c2b20c9c1350a568804c45274f6f34f478d41d31b11b91ae3",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 8
+        },
         "solver_calls": 9,
         "suffixes_proved": 1
       },
       "id": "W-071F-F3BD",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 8; bitwuzla: agree 8",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "ccc7197d0f802f1c2b20c9c1350a568804c45274f6f34f478d41d31b11b91ae3",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2804,13 +4276,35 @@
         "longest_suffix": 0,
         "method": "backward-deepening symbolic execution",
         "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 4
+          },
+          "cross_check": "clean",
+          "distinct_queries": 4,
+          "distinct_rechecked": 4,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "e7d7a69cd55f6843a013dfb8b3dea940bca24a2e7b96d27f32f9b8354b2ed40a",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 4
+            },
+            "cvc5": {
+              "agree": 4
+            }
+          },
+          "solver_queries": 4,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
         "solver_calls": 4,
         "suffixes_proved": 0
       },
       "id": "W-071F-FFF7",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 4; bitwuzla: agree 4",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "e7d7a69cd55f6843a013dfb8b3dea940bca24a2e7b96d27f32f9b8354b2ed40a",
       "result_artifact": null,
       "scope": "preservation obligation for one writer",
       "solver": "z3",
@@ -2893,19 +4387,1249 @@
         "possible_writers": 45,
         "strengthening": "stated here as a global invariant of the cell, which is stronger than the program-point form and is what the writer obligations preserve",
         "why_unknown": "initialisation is open and most writers are open; see the dependencies",
+        "writer_scan_queries": {
+          "by_kind": {
+            "bad_condition": 10708
+          },
+          "cross_check": "clean",
+          "distinct_queries": 503,
+          "distinct_rechecked": 503,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "15e09016d13e8516e2ce41d3e02f7d9b13e11c3e673074bca9b432208cf6b444",
+          "relied_on_unsat": 10663,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 503
+            },
+            "cvc5": {
+              "agree": 503
+            }
+          },
+          "solver_queries": 10708,
+          "z3_no_answer": 0,
+          "z3_sat": 45
+        },
         "writers_closed": 22,
         "writers_open": 23
       },
       "id": "P6-071F-PP",
+      "independent_check": "cvc5: agree 503; bitwuzla: agree 503",
+      "query_artifact": null,
+      "query_sha256": "15e09016d13e8516e2ce41d3e02f7d9b13e11c3e673074bca9b432208cf6b444",
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "RAM[$071F] <= 8 whenever $92B0 is fetched",
+      "status": "unknown"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "exit": "$800F",
+        "invariant": "no write has been performed and X, Y, S, C, I, D and V are the terms they were at the loop head",
+        "invariant_holds_on_both_successors": true,
+        "loop": "$800A-$800D",
+        "method": "loop invariant, not unrolling: the body is executed once from a fully unconstrained state at the loop head",
+        "non_termination": "a path that never leaves the loop fetches only $800A and $800D, both in PRG ROM",
+        "scope": "statement about the machine model in formal/model",
+        "structural_check": "the successors carry the identical terms, which is checked in Python rather than by the solver",
+        "successors_checked": [
+          "$800A",
+          "$800F"
+        ],
+        "successors_failing_the_invariant": []
+      },
+      "id": "INIT-MEM-VBLANK-800A",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-VBLANK-800A.rom.smt2",
+      "query_sha256": "d27435d4ab7e1f6c1b6204b6bbf73cad89c3b0fdbd0a87351891fd2d4b301608",
+      "result_artifact": null,
+      "scope": "loop invariant for one unbounded loop",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "the wait loop at $800A writes nothing, changes nothing except A, N and Z, and leaves bit 7 of A set at $800F, for every number of iterations",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "exit": "$8014",
+        "invariant": "no write has been performed and X, Y, S, C, I, D and V are the terms they were at the loop head",
+        "invariant_holds_on_both_successors": true,
+        "loop": "$800F-$8012",
+        "method": "loop invariant, not unrolling: the body is executed once from a fully unconstrained state at the loop head",
+        "non_termination": "a path that never leaves the loop fetches only $800F and $8012, both in PRG ROM",
+        "scope": "statement about the machine model in formal/model",
+        "structural_check": "the successors carry the identical terms, which is checked in Python rather than by the solver",
+        "successors_checked": [
+          "$800F",
+          "$8014"
+        ],
+        "successors_failing_the_invariant": []
+      },
+      "id": "INIT-MEM-VBLANK-800F",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-VBLANK-800F.rom.smt2",
+      "query_sha256": "4d4e3c6c4586c9191f3a26ccb7dbc442d2382ae3f0f27d4a3920504ca780f0ed",
+      "result_artifact": null,
+      "scope": "loop invariant for one unbounded loop",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "the wait loop at $800F writes nothing, changes nothing except A, N and Z, and leaves bit 7 of A set at $8014, for every number of iterations",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "note": "the two vblank summaries are not part of this query: the guards mention only the initial RAM",
+        "paths": 8,
+        "scope": "statement about the machine model in formal/model"
+      },
+      "id": "INIT-MEM-PATHS-TOTAL",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-PATHS-TOTAL.rom.smt2",
+      "query_sha256": "d06bebe7486fa0c80bd59b1df5bbbe712b7daafe1a977fa9af159a76ee199de5",
+      "result_artifact": null,
+      "scope": "exhaustiveness of the warm-boot case split",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "the 8 paths the model enumerates from the reset vector to the fetch of $802B cover every initial RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "pairs": 28,
+        "scope": "statement about the machine model in formal/model"
+      },
+      "id": "INIT-MEM-PATHS-DISJOINT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-PATHS-DISJOINT.rom.smt2",
+      "query_sha256": "b7ffa655dc0e789495608538b5db48457037f65ce50de0f66cd82289d46b1f79",
+      "result_artifact": null,
+      "scope": "disjointness of the warm-boot case split",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "those paths are pairwise exclusive, so the split assigns exactly one value of Y to each initial RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "cells_recovered_from": "the free-array reads inside the path conditions the model collected, not from a disassembly",
+        "cells_the_split_reads": [
+          "$07D7-$07DC",
+          "$07FF"
+        ],
+        "cold_paths": 7,
+        "method": "the model enumerated the paths; the solver proved the warm path's condition equal to phi",
+        "phi": "RAM[$07D7] <u 10 and RAM[$07D8] <u 10 and RAM[$07D9] <u 10 and RAM[$07DA] <u 10 and RAM[$07DB] <u 10 and RAM[$07DC] <u 10 and RAM[$07FF] == $A5",
+        "scope": "statement about the machine model in formal/model",
+        "warm_paths": 1
+      },
+      "id": "INIT-MEM-WARM-COND",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-WARM-COND.rom.smt2",
+      "query_sha256": "1ca035acb43aed9bb02e4a2377d1868acb43ab9ba9e8ce592f468ca2db7900c2",
+      "result_artifact": null,
+      "scope": "the warm-boot condition, as a formula over cold-boot RAM",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "the memory-initialisation routine at $90CC is entered with Y = $D6, the warm-boot offset, exactly when phi holds of the cold-boot RAM, and with Y = $FE otherwise, where phi is: RAM[$07D7] <u 10 and RAM[$07D8] <u 10 and RAM[$07D9] <u 10 and RAM[$07DA] <u 10 and RAM[$07DB] <u 10 and RAM[$07DC] <u 10 and RAM[$07FF] == $A5",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "purpose": "a counterexample here is a cold-boot RAM with six digits below ten and RAM[$07FF] != $A5, which takes the cold path"
+      },
+      "id": "INIT-MEM-WARM-COND-NEG",
+      "independent_check": "cvc5: sat",
+      "query_artifact": "formal/results/queries/INIT-MEM-WARM-COND-NEG.rom.smt2",
+      "query_sha256": "562b71585e28a3f64475f3da124d9f6b17c213d05d45b4f8bc3afe6b5e4d4e4f",
+      "result_artifact": null,
+      "scope": "negative regression test: phi is not vacuous",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "the same equivalence with the RAM[$07FF] == $A5 conjunct dropped   [expected to be refuted]",
+      "status": "refuted"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "method": "term identity on S, on the RAM array and on the write log, which needs no solver",
+        "paths": 8,
+        "ram_cells_written_before_the_split": [],
+        "scope": "statement about the machine model in formal/model",
+        "stack_pointer": "$FF",
+        "why_it_matters": "the window is then executed from the most general state with those fields pinned, which is a weakening of each path, so the determined and untouched sets proved there hold for all eight paths.  Because no RAM cell has been written yet, the window's final values compose exactly with the prologue",
+        "writes_before_the_split": [
+          "$2000"
+        ]
+      },
+      "id": "INIT-MEM-SPLIT-STATE",
       "independent_check": null,
       "query_artifact": null,
       "query_sha256": null,
       "result_artifact": null,
-      "scope": "program-point invariant",
+      "scope": "the state the window is executed from",
       "solver": null,
       "solver_version": null,
-      "statement": "RAM[$071F] <= 8 whenever $92B0 is fetched",
-      "status": "unknown"
+      "statement": "every one of those paths reaches the fetch of $802B with S = $FF, with RAM still untouched, and differing only in A, X and the flags, none of which the routine at $90CC reads before overwriting",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "case": "cold",
+        "cells": 1892,
+        "entry": {
+          "S": "$FF",
+          "Y": "$FE",
+          "everything_else": "unconstrained"
+        },
+        "note": "the value claimed is the last write to the cell in the write log; the query is against the final RAM array, which is the independent route",
+        "scope": "statement about the machine model in formal/model",
+        "steps": 19269,
+        "values": [
+          "$0000-$015F=$00",
+          "$01FC=$2A",
+          "$01FD=$8E",
+          "$01FE=$56",
+          "$01FF=$80",
+          "$0200=$F8",
+          "$0201-$0203=$00",
+          "$0204=$F8",
+          "$0205-$0207=$00",
+          "$0208=$F8",
+          "$0209-$020B=$00",
+          "$020C=$F8",
+          "$020D-$020F=$00",
+          "$0210=$F8",
+          "$0211-$0213=$00",
+          "$0214=$F8",
+          "$0215-$0217=$00",
+          "$0218=$F8",
+          "$0219-$021B=$00",
+          "$021C=$F8",
+          "$021D-$021F=$00",
+          "$0220=$F8",
+          "$0221-$0223=$00",
+          "$0224=$F8",
+          "$0225-$0227=$00",
+          "$0228=$F8",
+          "$0229-$022B=$00",
+          "$022C=$F8",
+          "$022D-$022F=$00",
+          "$0230=$F8",
+          "$0231-$0233=$00",
+          "$0234=$F8",
+          "$0235-$0237=$00",
+          "$0238=$F8",
+          "$0239-$023B=$00",
+          "$023C=$F8",
+          "$023D-$023F=$00",
+          "$0240=$F8",
+          "$0241-$0243=$00",
+          "$0244=$F8",
+          "$0245-$0247=$00",
+          "$0248=$F8",
+          "$0249-$024B=$00",
+          "$024C=$F8",
+          "$024D-$024F=$00",
+          "$0250=$F8",
+          "$0251-$0253=$00",
+          "$0254=$F8",
+          "$0255-$0257=$00",
+          "$0258=$F8",
+          "$0259-$025B=$00",
+          "$025C=$F8",
+          "$025D-$025F=$00",
+          "$0260=$F8",
+          "$0261-$0263=$00",
+          "$0264=$F8",
+          "$0265-$0267=$00",
+          "$0268=$F8",
+          "$0269-$026B=$00",
+          "$026C=$F8",
+          "$026D-$026F=$00",
+          "$0270=$F8",
+          "$0271-$0273=$00",
+          "$0274=$F8",
+          "$0275-$0277=$00",
+          "$0278=$F8",
+          "$0279-$027B=$00",
+          "$027C=$F8",
+          "$027D-$027F=$00",
+          "$0280=$F8",
+          "$0281-$0283=$00",
+          "$0284=$F8",
+          "$0285-$0287=$00",
+          "$0288=$F8",
+          "$0289-$028B=$00",
+          "$028C=$F8",
+          "$028D-$028F=$00",
+          "$0290=$F8",
+          "$0291-$0293=$00",
+          "$0294=$F8",
+          "$0295-$0297=$00",
+          "$0298=$F8",
+          "$0299-$029B=$00",
+          "$029C=$F8",
+          "$029D-$029F=$00",
+          "$02A0=$F8",
+          "$02A1-$02A3=$00",
+          "$02A4=$F8",
+          "$02A5-$02A7=$00",
+          "$02A8=$F8",
+          "$02A9-$02AB=$00",
+          "$02AC=$F8",
+          "$02AD-$02AF=$00",
+          "$02B0=$F8",
+          "$02B1-$02B3=$00",
+          "$02B4=$F8",
+          "$02B5-$02B7=$00",
+          "$02B8=$F8",
+          "$02B9-$02BB=$00",
+          "$02BC=$F8",
+          "$02BD-$02BF=$00",
+          "$02C0=$F8",
+          "$02C1-$02C3=$00",
+          "$02C4=$F8",
+          "$02C5-$02C7=$00",
+          "$02C8=$F8",
+          "$02C9-$02CB=$00",
+          "$02CC=$F8",
+          "$02CD-$02CF=$00",
+          "$02D0=$F8",
+          "$02D1-$02D3=$00",
+          "$02D4=$F8",
+          "$02D5-$02D7=$00",
+          "$02D8=$F8",
+          "$02D9-$02DB=$00",
+          "$02DC=$F8",
+          "$02DD-$02DF=$00",
+          "$02E0=$F8",
+          "$02E1-$02E3=$00",
+          "$02E4=$F8",
+          "$02E5-$02E7=$00",
+          "$02E8=$F8",
+          "$02E9-$02EB=$00",
+          "$02EC=$F8",
+          "$02ED-$02EF=$00",
+          "$02F0=$F8",
+          "$02F1-$02F3=$00",
+          "$02F4=$F8",
+          "$02F5-$02F7=$00",
+          "$02F8=$F8",
+          "$02F9-$02FB=$00",
+          "$02FC=$F8",
+          "$02FD-$0773=$00",
+          "$0774=$01",
+          "$0775-$0777=$00",
+          "$0778=$10",
+          "$0779-$07A6=$00",
+          "$07A7=$A5",
+          "$07A8-$07FE=$00",
+          "$07FF=$A5"
+        ],
+        "window_end": "$8EED"
+      },
+      "id": "INIT-MEM-DETERMINED-COLD",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-DETERMINED-COLD.rom.smt2",
+      "query_sha256": "9590075492f5fa689b19eaa67b2bd02830c6378e8667fa8c143c65c22a481e3a",
+      "result_artifact": null,
+      "scope": "determined cells at the end of the initialisation window",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "executing the image from the fetch of $802B with Y = $FE, S = $FF and no interrupt serviced, 1892 RAM cells hold a determined value at the fetch of the first instruction that sets the NMI-enable bit ($8EED), for every other register, every flag and every cold-boot RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "case": "cold",
+        "cells": 156,
+        "ranges": [
+          "$0160-$01FB"
+        ],
+        "scope": "statement about the machine model in formal/model"
+      },
+      "id": "INIT-MEM-PRESERVED-COLD",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-PRESERVED-COLD.rom.smt2",
+      "query_sha256": "a06c0c4d9eb12d2f3b223acb0783e8f26c7c95047a797627e35979fe6da4740f",
+      "result_artifact": null,
+      "scope": "preserved cells at the end of the initialisation window",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "on the same path the other 156 cells still hold their cold-boot values at that fetch",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "address_ranges": [
+          "$0000-$015F",
+          "$01FC-$07FF",
+          "$2000-$2001",
+          "$2005-$2007",
+          "$4011",
+          "$4015"
+        ],
+        "addresses": "the addresses are the write log's own, normalised with model.memory.as_int (z3.simplify plus a concreteness test) and run-encoded; a symbolic address aborts the analysis instead of being dropped",
+        "case": "cold",
+        "distinct_write_addresses": 1899,
+        "method": "the address and the cell number are both left free, so the mirror normalisation is checked by the solver rather than in Python",
+        "scope": "statement about the machine model in formal/model",
+        "writes_in_window": 4046,
+        "written_cells": 1892
+      },
+      "id": "INIT-MEM-WRITESET-COLD",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-WRITESET-COLD.rom.smt2",
+      "query_sha256": "8e8b21f65b73b71473e537a40a2ba744893c4eb2fcb3e109b0744ed92fa2a6e8",
+      "result_artifact": null,
+      "scope": "the cells the window's writes can reach",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "every address among the 1899 the window writes that denotes a RAM cell at all denotes one of 1892 cells, mirrors included",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "addresses": "the addresses are the write log's own, normalised with model.memory.as_int (z3.simplify plus a concreteness test) and run-encoded; a symbolic address aborts the analysis instead of being dropped",
+        "case": "cold",
+        "cells": 156,
+        "ranges": [
+          "$0160-$01FB"
+        ],
+        "scope": "statement about the machine model in formal/model",
+        "with": "INIT-MEM-WRITESET-COLD, which ties the cell set to the write log"
+      },
+      "id": "INIT-MEM-UNTOUCHED-COLD",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-UNTOUCHED-COLD.rom.smt2",
+      "query_sha256": "a07c19a886a849ff0fee902868145b4dd8e61f5cc131137d657aece22a6b67e3",
+      "result_artifact": null,
+      "scope": "untouched cells, from the write log",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "and none of those cells is one of the 156 the window leaves alone, so those are never written rather than written back",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "case": "warm",
+        "cells": 1852,
+        "entry": {
+          "S": "$FF",
+          "Y": "$D6",
+          "everything_else": "unconstrained"
+        },
+        "note": "the value claimed is the last write to the cell in the write log; the query is against the final RAM array, which is the independent route",
+        "scope": "statement about the machine model in formal/model",
+        "steps": 19029,
+        "values": [
+          "$0000-$015F=$00",
+          "$01FC=$2A",
+          "$01FD=$8E",
+          "$01FE=$56",
+          "$01FF=$80",
+          "$0200=$F8",
+          "$0201-$0203=$00",
+          "$0204=$F8",
+          "$0205-$0207=$00",
+          "$0208=$F8",
+          "$0209-$020B=$00",
+          "$020C=$F8",
+          "$020D-$020F=$00",
+          "$0210=$F8",
+          "$0211-$0213=$00",
+          "$0214=$F8",
+          "$0215-$0217=$00",
+          "$0218=$F8",
+          "$0219-$021B=$00",
+          "$021C=$F8",
+          "$021D-$021F=$00",
+          "$0220=$F8",
+          "$0221-$0223=$00",
+          "$0224=$F8",
+          "$0225-$0227=$00",
+          "$0228=$F8",
+          "$0229-$022B=$00",
+          "$022C=$F8",
+          "$022D-$022F=$00",
+          "$0230=$F8",
+          "$0231-$0233=$00",
+          "$0234=$F8",
+          "$0235-$0237=$00",
+          "$0238=$F8",
+          "$0239-$023B=$00",
+          "$023C=$F8",
+          "$023D-$023F=$00",
+          "$0240=$F8",
+          "$0241-$0243=$00",
+          "$0244=$F8",
+          "$0245-$0247=$00",
+          "$0248=$F8",
+          "$0249-$024B=$00",
+          "$024C=$F8",
+          "$024D-$024F=$00",
+          "$0250=$F8",
+          "$0251-$0253=$00",
+          "$0254=$F8",
+          "$0255-$0257=$00",
+          "$0258=$F8",
+          "$0259-$025B=$00",
+          "$025C=$F8",
+          "$025D-$025F=$00",
+          "$0260=$F8",
+          "$0261-$0263=$00",
+          "$0264=$F8",
+          "$0265-$0267=$00",
+          "$0268=$F8",
+          "$0269-$026B=$00",
+          "$026C=$F8",
+          "$026D-$026F=$00",
+          "$0270=$F8",
+          "$0271-$0273=$00",
+          "$0274=$F8",
+          "$0275-$0277=$00",
+          "$0278=$F8",
+          "$0279-$027B=$00",
+          "$027C=$F8",
+          "$027D-$027F=$00",
+          "$0280=$F8",
+          "$0281-$0283=$00",
+          "$0284=$F8",
+          "$0285-$0287=$00",
+          "$0288=$F8",
+          "$0289-$028B=$00",
+          "$028C=$F8",
+          "$028D-$028F=$00",
+          "$0290=$F8",
+          "$0291-$0293=$00",
+          "$0294=$F8",
+          "$0295-$0297=$00",
+          "$0298=$F8",
+          "$0299-$029B=$00",
+          "$029C=$F8",
+          "$029D-$029F=$00",
+          "$02A0=$F8",
+          "$02A1-$02A3=$00",
+          "$02A4=$F8",
+          "$02A5-$02A7=$00",
+          "$02A8=$F8",
+          "$02A9-$02AB=$00",
+          "$02AC=$F8",
+          "$02AD-$02AF=$00",
+          "$02B0=$F8",
+          "$02B1-$02B3=$00",
+          "$02B4=$F8",
+          "$02B5-$02B7=$00",
+          "$02B8=$F8",
+          "$02B9-$02BB=$00",
+          "$02BC=$F8",
+          "$02BD-$02BF=$00",
+          "$02C0=$F8",
+          "$02C1-$02C3=$00",
+          "$02C4=$F8",
+          "$02C5-$02C7=$00",
+          "$02C8=$F8",
+          "$02C9-$02CB=$00",
+          "$02CC=$F8",
+          "$02CD-$02CF=$00",
+          "$02D0=$F8",
+          "$02D1-$02D3=$00",
+          "$02D4=$F8",
+          "$02D5-$02D7=$00",
+          "$02D8=$F8",
+          "$02D9-$02DB=$00",
+          "$02DC=$F8",
+          "$02DD-$02DF=$00",
+          "$02E0=$F8",
+          "$02E1-$02E3=$00",
+          "$02E4=$F8",
+          "$02E5-$02E7=$00",
+          "$02E8=$F8",
+          "$02E9-$02EB=$00",
+          "$02EC=$F8",
+          "$02ED-$02EF=$00",
+          "$02F0=$F8",
+          "$02F1-$02F3=$00",
+          "$02F4=$F8",
+          "$02F5-$02F7=$00",
+          "$02F8=$F8",
+          "$02F9-$02FB=$00",
+          "$02FC=$F8",
+          "$02FD-$0773=$00",
+          "$0774=$01",
+          "$0775-$0777=$00",
+          "$0778=$10",
+          "$0779-$07A6=$00",
+          "$07A7=$A5",
+          "$07A8-$07D6=$00",
+          "$07FF=$A5"
+        ],
+        "window_end": "$8EED"
+      },
+      "id": "INIT-MEM-DETERMINED-WARM",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-DETERMINED-WARM.rom.smt2",
+      "query_sha256": "91292c790d0f85e247aad86d1018d7c90b1603783a3ac2e0cd612854f66b3060",
+      "result_artifact": null,
+      "scope": "determined cells at the end of the initialisation window",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "executing the image from the fetch of $802B with Y = $D6, S = $FF and no interrupt serviced, 1852 RAM cells hold a determined value at the fetch of the first instruction that sets the NMI-enable bit ($8EED), for every other register, every flag and every cold-boot RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "case": "warm",
+        "cells": 196,
+        "ranges": [
+          "$0160-$01FB",
+          "$07D7-$07FE"
+        ],
+        "scope": "statement about the machine model in formal/model"
+      },
+      "id": "INIT-MEM-PRESERVED-WARM",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-PRESERVED-WARM.rom.smt2",
+      "query_sha256": "576f7efb5231bb33e482b6291b19591104ca811df29bd84d5c357cabcec9e03f",
+      "result_artifact": null,
+      "scope": "preserved cells at the end of the initialisation window",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "on the same path the other 196 cells still hold their cold-boot values at that fetch",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "address_ranges": [
+          "$0000-$015F",
+          "$01FC-$07D6",
+          "$07FF",
+          "$2000-$2001",
+          "$2005-$2007",
+          "$4011",
+          "$4015"
+        ],
+        "addresses": "the addresses are the write log's own, normalised with model.memory.as_int (z3.simplify plus a concreteness test) and run-encoded; a symbolic address aborts the analysis instead of being dropped",
+        "case": "warm",
+        "distinct_write_addresses": 1859,
+        "method": "the address and the cell number are both left free, so the mirror normalisation is checked by the solver rather than in Python",
+        "scope": "statement about the machine model in formal/model",
+        "writes_in_window": 4006,
+        "written_cells": 1852
+      },
+      "id": "INIT-MEM-WRITESET-WARM",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-WRITESET-WARM.rom.smt2",
+      "query_sha256": "3af085b818da60bca2bcdb02e70574a6c7778d7a6efdce83c0398406eb39212b",
+      "result_artifact": null,
+      "scope": "the cells the window's writes can reach",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "every address among the 1859 the window writes that denotes a RAM cell at all denotes one of 1852 cells, mirrors included",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "addresses": "the addresses are the write log's own, normalised with model.memory.as_int (z3.simplify plus a concreteness test) and run-encoded; a symbolic address aborts the analysis instead of being dropped",
+        "case": "warm",
+        "cells": 196,
+        "ranges": [
+          "$0160-$01FB",
+          "$07D7-$07FE"
+        ],
+        "scope": "statement about the machine model in formal/model",
+        "with": "INIT-MEM-WRITESET-WARM, which ties the cell set to the write log"
+      },
+      "id": "INIT-MEM-UNTOUCHED-WARM",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-UNTOUCHED-WARM.rom.smt2",
+      "query_sha256": "5807087c3c39b1120895c723fe1853b3af9539551677e3a612172419f06054ec",
+      "result_artifact": null,
+      "scope": "untouched cells, from the write log",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "and none of those cells is one of the 196 the window leaves alone, so those are never written rather than written back",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "branch_instructions_executed": {
+          "cold": 6478,
+          "warm": 6398
+        },
+        "forks_inside_the_window": 0,
+        "inner_loop_iterations": {
+          "cold": 2047,
+          "warm": 2007
+        },
+        "instruction_starts_visited": {
+          "cold": 76,
+          "warm": 76
+        },
+        "method": "exhaustive execution of the model; a fork inside the window would have aborted the analysis rather than being bounded",
+        "page_loop_iterations": {
+          "cold": 8,
+          "warm": 8
+        },
+        "scope": "statement about the machine model in formal/model",
+        "steps": {
+          "cold": 19269,
+          "warm": 19029
+        },
+        "steps_before_the_split": 6,
+        "stores_executed_at_90DC": {
+          "cold": 1887,
+          "warm": 1847
+        },
+        "what_it_rests_on": "no branch guard inside the window was symbolic: each simplified to a literal, which is a decision by z3's simplifier, already in the trusted base.  The trip counts are therefore derived from the model rather than assumed, and the resulting final RAM array is what the determined-cell queries are proved against"
+      },
+      "id": "INIT-MEM-LOOP-90CC",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "unrolling, with the trip counts derived",
+      "solver": null,
+      "solver_version": null,
+      "statement": "the memory-initialisation routine at $90CC is fully unrolled on both paths: every branch guard inside the window is decided by the model with no case split, so its trip counts are derived and no loop bound is assumed",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "distinct_instruction_starts": {
+          "cold": 76,
+          "warm": 76
+        },
+        "fetches_outside_rom": {
+          "cold": [],
+          "warm": []
+        },
+        "lowest_program_counter": {
+          "cold": "$802B",
+          "warm": "$802B"
+        },
+        "method": "the program counter at every boundary of both traces, collected while executing the model",
+        "note": "the two vblank waits are outside this count; their invariant records that a non-terminating path fetches only the loop's own two instructions, both in ROM",
+        "scope": "statement about the machine model in formal/model"
+      },
+      "id": "INIT-MEM-FETCHES-IN-ROM",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "instruction location inside the window",
+      "solver": null,
+      "solver_version": null,
+      "statement": "every instruction the window fetches is fetched from PRG ROM, on both paths; this is P1 restricted to the initialisation window",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "boundaries": {
+          "cold": 19270,
+          "warm": 19030
+        },
+        "entry": "both entries the model provides set I: cold_boot sets it and cpu.reset sets it",
+        "holds": {
+          "cold": true,
+          "warm": true
+        },
+        "method": "the flag is the literal True at every boundary of both traces, checked structurally",
+        "scope": "statement about the machine model in formal/model"
+      },
+      "id": "INIT-MEM-NO-IRQ",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "absence of one asynchronous transition inside the window",
+      "solver": null,
+      "solver_version": null,
+      "statement": "the I flag is set at every instruction boundary inside the window, so the IRQ transition of the model is never enabled there",
+      "status": "proved"
+    },
+    {
+      "assumptions": [
+        "MA-PPU-POWERON: PPU control is zero at cold boot, so the ghost NMI-enable bit is false at the first fetch"
+      ],
+      "dependencies": [],
+      "detail": {
+        "enabling_instruction": {
+          "cold": [
+            {
+              "ghost_bit_after": "True",
+              "pc": "$8EED"
+            }
+          ],
+          "warm": [
+            {
+              "ghost_bit_after": "True",
+              "pc": "$8EED"
+            }
+          ]
+        },
+        "method": "the writes of each instruction are folded into transitions.ppu_control_update and the run stops at the first instruction for which the bit is not provably still false",
+        "no_solver_call": "the written values are concrete, so the ghost bit is the literal False at every boundary and a validity query would be degenerate.  What this item rests on is the enumeration of the control writes by the model, not a solver answer",
+        "ppu_control_writes_before_the_split": [
+          {
+            "address": "$2000",
+            "pc": "$8004",
+            "value": "$10"
+          }
+        ],
+        "ppu_control_writes_in_the_window": {
+          "cold": [
+            {
+              "address": "$2000",
+              "pc": "$8EED",
+              "value": "$10"
+            },
+            {
+              "address": "$2000",
+              "pc": "$8EED",
+              "value": "$90"
+            }
+          ],
+          "warm": [
+            {
+              "address": "$2000",
+              "pc": "$8EED",
+              "value": "$10"
+            },
+            {
+              "address": "$2000",
+              "pc": "$8EED",
+              "value": "$90"
+            }
+          ]
+        },
+        "scope": "statement about the machine model in formal/model",
+        "window_end": {
+          "cold": "$8EED",
+          "warm": "$8EED"
+        }
+      },
+      "id": "INIT-MEM-NO-NMI",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "absence of the other asynchronous transition inside the window",
+      "solver": null,
+      "solver_version": null,
+      "statement": "starting from cold boot, the ghost NMI-enable bit is false at every instruction boundary strictly inside the window, so no NMI handler can write RAM before the characterised fetch",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "boundaries_at_risk": [
+          "$8000",
+          "$8001",
+          "$8002",
+          "$8004"
+        ],
+        "consequence": "for that entry the determined and untouched sets are not established: the NMI handler may write RAM first.  P1 must either carry MA-PPU-POWERON, which restricts it to cold boot, or treat all 2,048 cells as parameters after a warm reset",
+        "counterexample": {
+          "enable_at_reset": "True"
+        },
+        "scope": "statement about the machine model in formal/model",
+        "why": "transitions.transitions carries the ghost bit through reset unchanged, so a reset taken while the game has NMIs enabled reaches the reset vector with the bit set.  The first write that clears it is the STA $2000 three instructions in, and the model admits an NMI at every boundary before it"
+      },
+      "id": "INIT-MEM-NMI-WARM-RESET",
+      "independent_check": "cvc5: sat",
+      "query_artifact": "formal/results/queries/INIT-MEM-NMI-WARM-RESET.rom.smt2",
+      "query_sha256": "28f78b39cdb4ddc25125263d216a119a6c7cafe730b6cfabbcdfffd092e19c41",
+      "result_artifact": null,
+      "scope": "the gap the cold-boot assumption hides",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "the ghost NMI-enable bit is false at every boundary inside the window for every entry the model permits, warm reset included   [expected to be refuted]",
+      "status": "refuted"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "cells": [
+          "$07D7-$07DC"
+        ],
+        "free_in_the_warm_case": [
+          "$07DD-$07FE"
+        ],
+        "note": "phi is a hypothesis of the claim rather than an assumption of the obligation, so this is not conditional on it",
+        "scope": "statement about the machine model in formal/model"
+      },
+      "id": "INIT-MEM-WARM-DIGITS",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/INIT-MEM-WARM-DIGITS.rom.smt2",
+      "query_sha256": "4187b96037ae452b18abf41fa32cf0314dfb7843aeb6602d8f06a7a9c551e320",
+      "result_artifact": null,
+      "scope": "the part of the theorem's parameter that is not free",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "on the warm path phi constrains 6 of the preserved cells: $07D7-$07DC are still below ten at the NMI-enabling fetch",
+      "status": "proved"
+    },
+    {
+      "assumptions": [
+        "MA-PPU-POWERON: PPU control is zero at cold boot, so the ghost NMI-enable bit is false at the first fetch"
+      ],
+      "dependencies": [
+        "INIT-MEM-VBLANK-800A",
+        "INIT-MEM-VBLANK-800F",
+        "INIT-MEM-PATHS-TOTAL",
+        "INIT-MEM-PATHS-DISJOINT",
+        "INIT-MEM-WARM-COND",
+        "INIT-MEM-SPLIT-STATE",
+        "INIT-MEM-DETERMINED-COLD",
+        "INIT-MEM-PRESERVED-COLD",
+        "INIT-MEM-WRITESET-COLD",
+        "INIT-MEM-UNTOUCHED-COLD",
+        "INIT-MEM-DETERMINED-WARM",
+        "INIT-MEM-PRESERVED-WARM",
+        "INIT-MEM-WRITESET-WARM",
+        "INIT-MEM-UNTOUCHED-WARM",
+        "INIT-MEM-LOOP-90CC",
+        "INIT-MEM-FETCHES-IN-ROM",
+        "INIT-MEM-NO-IRQ",
+        "INIT-MEM-NO-NMI"
+      ],
+      "detail": {
+        "always_overwritten": {
+          "count": 1852,
+          "ranges": [
+            "$0000-$015F",
+            "$01FC-$07D6",
+            "$07FF"
+          ],
+          "values": [
+            "$0000-$015F=$00",
+            "$01FC=$2A",
+            "$01FD=$8E",
+            "$01FE=$56",
+            "$01FF=$80",
+            "$0200=$F8",
+            "$0201-$0203=$00",
+            "$0204=$F8",
+            "$0205-$0207=$00",
+            "$0208=$F8",
+            "$0209-$020B=$00",
+            "$020C=$F8",
+            "$020D-$020F=$00",
+            "$0210=$F8",
+            "$0211-$0213=$00",
+            "$0214=$F8",
+            "$0215-$0217=$00",
+            "$0218=$F8",
+            "$0219-$021B=$00",
+            "$021C=$F8",
+            "$021D-$021F=$00",
+            "$0220=$F8",
+            "$0221-$0223=$00",
+            "$0224=$F8",
+            "$0225-$0227=$00",
+            "$0228=$F8",
+            "$0229-$022B=$00",
+            "$022C=$F8",
+            "$022D-$022F=$00",
+            "$0230=$F8",
+            "$0231-$0233=$00",
+            "$0234=$F8",
+            "$0235-$0237=$00",
+            "$0238=$F8",
+            "$0239-$023B=$00",
+            "$023C=$F8",
+            "$023D-$023F=$00",
+            "$0240=$F8",
+            "$0241-$0243=$00",
+            "$0244=$F8",
+            "$0245-$0247=$00",
+            "$0248=$F8",
+            "$0249-$024B=$00",
+            "$024C=$F8",
+            "$024D-$024F=$00",
+            "$0250=$F8",
+            "$0251-$0253=$00",
+            "$0254=$F8",
+            "$0255-$0257=$00",
+            "$0258=$F8",
+            "$0259-$025B=$00",
+            "$025C=$F8",
+            "$025D-$025F=$00",
+            "$0260=$F8",
+            "$0261-$0263=$00",
+            "$0264=$F8",
+            "$0265-$0267=$00",
+            "$0268=$F8",
+            "$0269-$026B=$00",
+            "$026C=$F8",
+            "$026D-$026F=$00",
+            "$0270=$F8",
+            "$0271-$0273=$00",
+            "$0274=$F8",
+            "$0275-$0277=$00",
+            "$0278=$F8",
+            "$0279-$027B=$00",
+            "$027C=$F8",
+            "$027D-$027F=$00",
+            "$0280=$F8",
+            "$0281-$0283=$00",
+            "$0284=$F8",
+            "$0285-$0287=$00",
+            "$0288=$F8",
+            "$0289-$028B=$00",
+            "$028C=$F8",
+            "$028D-$028F=$00",
+            "$0290=$F8",
+            "$0291-$0293=$00",
+            "$0294=$F8",
+            "$0295-$0297=$00",
+            "$0298=$F8",
+            "$0299-$029B=$00",
+            "$029C=$F8",
+            "$029D-$029F=$00",
+            "$02A0=$F8",
+            "$02A1-$02A3=$00",
+            "$02A4=$F8",
+            "$02A5-$02A7=$00",
+            "$02A8=$F8",
+            "$02A9-$02AB=$00",
+            "$02AC=$F8",
+            "$02AD-$02AF=$00",
+            "$02B0=$F8",
+            "$02B1-$02B3=$00",
+            "$02B4=$F8",
+            "$02B5-$02B7=$00",
+            "$02B8=$F8",
+            "$02B9-$02BB=$00",
+            "$02BC=$F8",
+            "$02BD-$02BF=$00",
+            "$02C0=$F8",
+            "$02C1-$02C3=$00",
+            "$02C4=$F8",
+            "$02C5-$02C7=$00",
+            "$02C8=$F8",
+            "$02C9-$02CB=$00",
+            "$02CC=$F8",
+            "$02CD-$02CF=$00",
+            "$02D0=$F8",
+            "$02D1-$02D3=$00",
+            "$02D4=$F8",
+            "$02D5-$02D7=$00",
+            "$02D8=$F8",
+            "$02D9-$02DB=$00",
+            "$02DC=$F8",
+            "$02DD-$02DF=$00",
+            "$02E0=$F8",
+            "$02E1-$02E3=$00",
+            "$02E4=$F8",
+            "$02E5-$02E7=$00",
+            "$02E8=$F8",
+            "$02E9-$02EB=$00",
+            "$02EC=$F8",
+            "$02ED-$02EF=$00",
+            "$02F0=$F8",
+            "$02F1-$02F3=$00",
+            "$02F4=$F8",
+            "$02F5-$02F7=$00",
+            "$02F8=$F8",
+            "$02F9-$02FB=$00",
+            "$02FC=$F8",
+            "$02FD-$0773=$00",
+            "$0774=$01",
+            "$0775-$0777=$00",
+            "$0778=$10",
+            "$0779-$07A6=$00",
+            "$07A7=$A5",
+            "$07A8-$07D6=$00",
+            "$07FF=$A5"
+          ]
+        },
+        "never_initialised": {
+          "count": 156,
+          "ranges": [
+            "$0160-$01FB"
+          ]
+        },
+        "not_covered": "entry by warm reset with the enable bit already set; see INIT-MEM-NMI-WARM-RESET",
+        "preserved_in_the_warm_case_only": {
+          "constrained_by_phi": [
+            "$07D7-$07DC"
+          ],
+          "count": 40,
+          "ranges": [
+            "$07D7-$07FE"
+          ],
+          "unconstrained": [
+            "$07DD-$07FE"
+          ],
+          "value_on_the_cold_path": [
+            "$07D7-$07FE=$00"
+          ]
+        },
+        "scope": "statement about the machine model in formal/model",
+        "total": 2048,
+        "window": "the fetch of the reset vector to the fetch of the first instruction that sets the ghost NMI-enable bit",
+        "written_only_in_the_warm_case": {
+          "count": 0,
+          "ranges": []
+        }
+      },
+      "id": "INIT-MEM-PARTITION",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "the partition P1's initial-memory parameter is read off",
+      "solver": null,
+      "solver_version": null,
+      "statement": "the 2,048 RAM cells split into 1852 always overwritten with a determined value before the NMI-enable bit is set, 40 overwritten on the cold-boot path and preserved on the warm-boot path, and 156 never written inside the window at all",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "MA-PPU-POWERON: PPU control is zero at cold boot, so the ghost NMI-enable bit is false at the first fetch"
+      ],
+      "dependencies": [
+        "INIT-MEM-VBLANK-800A",
+        "INIT-MEM-VBLANK-800F",
+        "INIT-MEM-PATHS-TOTAL",
+        "INIT-MEM-PATHS-DISJOINT",
+        "INIT-MEM-WARM-COND",
+        "INIT-MEM-SPLIT-STATE",
+        "INIT-MEM-DETERMINED-COLD",
+        "INIT-MEM-PRESERVED-COLD",
+        "INIT-MEM-WRITESET-COLD",
+        "INIT-MEM-UNTOUCHED-COLD",
+        "INIT-MEM-DETERMINED-WARM",
+        "INIT-MEM-PRESERVED-WARM",
+        "INIT-MEM-WRITESET-WARM",
+        "INIT-MEM-UNTOUCHED-WARM",
+        "INIT-MEM-LOOP-90CC",
+        "INIT-MEM-FETCHES-IN-ROM",
+        "INIT-MEM-NO-IRQ",
+        "INIT-MEM-NO-NMI",
+        "INIT-MEM-PARTITION",
+        "INIT-MEM-WARM-DIGITS"
+      ],
+      "detail": {
+        "caveat": "a warm reset taken with the NMI-enable bit set is outside this statement (INIT-MEM-NMI-WARM-RESET), and so is any entry other than the two the model provides",
+        "cold_case": "phi is false, and then every cell outside $0160-$01FB is determined",
+        "constrained_in_the_warm_case_only": {
+          "cells": [
+            "$07D7-$07DC"
+          ],
+          "constraint": "below ten"
+        },
+        "free_in_both_cases": [
+          "$0160-$01FB"
+        ],
+        "free_in_the_warm_case_only": [
+          "$07DD-$07FE"
+        ],
+        "phi": "RAM[$07D7] <u 10 and RAM[$07D8] <u 10 and RAM[$07D9] <u 10 and RAM[$07DA] <u 10 and RAM[$07DB] <u 10 and RAM[$07DC] <u 10 and RAM[$07FF] == $A5",
+        "scope": "statement about the machine model in formal/model"
+      },
+      "id": "INIT-MEM-P1-PARAMETER",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "the initial-memory parameter of the theorem",
+      "solver": null,
+      "solver_version": null,
+      "statement": "P1 can be stated over the free cells only: for all initial values of $0160-$01FB and, when phi holds, $07D7-$07FE as well, where phi is RAM[$07D7] <u 10 and RAM[$07D8] <u 10 and RAM[$07D9] <u 10 and RAM[$07DA] <u 10 and RAM[$07DB] <u 10 and RAM[$07DC] <u 10 and RAM[$07FF] == $A5; every other cell holds the value INIT-MEM-PARTITION gives it at the first boundary at which the model admits an NMI",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "agreement": true,
+        "dynamic_manifest": {
+          "engine": "tracer",
+          "frames_total": 140000,
+          "instructions_total": 1353946027,
+          "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922"
+        },
+        "dynamic_never_written": [
+          "$0160-$01E6"
+        ],
+        "dynamic_never_written_count": 135,
+        "label": "observation only: a trace of a hardware-accurate emulator under particular inputs, not a statement about the model",
+        "never_in_the_trace_but_written_by_the_window": [],
+        "reading": "the window writes every cell outside $0160-$01FB, and the trace wrote every one of them, so the two agree.  The trace additionally wrote part of that range, which is the stack growing deeper during play than the reset code needs; that is consistent, since the dynamic report covers the whole run and this module covers the initialisation window only",
+        "source": "formal/results/reports/dyn_cell_domains.json",
+        "static_never_written_in_the_window": [
+          "$0160-$01FB"
+        ],
+        "written_by_the_window_but_never_in_the_trace": []
+      },
+      "id": "INIT-MEM-DYN",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "cross-check against dynamic observation",
+      "solver": null,
+      "solver_version": null,
+      "statement": "the partition is consistent with the dynamic cell-domain report",
+      "status": "observed"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "purpose": "the counterexample is a cold-boot RAM in which $0160 is not zero, a cell the window does not touch"
+      },
+      "id": "INIT-MEM-DETERMINED-WARM-NEG",
+      "independent_check": "cvc5: sat",
+      "query_artifact": "formal/results/queries/INIT-MEM-DETERMINED-WARM-NEG.rom.smt2",
+      "query_sha256": "37bef83a410da2329974b90202e8f6ff5c9f16639f90c2bf896c2e096a162804",
+      "result_artifact": null,
+      "scope": "negative regression test: the determined set is not everything",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "$0160, which the window never writes, also holds a determined value at the NMI-enabling fetch   [expected to be refuted]",
+      "status": "refuted"
     },
     {
       "assumptions": [],
@@ -2920,7 +5644,27 @@
         "nodes_with_a_successor_outside_N": {},
         "of_those_not_shown_unreachable": {},
         "of_those_shown_unreachable": {},
-        "scope": "statement about the machine model in formal/model"
+        "scope": "statement about the machine model in formal/model",
+        "slice_queries": {
+          "by_kind": {},
+          "cross_check": "clean",
+          "distinct_queries": 0,
+          "distinct_rechecked": 0,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": null,
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 0
+            },
+            "cvc5": {
+              "agree": 0
+            }
+          },
+          "solver_queries": 0,
+          "z3_no_answer": 0,
+          "z3_sat": 0
+        }
       },
       "id": "LOC-DIRECT",
       "independent_check": null,
@@ -4172,12 +6916,36 @@
             "instruction": "SHA* ($92),Y",
             "status": "conditional"
           }
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 11529,
+            "pc_uniqueness": 402
+          },
+          "cross_check": "2 second-solver timeout(s)",
+          "distinct_queries": 1264,
+          "distinct_rechecked": 1264,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "7eb92bab9b05f75e82c784314ff8ca7ea7497d59f91f878d8f71d6e4378dc80a",
+          "relied_on_unsat": 10295,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 1264
+            },
+            "cvc5": {
+              "agree": 1262,
+              "timeout": 2
+            }
+          },
+          "solver_queries": 11931,
+          "z3_no_answer": 1,
+          "z3_sat": 1635
         }
       },
       "id": "STACK-PAGE-STORES",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 1262, timeout 2; bitwuzla: agree 1264",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "7eb92bab9b05f75e82c784314ff8ca7ea7497d59f91f878d8f71d6e4378dc80a",
       "result_artifact": null,
       "scope": "frame condition needed by P4 and P5",
       "solver": "z3",
@@ -4324,15 +7092,37 @@
             "instruction": "ASL $1F1E,X"
           }
         },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 10823
+          },
+          "cross_check": "clean",
+          "distinct_queries": 600,
+          "distinct_rechecked": 600,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "305b7d65c93d9318dccbdd4a89bf8143ce05f6d33681b3797d1d85c2a82fe5c6",
+          "relied_on_unsat": 10702,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 600
+            },
+            "cvc5": {
+              "agree": 600
+            }
+          },
+          "solver_queries": 10823,
+          "z3_no_answer": 0,
+          "z3_sat": 121
+        },
         "why_unknown": "needs the invariant 'NMI enable is clear while the handler body runs' plus MA-NMI-EDGE; neither has been stated as a checked invariant"
       },
       "id": "J-ASYNC",
-      "independent_check": null,
+      "independent_check": "cvc5: agree 600; bitwuzla: agree 600",
       "query_artifact": null,
-      "query_sha256": null,
+      "query_sha256": "305b7d65c93d9318dccbdd4a89bf8143ce05f6d33681b3797d1d85c2a82fe5c6",
       "result_artifact": null,
       "scope": "invariant every slice-based result assumes",
-      "solver": null,
+      "solver": "z3",
       "solver_version": null,
       "statement": "no interrupt handler runs between two instructions of game logic",
       "status": "unknown"
@@ -4348,7 +7138,8 @@
       ],
       "detail": {
         "certificate": "J_location := Fetch => PC in N; initiation is LOC-ASYNC (reset vector), safety is N being a subset of ROM, consecution is the dependencies",
-        "why_unknown": "consecution is not discharged: see each dependency's status"
+        "joint_route": "unknown",
+        "why_unknown": "consecution is not discharged by either route: see each dependency's status and the JOINT-* items"
       },
       "id": "P1",
       "independent_check": null,
@@ -4362,12 +7153,14 @@
       "status": "unknown"
     }
   ],
-  "repository_commit": "49f1f7e6e8e20f7c88ec434c44e3e5e3e92520da",
+  "repository_commit": "7426a2d8072242729fac8f196b2d14167c834eda",
   "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
   "seconds": {
-    "dispatch": 7.4,
-    "instruction_location": 111.0,
-    "state_domains": 73.7
+    "dispatch": 26.8,
+    "graph_check": 79.3,
+    "init_memory": 80.9,
+    "instruction_location": 367.0,
+    "state_domains": 446.0
   },
   "solver": {
     "cvc5": "1.4.2",

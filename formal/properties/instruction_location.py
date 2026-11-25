@@ -30,6 +30,7 @@ from analysis.cfg import JUMPENGINE
 from analysis.decoder import Flow
 
 from ..model import cpu
+from ..verify import crosscheck
 from ..verify.obligations import Ledger, Obligation
 from ..verify.symexec import Slicer, havoc_state
 from .common import (IRQ_ASSUMPTION, MODEL_SCOPE, Context, ppu_control_hit,
@@ -54,19 +55,24 @@ def direct_transfers(ledger: Ledger, ctx: Context) -> None:
                 escapes.setdefault(pc, []).append(target)
     slicer = Slicer(ctx.graph, ctx.prg, closed_entries=IRQ_ENTRY)
     reachable_escapes, closed = {}, {}
-    for pc, targets in escapes.items():
-        # is the escaping instruction itself reachable?  `bad` is simply True.
-        outcome = slicer.prove_never(pc, lambda s, w: z3.BoolVal(True),
-                                     max_depth=14)
-        if outcome.holds:
-            closed[pc] = sorted(outcome.entry_assumptions) or ["none"]
-        else:
-            reachable_escapes[pc] = targets
+    with crosscheck.collect("LOC-DIRECT") as queries:
+        for pc, targets in escapes.items():
+            # is the escaping instruction itself reachable?  `bad` is True.
+            outcome = slicer.prove_never(pc, lambda s, w: z3.BoolVal(True),
+                                         max_depth=14)
+            if outcome.holds:
+                closed[pc] = sorted(outcome.entry_assumptions) or ["none"]
+            else:
+                reachable_escapes[pc] = targets
     status = "abstract_counterexample" if reachable_escapes else "conditional"
     assumptions = sorted({a for v in closed.values() for a in v} - {"none"})
     if closed:
         assumptions.insert(0, "J-LOCATION and J-ASYNC, for the nodes shown "
                               "unreachable by slicing")
+    slice_queries = queries.summary()
+    if not queries.clean:
+        # a second solver contradicted Z3 on a reachability query
+        status, assumptions = "unknown", []
     ledger.add(Obligation(
         "LOC-DIRECT",
         "every instruction start in N with a statically determined successor "
@@ -74,7 +80,7 @@ def direct_transfers(ledger: Ledger, ctx: Context) -> None:
         "consecution of J_location for direct transfers",
         "proved" if not escapes else status,
         assumptions if escapes else [],
-        solver=EXHAUSTIVE,
+        solver=EXHAUSTIVE, **crosscheck.obligation_fields(queries),
         detail={
             "scope": MODEL_SCOPE,
             "instruction_starts": len(nodes),
@@ -87,6 +93,7 @@ def direct_transfers(ledger: Ledger, ctx: Context) -> None:
             "of_those_not_shown_unreachable": {
                 f"0x{pc:04X}": hexes(t)
                 for pc, t in reachable_escapes.items()},
+            "slice_queries": slice_queries,
         }))
     ctx.computed = sorted(set(computed))
 
@@ -139,32 +146,38 @@ def returns(ledger: Ledger, ctx: Context) -> None:
     """Frame integrity is not proved; record what bears on it."""
     slicer = Slicer(ctx.graph, ctx.prg, closed_entries=IRQ_ENTRY)
     stack_ops = {"PHA", "PHP", "JSR", "BRK"}
-    stores = [pc for pc in writers_of(ctx, stack_page_hit)
-              if ctx.graph.nodes[pc].instruction.info.mnemonic
-              not in stack_ops]
-    bad = lambda state, writes: z3.Or(
-        z3.BoolVal(False), *[stack_page_hit(a) for a, _ in writes])
+    bad = lambda state, writes: crosscheck.disjunction(
+        [stack_page_hit(a) for a, _ in writes])
     per_store = {}
-    for pc in stores:
-        outcome = slicer.prove_never(pc, bad, max_depth=12)
-        status, assumptions, detail = outcome_fields(outcome)
-        per_store[f"0x{pc:04X}"] = {
-            "instruction": str(ctx.graph.nodes[pc].instruction),
-            "status": status,
-            **({"unclosed_suffix": detail["unclosed_suffix"]}
-               if "unclosed_suffix" in detail else {})}
+    with crosscheck.collect("STACK-PAGE-STORES") as queries:
+        stores = [pc for pc in writers_of(ctx, stack_page_hit)
+                  if ctx.graph.nodes[pc].instruction.info.mnemonic
+                  not in stack_ops]
+        for pc in stores:
+            outcome = slicer.prove_never(pc, bad, max_depth=12)
+            status, assumptions, detail = outcome_fields(outcome)
+            per_store[f"0x{pc:04X}"] = {
+                "instruction": str(ctx.graph.nodes[pc].instruction),
+                "status": status,
+                **({"unclosed_suffix": detail["unclosed_suffix"]}
+                   if "unclosed_suffix" in detail else {})}
     closed = sum(v["status"] == "conditional" for v in per_store.values())
+    status = ("conditional" if closed == len(per_store)
+              else "abstract_counterexample")
+    assumptions = (["J-LOCATION", "J-ASYNC", IRQ_ASSUMPTION]
+                   if closed == len(per_store) else [])
+    if not queries.clean:
+        status, assumptions = "unknown", []
     ledger.add(Obligation(
         "STACK-PAGE-STORES",
         "no instruction other than a push writes $0100-$01FF",
         "frame condition needed by P4 and P5",
-        "conditional" if closed == len(per_store) else "abstract_counterexample",
-        ["J-LOCATION", "J-ASYNC", IRQ_ASSUMPTION]
-        if closed == len(per_store) else [],
-        solver="z3",
+        status, assumptions,
+        solver="z3", **crosscheck.obligation_fields(queries),
         detail={"non_push_instructions_that_can_address_the_stack_page":
                 len(per_store), "closed_by_slicing": closed,
                 "open": len(per_store) - closed, "per_instruction": per_store,
+                "slice_queries": queries.summary(),
                 "note": "stronger than needed: the game legitimately keeps "
                         "data at the bottom of page 1, so an open item here "
                         "is not evidence of a fault"}))
@@ -213,43 +226,61 @@ def asynchronous(ledger: Ledger, ctx: Context) -> None:
                                "frame integrity, which is open"}))
 
     slicer = Slicer(ctx.graph, ctx.prg, closed_entries=IRQ_ENTRY)
-    enabling = lambda state, writes: z3.Or(z3.BoolVal(False), *[
-        z3.And(ppu_control_hit(a), z3.Extract(7, 7, v) == 1)
-        for a, v in writes])
+    enabling = lambda state, writes: crosscheck.disjunction(
+        [z3.And(ppu_control_hit(a), z3.Extract(7, 7, v) == 1)
+         for a, v in writes])
     per_writer = {}
-    for pc in writers_of(ctx, ppu_control_hit):
-        outcome = slicer.prove_never(pc, enabling, max_depth=12)
-        per_writer[f"0x{pc:04X}"] = {
-            "instruction": str(nodes[pc].instruction),
-            "can_set_enable": not outcome.holds}
+    with crosscheck.collect("J-ASYNC") as queries:
+        for pc in writers_of(ctx, ppu_control_hit):
+            outcome = slicer.prove_never(pc, enabling, max_depth=12)
+            per_writer[f"0x{pc:04X}"] = {
+                "instruction": str(nodes[pc].instruction),
+                "can_set_enable": not outcome.holds}
     ledger.add(Obligation(
         "J-ASYNC",
         "no interrupt handler runs between two instructions of game logic",
         "invariant every slice-based result assumes", "unknown",
         dependencies=["J-IRQ"],
+        solver="z3", **crosscheck.obligation_fields(queries),
         detail={
             "instructions_that_can_write_ppu_control": len(per_writer),
             "of_those_possibly_setting_nmi_enable":
                 sum(v["can_set_enable"] for v in per_writer.values()),
             "per_instruction": per_writer,
+            "slice_queries": queries.summary(),
             "why_unknown": "needs the invariant 'NMI enable is clear while "
                            "the handler body runs' plus MA-NMI-EDGE; neither "
                            "has been stated as a checked invariant"}))
 
 
 def theorem(ledger: Ledger) -> None:
+    """P1's status is derived from the two routes to it, never asserted.
+
+    Route one is the per-conjunct decomposition in this module, which leaves
+    `LOC-RETURN` and `J-ASYNC` open.  Route two is the joint certificate
+    (`properties/joint.py`), which discharges all of them at once or not at
+    all.  P1 takes the better of the two, and `conditional` is the best
+    either can give: both carry model assumptions.
+    """
+    joint = ledger.items.get("P1-JOINT")
+    route = joint.status if joint is not None else "unknown"
+    status = "conditional" if route == "conditional" else "unknown"
     ledger.add(Obligation(
         "P1",
         "for every reachable state s: Fetch(s) implies $8000 <= PC(s) <= $FFFF",
-        "primary theorem (unbounded, all admissible inputs)", "unknown",
+        "primary theorem (unbounded, all admissible inputs)", status,
+        list(joint.assumptions) if status == "conditional" else [],
         dependencies=["LOC-DIRECT", "LOC-DISPATCH", "LOC-RETURN", "LOC-ASYNC",
-                      "J-ASYNC"],
+                      "J-ASYNC"] if status != "conditional"
+        else ["P1-JOINT"],
         detail={"certificate": "J_location := Fetch => PC in N; initiation is "
                                "LOC-ASYNC (reset vector), safety is N being a "
                                "subset of ROM, consecution is the "
                                "dependencies",
-                "why_unknown": "consecution is not discharged: see each "
-                               "dependency's status"}))
+                "joint_route": route,
+                "why_unknown": None if status == "conditional" else
+                    "consecution is not discharged by either route: see each "
+                    "dependency's status and the JOINT-* items"}))
 
 
 def run(ledger: Ledger, ctx: Context) -> None:

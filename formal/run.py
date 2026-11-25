@@ -15,7 +15,8 @@ import time
 
 import z3
 
-from .properties import dispatch, instruction_location, state_domains
+from .properties import (dispatch, graph_check, init_memory,
+                         instruction_location, state_domains)
 from .properties.common import context
 from .verify.obligations import STATUSES, Ledger
 
@@ -49,7 +50,15 @@ def build() -> tuple[Ledger, dict]:
     ctx = context()
     ledger = Ledger()
     timings = {}
-    for module in (dispatch, state_domains, instruction_location):
+    modules = [graph_check, dispatch, state_domains, init_memory]
+    if os.environ.get("SMB1_JOINT") == "1":
+        # The certificate route is opt-in: the checker has known soundness
+        # gaps (formal/lean/FINDINGS.md) and its verdicts must not enter the
+        # manifest by default until they are closed.
+        from .properties import joint
+        modules.append(joint)
+    modules.append(instruction_location)
+    for module in modules:
         started = time.time()
         module.run(ledger, ctx)
         timings[module.__name__.rsplit(".", 1)[-1]] = round(
@@ -98,6 +107,8 @@ def render(ledger: Ledger, header: dict) -> str:
 
 
 def main() -> int:
+    from .verify import obligations
+    obligations.SAVE_QUERIES = True
     ledger, header = build()
     os.makedirs(os.path.dirname(MANIFEST), exist_ok=True)
     with open(MANIFEST, "w") as handle:
@@ -106,8 +117,10 @@ def main() -> int:
     with open(REPORT, "w") as handle:
         handle.write(render(ledger, header))
     print(json.dumps(ledger.counts(), indent=2))
-    for key in ("P1", "P6-071F-PP", "LOC-DIRECT", "LOC-RETURN"):
-        print(f"{key}: {ledger.items[key].status}")
+    for key in ("P1", "P1-JOINT", "JOINT-CERTIFICATE", "P6-071F-PP",
+                "LOC-DIRECT", "LOC-RETURN", "GRAPH-EDGES"):
+        if key in ledger.items:
+            print(f"{key}: {ledger.items[key].status}")
     print(f"wrote {MANIFEST}\nwrote {REPORT}")
     return 0
 
