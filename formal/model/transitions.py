@@ -28,10 +28,27 @@ every result that depends on them:
 MA-PPU-POWERON   at cold boot the PPU control register is zero, so
                  `nmi_enable` starts false.
 MA-PPU-WARMUP    writes to PPU control are assumed to take effect.  A real PPU
-                 ignores them for about 29,658 CPU cycles after power-on or
-                 (on consoles that reset the PPU) after reset.
+                 ignores them from power-on (and, on consoles whose reset
+                 button resets the PPU, from reset) until the pre-render
+                 scanline of the next frame.  That is a scanline-phase
+                 condition, not a cycle count: the often-quoted 29,658 NTSC
+                 CPU cycles holds only when CPU and PPU leave reset together.
+                 Which consoles reset the PPU on the button varies (the
+                 front-loading NES does; the Famicom and the top-loader are
+                 documented as not doing so).
 MA-NMI-EDGE      two NMI entries with no intervening 0->1 write of the enable
-                 bit are at least one frame apart.  Not built into `T`.
+                 bit are at least one frame apart.  Not built into `T`.  The
+                 edge rule (NMI on a rising edge of vblank flag AND enable) is
+                 documented by NESdev; the consequence used here is derived
+                 from it.
+MA-NMI-LATENCY   an NMI whose edge is caused by the final cycle of an
+                 instruction is serviced after the *following* instruction.
+                 Not built into `T`.  NESdev documents that the interrupt
+                 lines are sampled at the end of the second-to-last cycle;
+                 this assumption is an inference from that, not a quoted
+                 statement.  The uniform rule is wrong for taken branches,
+                 which does not matter for the two instructions it is applied
+                 to (`STA $2000` and `RTI`).
 MA-CPU           `cpu.py` matches the 2A03 at instruction granularity; see the
                  validation report for what that rests on.
 

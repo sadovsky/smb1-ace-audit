@@ -13,3 +13,5 @@ paper/*.log
 paper/*.out
 paper/*.toc
 formal/results/queries/*.rom.smt2
+# report figure intermediates
+formal/paper/build/

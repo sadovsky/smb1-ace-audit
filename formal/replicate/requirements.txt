@@ -1,0 +1,4 @@
+# Pinned to what the committed manifest was generated with.
+z3-solver==5.4.1.0
+cvc5==1.4.2
+py65==1.2.0
