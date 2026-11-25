@@ -1,0 +1,39 @@
+reached 22783 PRG bytes (69%)
+sole computed jump: JMP ($0006) at $8E16 (JumpEngine $8E04)
+dispatch sites: 18
+
+site   table   N  idx<=  index source                 bound / note
+------------------------------------------------------------------------------
+$8215 $8218   4     3  $0770 OperMode               state counter 0-3
+$8234 $8237   4     3  $0772 OperMode_Task          task counter
+$83A3 $83A6   5     4  $0772                        task counter
+$856A $856D  15    14  $073C screen task            screen-routine counter
+$921B $921E   3     2  $0772                        task counter
+$92C8 $92CB   8     7  $071F forced 1..8            STRUCTURAL: 0..7
+$9664 $9667  47    46  GameEngine ($0E)             engine state
+$9743 $9746   5     4  $0733                        state counter
+$AEDF $AEE2   4     3  $0772                        task counter
+$B04C $B04F  13    12  $0E                          state value
+$B34E $B351   4     3  $1D (CMP #$03)               player state, checked
+$BDBD $BDC0   9     8  $05 via $BDF6                CMP #$09 / BCC
+$C27F $C282  55    54  $16,x enemy ID               table sized to ID space 0..$36
+$C7A8 $C7AB   8     7  $16,x - $12                  routed IDs $12..$19
+$C88F $C892  34    33  $16,x (CPY #$15, SBC #$14)   worst case -> I/O crash
+$C907 $C90A  21     -  $16,x RAW, no local bound    upstream routing only  <-- internal RAM reachable within bound
+$C987 $C98A   7     6  $16,x - $24                  routed IDs $24..$2A
+$D2E5 $D2E8   5     4  $0746 (CMP #$05 / BCS)       explicit clamp
+
+--- sites whose bound does NOT exclude a controllable-RAM target ---
+$C907: table $C90A N=21 maxidx=None
+    index 52 -> $0747 (internal_ram)
+    index 53 -> $03D0 (internal_ram)
+    index 60 -> $16B5 (internal_ram_mirror)
+    index 71 -> $00A9 (internal_ram)
+    index 72 -> $0F95 (internal_ram_mirror)
+    index 73 -> $1695 (internal_ram_mirror)
+
+--- $C907 (enemy graphics, raw ID, 21-entry table) ---
+    enemy ID $34 -> $0747 (controllable RAM)
+    enemy ID $35 -> $03D0 (controllable RAM)
+    (IDs $34/$35 route via master $C27F to RTS stubs $C2F0/$C307,
+     so they never reach $C905; Bowser ID $2D proves the gate empirically.)

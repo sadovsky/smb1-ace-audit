@@ -1,0 +1,14 @@
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+non-ROM destinations classified: 2182
+
+  not_ace       : 1
+  excluded      : 2181
+
+Anything NOT excluded by a bound (the live attack surface):
+  0xC88F idx  34 -> 0x2060 [ppu_registers]  not_ace  enemy IDs 0x36
+      reachable index, destination not executable
+
+Bound provenance across the 18 dispatch sites:
+  derived   : 5 sites  ['0xC27F', '0xC7A8', '0xC88F', '0xC907', '0xC987']
+  observed  : 9 sites  ['0x8215', '0x8234', '0x83A3', '0x856A', '0x921B', '0x9664', '0x9743', '0xAEDF', '0xB04C']
+  structural: 4 sites  ['0x92C8', '0xB34E', '0xBDBD', '0xD2E5']

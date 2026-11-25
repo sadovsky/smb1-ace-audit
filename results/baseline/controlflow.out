@@ -1,0 +1,51 @@
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+
+========================================================================
+4.4  Byte classification
+========================================================================
+  instruction starts :  10693
+  operand bytes      :  12090
+  dispatch-table data:    502
+  unreached bytes    :   9985  (30% of PRG)
+  (of which not table data: 9491)
+  starts+operands    :  22783  vs trace.py's 'reached' 22783
+
+  Control-transfer opcodes in UNREACHED bytes (alternate decodings):
+    JMP (ind) : 15
+    JSR       : 140
+    RTI       : 88
+    JMP (ind) byte positions in unreached data (candidate only if
+    some real path decodes them as instruction starts):
+      $8B78: JMP ($6D71)  pointer region=cartridge_ram_or_open_bus
+      $A63D: JMP ($8751)  pointer region=prg_rom
+      $A6AC: JMP ($B302)  pointer region=prg_rom
+      $A7EB: JMP ($4773)  pointer region=cartridge_expansion
+      $AA0F: JMP ($9C00)  pointer region=prg_rom
+      $AE10: JMP ($6503)  pointer region=cartridge_ram_or_open_bus
+      $AE20: JMP ($6201)  pointer region=cartridge_ram_or_open_bus
+      $E75E: JMP ($A3A2)  pointer region=prg_rom
+      $FB84: JMP ($A245)  pointer region=prg_rom
+      $FC09: JMP ($706E)  pointer region=cartridge_ram_or_open_bus
+      $FC11: JMP ($706E)  pointer region=cartridge_ram_or_open_bus
+      $FC18: JMP ($706E)  pointer region=cartridge_ram_or_open_bus
+      ... 15 total
+
+========================================================================
+4.5  Stack-based control flow
+========================================================================
+  JSR : 611
+  PHA : 82
+  PLA : 88
+  RTI : 1
+  RTS : 336
+  TXS : 1
+
+  Direct stack-pointer writes (TXS): 1 site(s)
+    $8009
+
+  RTS-trick dispatch (PHA..PHA..RTS with no intervening JSR):
+    none found - every RTS in reached code returns to a JSR frame
+
+  RTI sites in reached code:
+    $8181
+    (RTI returns from the NMI handler; IRQ is never taken on NROM)

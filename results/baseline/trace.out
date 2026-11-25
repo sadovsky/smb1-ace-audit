@@ -1,0 +1,4 @@
+reached 22783 code bytes  (69% of PRG)
+JSR $8E04 dispatch tables: 18
+real indirect JMPs: 1
+  $8E16  JMP (ind) $0006

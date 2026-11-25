@@ -1,0 +1,38 @@
+/home/sadovsky/code/smb1-ace-audit/reach.py:55: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/sadovsky/code/smb1-ace-audit/trace.json' mode='r' encoding='UTF-8'>
+  return {pc: (tbl, n) for pc, tbl, n in json.load(open(TRACE))["jt"]}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+test_every_record_has_a_bound_provenance (test_audit.ClassificationTests) ... ok
+test_no_in_bounds_destination_leaves_rom (test_audit.ClassificationTests)
+An in-bounds index must always resolve to PRG ROM. ... ok
+test_only_live_candidate_is_id36_and_it_is_not_ace (test_audit.ClassificationTests) ... ok
+/home/sadovsky/code/smb1-ace-audit/controlflow.py:42: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/sadovsky/code/smb1-ace-audit/trace.json' mode='r' encoding='UTF-8'>
+  return json.load(open(TRACE))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+test_instruction_starts_and_operands_partition_reached_bytes (test_audit.ControlFlowTests) ... ok
+test_no_rts_trick_dispatch (test_audit.ControlFlowTests)
+A PHA/PHA/RTS sequence would be a computed transfer that is not a ... ok
+test_single_rti_and_it_is_the_nmi_return (test_audit.ControlFlowTests) ... ok
+test_stack_pointer_written_only_once (test_audit.ControlFlowTests)
+TXS is the only direct write to SP. If it happens solely in reset ... ok
+test_c907_receives_only_ids_below_15 (test_audit.DispatchReachabilityTests)
+$C905 is reached only via collision-table entry 0, which CPY #$15/BCC ... ok
+test_dangerous_ids_never_arrive_at_c907 (test_audit.DispatchReachabilityTests)
+$34/$35 resolve into controllable RAM but the routing excludes them. ... ok
+test_every_in_bounds_target_stays_in_rom (test_audit.DispatchReachabilityTests)
+The core structural claim: an in-range index always yields ROM. ... ok
+test_only_out_of_bounds_dispatch_is_id36_into_ppu (test_audit.DispatchReachabilityTests)
+Exactly one legal identifier indexes past its table, and it lands in ... ok
+test_accumulator_bit_seven_is_discarded_by_asl (test_audit.JumpEngineTests) ... ok
+test_normal_table_entry (test_audit.JumpEngineTests) ... ok
+test_y_wrap_splits_the_pair_at_index_7f (test_audit.JumpEngineTests) ... ok
+test_zero_page_indirect_pointer_wraps (test_audit.JumpEngineTests) ... ok
+test_ram_mirrors_normalize_to_same_physical_byte (test_audit.MemoryMappingTests) ... ok
+test_expected_hash_accepts_structurally_valid_image (test_audit.ROMValidationTests) ... ok
+test_invalid_header_mapper_and_size_rejected (test_audit.ROMValidationTests) ... ok
+test_wrong_hash_rejected_without_explicit_override (test_audit.ROMValidationTests) ... ok
+test_writes_required_fields (test_trace_jsonl.TraceJSONLTests) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.043s
+
+OK
