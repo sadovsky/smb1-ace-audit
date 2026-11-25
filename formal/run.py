@@ -15,8 +15,9 @@ import time
 
 import z3
 
-from .properties import (dispatch, graph_check, init_memory,
-                         instruction_location, state_domains)
+from .properties import (bounded, dispatch, graph_check, init_memory,
+                         instruction_location, stack_separation,
+                         state_domains)
 from .properties.common import context
 from .verify.obligations import STATUSES, Ledger
 
@@ -50,7 +51,8 @@ def build() -> tuple[Ledger, dict]:
     ctx = context()
     ledger = Ledger()
     timings = {}
-    modules = [graph_check, dispatch, state_domains, init_memory]
+    modules = [graph_check, dispatch, state_domains, init_memory,
+               stack_separation, bounded]
     if os.environ.get("SMB1_JOINT") == "1":
         # The certificate route is opt-in: the checker has known soundness
         # gaps (formal/lean/FINDINGS.md) and its verdicts must not enter the
@@ -118,7 +120,8 @@ def main() -> int:
         handle.write(render(ledger, header))
     print(json.dumps(ledger.counts(), indent=2))
     for key in ("P1", "P1-JOINT", "JOINT-CERTIFICATE", "P6-071F-PP",
-                "LOC-DIRECT", "LOC-RETURN", "GRAPH-EDGES"):
+                "LOC-DIRECT", "LOC-RETURN", "GRAPH-EDGES", "SEP-SEPARATION",
+                "BOUNDED-P1-RESET", "BOUNDED-P1-NMI"):
         if key in ledger.items:
             print(f"{key}: {ledger.items[key].status}")
     print(f"wrote {MANIFEST}\nwrote {REPORT}")

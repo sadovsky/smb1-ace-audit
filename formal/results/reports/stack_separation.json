@@ -947,7 +947,7 @@
           "distinct_queries": 56,
           "distinct_rechecked": 56,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "a4d0ca4749f605849ceb76176f20ba745dc87d90fd8fa7909d1b3217e3878f37",
+          "query_digest": "90e761f441dcbd753ffc4ad0f58a96d451384ba842ed1dbd51129c8e64bfcf6f",
           "relied_on_unsat": 9,
           "second_solver": {
             "bitwuzla": {
@@ -1012,7 +1012,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x010D",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-99C6.rom.smt2",
         "query_sha256": "7069c6108bece4d3ae7a8ecc9e52227de264477dae02e10036bec4a6b392fa57",
         "slice_queries": {
           "by_kind": {
@@ -1048,7 +1048,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x0139",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-B78F.rom.smt2",
         "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
         "slice_queries": {
           "by_kind": {
@@ -1084,7 +1084,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x010E",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-B88B.rom.smt2",
         "query_sha256": "e841f4caf7990338f1f61e8e3094629969779e07708bbcf63f3659e4b88ae3c2",
         "slice_queries": {
           "by_kind": {
@@ -1120,7 +1120,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x010D",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-B893.rom.smt2",
         "query_sha256": "7069c6108bece4d3ae7a8ecc9e52227de264477dae02e10036bec4a6b392fa57",
         "slice_queries": {
           "by_kind": {
@@ -1301,8 +1301,8 @@
         "mnemonic": "STA",
         "mode": "aby",
         "one_step_bound": "0x0129",
-        "query_artifact": null,
-        "query_sha256": "9a0a23ddb4ec6d7cf5b0bc56824ad0333d4fff1fb1fc0626fea0cd5439ecef0f",
+        "query_artifact": "formal/results/queries/SEP-W-BAB5.rom.smt2",
+        "query_sha256": "e5f05191da334333b61e55cc94a0388ef25097a9446d3699bfb0daf13b965482",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -1337,8 +1337,8 @@
         "mnemonic": "STA",
         "mode": "aby",
         "one_step_bound": "0x011D",
-        "query_artifact": null,
-        "query_sha256": "995eea708868fd3efa324c07f67c8b48b889a011b390cdd4058271beca0b53a8",
+        "query_artifact": "formal/results/queries/SEP-W-BAFC.rom.smt2",
+        "query_sha256": "259975be9bb253eb0302c52cf65fcdfdfe2cc5de0c3feb5e7aab7d33e1cb908e",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -1742,8 +1742,8 @@
         "mnemonic": "STA",
         "mode": "aby",
         "one_step_bound": "0x0129",
-        "query_artifact": null,
-        "query_sha256": "55b480cdfcda760d27ab571fb6f973075349c85976abad39300708af6ea24e4a",
+        "query_artifact": "formal/results/queries/SEP-W-BB76.rom.smt2",
+        "query_sha256": "7653d07ab30a7ecce00b663c6f08be487e7f6dc5229233c5efaa14e72b16da4f",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -1778,7 +1778,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x0139",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-BC00.rom.smt2",
         "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
         "slice_queries": {
           "by_kind": {
@@ -1814,7 +1814,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x0138",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-BC24.rom.smt2",
         "query_sha256": "1d2b412bc42ecd8b7e8716da3e1243ccecd23e816afe6391e617ec0b084eb998",
         "slice_queries": {
           "by_kind": {
@@ -1890,7 +1890,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x0139",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-BE15.rom.smt2",
         "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
         "slice_queries": {
           "by_kind": {
@@ -2009,8 +2009,8 @@
         "mnemonic": "STA",
         "mode": "aby",
         "one_step_bound": "0x010E",
-        "query_artifact": null,
-        "query_sha256": "11ec42f324753061b83dec64f75202af6fce20e1f6061cb9d0d65e4b96f6bc83",
+        "query_artifact": "formal/results/queries/SEP-W-C583.rom.smt2",
+        "query_sha256": "d50e8daf9d7735881c4da19f6a0f0f5e0e23524cfa4b3e819acaa3f69be27cc7",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -2765,8 +2765,8 @@
         "mnemonic": "STA",
         "mode": "aby",
         "one_step_bound": "0x011D",
-        "query_artifact": null,
-        "query_sha256": "5a0c8c58afc64e05e7ab50c70ebc8a6eb457f2efb17253b8db6343ebe9bb8c3a",
+        "query_artifact": "formal/results/queries/SEP-W-C7C3.rom.smt2",
+        "query_sha256": "03723172246982c5a5777b37538a85542e33d5cf800edbf749dcca33d0abca5e",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -2798,6 +2798,7 @@
             "bound": "0x0139",
             "cut_points": [
               "0xB7A4",
+              "0xB98A",
               "0xC998",
               "0xC9A0"
             ],
@@ -2813,7 +2814,7 @@
             ],
             "invariant": "X <= 0x29",
             "provenance": "synthesised",
-            "rounds": 3
+            "rounds": 4
           }
         ],
         "bound": null,
@@ -2829,27 +2830,27 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 157,
+            "bad_condition": 313,
             "page_write_bound": 26,
-            "pc_uniqueness": 147
+            "pc_uniqueness": 747
           },
           "cross_check": "clean",
-          "distinct_queries": 205,
-          "distinct_rechecked": 205,
+          "distinct_queries": 353,
+          "distinct_rechecked": 353,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "2fc02c5e7a1e415512f7e23c3248de4e954ca5dea0e46c8d91836e8b172c5b8e",
-          "relied_on_unsat": 97,
+          "query_digest": "e074851a8aadb9e815671c225f62a2211c0a5b2dc868edb6723c57d0e48e47b9",
+          "relied_on_unsat": 640,
           "second_solver": {
             "bitwuzla": {
-              "agree": 205
+              "agree": 353
             },
             "cvc5": {
-              "agree": 205
+              "agree": 353
             }
           },
-          "solver_queries": 330,
+          "solver_queries": 1086,
           "z3_no_answer": 0,
-          "z3_sat": 233
+          "z3_sat": 446
         },
         "status": "unknown"
       },
@@ -2860,6 +2861,7 @@
             "bound": "0x0139",
             "cut_points": [
               "0xB7A4",
+              "0xB98A",
               "0xC998",
               "0xC9A6"
             ],
@@ -2875,7 +2877,7 @@
             ],
             "invariant": "X <= 0x14",
             "provenance": "synthesised",
-            "rounds": 3
+            "rounds": 4
           }
         ],
         "bound": null,
@@ -2891,27 +2893,27 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 157,
+            "bad_condition": 347,
             "page_write_bound": 26,
-            "pc_uniqueness": 142
+            "pc_uniqueness": 1191
           },
           "cross_check": "clean",
-          "distinct_queries": 202,
-          "distinct_rechecked": 202,
+          "distinct_queries": 353,
+          "distinct_rechecked": 353,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "2b2019875dea5823cd4e2545a5c0e1a76e262eb92366a599aee9f7144df69443",
-          "relied_on_unsat": 91,
+          "query_digest": "7293f12e5bae1f7445b1b1709843c25807cf5dc9ef05460f0a29d5071c379a16",
+          "relied_on_unsat": 1083,
           "second_solver": {
             "bitwuzla": {
-              "agree": 202
+              "agree": 353
             },
             "cvc5": {
-              "agree": 202
+              "agree": 353
             }
           },
-          "solver_queries": 325,
+          "solver_queries": 1564,
           "z3_no_answer": 0,
-          "z3_sat": 234
+          "z3_sat": 481
         },
         "status": "unknown"
       },
@@ -2925,8 +2927,8 @@
         "mnemonic": "STA",
         "mode": "aby",
         "one_step_bound": "0x0100",
-        "query_artifact": null,
-        "query_sha256": "c9ea52011adcb2ebff57818f26a8b219ebda87aa99a7b7ed0af9633c0052eb27",
+        "query_artifact": "formal/results/queries/SEP-W-CF4A.rom.smt2",
+        "query_sha256": "79f7f88be4e6ddb7c0fdef37de1e3a7c9af4299950bff1f50b4e2c4552e5e350",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -3167,8 +3169,8 @@
         "mnemonic": "STA",
         "mode": "aby",
         "one_step_bound": "0x011D",
-        "query_artifact": null,
-        "query_sha256": "015ca4e36c64f06cc58dfbfbaf205e83720ee6f44847b427e5727e95e80be3e0",
+        "query_artifact": "formal/results/queries/SEP-W-D19B.rom.smt2",
+        "query_sha256": "fe978d2afff0d72de6179078bd26dee9f3aa7367eae80dc23efa2dbdc6e674e3",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -3304,7 +3306,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x0138",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-D2C7.rom.smt2",
         "query_sha256": "1d2b412bc42ecd8b7e8716da3e1243ccecd23e816afe6391e617ec0b084eb998",
         "slice_queries": {
           "by_kind": {
@@ -3340,7 +3342,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x0139",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-D32B.rom.smt2",
         "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
         "slice_queries": {
           "by_kind": {
@@ -3376,7 +3378,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x0139",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-D333.rom.smt2",
         "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
         "slice_queries": {
           "by_kind": {
@@ -4147,27 +4149,27 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 45,
+            "bad_condition": 208,
             "page_write_bound": 26,
-            "pc_uniqueness": 113
+            "pc_uniqueness": 661
           },
           "cross_check": "clean",
-          "distinct_queries": 90,
-          "distinct_rechecked": 90,
+          "distinct_queries": 399,
+          "distinct_rechecked": 399,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "7b71438b4b057e3162798f8af4c5f12e4f0006d8ea8570bbdd8d13050011c8a7",
-          "relied_on_unsat": 122,
+          "query_digest": "c0b40a147905cfd0f00f284114b122c1b165c4320021ad5fe1f92a275a51f16b",
+          "relied_on_unsat": 652,
           "second_solver": {
             "bitwuzla": {
-              "agree": 90
+              "agree": 399
             },
             "cvc5": {
-              "agree": 90
+              "agree": 399
             }
           },
-          "solver_queries": 184,
+          "solver_queries": 895,
           "z3_no_answer": 0,
-          "z3_sat": 62
+          "z3_sat": 243
         },
         "status": "unknown"
       },
@@ -4209,27 +4211,27 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 61,
+            "bad_condition": 224,
             "page_write_bound": 26,
-            "pc_uniqueness": 116
+            "pc_uniqueness": 664
           },
           "cross_check": "clean",
-          "distinct_queries": 94,
-          "distinct_rechecked": 94,
+          "distinct_queries": 410,
+          "distinct_rechecked": 410,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "44f06eddc9076f3b1b88ec25dcb26b922b69c5c9d9715232de6b2d05be8ff737",
-          "relied_on_unsat": 125,
+          "query_digest": "20cf65a2364ea17c8982ce8a65a7c75fc000850971b2f080f59764bd48d461e1",
+          "relied_on_unsat": 655,
           "second_solver": {
             "bitwuzla": {
-              "agree": 94
+              "agree": 410
             },
             "cvc5": {
-              "agree": 94
+              "agree": 410
             }
           },
-          "solver_queries": 203,
+          "solver_queries": 914,
           "z3_no_answer": 0,
-          "z3_sat": 78
+          "z3_sat": 259
         },
         "status": "unknown"
       },
@@ -4271,27 +4273,27 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 96,
+            "bad_condition": 224,
             "page_write_bound": 26,
-            "pc_uniqueness": 523
+            "pc_uniqueness": 651
           },
           "cross_check": "clean",
-          "distinct_queries": 277,
-          "distinct_rechecked": 277,
+          "distinct_queries": 407,
+          "distinct_rechecked": 407,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "3082be0f20e1a4f858af0b2a4099d501ba15bd591aa7cbb1a380e2c7551a96de",
-          "relied_on_unsat": 520,
+          "query_digest": "34b7fcaefed67f117954ba747ec93cf079aa1a62ba12232276fd0bef703b27c8",
+          "relied_on_unsat": 643,
           "second_solver": {
             "bitwuzla": {
-              "agree": 277
+              "agree": 407
             },
             "cvc5": {
-              "agree": 277
+              "agree": 407
             }
           },
-          "solver_queries": 645,
+          "solver_queries": 901,
           "z3_no_answer": 0,
-          "z3_sat": 125
+          "z3_sat": 258
         },
         "status": "unknown"
       },
@@ -4333,27 +4335,27 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 96,
+            "bad_condition": 224,
             "page_write_bound": 26,
-            "pc_uniqueness": 511
+            "pc_uniqueness": 640
           },
           "cross_check": "clean",
-          "distinct_queries": 275,
-          "distinct_rechecked": 275,
+          "distinct_queries": 407,
+          "distinct_rechecked": 407,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "4a5b415f449e2aec6976a9fc4842454b5d11da9b7b640fc60157b4c80ac7f211",
-          "relied_on_unsat": 506,
+          "query_digest": "abf357271300896d9478738e550614ab842525634292868478d60dc91aa1b496",
+          "relied_on_unsat": 630,
           "second_solver": {
             "bitwuzla": {
-              "agree": 275
+              "agree": 407
             },
             "cvc5": {
-              "agree": 275
+              "agree": 407
             }
           },
-          "solver_queries": 633,
+          "solver_queries": 890,
           "z3_no_answer": 0,
-          "z3_sat": 127
+          "z3_sat": 260
         },
         "status": "unknown"
       },
@@ -4613,7 +4615,7 @@
         "mnemonic": "STX",
         "mode": "abs",
         "one_step_bound": "0x010F",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-DE70.rom.smt2",
         "query_sha256": "ecb383d67969ac46b96030ec7c7f68aa238203bd48d504606f64621a38459fc7",
         "slice_queries": {
           "by_kind": {
@@ -4689,7 +4691,7 @@
         "mnemonic": "STA",
         "mode": "abs",
         "one_step_bound": "0x0109",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-E88D.rom.smt2",
         "query_sha256": "22e78abbb1171bb27ac5086c2d2bff25b6f9a027799bbcad2eb9b65a77d51fd2",
         "slice_queries": {
           "by_kind": {
@@ -4725,7 +4727,7 @@
         "mnemonic": "INC",
         "mode": "abs",
         "one_step_bound": "0x0109",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-E8EF.rom.smt2",
         "query_sha256": "22e78abbb1171bb27ac5086c2d2bff25b6f9a027799bbcad2eb9b65a77d51fd2",
         "slice_queries": {
           "by_kind": {
@@ -4761,7 +4763,7 @@
         "mnemonic": "STX",
         "mode": "abs",
         "one_step_bound": "0x0109",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-E946.rom.smt2",
         "query_sha256": "22e78abbb1171bb27ac5086c2d2bff25b6f9a027799bbcad2eb9b65a77d51fd2",
         "slice_queries": {
           "by_kind": {
@@ -4797,7 +4799,7 @@
         "mnemonic": "STY",
         "mode": "abs",
         "one_step_bound": "0x0109",
-        "query_artifact": null,
+        "query_artifact": "formal/results/queries/SEP-W-EA45.rom.smt2",
         "query_sha256": "22e78abbb1171bb27ac5086c2d2bff25b6f9a027799bbcad2eb9b65a77d51fd2",
         "slice_queries": {
           "by_kind": {

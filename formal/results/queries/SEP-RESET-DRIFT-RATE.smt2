@@ -1,0 +1,5 @@
+(declare-fun h61848_S () (_ BitVec 8))
+(assert (let ((a!1 (= ((_ extract 7 0) (concat #x01 (bvadd #xfb h61848_S)))
+              (bvsub h61848_S #x05))))
+  (not (and (= (bvadd #xfd h61848_S) (bvsub h61848_S #x03)) a!1))))
+(check-sat)

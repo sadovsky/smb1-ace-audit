@@ -1,0 +1,415 @@
+{
+  "budgets": {
+    "loop_body_steps": 96,
+    "pc_values": 16,
+    "phase1_paths": 64,
+    "phase1_steps": 400000,
+    "phase2_depth": 4000,
+    "phase2_paths": 600,
+    "phase2_steps": 250000,
+    "solver_timeout_ms": 20000
+  },
+  "phase1": {
+    "boundaries_admitting_an_nmi": 0,
+    "boundaries_where_I_was_not_provably_set": 0,
+    "distinct_instruction_starts_fetched": 97,
+    "fetches_checked": 153966,
+    "findings": [],
+    "findings_total": 0,
+    "irq_transitions_followed": 0,
+    "loop_summary_attempts": 2,
+    "loops_closed": [
+      {
+        "back_edges": 1,
+        "body": [
+          "$800A",
+          "$800D"
+        ],
+        "body_size": 2,
+        "body_steps_from_the_generalisation": 2,
+        "closure": "summarised",
+        "exits_followed": 1,
+        "generalised_fields": [
+          "a",
+          "z",
+          "n"
+        ],
+        "head": "$800A"
+      },
+      {
+        "back_edges": 1,
+        "body": [
+          "$800F",
+          "$8012"
+        ],
+        "body_size": 2,
+        "body_steps_from_the_generalisation": 2,
+        "closure": "summarised",
+        "exits_followed": 1,
+        "generalised_fields": [
+          "a",
+          "z",
+          "n"
+        ],
+        "head": "$800F"
+      }
+    ],
+    "loops_closed_total": 2,
+    "max_abstract_steps_on_a_path": 19314,
+    "max_live_paths": 8,
+    "nmi_taken_at": [],
+    "nmi_transitions_followed": 0,
+    "nmi_transitions_not_followed": 0,
+    "paths_by_how_they_ended": {
+      "closed: ghost NMI-enable bit set (end of the window)": 8,
+      "closed: loop summary": 2
+    },
+    "paths_cut_by_budget_or_timeout": 0,
+    "paths_live_at_the_depth_bound": 0,
+    "paths_started": 1,
+    "paths_still_open_that_took_no_nmi": 0,
+    "phase": "phase 1",
+    "seconds": 224.7,
+    "solver_queries": 14,
+    "solver_timeouts": 0,
+    "successors_closed_by_subsumption": 0,
+    "successors_pruned_as_infeasible": 0,
+    "symbolic_pc_splits": 0,
+    "uniform_depth_bound": null,
+    "uniform_depth_bound_past_the_nmi": null,
+    "violations": [],
+    "warm_resets_closed_by_subsumption": 153964,
+    "warm_resets_not_followed": 0
+  },
+  "phase2": {
+    "boundaries_admitting_an_nmi": 144,
+    "boundaries_where_I_was_not_provably_set": 0,
+    "distinct_instruction_starts_fetched": 179,
+    "fetches_checked": 129123,
+    "findings": [],
+    "findings_total": 0,
+    "irq_transitions_followed": 0,
+    "loop_summary_attempts": 0,
+    "loops_closed": [
+      {
+        "back_edges": 0,
+        "body": [
+          "$8057"
+        ],
+        "body_size": 1,
+        "body_steps_from_the_generalisation": 0,
+        "closure": "subsumed",
+        "exits_followed": 0,
+        "generalised_fields": [],
+        "head": "$8057"
+      },
+      {
+        "back_edges": 0,
+        "body": [
+          "$8057"
+        ],
+        "body_size": 1,
+        "body_steps_from_the_generalisation": 0,
+        "closure": "subsumed",
+        "exits_followed": 0,
+        "generalised_fields": [],
+        "head": "$8057"
+      },
+      {
+        "back_edges": 0,
+        "body": [
+          "$8057"
+        ],
+        "body_size": 1,
+        "body_steps_from_the_generalisation": 0,
+        "closure": "subsumed",
+        "exits_followed": 0,
+        "generalised_fields": [],
+        "head": "$8057"
+      },
+      {
+        "back_edges": 0,
+        "body": [
+          "$8057"
+        ],
+        "body_size": 1,
+        "body_steps_from_the_generalisation": 0,
+        "closure": "subsumed",
+        "exits_followed": 0,
+        "generalised_fields": [],
+        "head": "$8057"
+      },
+      {
+        "back_edges": 0,
+        "body": [
+          "$8057"
+        ],
+        "body_size": 1,
+        "body_steps_from_the_generalisation": 0,
+        "closure": "subsumed",
+        "exits_followed": 0,
+        "generalised_fields": [],
+        "head": "$8057"
+      },
+      {
+        "back_edges": 0,
+        "body": [
+          "$8057"
+        ],
+        "body_size": 1,
+        "body_steps_from_the_generalisation": 0,
+        "closure": "subsumed",
+        "exits_followed": 0,
+        "generalised_fields": [],
+        "head": "$8057"
+      },
+      {
+        "back_edges": 0,
+        "body": [
+          "$8057"
+        ],
+        "body_size": 1,
+        "body_steps_from_the_generalisation": 0,
+        "closure": "subsumed",
+        "exits_followed": 0,
+        "generalised_fields": [],
+        "head": "$8057"
+      },
+      {
+        "back_edges": 0,
+        "body": [
+          "$8057"
+        ],
+        "body_size": 1,
+        "body_steps_from_the_generalisation": 0,
+        "closure": "subsumed",
+        "exits_followed": 0,
+        "generalised_fields": [],
+        "head": "$8057"
+      }
+    ],
+    "loops_closed_total": 8,
+    "max_abstract_steps_on_a_path": 3999,
+    "max_live_paths": 33,
+    "nmi_taken_at": [
+      {
+        "abstract_steps": 0,
+        "boundary": "$8EF0",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.1.1.1"
+      },
+      {
+        "abstract_steps": 0,
+        "boundary": "$8EF0",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.1.1.0"
+      },
+      {
+        "abstract_steps": 0,
+        "boundary": "$8EF0",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.1.0"
+      },
+      {
+        "abstract_steps": 0,
+        "boundary": "$8EF0",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.0"
+      },
+      {
+        "abstract_steps": 0,
+        "boundary": "$8EF0",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.0"
+      },
+      {
+        "abstract_steps": 0,
+        "boundary": "$8EF0",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.0"
+      },
+      {
+        "abstract_steps": 0,
+        "boundary": "$8EF0",
+        "handler": "$8082",
+        "path": "nmi:boot.1.0"
+      },
+      {
+        "abstract_steps": 0,
+        "boundary": "$8EF0",
+        "handler": "$8082",
+        "path": "nmi:boot.0"
+      },
+      {
+        "abstract_steps": 1,
+        "boundary": "$8EF3",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.1.1.1.0"
+      },
+      {
+        "abstract_steps": 1,
+        "boundary": "$8EF3",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.1.1.0.0"
+      },
+      {
+        "abstract_steps": 1,
+        "boundary": "$8EF3",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.1.0.0"
+      },
+      {
+        "abstract_steps": 1,
+        "boundary": "$8EF3",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.0.0"
+      },
+      {
+        "abstract_steps": 1,
+        "boundary": "$8EF3",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.0.0"
+      },
+      {
+        "abstract_steps": 1,
+        "boundary": "$8EF3",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.0.0"
+      },
+      {
+        "abstract_steps": 1,
+        "boundary": "$8EF3",
+        "handler": "$8082",
+        "path": "nmi:boot.1.0.0"
+      },
+      {
+        "abstract_steps": 1,
+        "boundary": "$8EF3",
+        "handler": "$8082",
+        "path": "nmi:boot.0.0"
+      },
+      {
+        "abstract_steps": 2,
+        "boundary": "$8057",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.1.1.1.0.0"
+      },
+      {
+        "abstract_steps": 2,
+        "boundary": "$8057",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.1.1.0.0.0"
+      },
+      {
+        "abstract_steps": 2,
+        "boundary": "$8057",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.1.0.0.0"
+      },
+      {
+        "abstract_steps": 2,
+        "boundary": "$8057",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.1.0.0.0"
+      },
+      {
+        "abstract_steps": 2,
+        "boundary": "$8057",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.1.0.0.0"
+      },
+      {
+        "abstract_steps": 2,
+        "boundary": "$8057",
+        "handler": "$8082",
+        "path": "nmi:boot.1.1.0.0.0"
+      },
+      {
+        "abstract_steps": 2,
+        "boundary": "$8057",
+        "handler": "$8082",
+        "path": "nmi:boot.1.0.0.0"
+      },
+      {
+        "abstract_steps": 2,
+        "boundary": "$8057",
+        "handler": "$8082",
+        "path": "nmi:boot.0.0.0"
+      }
+    ],
+    "nmi_transitions_followed": 24,
+    "nmi_transitions_not_followed": 120,
+    "paths_by_how_they_ended": {
+      "depth bound reached": 33
+    },
+    "paths_cut_by_budget_or_timeout": 0,
+    "paths_live_at_the_depth_bound": 33,
+    "paths_started": 8,
+    "paths_still_open_that_took_no_nmi": 0,
+    "phase": "phase 2",
+    "seconds": 423.7,
+    "solver_queries": 18,
+    "solver_timeouts": 0,
+    "successors_closed_by_subsumption": 8,
+    "successors_pruned_as_infeasible": 0,
+    "symbolic_pc_splits": 0,
+    "uniform_depth_bound": 4000,
+    "uniform_depth_bound_past_the_nmi": 3997,
+    "violations": [],
+    "warm_resets_closed_by_subsumption": 128979,
+    "warm_resets_not_followed": 144
+  },
+  "property": "P1: every instruction fetch is at an instruction start recorded in the control-flow graph",
+  "queries": {
+    "BOUNDED-P1-NMI": {
+      "by_kind": {
+        "branch_feasibility": 18
+      },
+      "cross_check": "clean",
+      "distinct_queries": 6,
+      "distinct_rechecked": 6,
+      "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+      "query_digest": "a322013f6a7f7dd8a3378f1afc5be98d4d0f3668ae12d5ed1fb1b8f4028f01b6",
+      "relied_on_unsat": 0,
+      "second_solver": {
+        "bitwuzla": {
+          "agree": 6
+        },
+        "cvc5": {
+          "agree": 6
+        }
+      },
+      "solver_queries": 18,
+      "z3_no_answer": 0,
+      "z3_sat": 18
+    },
+    "BOUNDED-P1-RESET": {
+      "by_kind": {
+        "branch_feasibility": 14
+      },
+      "cross_check": "clean",
+      "distinct_queries": 14,
+      "distinct_rechecked": 14,
+      "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+      "query_digest": "3215118f71f5fda17c3ecdfb3467851e0f11969f2e914c2e33812da09f92c6bf",
+      "relied_on_unsat": 0,
+      "second_solver": {
+        "bitwuzla": {
+          "agree": 14
+        },
+        "cvc5": {
+          "agree": 14
+        }
+      },
+      "solver_queries": 14,
+      "z3_no_answer": 0,
+      "z3_sat": 14
+    }
+  },
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "statuses": {
+    "BOUNDED-P1-NMI": "bounded",
+    "BOUNDED-P1-RESET": "bounded",
+    "BOUNDED-RESET": "proved"
+  }
+}
