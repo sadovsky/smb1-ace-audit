@@ -18,8 +18,17 @@ trap 'rm -rf "$work"' EXIT
 
 git clone --quiet "$root" "$work/repo"
 commit="$(git -C "$work/repo" rev-parse HEAD)"
-python3 -m venv "$work/venv"
-"$work/venv/bin/pip" install --quiet -r "$work/repo/formal/replicate/requirements.txt"
+# `python3 -m venv` needs a system package on Debian/Ubuntu; fall back to uv.
+if python3 -m venv "$work/venv" >/dev/null 2>&1; then
+  "$work/venv/bin/pip" install --quiet -r "$work/repo/formal/replicate/requirements.txt"
+elif command -v uv >/dev/null 2>&1; then
+  rm -rf "$work/venv"
+  uv venv --quiet "$work/venv"
+  uv pip install --quiet --python "$work/venv/bin/python" \
+     -r "$work/repo/formal/replicate/requirements.txt"
+else
+  echo "need either the python3-venv package or uv" >&2; exit 1
+fi
 py="$work/venv/bin/python"
 cd "$work/repo"
 cp formal/results/manifests/obligations.json "$work/committed.json"
