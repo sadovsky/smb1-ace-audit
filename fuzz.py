@@ -13,7 +13,7 @@ from multiprocessing import Pool
 sys.path.insert(0, os.environ.get("CHEAT_ENV_DIR", "../rommage/genie_search"))
 with contextlib.redirect_stderr(io.StringIO()):
     from cheat_env import CheatNESEnv
-from rom import ROM
+from rom import ROM, image
 
 A,B,SEL,ST,U,D,L,R = 1,2,4,8,16,32,64,128
 BOOT=[(0,40),(ST,10),(0,40)]
@@ -54,7 +54,8 @@ def episode(args):
 
 if __name__=="__main__":
     N=int(sys.argv[1]) if len(sys.argv)>1 else 48
-    # mix: 2/3 pure controller-only on 1-1, 1/3 coverage episodes across areas
+    # Native results are the only controller-only evidence. Area forcing uses a
+    # ROM-read intercept and is separately labelled assisted coverage.
     areas=[0x00,0x01,0x21,0x25,0x2B,0x34,0x65,0xC2]
     jobs=[]
     for i in range(N):
@@ -66,13 +67,26 @@ if __name__=="__main__":
         for k in IDX: agg[k]=max(agg[k],r["maxv"][k])
         (covids if r["cov"] is not None else allids).update(r["ids"])
         derails+=r["derail"]
-    print(f"episodes={len(res)}  derailments(OperMode left 0-3)={derails}")
+    native=[r for r in res if r["cov"] is None]
+    assisted=[r for r in res if r["cov"] is not None]
+    print(f"native controller-only episodes={len(native)}  assisted coverage episodes={len(assisted)}")
+    print(f"derailments(OperMode left 0-3)={derails}")
     print("\nindex variable   max-seen   table-bound(N-1)   OOB?")
     for k,(addr,bnd) in IDX.items():
         oob="  <-- EXCEEDS BOUND" if agg[k]>bnd else ""
         print(f"  {k}  {agg[k]:>8}   {bnd:>12}{oob}")
-    print(f"\nenemy IDs seen (controller-only 1-1 eps): {[hex(i) for i in sorted(allids)]}")
-    print(f"enemy IDs seen (coverage eps, all areas): {[hex(i) for i in sorted(covids)]}")
-    danger=sorted((allids|covids) & {0x34,0x35})
-    print(f"\n$34/$35 (the only RAM-reaching IDs) ever in a slot: {[hex(i) for i in danger] or 'NEVER'}")
-    json.dump({"max":agg,"ids":sorted(allids),"covids":sorted(covids),"derails":derails}, open("fuzz_result.json","w"))
+    print(f"\nenemy IDs seen (native controller-only): {[hex(i) for i in sorted(allids)]}")
+    print(f"enemy IDs seen (assisted area coverage): {[hex(i) for i in sorted(covids)]}")
+    native_danger=sorted(allids & {0x34,0x35})
+    assisted_danger=sorted(covids & {0x34,0x35})
+    print(f"\n$34/$35 in native runs: {[hex(i) for i in native_danger] or 'NEVER'}")
+    print(f"$34/$35 in assisted runs: {[hex(i) for i in assisted_danger] or 'NEVER'}")
+    json.dump({
+        "experiment_type": "mixed_native_and_assisted_separated",
+        "rom_sha1": image().sha1,
+        "seed_range": [1000, 1000 + N - 1],
+        "frames_per_episode": 3000,
+        "native": {"episodes": len(native), "ids": sorted(allids)},
+        "assisted": {"episodes": len(assisted), "ids": sorted(covids)},
+        "max": agg, "derails": derails,
+    }, open("fuzz_result.json","w"), indent=2, sort_keys=True)
