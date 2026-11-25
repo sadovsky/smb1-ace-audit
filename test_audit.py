@@ -121,5 +121,71 @@ class DispatchReachabilityTests(unittest.TestCase):
                                  f"${pc:04X} index {i} -> ${t:04X}")
 
 
+class ControlFlowTests(unittest.TestCase):
+    """Review items 4.4/4.5: byte classification and stack-based transfers."""
+
+    @classmethod
+    def setUpClass(cls):
+        import os
+        import controlflow
+        if not os.path.exists(controlflow.TRACE):
+            raise unittest.SkipTest("trace.json missing; run python3 trace.py")
+        cls.cf = controlflow
+        cls.J = controlflow.load_trace()
+        cls.starts = set(cls.J["instruction_starts"])
+
+    def test_no_rts_trick_dispatch(self):
+        """A PHA/PHA/RTS sequence would be a computed transfer that is not a
+        JMP, which would break the 'exactly one computed jump' claim."""
+        self.assertEqual(self.cf.find_rts_trick(self.starts), [])
+
+    def test_stack_pointer_written_only_once(self):
+        """TXS is the only direct write to SP. If it happens solely in reset
+        init, gameplay cannot reposition the stack arbitrarily."""
+        _counts, txs = self.cf.stack_ops(self.starts)
+        self.assertEqual(txs, [0x8009])
+
+    def test_single_rti_and_it_is_the_nmi_return(self):
+        rti = [a for a in self.starts if self.cf.b(a) == self.cf.RTI]
+        self.assertEqual(rti, [0x8181])
+
+    def test_instruction_starts_and_operands_partition_reached_bytes(self):
+        reached = set(self.J["instruction_bytes"])
+        self.assertTrue(self.starts <= reached)
+        # every reached byte is either a start or inside an instruction
+        self.assertEqual(len(reached), len(self.starts) + len(reached - self.starts))
+
+
+class ClassificationTests(unittest.TestCase):
+    """Review item 8: the exploitability classification."""
+
+    @classmethod
+    def setUpClass(cls):
+        import os
+        import reach
+        if not os.path.exists(reach.TRACE):
+            raise unittest.SkipTest("trace.json missing; run python3 trace.py")
+        import classify
+        cls.records = classify.build()
+
+    def test_no_in_bounds_destination_leaves_rom(self):
+        """An in-bounds index must always resolve to PRG ROM."""
+        bad = [r for r in self.records if r["reachability"] == "in_bounds_non_rom"]
+        self.assertEqual(bad, [])
+
+    def test_only_live_candidate_is_id36_and_it_is_not_ace(self):
+        live = [r for r in self.records if r["exploitability"] != "excluded"]
+        self.assertEqual(len(live), 1)
+        r = live[0]
+        self.assertEqual((r["entry_point"], r["index"]), ("0xC88F", 34))
+        self.assertEqual(r["exploitability"], "not_ace")
+        self.assertEqual(r["memory_region"], "ppu_registers")
+
+    def test_every_record_has_a_bound_provenance(self):
+        allowed = {"structural", "derived", "observed", "unproved"}
+        for r in self.records:
+            self.assertIn(r["bound_provenance"], allowed)
+
+
 if __name__ == "__main__":
     unittest.main()

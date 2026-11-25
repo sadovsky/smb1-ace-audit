@@ -113,7 +113,7 @@ def build():
     e.append(FrameBreak())
 
     # ---- 1 ----
-    e.append(P("1&nbsp;&nbsp;Introduction and threat model", H1))
+    e.append(P("1&nbsp;&nbsp;Introduction", H1))
     e.append(P("Arbitrary code execution from controller input &mdash; redirecting a console's CPU into "
                "attacker-chosen bytes using only legitimate inputs on an unmodified game &mdash; is a "
                "mature subject in the tool-assisted speedrun (TAS) community. It has been demonstrated "
@@ -122,21 +122,47 @@ def build():
                "<i>Super Mario Bros.</i> no controller-only ACE is known; fast categories instead rely "
                "on the flagpole-glitch and frame-rule manipulation. This report asks the structural "
                "question behind that absence: <i>where, if anywhere, could such a vector live?</i>", BODY))
-    e.append(P("We fix the threat model precisely. The target is the unmodified cartridge; the only "
-               "inputs are the two controllers. This excludes Game Genie codes and other hardware that "
-               "inject or patch bytes (a different model). &ldquo;ACE&rdquo; means driving the 6502 "
-               "program counter (PC) to an address whose bytes the player controls, and then executing "
-               "a chosen payload from there.", BODY))
-    e.append(P("The cartridge is NROM (mapper&nbsp;0): a fixed 32&nbsp;KiB of program ROM mapped at CPU "
-               "<font face='Courier'>$8000&ndash;$FFFF</font>, with no bank switching and no mapper "
-               "interrupt. Crucially, <i>all executable code is read-only</i>. The 2&nbsp;KiB of work "
-               "RAM at <font face='Courier'>$0000&ndash;$07FF</font> is writable and carries mutable "
-               "game and controller-derived state, but nothing executes from it unless the PC is "
-               "redirected there. ACE thus reduces to one question: can controller input move the PC "
-               "into writable RAM?", BODY))
+    e.append(P("We fix the threat model in Section&nbsp;3 and the memory model in Section&nbsp;2. In short: an unmodified cartridge, controller input only, and ACE means "
+               "executing bytes the player controls rather than merely crashing the machine.", BODY))
 
     # ---- 2 ----
-    e.append(P("2&nbsp;&nbsp;The attack surface is a single instruction", H1))
+    e.append(P("2&nbsp;&nbsp;NES execution and memory model", H1))
+    e.append(P("The cartridge is NROM (mapper&nbsp;0): 32&nbsp;KiB of program ROM fixed at "
+               "<font face='Courier'>$8000-$FFFF</font>, 8&nbsp;KiB of character ROM, no bank "
+               "switching and no mapper interrupt. The CPU is a 2A03, an NMOS 6502 without the "
+               "65C02's indexed-indirect jump. Internal RAM is 2&nbsp;KiB at "
+               "<font face='Courier'>$0000-$07FF</font>, <i>mirrored</i> three further times "
+               "through <font face='Courier'>$1FFF</font>, so <font face='Courier'>$16B5</font> and "
+               "<font face='Courier'>$06B5</font> are the same byte. Misreading those mirrors as I/O "
+               "was a defect in the first version of this work (Section&nbsp;8). "
+               "<font face='Courier'>$2000-$401F</font> is PPU and APU register space, and "
+               "<font face='Courier'>$4020-$7FFF</font> is unmapped on this cartridge. The decisive "
+               "consequence: executable bytes exist only in ROM, which the player cannot write, and "
+               "controllable bytes exist only below <font face='Courier'>$2000</font>.", BODY))
+
+    e.append(P("3&nbsp;&nbsp;Threat model", H1))
+    e.append(P("The target is an unmodified NTSC cartridge and the only inputs are the two "
+               "controllers. This excludes Game Genie codes and any other hardware that injects or "
+               "patches bytes, which is a different model. We call an experiment "
+               "<i>controller-only</i> when it uses the original ROM with no memory injection and no "
+               "cheat interception, and <i>assisted</i> when it writes RAM, forces a starting area or "
+               "patches the image. Assisted experiments are useful for testing a mechanism but are "
+               "never evidence of a controller-only exploit, and are labelled as such throughout. "
+               "Arbitrary code execution means driving the program counter into bytes the player "
+               "controls and executing a chosen sequence; an unexpected jump that crashes or hangs "
+               "the machine is not ACE.", BODY))
+
+    e.append(P("4&nbsp;&nbsp;Method", H1))
+    e.append(P("Recursive-descent disassembly from the three CPU vectors enumerates reachable code, "
+               "separating instruction starts from operand bytes, dispatch-table data and unreached "
+               "bytes. Every dispatch table is read with an instruction-accurate model of the jump "
+               "engine rather than an arithmetic shortcut, over all 256 accumulator values. "
+               "Destinations are classified against the memory model of Section&nbsp;2. Bounds are "
+               "labelled by provenance: enforced at the dispatch, derived from routing tables, or "
+               "merely observed. Dynamic work runs on the emulator with an added instruction tracer, "
+               "so the program counter is observed per instruction rather than sampled per frame.", BODY))
+
+    e.append(P("5&nbsp;&nbsp;Static control-flow analysis", H1))
     e.append(P("We disassembled the program by recursive descent from the three CPU vectors "
                "(reset <font face='Courier'>$8000</font>, NMI <font face='Courier'>$8082</font>, IRQ "
                "<font face='Courier'>$FFF0</font>), following every <font face='Courier'>JSR</font>, "
@@ -152,17 +178,17 @@ def build():
                "engine, listed in Figure&nbsp;1.", BODY))
     e.append(Preformatted(
         "8E04  JumpEngine:\n"
-        "8E04  0A        ASL A        ; A = index*2\n"
+        "8E04  0A        ASL A        ; 8-bit; bit 7 lost\n"
         "8E05  A8        TAY\n"
         "8E06  68        PLA          ; caller return ->\n"
         "8E07  85 04     STA $04      ;   $04/$05 = table-1\n"
         "8E09  68        PLA\n"
         "8E0A  85 05     STA $05\n"
         "8E0C  C8        INY\n"
-        "8E0D  B1 04     LDA ($04),Y  ; $06 = ROM[table+2i]\n"
+        "8E0D  B1 04     LDA ($04),Y  ; $06 = CPU[ptr+wrapped Y]\n"
         "8E0F  85 06     STA $06\n"
         "8E11  C8        INY\n"
-        "8E12  B1 04     LDA ($04),Y  ; $07 = ROM[table+2i+1]\n"
+        "8E12  B1 04     LDA ($04),Y  ; $07 = CPU[ptr+wrapped Y]\n"
         "8E14  85 07     STA $07\n"
         "8E16  6C 06 00  JMP ($0006)  ; the only computed jump", CODE))
     e.append(P("Figure&nbsp;1: the jump engine. The caller does "
@@ -170,7 +196,7 @@ def build():
                "<font face='Courier'>JSR</font> in ROM.", CAP))
 
     # ---- 3 ----
-    e.append(P("3&nbsp;&nbsp;Targets come from fixed ROM tables", H1))
+    e.append(P("6&nbsp;&nbsp;JumpEngine analysis", H1))
     e.append(P("The engine forms <font face='Courier'>$06/$07</font> from the caller return address and "
                "the 6502's 8-bit <font face='Courier'>ASL</font>/<font face='Courier'>INY</font> "
                "sequence. For indices <font face='Courier'>$00..$7E</font> this agrees with "
@@ -242,7 +268,7 @@ def build():
                "these dispatches during normal play.", BODY))
 
     # ---- 4 ----
-    e.append(P("4&nbsp;&nbsp;The enemy master dispatch is sized to the identifier space", H1))
+    e.append(P("6.1&nbsp;&nbsp;The enemy master dispatch is sized to the identifier space", H2))
     e.append(P("The largest dispatch, <font face='Courier'>$C27F</font>, selects an enemy's behavior "
                "routine by its object identifier <font face='Courier'>$16,x</font>. Legal identifiers "
                "span <font face='Courier'>$00&ndash;$36</font>, and the table has 55 entries &mdash; "
@@ -252,7 +278,7 @@ def build():
                "<font face='Courier'>$16,x</font> during normal play.", BODY))
 
     # ---- 5 ----
-    e.append(P("5&nbsp;&nbsp;The one site that can reach RAM: $C907", H1))
+    e.append(P("6.2&nbsp;&nbsp;The one site that can reach RAM: $C907", H2))
     e.append(P("The enemy-graphics dispatch at <font face='Courier'>$C907</font> is unique: it indexes "
                "a 21-entry table by the raw identifier <font face='Courier'>$16,x</font> with no check "
                "at the dispatch, yet legal identifiers reach <font face='Courier'>$36</font>. Mapping "
@@ -305,33 +331,40 @@ def build():
                "can hang the machine but cannot execute controllable bytes, so it is not an ACE "
                "vector.", BODY))
 
-    e.append(P("6&nbsp;&nbsp;Verdict and open problem", H1))
-    e.append(P("We found no controller-only ACE vector. The structural reason is uniform: a single "
-               "jump engine, fed from fixed ROM tables, with every index held in range by explicit "
-               "checks, exact table sizing, or state-counter invariants. This is consistent with the "
-               "TAS community's standing result that NTSC <i>Super Mario Bros.</i> has no known "
-               "controller-only ACE while related titles do.", BODY))
-    e.append(P("We are explicit that this is structural evidence, not a machine-checked proof of "
-               "impossibility. The problem reduces to three precise, falsifiable conditions; exhibiting "
-               "any one yields ACE, and refuting all three would close the question:", BODY))
-    e.append(P("<b>(C1) Out-of-range index injection.</b> Can a glitch drive any of the 18 index "
-               "variables outside its table under a corrupted state the static bounds do not model? "
-               "The mode and task counters were not exhaustively bounded against corrupted state.", BODY))
-    e.append(P("<b>(C2) Identifier injection into the graphics path.</b> Can a glitch place enemy "
-               "identifier <font face='Courier'>$34</font> or <font face='Courier'>$35</font> in a slot "
-               "that reaches <font face='Courier'>$C905</font>, bypassing the stub routing of "
-               "Section&nbsp;5? This is the only site whose indirect jump reaches RAM.", BODY))
-    e.append(P("<b>(C3) Jump-engine stack corruption.</b> The engine recovers its <i>table pointer</i> "
-               "by pulling the caller's return address off the stack. If stack depth can be corrupted "
-               "so that this pull returns a RAM pointer, the &ldquo;table&rdquo; the engine indexes "
-               "could itself point into controllable memory &mdash; an independent vector. Stack-depth "
-               "invariants were not audited here.", BODY))
-    e.append(P("<b>Coverage.</b> Static descent reached 69% of program ROM; code reached only through "
-               "computed tables is included, but anything reached by descent-missed paths is unaudited. "
-               "PPU and APU writes cannot execute code and are not an ACE path.", BODY))
+    e.append(P("7&nbsp;&nbsp;Stack and interrupt analysis", H1))
+    e.append(P("A claim that one instruction carries all computed control flow is only as strong as "
+               "the search for alternatives. A 6502 can transfer control without a "
+               "<font face='Courier'>JMP</font>: the classic trick pushes a computed address and "
+               "returns into it with <font face='Courier'>RTS</font>. Scanning every reached "
+               "instruction stream for <font face='Courier'>PHA</font> ... "
+               "<font face='Courier'>PHA</font> ... <font face='Courier'>RTS</font> with no "
+               "intervening <font face='Courier'>JSR</font> finds no such sequence: every "
+               "<font face='Courier'>RTS</font> returns to a genuine call frame. "
+               "<font face='Courier'>TXS</font>, the only direct write to the stack pointer, occurs "
+               "once, in reset initialisation, so gameplay cannot reposition the stack. There is a "
+               "single <font face='Courier'>RTI</font>, ending the NMI handler; IRQ is never taken "
+               "on NROM.", BODY))
+    e.append(P("The engine recovers its table pointer by pulling the caller's return address off "
+               "the stack, so a sufficiently deranged stack pointer would make the table itself "
+               "point into RAM. Measuring the recorded <font face='Courier'>sp</font> over four "
+               "controller-only episodes of 3000 frames, the stack pointer stayed within "
+               "<font face='Courier'>$EF-$FC</font>: 16 bytes of a 256-byte page, with 239 bytes of "
+               "headroom. Overflow would need roughly 128 nested frames. This bounds the vector by "
+               "measurement over reached states, not by proof.", BODY))
 
-    # ---- empirical ----
-    e.append(P("7&nbsp;&nbsp;Empirical validation", H1))
+    e.append(P("8&nbsp;&nbsp;Emulator instrumentation", H1))
+    e.append(P("Frame-granular sampling cannot see transient state, so we added an optional "
+               "instruction tracer to the emulator. The hook sits at the single instruction boundary, "
+               "immediately after the opcode fetch, and records the program counter, opcode, "
+               "registers, stack pointer and status. Two filters keep it affordable: a 64&nbsp;KiB "
+               "program-counter bitmap, and a flag that records any instruction executed below "
+               "<font face='Courier'>$8000</font>. The second is the derailment detector; because "
+               "all code is in ROM, an instruction running outside "
+               "<font face='Courier'>$8000-$FFFF</font> means the program counter has entered RAM or "
+               "I/O. With no filter set the hook is one predictable branch, and a regression test "
+               "asserts that enabling tracing leaves emulation bit-identical.", BODY))
+
+    e.append(P("9&nbsp;&nbsp;Controller-input experiments", H1))
     e.append(P("Two experiments on the real game (patched <font face='Courier'>nes-py</font>) "
                "complement the static audit. First, a <i>controller-only fuzz</i>: 48 episodes of "
                "3000 frames (144k frames) of structured and fully random input, two thirds on "
@@ -368,7 +401,73 @@ def build():
                "outside PRG ROM</b>. This is a per-instruction observation rather than a sample, "
                "though it remains a search over the states these inputs reached.", BODY))
 
-    e.append(P("8&nbsp;&nbsp;Reproducibility", H1))
+    e.append(P("10&nbsp;&nbsp;Candidate exploitability", H1))
+    e.append(P("We classify every (dispatch site, index) pair whose destination is not program ROM, "
+               "recording the entry point, trigger, index source, destination, memory region, what "
+               "the controller can influence, reachability, exploitability and evidence, together "
+               "with a provenance label on the bound that excludes it. Provenance is the substance "
+               "of the result: a bound enforced by an instruction, or derived from the routing "
+               "tables, is a different claim from one merely consistent with observed play. Of the "
+               "eighteen sites, four are bounded structurally, five are derived, and nine are only "
+               "observed.", BODY))
+    e.append(P("Across all 256 indices at all eighteen sites there are 2182 non-ROM destinations. "
+               "2181 are excluded by a bound. Exactly one is live: index 34 at "
+               "<font face='Courier'>$C88F</font>, reached by enemy identifier "
+               "<font face='Courier'>$36</font>, resolving to <font face='Courier'>$2060</font> in "
+               "PPU register space. It is classified not-ACE, because that destination holds no "
+               "controllable executable bytes; it can hang the machine, which is a different "
+               "outcome. No candidate is classified unknown, and none is demonstrated.", BODY))
+
+    e.append(P("11&nbsp;&nbsp;Results", H1))
+    e.append(P("We found no controller-only ACE vector. The structural reason is uniform: a single "
+               "jump engine, fed from fixed ROM tables, with every index held in range by explicit "
+               "checks, exact table sizing, or state-counter invariants. This is consistent with the "
+               "TAS community's standing result that NTSC <i>Super Mario Bros.</i> has no known "
+               "controller-only ACE while related titles do.", BODY))
+    e.append(P("We are explicit that this is structural evidence, not a machine-checked proof of "
+               "impossibility. The problem reduces to three precise, falsifiable conditions; exhibiting "
+               "any one yields ACE, and refuting all three would close the question:", BODY))
+    e.append(P("<b>(C1) Out-of-range index injection.</b> Can a glitch drive any of the 18 index "
+               "variables outside its table under a corrupted state the static bounds do not model? "
+               "The mode and task counters were not exhaustively bounded against corrupted state.", BODY))
+    e.append(P("<b>(C2) Identifier injection into the graphics path.</b> Can a glitch place enemy "
+               "identifier <font face='Courier'>$34</font> or <font face='Courier'>$35</font> in a slot "
+               "that reaches <font face='Courier'>$C905</font>, bypassing the stub routing of "
+               "Section&nbsp;5? This is the only site whose indirect jump reaches RAM.", BODY))
+    e.append(P("<b>(C3) Jump-engine stack corruption.</b> The engine recovers its <i>table pointer</i> "
+               "by pulling the caller's return address off the stack. If stack depth can be corrupted "
+               "so that this pull returns a RAM pointer, the &ldquo;table&rdquo; the engine indexes "
+               "could itself point into controllable memory &mdash; an independent vector. Stack-depth "
+               "invariants were not audited here.", BODY))
+    e.append(P("<b>Coverage.</b> Static descent reached 69% of program ROM; code reached only through "
+               "computed tables is included, but anything reached by descent-missed paths is unaudited. "
+               "PPU and APU writes cannot execute code and are not an ACE path.", BODY))
+
+    # ---- empirical ----
+    e.append(P("12&nbsp;&nbsp;Limitations", H1))
+    e.append(P("Static descent reaches 69% of program ROM; code reached only through computed tables "
+               "is included, but anything reached by a path the descent misses is unaudited. Fifteen "
+               "byte positions in unreached data would decode as "
+               "<font face='Courier'>JMP (indirect)</font>; no traced path decodes them as "
+               "instruction starts, but they are listed rather than dismissed. Nine dispatch bounds "
+               "rest on observation rather than proof. The dynamic results are searches over the "
+               "states the inputs reached, not exhaustive exploration, and the emulator's CPU core "
+               "does not implement the undocumented opcodes, so a derailed run would diverge from "
+               "hardware once it reached one. Finally, this is a single NTSC revision; other "
+               "regional releases are not covered.", BODY))
+
+    e.append(P("13&nbsp;&nbsp;Future research", H1))
+    e.append(P("Three directions would tighten the result. First, prove the nine observed bounds by "
+               "reasoning over reachable game states rather than sampling them, which is the only "
+               "part of the argument that would turn measurement into proof. Second, extend the "
+               "search with deterministic save states, so branches can be explored without replaying "
+               "from power-on, and drive it by coverage of distinct (site, index) pairs rather than "
+               "by episode. Third, apply the same method to the regional variants and to the "
+               "closely related titles where ACE is known, which would show whether the structural "
+               "property identified here (a single bounds-checked dispatcher reading fixed ROM "
+               "tables) is what distinguishes them.", BODY))
+
+    e.append(P("14&nbsp;&nbsp;Reproducibility", H1))
     e.append(P("The analysis is a few short Python scripts over the ROM: a 6502 linear disassembler, a "
                "recursive-descent tracer that emits the reached code set and the 18 dispatch tables, "
                "and an audit script that computes, per site, the index source, bound, and "
@@ -376,11 +475,11 @@ def build():
                "redistributed. The invariant to re-derive is simple: for each dispatch, "
                "<font face='Courier'>index &le; N&minus;1</font> implies the fetched target is a fixed "
                "ROM routine and the PC stays in ROM; ACE requires breaking that inequality at a site "
-               "whose trailing bytes encode a sub-<font face='Courier'>$0800</font> pointer and "
+               "whose trailing bytes encode a sub-<font face='Courier'>$2000</font> pointer and "
                "reaching it from controller input.", BODY))
 
     # ---- references ----
-    e.append(P("References", H1))
+    e.append(P("15&nbsp;&nbsp;References", H1))
     refs = [
         "MOS Technology. <i>MCS6500 Microcomputer Family Programming Manual.</i> (6502 instruction "
         "set and addressing modes.)",

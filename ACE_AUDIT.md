@@ -308,6 +308,97 @@ It remains a *search*, not a proof — it covers the states these inputs reached
 
 ---
 
+## 6c. Stack and alternate control flow (review items 4.4, 4.5)
+
+The claim "exactly one computed jump" is only as good as the search behind it.
+A 6502 program can transfer control without a `JMP`, so `controlflow.py`
+enumerates the alternatives.
+
+**The RTS trick.** The classic 6502 dispatch pushes a computed address and
+`RTS`es into it. If SMB1 did that anywhere, it would be a computed transfer the
+audit never counted. Scanning every reached instruction stream for
+`PHA` … `PHA` … `RTS` with no intervening `JSR`: **none exists.** Every `RTS`
+in reached code returns to a genuine `JSR` frame.
+
+**Direct stack-pointer writes.** `TXS` appears exactly once, at `$8009` in
+reset initialisation. Gameplay therefore cannot reposition the stack; it moves
+only through `JSR`/`RTS`, `PHA`/`PLA`, `PHP`/`PLP` and the NMI's push/`RTI`.
+
+**`RTI`.** One site, `$8181`, ending the NMI handler. IRQ is never taken on
+NROM.
+
+**Byte classification.** `trace.py` now separates instruction starts (10,693)
+from operand bytes (12,090) and dispatch-table data (502), leaving 9,985 bytes
+(30% of PRG) unreached. Sweeping the unreached remainder finds 15 byte
+positions that would decode as `JMP (indirect)`. They are byte coincidences in
+data: no traced path decodes them as instruction starts, and the only way to
+begin executing at a misaligned address is a computed transfer, which is the
+bounds-checked engine. They are listed rather than dismissed.
+
+### Stack depth, measured
+
+Condition C3 asks whether the stack can be driven far enough that the engine's
+`PLA/PLA` pulls something other than a return address. `stack_depth.py` samples
+the `sp` field the tracer records, over four controller-only episodes of 3000
+frames:
+
+| measure | value |
+|---|---|
+| SP range observed | **`$EF`–`$FC`** |
+| deepest use | 16 bytes of the 256-byte stack page |
+| headroom before wrap | 239 bytes |
+
+Overflow needs roughly 128 nested frames. Combined with the single reset-only
+`TXS` and the absence of any RTS trick, C3 is now tightly bounded — though
+still by measurement over reached states, not by proof.
+
+---
+
+## 6d. Exploitability classification (review item 8)
+
+`classify.py` emits one record per (dispatch site, index) pair whose
+destination is not PRG ROM, with the review's fields plus an explicit
+**provenance** label on the bound that excludes it. Provenance is the point: a
+bound derived from the ROM is a different claim from one inferred from play.
+
+| provenance | meaning | sites |
+|---|---|---|
+| `structural` | enforced by an instruction at the dispatch | 4 |
+| `derived` | computed from the routing tables (`reach.py`) | 5 |
+| `observed` | consistent with every state reached, not proved | **9** |
+| `unproved` | no bound established | 0 |
+
+Of 2182 non-ROM destinations across all 256 indices at all 18 sites:
+
+- **2181 are excluded** by a bound.
+- **1 is live**: `$C88F` index 34 (enemy ID `$36`) → `$2060`, PPU register
+  space. Classified `not_ace` — reachable in principle, but the destination
+  holds no controllable executable bytes.
+- **0 are `unknown`**, and none is `demonstrated`.
+
+The nine `observed` sites are condition C1 and are the honest soft spot.
+
+---
+
+## 6e. Targeted search for an out-of-bounds index (review item 7)
+
+`search_oob.py` attacks those nine sites directly. Watching each dispatch
+address makes the quantity measurable: the instruction there is `JSR $8E04`,
+so the accumulator at that moment *is* the index. The search is evolutionary
+over controller-input programs, scored by how far past a table's last valid
+index it can push, then by coverage of distinct (site, index) pairs.
+
+Result over 10 generations: **47–49 distinct (site, index) pairs, best margin
+`+0`** — several sites reach their *last valid* index (`$856A` 14 of 15,
+`$92C8` 7 of 8, `$8234` 3 of 4) and **none exceeds it**. Zero instructions
+executed outside PRG ROM along the way.
+
+Counters saturating exactly at the table limit is what one expects if the
+tables were sized to the state space, which is the same pattern the derived
+enemy bounds show.
+
+---
+
 ## 7. Reproducing this
 
 Tooling lives in `../gamegenie/`:
