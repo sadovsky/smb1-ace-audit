@@ -99,7 +99,10 @@ def build():
                "with no local bound and is the unique site whose out-of-range targets reach writable "
                "memory; we show the two offending identifiers are routed by the behavior dispatch to "
                "inert stubs and never reach it, consistent with the game not crashing on high-numbered "
-               "enemies. We therefore report no controller-only ACE vector, give the structural reason "
+               "enemies. A controller-input fuzz of 144k frames and an identifier-injection probe "
+               "corroborate the analysis: no index leaves its table, the two RAM-reaching identifiers "
+               "never arise, and the dispatch chain absorbs them when injected. We therefore report no "
+               "controller-only ACE vector, give the structural reason "
                "none is known, and reduce the open problem to three precise, falsifiable conditions. We "
                "are explicit that this is strong structural evidence, not a machine-checked proof of "
                "impossibility.", ABSTRACT))
@@ -300,8 +303,31 @@ def build():
                "computed tables is included, but anything reached by descent-missed paths is unaudited. "
                "PPU and APU writes cannot execute code and are not an ACE path.", BODY))
 
+    # ---- empirical ----
+    e.append(P("7&nbsp;&nbsp;Empirical validation", H1))
+    e.append(P("Two experiments on the real game (patched <font face='Courier'>nes-py</font>) "
+               "complement the static audit. First, a <i>controller-only fuzz</i>: 48 episodes of "
+               "3000 frames (144k frames) of structured and fully random input, two thirds on "
+               "<font face='Courier'>1-1</font> and one third across varied start areas for dispatch "
+               "coverage, reading the eight state-counter indices and five enemy-ID slots each frame. "
+               "OperMode never left its valid range (zero derailments), every index stayed within the "
+               "table it feeds, and identifiers <font face='Courier'>$34</font>/"
+               "<font face='Courier'>$35</font> never appeared in any slot.", BODY))
+    e.append(P("Second, an <i>identifier-injection</i> probe testing condition (C2) downstream: "
+               "overwriting a live enemy slot's identifier each frame. Every in-range value "
+               "<font face='Courier'>$00&ndash;$36</font>, including <font face='Courier'>$34</font> "
+               "and <font face='Courier'>$35</font>, is absorbed without derailment &mdash; the master "
+               "dispatch routes them to the stubs and the graphics gate keeps them from "
+               "<font face='Courier'>$C905</font>. Only identifiers beyond the legal maximum "
+               "(<font face='Courier'>$3F</font>, <font face='Courier'>$7F</font>) derail the CPU, by "
+               "overrunning the 55-entry master table itself. Both halves of the static picture are "
+               "thus confirmed: safety rests on identifiers never exceeding "
+               "<font face='Courier'>$36</font> and on the routing of <font face='Courier'>$34</font>/"
+               "<font face='Courier'>$35</font>. The search found no controller-only route to an "
+               "out-of-range index.", BODY))
+
     # ---- method / repro ----
-    e.append(P("7&nbsp;&nbsp;Reproducibility", H1))
+    e.append(P("8&nbsp;&nbsp;Reproducibility", H1))
     e.append(P("The analysis is a few short Python scripts over the ROM: a 6502 linear disassembler, a "
                "recursive-descent tracer that emits the reached code set and the 18 dispatch tables, "
                "and an audit script that computes, per site, the index source, bound, and "

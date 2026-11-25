@@ -190,7 +190,42 @@ path (though they are how the visual Game Genie glitches work).
 
 ---
 
-## 6. Reproducing this
+## 6. Empirical validation (emulator search)
+
+Two experiments on the real game (patched `nes-py`) complement the static audit.
+See `fuzz.py` and `inject.py`.
+
+**Input fuzz &mdash; condition C1, controller-only.** 48 episodes x 3000 frames
+(144k frames) of structured plus fully random controller input, two thirds on
+`1-1` and one third across varied start areas for dispatch coverage. Each frame
+reads the eight state-counter index variables and the five enemy-ID slots.
+Result: **OperMode never left `{0,1,2,3}` (zero derailments)**; every index
+variable stayed within the table it indexes at the relevant site; and **enemy
+IDs `$34`/`$35` never appeared in any slot.** Two raw variables briefly exceed
+the *tightest* table they ever index, both already explained statically: `$071F`
+reaches 8 but the engine's `DEY` makes the real index 7 (the "structural"
+`$92C8` case), and `$0772` reaches 3 only while indexing its larger 4/5-entry
+tables, not the 3-entry one at `$921B`.
+
+**ID injection &mdash; condition C2 downstream.** Overwriting a live enemy
+slot's ID every frame (the realistic shape of a glitch depositing a byte) shows
+that **every in-range identifier `$00`&ndash;`$36`, including the two dangerous
+values `$34`/`$35`, is absorbed without derailment**: the behavior master
+`$C27F` routes them to the `RTS` stubs and the graphics gate keeps them out of
+`$C905`. Only identifiers **beyond the legal maximum** (`$3F`, `$7F`) derail the
+CPU immediately (around frame 5), by overrunning the 55-entry master table
+itself.
+
+This confirms both halves of the static picture: the game is safe precisely
+because (a) enemy IDs never exceed `$36`, and (b) within that range the routing
+keeps `$34`/`$35` away from `$C905`. The search found **no controller-only route
+to an out-of-range index**. (Caveat: `nes-py`'s CPU core aborts on undocumented
+opcodes, so "derail" here means the PC left normal code; on real hardware those
+opcodes execute as NOPs and the run would continue into whatever follows.)
+
+---
+
+## 7. Reproducing this
 
 Tooling lives in `../gamegenie/`:
 
