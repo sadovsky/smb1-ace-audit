@@ -1,0 +1,5 @@
+name = "aceaudit"
+defaultTargets = ["AceAudit"]
+
+[[lean_lib]]
+name = "AceAudit"
