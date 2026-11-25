@@ -142,6 +142,7 @@ REFS = [
     ("nesdev-int", "NESdev Wiki. CPU interrupts; NMI. nesdev.org/wiki (retrieved 2026-11-25)."),
     ("nesdev-ppu", "NESdev Wiki. PPU power up state; PPU registers. nesdev.org/wiki (retrieved 2026-11-25)."),
     ("nesdev-map", "NESdev Wiki. CPU memory map; Open bus behavior; Status flags. nesdev.org/wiki (retrieved 2026-11-25)."),
+    ("lean", "L. de Moura, S. Ullrich. The Lean 4 Theorem Prover and Programming Language. CADE 2021."),
     ("z3", "L. de Moura, N. Bj&oslash;rner. Z3: An Efficient SMT Solver. TACAS 2008; H. Barbosa et al. cvc5: A Versatile and Industrial-Strength SMT Solver. TACAS 2022."),
 ]
 NUM = {key: i for i, (key, _text) in enumerate(REFS, 1)}
@@ -368,6 +369,9 @@ def build():
           status("SEP-SEPARATION").replace("_", " ")
           + f"; {len(sd['writers']) - len(sd['open'])} of "
           f"{len(sd['writers'])} risky writes bounded"],
+         ["Passing every check of our proof plan implies the property",
+          "proved in Lean for the corrected checks; refuted for the "
+          "original ones"],
          ["<b>The full property, for all play</b>",
           "<b>" + status("P1").replace("_", " ") + "</b>"]],
         [0.6, 0.4], "Where the main claims stand.")
@@ -564,6 +568,34 @@ def build():
           f"stack area, plus {warm['count']} more after a reset, are left "
           "to chance. Everything else is fixed before any interrupt can "
           "run."))
+    SUB("The proof plan is sound, once corrected")
+    add(P("The plan for a full proof (Section " + S("What is open")
+          + ") is a <i>certificate</i>: a statement of what is known at "
+          "every instruction, plus a contract for each subroutine saying "
+          "what it may change, each piece tested separately by a solver. "
+          "That only helps if passing all the tests really implies the "
+          "property. We proved that it does, in the Lean proof assistant "
+          + cite("lean") + ", where every step is checked by a small "
+          "trusted kernel."))
+    add(P("The Lean development does not model the real processor. Its "
+          "machine is abstract: a program counter, a stack position, a "
+          "memory and the interrupt switch, able to step, call, return, "
+          "take an interrupt, return from one, or reset. The certificate "
+          "and each test are written as mathematical statements about "
+          "that machine. The key to the proof is one statement about the "
+          "whole call stack: the routine now running satisfies its "
+          "invariant, and each routine waiting beneath it would still "
+          "recognise memory, because whatever has changed since it was "
+          "suspended lies within what the routines above it are permitted "
+          "to change. A call and an interrupt suspend a routine in the "
+          "same way, so one argument covers both."))
+    add(P("The theorem: if every test holds, that statement is true of "
+          "every reachable state, and so the program counter is always "
+          "where it should be. It is proved with no steps left open; the "
+          "build prints the axioms each theorem rests on, and only two "
+          "of Lean's standard ones appear. It is a theorem about the "
+          "<i>corrected</i> tests. Section " + S("What is refuted")
+          + " says what was wrong with the original ones."))
     SUB("The interrupt cannot fire while switched off")
     add(P("From a small cycle-by-cycle model of the interrupt circuitry, "
           "built from published hardware documentation "
@@ -607,7 +639,7 @@ def build():
           "proof can succeed without saying something about <i>when</i> "
           "interrupts arrive. Those assumptions are the two marked "
           "windows in Figure 2."))
-    SUB("Three things we had assumed")
+    SUB("Two things we had assumed")
     add(P("&bull; <i>&quot;No subroutine calls itself.&quot;</i> False. "
           "One routine can re-enter itself through its own dispatch list, "
           "so there is no simple limit on how deep the stack can go."))
@@ -615,12 +647,41 @@ def build():
           "in the model. Each reset moves the stack position down by "
           "three without writing, so repeated resets at the wrong moments "
           "walk it down the page."))
-    add(P("&bull; <i>&quot;If every check passes, the property "
-          "holds.&quot;</i> False for the checks as we first designed "
-          "them (see the certificate, Section " + S("What is open")
-          + "). A machine-checked proof of that argument exposed four "
-          "missing conditions, and includes a small example that passes "
-          "every original check and still goes wrong."))
+    SUB("Our own proof plan, as first designed")
+    add(P("We had argued on paper that if every certificate test "
+          "passed, the property would hold. Writing that argument in Lean "
+          "showed it was wrong. The proof would not go through until five "
+          "omissions were repaired (Table 4), and for the first of them "
+          "the Lean development contains a tiny example, with two program "
+          "addresses, that passes every one of the original tests and "
+          "still reaches an address it should not. So the original tests "
+          "did not imply the property, and that is itself a "
+          "machine-checked fact."))
+    TAB([["What the original tests left out", "Consequence"],
+         ["The moments when &quot;no interrupt can occur&quot; were "
+          "accepted from the certificate unverified",
+          "a certificate could exempt itself from every interrupt test; "
+          "the counterexample does exactly this"],
+         ["An interrupt arriving inside a subroutine was not charged to "
+          "the routines waiting beneath it",
+          "a caller could resume believing memory unchanged when the "
+          "handler had changed it"],
+         ["The handler's final-state promise was tested just before the "
+          "return from interrupt and relied on just after",
+          "that instruction restores the interrupted code's flags, so "
+          "the two states differ"],
+         ["A shortcut in the checker tested less than the proof needs",
+          "a test could pass because its premises contradicted each "
+          "other"],
+         ["Stack depth was compared in arithmetic that wraps at 256, "
+          "with no limit on total depth",
+          "the certificate fixed no real ordering of stack positions"]],
+        [0.5, 0.5], "Omissions the Lean proof exposed.")
+    add(P("Four of these had been spotted by reading the checker's code. "
+          "The proof arrived at three of them independently, narrowed "
+          "down the fourth, and found the fifth, which no reading had "
+          "caught. Only the first is shown to be exploitable by example; "
+          "the others are shown to be needed by the proof."))
 
     # ------------------------------------------------------------------ 7
     H("What is open")
@@ -682,22 +743,22 @@ def build():
           "checks each piece with the solver. This is the approach of "
           "proof-carrying code " + cite("pcc") + " and annotation "
           "inference " + cite("houdini") + "."))
-    add(P("The checker exists but we report no results from it. We "
-          "formalised its underlying argument in the Lean proof assistant "
-          "and proved that passing every check implies the property, but "
-          "only after adding conditions the design had left out: the "
-          "interrupt windows were being taken on trust; an interrupt "
-          "during a subroutine was not accounted for in what that "
-          "subroutine &quot;may change&quot;; one condition was checked at "
-          "the wrong moment; and stack depth was compared in arithmetic "
-          "that wraps around. Until the checker enforces the corrected "
-          "conditions, its verdicts would not mean what they need to."))
+    add(P("The argument behind this plan is the one proved in Section "
+          + S("What is proved") + ", after the corrections of Section "
+          + S("What is refuted") + ". What is open is everything on the "
+          "game's side of it. The checker exists, but until it enforces "
+          "the corrected tests its verdicts would not mean what they need "
+          "to, and we report none. A first trial certificate is also far "
+          "too weak: it does not yet capture that the interrupt is "
+          "enabled only while the game idles, so most tests about "
+          "resuming after an interrupt cannot pass. Strengthening it is "
+          "the main work remaining."))
     SUB("Interrupt timing")
     tc = timing["status_counts"]
     add(P("The two timing assumptions from Section "
           + S("What is refuted") + " were examined with the cycle-level "
           "model, trying every possible timing of the graphics chip "
-          "(Table 4)."))
+          "(Table 5)."))
     TAB([["Claim", "Label", "Depends on"],
          ["No interrupt while it is switched off", "proved", "nothing"],
          ["No second interrupt in the 23 cycles before the handler "
@@ -803,6 +864,13 @@ def build():
           "up as a disagreement between them."))
     add(P("&bull; <b>The solvers</b>, cross-checked against each other "
           "for most claims, but not for the certificate."))
+    add(P("&bull; <b>The gap between the Lean proof and the checker.</b> "
+          "The proof says which tests suffice. It does not show that the "
+          "checker's code performs those tests, nor that each test is "
+          "translated faithfully into a solver question. It also treats "
+          "the stack position as an unbounded number, so the 256-byte "
+          "wraparound cannot occur in it; the limit on stack depth that "
+          "would justify this is stated but not proved."))
     add(P("&bull; <b>Our own code</b> that turns claims into solver "
           "questions. The certificate checker's faults described in "
           "Section " + S("What is open") + " are a reminder that such "
