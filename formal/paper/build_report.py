@@ -462,9 +462,22 @@ def build():
           "parser " + cite("z3") + "; a disagreement between solvers is "
           "recorded as such. Queries that embed program bytes are hashed but "
           "not stored in the repository, since the image is not distributed. "
-          "The slice-based results of Section " + S("Backward slices") + " and the certificate "
-          "conditions of Section " + S("Joint inductive invariant") + " are checked by Z3 only; that is a known "
-          "gap."))
+          "The slice-based results of Section " + S("Backward slices")
+          + " go through the same treatment with Bitwuzla as a third "
+          "solver: every answer a slice relies on is hashed and re-asked. "
+          "Certificate conditions (Section " + S("Joint inductive invariant")
+          + ") are checked by Z3 only."))
+    g = obligations.get("GRAPH-EDGES")
+    if g is not None:
+        add(P("The recovered graph is itself checked against the model ("
+              + C("GRAPH-EDGES") + ": <b>" + g["status"] + "</b>): for "
+              "every instruction start whose own bytes decide where control "
+              "goes, the successors the model allows from an unconstrained "
+              "state are exactly the recorded edges. Returns and the "
+              "dispatcher's jump are excluded, being the subject of the "
+              "open obligations, and instruction lengths come from the "
+              "opcode table the model shares with the decoder, so that part "
+              "is not independent."))
     add(P(f"The ledger holds {total} obligations: "
           + ", ".join(f"{v} {k.replace('_', ' ')}" for k, v in
                       sorted(counts.items())) + ". "
@@ -814,9 +827,12 @@ def build():
     # ------------------------------------------------------------------
     H("Trusted base and threats to validity")
     add(P("A reader who accepts a <i>proved</i> entry is trusting: the "
-          "machine model, validated by sampling only; the decoder and the "
-          "recovered graph, which define the set of instruction starts; Z3 "
-          "and, for the lemma queries, cvc5; the Python that builds queries, "
+          "machine model, validated by sampling only; the opcode table and "
+          "the recovered set of instruction starts, whose edges are now "
+          "checked against the model but whose completeness at returns is "
+          "not; Z3 "
+          "with cvc5 and Bitwuzla as cross-checks on the lemma and slice "
+          "queries; the Python that builds queries, "
           "including the ledger; and, for the certificate route, the "
           "unmechanised soundness argument and the checker. A review of the "
           "checker during this work found four soundness gaps (interrupt "
