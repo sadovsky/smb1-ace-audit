@@ -48,7 +48,7 @@ def P(t, s=BODY):
 # ---------------------------------------------------------------- document
 def build():
     doc = BaseDocTemplate(OUT, pagesize=letter, title="Static Audit of Controller-Only ACE in Super Mario Bros.",
-                          author="Alexander Sadovsky",
+                          author="Alexander Sadovsky and Claude (Anthropic)",
                           leftMargin=0.8 * inch, rightMargin=0.8 * inch,
                           topMargin=0.8 * inch, bottomMargin=0.8 * inch)
     fw = doc.width
@@ -80,7 +80,7 @@ def build():
     e = []
     # ---- title block (full width) ----
     e.append(P("A Static Audit of Controller-Only Arbitrary Code Execution in <i>Super Mario Bros.</i> (NES)", TITLE))
-    e.append(P("Alexander Sadovsky", AUTH))
+    e.append(P("Alexander Sadovsky and Claude (Anthropic)", AUTH))
     e.append(P("November 2026", AUTH))
     e.append(Spacer(1, 6))
     e.append(P("<b>Abstract.</b> We ask whether the NES game <i>Super Mario Bros.</i> (NTSC/World, "
