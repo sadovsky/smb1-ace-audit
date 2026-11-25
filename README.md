@@ -29,6 +29,8 @@ cp /path/to/smb1.nes ./smb1.nes        # next to the scripts
 python3 trace.py     # recursive-descent disassembly from the reset/NMI/IRQ
                      # vectors -> trace.json (reached code, the sole indirect
                      # jump, the 18 JSR $8E04 dispatch tables)
+python3 reach.py     # derived enemy-ID bounds (ACE_AUDIT.md 4)
+python3 -m unittest test_audit   # 12 regression tests
 python3 audit.py     # per-site index/bound/target analysis (ACE_AUDIT.md 3-4)
 ```
 
@@ -46,7 +48,9 @@ python3 d65.py 8E04 8E19    # disassemble a CPU address range
 | `rom.py` | ROM loader + byte/pattern helpers (resolves `$SMB1_ROM` / `./smb1.nes`) |
 | `d65.py` | minimal 6502 linear disassembler (opcode + length tables) |
 | `trace.py` | recursive-descent disassembler from the CPU vectors; writes `trace.json` |
+| `reach.py` | **derives** the enemy-ID -> dispatch bounds from the routing tables instead of assuming them |
 | `audit.py` | the ACE analysis over `trace.json`: index source, bound, and `JMP ($0006)` target per dispatch |
+| `test_audit.py` | regression tests: ROM validation, 6502/JumpEngine semantics, memory mirroring, derived bounds |
 | `fuzz.py` | emulator search: controller-input fuzz watching the index variables and enemy-ID slots (needs the patched `nes-py`) |
 | `inject.py` | focused probe: inject out-of-range enemy IDs into a live slot and watch for derailment (needs the patched `nes-py`) |
 | `ACE_AUDIT.md` | the writeup (incl. the emulator-search results, section 6) |

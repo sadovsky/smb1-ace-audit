@@ -48,7 +48,7 @@ def P(t, s=BODY):
 # ---------------------------------------------------------------- document
 def build():
     doc = BaseDocTemplate(OUT, pagesize=letter, title="Static Audit of Controller-Only ACE in Super Mario Bros.",
-                          author="Alexander Sadovsky and ChatGPT (OpenAI)",
+                          author="Alexander Sadovsky, Claude (Anthropic), and ChatGPT (OpenAI)",
                           leftMargin=0.8 * inch, rightMargin=0.8 * inch,
                           topMargin=0.8 * inch, bottomMargin=0.8 * inch)
     fw = doc.width
@@ -80,7 +80,8 @@ def build():
     e = []
     # ---- title block (full width) ----
     e.append(P("A Static Audit of Controller-Only Arbitrary Code Execution in <i>Super Mario Bros.</i> (NES)", TITLE))
-    e.append(P("Alexander Sadovsky and ChatGPT (OpenAI)", AUTH))
+    e.append(P("Alexander Sadovsky, Claude (Anthropic), and ChatGPT (OpenAI)", AUTH))
+    e.append(P("<font size=8>Analysis, tooling and experiments by the first two authors; ChatGPT (OpenAI) contributed the methodological review and the exact-semantics and validation work.</font>", AUTH))
     e.append(P("November 2026", AUTH))
     e.append(Spacer(1, 6))
     e.append(P("<b>Abstract.</b> We ask whether the NES game <i>Super Mario Bros.</i> (NTSC/World, "
@@ -287,6 +288,22 @@ def build():
                "high-numbered enemies never enter the <font face='Courier'>$C905</font> path.", BODY))
 
     # ---- 6 ----
+    e.append(P("<b>The gate, derived rather than inferred.</b> An earlier version argued the gate must "
+               "exist because Bowser (identifier <font face='Courier'>$2D</font>) renders without "
+               "crashing. The gate is in fact explicit in the collision dispatch: "
+               "<font face='Courier'>CPY #$15 / BCC</font> selects collision-table entry 0 only for "
+               "identifiers below <font face='Courier'>$15</font>, and that entry is the sole route "
+               "into the block that calls <font face='Courier'>$C905</font>. Hence "
+               "<font face='Courier'>$C907</font> receives identifiers "
+               "<font face='Courier'>$00-$14</font>, indices 0-20, exactly its 21 entries. Applying the "
+               "same derivation to all five enemy dispatches (<font face='Courier'>reach.py</font>) "
+               "shows every in-bounds index at all 18 sites resolves to PRG ROM, and that exactly one "
+               "legal identifier indexes past its table anywhere in the game: "
+               "<font face='Courier'>$36</font> at <font face='Courier'>$C88F</font>, index 34 against "
+               "34 entries, resolving to <font face='Courier'>$2060</font> in PPU register space. That "
+               "can hang the machine but cannot execute controllable bytes, so it is not an ACE "
+               "vector.", BODY))
+
     e.append(P("6&nbsp;&nbsp;Verdict and open problem", H1))
     e.append(P("We found no controller-only ACE vector. The structural reason is uniform: a single "
                "jump engine, fed from fixed ROM tables, with every index held in range by explicit "
