@@ -1,0 +1,2141 @@
+{
+  "dispatches": [
+    {
+      "dispatch": "0x8215",
+      "entries": [
+        "0x8231",
+        "0xAEDC",
+        "0x838B",
+        "0x9218"
+      ],
+      "entry_count": 4,
+      "table": "0x8218"
+    },
+    {
+      "dispatch": "0x8234",
+      "entries": [
+        "0x8FCF",
+        "0x8567",
+        "0x9061",
+        "0x8245"
+      ],
+      "entry_count": 4,
+      "table": "0x8237"
+    },
+    {
+      "dispatch": "0xAEDF",
+      "entries": [
+        "0x8FE4",
+        "0x8567",
+        "0x9071",
+        "0xAEEA"
+      ],
+      "entry_count": 4,
+      "table": "0xAEE2"
+    },
+    {
+      "dispatch": "0x921B",
+      "entries": [
+        "0x9224",
+        "0x8567",
+        "0x9237"
+      ],
+      "entry_count": 3,
+      "table": "0x921E"
+    },
+    {
+      "dispatch": "0x83A3",
+      "entries": [
+        "0xCFEC",
+        "0x83B0",
+        "0x83BD",
+        "0x83F6",
+        "0x8461"
+      ],
+      "entry_count": 5,
+      "table": "0x83A6"
+    },
+    {
+      "dispatch": "0x856A",
+      "entries": [
+        "0x858B",
+        "0x859B",
+        "0x8652",
+        "0x865A",
+        "0x8693",
+        "0x889D",
+        "0x86A8",
+        "0x889D",
+        "0x86E6",
+        "0x85BF",
+        "0x85E3",
+        "0x8643",
+        "0x86FF",
+        "0x8732",
+        "0x8749"
+      ],
+      "entry_count": 15,
+      "table": "0x856D"
+    },
+    {
+      "dispatch": "0xB04C",
+      "entries": [
+        "0x9131",
+        "0xB1C7",
+        "0xB206",
+        "0xB1E5",
+        "0xB2A4",
+        "0xB2CA",
+        "0x91CD",
+        "0xB069",
+        "0xB0E9",
+        "0xB233",
+        "0xB245",
+        "0xB269",
+        "0xB27D"
+      ],
+      "entry_count": 13,
+      "table": "0xB04F"
+    },
+    {
+      "dispatch": "0x92C8",
+      "entries": [
+        "0x92DB",
+        "0x88AE",
+        "0x88AE",
+        "0x93FC",
+        "0x92DB",
+        "0x88AE",
+        "0x88AE",
+        "0x93FC"
+      ],
+      "entry_count": 8,
+      "table": "0x92CB"
+    },
+    {
+      "dispatch": "0xC88F",
+      "entries": [
+        "0xC8E0",
+        "0xC935",
+        "0xD295",
+        "0xC8D6",
+        "0xC8D6",
+        "0xC8D6",
+        "0xC8D6",
+        "0xC947",
+        "0xC947",
+        "0xC947",
+        "0xC947",
+        "0xC947",
+        "0xC947",
+        "0xC947",
+        "0xC947",
+        "0xC8D6",
+        "0xC965",
+        "0xC965",
+        "0xC965",
+        "0xC965",
+        "0xC965",
+        "0xC965",
+        "0xC965",
+        "0xC94D",
+        "0xC94D",
+        "0xD065",
+        "0xBC85",
+        "0xB94B",
+        "0xC8D6",
+        "0xD2D9",
+        "0xB8BA",
+        "0xC8D6",
+        "0xB7A4",
+        "0xC8D7"
+      ],
+      "entry_count": 34,
+      "table": "0xC892"
+    },
+    {
+      "dispatch": "0xB34E",
+      "entries": [
+        "0xB35A",
+        "0xB376",
+        "0xB36D",
+        "0xB3CF"
+      ],
+      "entry_count": 4,
+      "table": "0xB351"
+    },
+    {
+      "dispatch": "0xD2E5",
+      "entries": [
+        "0xD311",
+        "0xD2F2",
+        "0xD312",
+        "0xD34E",
+        "0xD3A2"
+      ],
+      "entry_count": 5,
+      "table": "0xD2E8"
+    },
+    {
+      "dispatch": "0xC987",
+      "entries": [
+        "0xD432",
+        "0xD5D3",
+        "0xD64F",
+        "0xD64F",
+        "0xD607",
+        "0xD631",
+        "0xD63D"
+      ],
+      "entry_count": 7,
+      "table": "0xC98A"
+    },
+    {
+      "dispatch": "0xC907",
+      "entries": [
+        "0xCA77",
+        "0xCA77",
+        "0xCA77",
+        "0xCA77",
+        "0xCA77",
+        "0xC9D8",
+        "0xCA77",
+        "0xCB89",
+        "0xCC36",
+        "0xC934",
+        "0xCC4A",
+        "0xCC4A",
+        "0xC9B0",
+        "0xD3B0",
+        "0xCAF9",
+        "0xCAFF",
+        "0xCB25",
+        "0xCF28",
+        "0xCA77",
+        "0xC934",
+        "0xCEDF"
+      ],
+      "entry_count": 21,
+      "table": "0xC90A"
+    },
+    {
+      "dispatch": "0xC27F",
+      "entries": [
+        "0xC30E",
+        "0xC30E",
+        "0xC30E",
+        "0xC31E",
+        "0xC2F0",
+        "0xC328",
+        "0xC2F1",
+        "0xC342",
+        "0xC36B",
+        "0xC2F0",
+        "0xC375",
+        "0xC375",
+        "0xC2F7",
+        "0xC787",
+        "0xC7D1",
+        "0xC34A",
+        "0xC33D",
+        "0xC385",
+        "0xC7A0",
+        "0xC2F0",
+        "0xC7A0",
+        "0xC7A0",
+        "0xC7A0",
+        "0xC7A0",
+        "0xC7B8",
+        "0xC2F0",
+        "0xC2F0",
+        "0xC45C",
+        "0xC45C",
+        "0xC45C",
+        "0xC45C",
+        "0xC459",
+        "0xC2F0",
+        "0xC2F0",
+        "0xC2F0",
+        "0xC2F0",
+        "0xC7DF",
+        "0xC812",
+        "0xC83F",
+        "0xC845",
+        "0xC80B",
+        "0xC803",
+        "0xC80B",
+        "0xC84B",
+        "0xC857",
+        "0xC549",
+        "0xBC60",
+        "0xB91E",
+        "0xC2F0",
+        "0xC2F0",
+        "0xC2F0",
+        "0xC2F0",
+        "0xC2F0",
+        "0xC307",
+        "0xC881"
+      ],
+      "entry_count": 55,
+      "table": "0xC282"
+    },
+    {
+      "dispatch": "0xC7A8",
+      "entries": [
+        "0xC3A4",
+        "0xC7B7",
+        "0xC4A8",
+        "0xC5A3",
+        "0xC63D",
+        "0xC69C",
+        "0xA060",
+        "0xB905"
+      ],
+      "entry_count": 8,
+      "table": "0xC7AB"
+    },
+    {
+      "dispatch": "0x9664",
+      "entries": [
+        "0x98E5",
+        "0x9740",
+        "0x9A2E",
+        "0x9A3E",
+        "0x99F2",
+        "0x9A50",
+        "0x9A59",
+        "0x98E5",
+        "0x9B41",
+        "0x97BA",
+        "0x9979",
+        "0x997C",
+        "0x997F",
+        "0x9957",
+        "0x9968",
+        "0x996B",
+        "0x99D0",
+        "0x99D7",
+        "0x9806",
+        "0x9AB7",
+        "0x98AB",
+        "0x9994",
+        "0x9B0E",
+        "0x9B0E",
+        "0x9B0E",
+        "0x9B01",
+        "0x9B19",
+        "0x9B19",
+        "0x9B19",
+        "0x9B14",
+        "0x9B19",
+        "0x986F",
+        "0x9A19",
+        "0x9AD3",
+        "0x9882",
+        "0x999E",
+        "0x9A09",
+        "0x9A0E",
+        "0x9A01",
+        "0x96F2",
+        "0x970D",
+        "0x970D",
+        "0x972B",
+        "0x972B",
+        "0x972B",
+        "0x9645",
+        "0x96C5"
+      ],
+      "entry_count": 47,
+      "table": "0x9667"
+    },
+    {
+      "dispatch": "0x9743",
+      "entries": [
+        "0x974C",
+        "0x9778",
+        "0x9A69",
+        "0xBB20",
+        "0xBD9B"
+      ],
+      "entry_count": 5,
+      "table": "0x9746"
+    },
+    {
+      "dispatch": "0xBDBD",
+      "entries": [
+        "0xBDD2",
+        "0xBB38",
+        "0xBB38",
+        "0xBDD8",
+        "0xBDD2",
+        "0xBDDF",
+        "0xBDD5",
+        "0xBB38",
+        "0xBDD8"
+      ],
+      "entry_count": 9,
+      "table": "0xBDC0"
+    }
+  ],
+  "overlapping_starts": {
+    "0x8223": [
+      "0x8222"
+    ],
+    "0x996B": [
+      "0x996A"
+    ],
+    "0x997C": [
+      "0x997B"
+    ],
+    "0x997F": [
+      "0x997E"
+    ],
+    "0xBDD5": [
+      "0xBDD4"
+    ],
+    "0xBDD8": [
+      "0xBDD7"
+    ],
+    "0xBFB7": [
+      "0xBFB6"
+    ],
+    "0xDC21": [
+      "0xDC20"
+    ],
+    "0xE3EC": [
+      "0xE3EB"
+    ],
+    "0xF34A": [
+      "0xF349"
+    ]
+  },
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "summary": {
+    "dispatch_sites": 18,
+    "halt_instructions": 3,
+    "instruction_starts": 10710,
+    "occupied_bytes": 22809,
+    "overlapping_starts": 10,
+    "undocumented_instructions": 9,
+    "unresolved_transfers": 341
+  },
+  "undocumented": [
+    "0xA062",
+    "0xD965",
+    "0xF34A",
+    "0xF3B1",
+    "0xF3BB",
+    "0xF3BD",
+    "0xFFF3",
+    "0xFFF4",
+    "0xFFFA"
+  ],
+  "unresolved": [
+    {
+      "address": "0x8E16",
+      "detail": "JMP ($0006)",
+      "kind": "indirect_jump"
+    },
+    {
+      "address": "0x8EEC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x90E6",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8EF3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8230",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF2D8",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x81C5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x819C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8FBB",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF45A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF67F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF5C1",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF387",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF6A3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF39E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF57B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF380",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF666",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8E91",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF4B5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8E8C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF3A5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF627",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF8C4",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8181",
+      "detail": "destination depends on the stack frame",
+      "kind": "rti"
+    },
+    {
+      "address": "0xF34A",
+      "detail": "JAM: the processor stops fetching",
+      "kind": "halt"
+    },
+    {
+      "address": "0xF8FE",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF8D7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF908",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF90C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8486",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x88AD",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF8F3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8751",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8748",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x86E5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF773",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xAEFD",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF147",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9236",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9281",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xEF33",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBC48",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB2A3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x86FE",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB21E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB2C1",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB268",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x849E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x92C7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB205",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB244",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x92A9",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x86D2",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8F5E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8460",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF17F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x82D7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB2A2",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB686",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC06A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB0E5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB27C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB232",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD07E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x83F5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9C21",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB0AB",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD1BB",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9263",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9C12",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x833F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x831C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB328",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x91E8",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB359",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC8D6",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x92F6",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB296",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x830D",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9115",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB7A3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x838A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x84DA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC9AF",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB9B9",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB049",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBF9E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBCEA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8211",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB6F2",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xEE06",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCDBA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD6D5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD311",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF09B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xEFBD",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF1AE",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD84C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD1EA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF033",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF0D6",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8881",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB74A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDBB9",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDC97",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBF01",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBED3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF170",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD880",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xAF92",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB91D",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF0E8",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xEFEB",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDB7A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD3AF",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB36C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDC51",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDFB8",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD2BC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD679",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF129",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9588",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBF4C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDA24",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF090",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB033",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB478",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB1BA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBA30",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD3A1",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC22D",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB5CB",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB7F4",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD63C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB623",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xED65",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC934",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBBF7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8642",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE162",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD606",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBF08",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD64E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF1D6",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD43F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD630",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE5C7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC2F0",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC881",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC163",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x885E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x92AF",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF22A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB8B5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8A38",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDAB3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE29B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCB5C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD670",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD40F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC30B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE8A8",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD423",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD431",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDC40",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC36A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC325",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xEF9D",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x90CB",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCB44",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC374",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB423",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8A6A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC7B7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x91BC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB41F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBB37",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDC61",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE123",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC384",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC7DE",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xA062",
+      "detail": "JAM: the processor stops fetching",
+      "kind": "halt"
+    },
+    {
+      "address": "0xE14E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC3E5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC44E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC59C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC689",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC710",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC83E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9060",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF281",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCB18",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCB5F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCB65",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC86A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE1AD",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE066",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCB86",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8F86",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC7D0",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9594",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9635",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB58B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE1C7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE4BF",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF26C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE195",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCAC7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE1F3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBAC2",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBC84",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9645",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB1C6",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8B07",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD8F8",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD395",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC880",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD735",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCC28",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE30B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE324",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9B3C",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8566",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC046",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9715",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD5D2",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCAF8",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBD9A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBA88",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE387",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCC03",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCC1B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCC35",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBFD6",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD5BA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE15A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC574",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xB948",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9BBA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x97CE",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x989E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE34B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE35E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE37D",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE3AC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBE40",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9956",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x973F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCF24",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCE8D",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9978",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9881",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE1FC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD83F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9949",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9BD2",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x89C2",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCBCD",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCBDB",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBABE",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9BCA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD81F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCCC6",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xED05",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xF2C9",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD7FF",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD957",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9BAB",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x96F1",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE2DD",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD965",
+      "detail": "JAM: the processor stops fetching",
+      "kind": "halt"
+    },
+    {
+      "address": "0xDC16",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE1EE",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE0DA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDBF4",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCAE4",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD7C3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE0E1",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xED60",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBDE7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9BDC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9BF5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDB44",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDFAF",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE0A4",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBE01",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9727",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDFAA",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC0CB",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x96E1",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCFDC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x98DC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD540",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9B00",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xCED4",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9AA4",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDF95",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x986E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x99CF",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9503",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDF8A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC26B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBB95",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xEC52",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE540",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD294",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8A60",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDFA0",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDD9B",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xEDE0",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE6BD",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xEBCC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDAF0",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDEC3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD9B2",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC630",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE431",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDE02",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE654",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xEBA9",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDA10",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xE4AD",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBB83",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDEDC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC215",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDEE7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDE38",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9868",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDF4A",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD9F5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDB14",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xC548",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xECDD",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x9CB3",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDDFE",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD597",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xDEBC",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBD83",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBE1E",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBE6F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    }
+  ]
+}
