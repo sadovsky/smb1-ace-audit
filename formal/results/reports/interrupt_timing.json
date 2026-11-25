@@ -1,0 +1,791 @@
+{
+ "cycle_model": {
+  "ppu_reduced_to": "one bit, vblank_flag, which the CPU clears by reading $2002 and which the environment may set or clear on any cycle. Where a derivation needs the real timing back it names it as a premise.",
+  "rules": [
+   {
+    "page": "https://www.nesdev.org/wiki/NMI",
+    "quote": "The PPU pulls /NMI low if and only if both vblank_flag and NMI_output are true.",
+    "rule": "/NMI is low if and only if vblank_flag and NMI_output are both true",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/NMI",
+    "quote": "if other circuitry on the board pulls the /NMI pin from high to low voltage, this sets a flip-flop in the CPU.",
+    "rule": "a high->low transition of /NMI sets a flip-flop in the CPU",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+    "quote": "This edge detector polls the status of the NMI line during phi2 of each CPU cycle",
+    "rule": "the edge detector samples the line during phi2 of every cycle",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+    "quote": "The internal signal goes high during phi1 of the cycle that follows the one where the edge is detected, ... stays high until the NMI has been handled.",
+    "rule": "the internal signal rises one cycle after detection and stays up until the NMI is handled",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+    "quote": "it's really the status of the interrupt lines at the end of the second-to-last cycle that matters.",
+    "rule": "the CPU's decision is made at the end of the second-to-last cycle of an instruction",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+    "quote": "like all two-cycle instructions they poll the interrupt lines at the end of the first cycle",
+    "rule": "a two-cycle instruction therefore polls at the end of its first cycle",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+    "quote": "The interrupt sequences themselves do not perform interrupt polling,",
+    "rule": "the interrupt sequence itself polls no interrupt",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/NMI (step 5 of the NMI sequence)",
+    "quote": "Clear the NMI handler flip-flop.",
+    "rule": "servicing clears the flip-flop",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/NMI",
+    "quote": "Start of vertical blanking (scanline 241, dot 1): Set vblank_flag in PPU to true. ... End of vertical blanking (scanline 261, dot 1): Set vblank_flag to false. ... Read PPUSTATUS: Return old status of vblank_flag in bit 7, then set vblank_flag to false.",
+    "rule": "vblank_flag is set true at the start of vertical blanking and false at its end or by a PPUSTATUS read",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+    "quote": "(no sentence; the 'IRQ and NMI tick-by-tick execution' table has seven numbered ticks and is labelled as derived from Visual 6502)",
+    "rule": "the interrupt entry sequence is 7 cycles",
+    "sourcing": "stated as a seven-row table, not as a number"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+    "quote": "Interrupts are always polled before the second CPU cycle (the operand fetch) ... but not before the third CPU cycle on a taken branch ... The BRK instruction, however, can effectively be cancelled by an NMI (or an IRQ) this way",
+    "rule": "taken branches poll earlier than the second-to-last cycle, and BRK can be hijacked: both are refused by this model rather than approximated",
+    "sourcing": "stated"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+    "quote": "RTI ... restoring the I flag from the stack before polling for interrupts",
+    "rule": "RTI/PLP/CLI/SEI are peculiar about the I flag only, which does not mask NMI, so the uniform poll rule is used for them",
+    "sourcing": "stated"
+   },
+   {
+    "page": "",
+    "quote": "(no page consulted addresses this)",
+    "rule": "whether a PPUCTRL write is visible to the detector on its own cycle",
+    "sourcing": "silent: enumerated both ways (write_visible_same_cycle)"
+   },
+   {
+    "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+    "quote": "(see P-POLL-READS-DELAYED-SIGNAL)",
+    "rule": "whether the CPU's poll reads the delayed internal signal or the flip-flop",
+    "sourcing": "implied by two separate sentences, not composed anywhere: enumerated both ways (detector_latency)"
+   }
+  ],
+  "state_space": "32 configurations (vblank_flag, NMI_output, the detector's previous sample, the flip-flop, the internal signal)"
+ },
+ "image_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+ "kind": "derivation against a stated cycle-level model. The model is a transcription of NESdev prose plus a vector-derived cycle table. Nothing here is a hardware measurement, and nothing here changes model/transitions.py or model/cpu.py.",
+ "not_validated": [
+  "the interrupt entry sequence: the nes6502 vectors contain no interrupts, so its 7 cycles and its no-polling rule are prose only",
+  "the edge detector and the poll point: prose only, no vectors and no measurement",
+  "PPU dot timing: there is no dot or scanline counter in this model; the PPU is one bit",
+  "the two race parameters (write visibility, detector latency): enumerated rather than resolved",
+  "no hardware measurement of any kind was taken",
+  "DMA: OAM and DMC DMA stall the CPU and would stretch any window in real cycles. They cannot create a PPUCTRL write or a vblank_flag set, so they do not affect these two derivations, but the cycle counts here are stall-free"
+ ],
+ "obligation": "MA-NMI-EDGE and MA-NMI-LATENCY, derived rather than assumed",
+ "premises": [
+  {
+   "evidence": "Arithmetic from stated numbers, not a stated sentence. vblank_flag is set true by one event only, 'Start of vertical blanking (scanline 241, dot 1): Set vblank_flag in PPU to true.' (NMI); a frame is '341*262/3 = 29780 2/3 CPU clocks long' and 'The NTSC PPU runs at 3 times the CPU clock rate' (PPU_frame_timing), so consecutive sets are about 29780 CPU cycles apart. The edge that caused this NMI needed vblank_flag true, and 'the VBL flag is cleared 6820 PPU clocks (exactly 20 scanlines) after it is set' (PPU_frame_timing), i.e. about 2273 CPU cycles, so that edge was at most ~2273 cycles after the last set; servicing follows the edge within one instruction plus one detector cycle. The next set is therefore some 27000 CPU cycles away, far outside a 23-cycle window. Neither page states 'vblank_flag is set once per frame' in words, and neither states the vblank duration in CPU cycles.",
+   "page": "https://www.nesdev.org/wiki/NMI, https://www.nesdev.org/wiki/PPU_frame_timing",
+   "premise": "P-EDGE-NO-SET",
+   "sourcing": "implied",
+   "statement": "From the first cycle of the NMI interrupt sequence, no event sets vblank_flag to true for the next 23 CPU cycles (the length of the window from interrupt entry to the completion of the disabling write at $808C)."
+  },
+  {
+   "evidence": "Not a hardware premise. NMI_output false has to come from the image. The graph has three PPUCTRL writes that can happen between $808C and $817E, and the bit-7 provenance analysis settles each: $808C writes bit 7 clear (from the image's own AND #$7F / AND #$7E masks), $816C writes bit 7 of RAM[$0778], and the routine at $8EED, which the handler body reaches through JSR $8EED at $8E23, also writes bit 7 of RAM[$0778]. All three reduce to one RAM invariant - bit 7 of RAM[$0778] is clear - which verify/JOINT_INVARIANT.md section 1 already lists as open. 'No NMI pending' then follows from L-NMI-EDGE-DISABLED: with NMI_output false no edge can be latched. Not settled: the nine stores through a RAM pointer that the handler body reaches, whose effective address is not bounded here.",
+   "page": "formal/verify/JOINT_INVARIANT.md section 1",
+   "premise": "P-LATENCY-DISABLED",
+   "sourcing": "program",
+   "statement": "At the first cycle of the handler epilogue at $8178, NMI_output is false and no NMI is pending (neither the edge-detector flip-flop nor the internal signal is set)."
+  },
+  {
+   "evidence": "The no-polling half is stated: 'The interrupt sequences themselves do not perform interrupt polling,' (CPU_interrupts). The length is not stated in words; CPU_interrupts gives a seven-row 'IRQ and NMI tick-by-tick execution' table, labelled as derived from Visual 6502, and the 7 is read off that table. The vectors do not cover interrupt entry, so this number is not validated here. L-NMI-EDGE-WINDOW is re-run for entry lengths 1..12 and its verdict does not change, so the number is not load-bearing.",
+   "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+   "premise": "P-ENTRY-SEQUENCE-7",
+   "sourcing": "stated",
+   "statement": "The NMI interrupt entry sequence is 7 CPU cycles long and polls no interrupt during them."
+  },
+  {
+   "evidence": "Read out of the SingleStepTests nes6502 vectors' per-cycle 'cycles' field; every vector for each opcode agrees. See the validation section of the report for the counts.",
+   "page": "https://github.com/SingleStepTests/65x02",
+   "premise": "P-WRITE-ON-LAST-CYCLE",
+   "sourcing": "vectors",
+   "statement": "STA abs takes 4 cycles and its write lands on the fourth; LDA abs takes 4 and reads its operand on the fourth; AND/ORA immediate take 2; PLA takes 4; RTI takes 6."
+  },
+  {
+   "evidence": "Neither CPU_interrupts nor NMI states this. The closest is 'The PPU pulls /NMI low if and only if both vblank_flag and NMI_output are true.' (NMI), which is a condition, not a timing. Both settings are enumerated as the model parameter write_visible_same_cycle, and neither derivation's verdict depends on it, so this premise is NOT needed. It would be needed only for a liveness claim (that the re-enabling write at $817E does cause the next NMI promptly), which no obligation in this track makes.",
+   "page": "https://www.nesdev.org/wiki/NMI",
+   "premise": "P-ENABLE-IMMEDIATE-EDGE",
+   "sourcing": "silent",
+   "statement": "A PPUCTRL write that sets bit 7 while vblank_flag is already true pulls /NMI low in time for the edge detector's phi2 sample on that same cycle."
+  },
+  {
+   "evidence": "Composed from two separately stated sentences: 'it's really the status of the interrupt lines at the end of the second-to-last cycle that matters.' and 'The internal signal goes high during phi1 of the cycle that follows the one where the edge is detected,' (CPU_interrupts). No page composes them. Both settings are enumerated as the model parameter detector_latency, and neither derivation's verdict depends on it.",
+   "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+   "premise": "P-POLL-READS-DELAYED-SIGNAL",
+   "sourcing": "implied",
+   "statement": "The CPU's end-of-second-to-last-cycle poll reads the edge detector's delayed internal signal, not the flip-flop directly."
+  },
+  {
+   "evidence": "Checked from the image by the derivation itself: the window decodes to LDA $0778 / AND #$7F / STA $0778 / AND #$7E / STA $2000 and contains no $2002 access. Reported as window_has_no_ppustatus_read.",
+   "page": "the image",
+   "premise": "P-NO-STATUS-READ-IN-WINDOW",
+   "sourcing": "program",
+   "statement": "No instruction between $8082 and the disabling write at $808C reads PPUSTATUS, so the CPU does not clear vblank_flag inside that window."
+  }
+ ],
+ "program_side": {
+  "closed": "there are five direct writes to a PPUCTRL mirror in the graph: $8004 and the routine at $8EED (both on the reset path), $808C and $816C in the handler prologue, and $817E in its epilogue. $808C writes bit 7 clear, derived from the image's own AND #$7F / AND #$7E masks, and $817E writes it set, derived from its ORA #$80.",
+  "direct_ppuctrl_writes": [
+   {
+    "at": "$8004",
+    "instruction": "STA $2000",
+    "reachable_from_the_handler_body": false
+   },
+   {
+    "at": "$808C",
+    "instruction": "STA $2000",
+    "reachable_from_the_handler_body": false
+   },
+   {
+    "at": "$816C",
+    "instruction": "STA $2000",
+    "reachable_from_the_handler_body": false
+   },
+   {
+    "at": "$817E",
+    "instruction": "STA $2000",
+    "reachable_from_the_handler_body": false
+   },
+   {
+    "at": "$8EED",
+    "instruction": "STA $2000",
+    "reachable_from_the_handler_body": true
+   }
+  ],
+  "enable_bit_provenance": {
+   "$8004": {
+    "bit7_of_the_value_written": "clear",
+    "instruction": "STA $2000",
+    "reduces_to": "clear"
+   },
+   "$8054": {
+    "bit7_of_the_value_written": "set",
+    "instruction": "JSR $8EED",
+    "reduces_to": "set"
+   },
+   "$808C": {
+    "bit7_of_the_value_written": "clear",
+    "instruction": "STA $2000",
+    "reduces_to": "clear"
+   },
+   "$816C": {
+    "bit7_of_the_value_written": "copy:$0778",
+    "instruction": "STA $2000",
+    "reduces_to": "the RAM invariant on $0778"
+   },
+   "$817E": {
+    "bit7_of_the_value_written": "set",
+    "instruction": "STA $2000",
+    "reduces_to": "set"
+   },
+   "$8E23": {
+    "bit7_of_the_value_written": "copy:$0778",
+    "instruction": "JSR $8EED",
+    "reduces_to": "the RAM invariant on $0778"
+   },
+   "$8EA9": {
+    "bit7_of_the_value_written": "copy:$0778",
+    "instruction": "JSR $8EED",
+    "reduces_to": "the RAM invariant on $0778"
+   },
+   "$8EED": {
+    "bit7_of_the_value_written": "unknown",
+    "instruction": "STA $2000",
+    "reduces_to": "unknown"
+   }
+  },
+  "graph": "analysis/cfg.py, built from the three vectors",
+  "handler_body_reachable_starts": 9691,
+  "indexed_writes_whose_range_may_include_a_mirror": [
+   {
+    "at": "$FFF7",
+    "instruction": "ASL $1F1E,X",
+    "reachable_from_the_handler_body": false
+   }
+  ],
+  "instruction_starts": 10708,
+  "open": "two things. First, the routine at $8EED writes PPUCTRL from whatever A holds, and the handler body does reach it: the graph has $8212 -> ... -> $858E -> $8E19 -> JSR $8EED at $8E23. So a PPUCTRL write does occur inside the game logic, and the premise is not 'no write' but 'no write with bit 7 set'. See enable_bit_provenance: at $8E23 bit 7 of A is bit 7 of RAM[$0778], the same cell $816C writes from, so this site reduces to the same RAM invariant and adds no new assumption - but that invariant is open (verify/JOINT_INVARIANT.md section 1). Second, the stores through a RAM pointer are not bounded here. If any of the nine the handler body reaches can be made to address a PPUCTRL mirror with bit 7 of the stored value set, the enable bit can be raised inside the handler body and both halves of MA-NMI-EDGE lose their program premise. Both are residual obligations, not results.",
+  "provenance_of_the_sites_the_handler_body_reaches": {
+   "$8E23": {
+    "bit7_of_the_value_written": "copy:$0778",
+    "instruction": "JSR $8EED",
+    "reduces_to": "the RAM invariant on $0778"
+   },
+   "$8EED": {
+    "bit7_of_the_value_written": "unknown",
+    "instruction": "STA $2000",
+    "reduces_to": "unknown"
+   }
+  },
+  "writes_through_a_RAM_pointer": [
+   {
+    "at": "$871C",
+    "instruction": "STA ($00),Y",
+    "reachable_from_the_handler_body": true
+   },
+   {
+    "at": "$90DC",
+    "instruction": "STA ($06),Y",
+    "reachable_from_the_handler_body": true
+   },
+   {
+    "at": "$94F7",
+    "instruction": "STA ($06),Y",
+    "reachable_from_the_handler_body": true
+   },
+   {
+    "at": "$B9B5",
+    "instruction": "STA ($06),Y",
+    "reachable_from_the_handler_body": true
+   },
+   {
+    "at": "$BD4B",
+    "instruction": "STA ($06),Y",
+    "reachable_from_the_handler_body": true
+   },
+   {
+    "at": "$BE35",
+    "instruction": "STA ($06),Y",
+    "reachable_from_the_handler_body": true
+   },
+   {
+    "at": "$BEF4",
+    "instruction": "STA ($06),Y",
+    "reachable_from_the_handler_body": true
+   },
+   {
+    "at": "$DE20",
+    "instruction": "STA ($06),Y",
+    "reachable_from_the_handler_body": true
+   },
+   {
+    "at": "$E007",
+    "instruction": "STA ($06),Y",
+    "reachable_from_the_handler_body": true
+   },
+   {
+    "at": "$F3BD",
+    "instruction": "SHA* ($92),Y",
+    "reachable_from_the_handler_body": false
+   }
+  ]
+ },
+ "recommended_assumption_wording": {
+  "MA-NMI-EDGE": "Split in two. The half that needs nothing: while the PPU NMI-enable bit is clear no NMI can be taken, so two NMI entries must have an intervening 0->1 write of that bit (L-NMI-EDGE-DISABLED, proved against the cycle model in model/interrupt_timing.py, no premise). The half that is still an assumption: no second NMI inside the 23 cycles from interrupt entry to the disabling write at $808C. That is derived (L-NMI-EDGE-WINDOW) but conditional on P-EDGE-NO-SET, a PPU frame-timing premise NESdev implies by arithmetic and states nowhere. Drop the phrase 'at least one frame apart': the frame is not what the derivation uses, and the program premise that no PPUCTRL write between $808C and $817E sets bit 7 is open for nine stores through a RAM pointer.",
+  "MA-NMI-LATENCY": "Keep it as an assumption, but say what it rests on. Derived (L-NMI-LATENCY) by exhaustive enumeration over the real epilogue $8178-$8181 and every adversarial vblank_flag timing, and conditional on P-LATENCY-DISABLED, which is a *program* premise, not a timing one: NMI_output must be clear and no NMI pending when the epilogue starts. Without it the statement is refuted with a witness. The sample point is quoted, the consequence is derived, and the 'wrong for taken branches' caveat can go: the model refuses branches rather than approximating them, and neither window contains one."
+ },
+ "results": [
+  {
+   "claim": "No NMI is taken between the enabling write STA $2000 at $817E and the completion of the RTI at $8181; an NMI whose edge that write causes is serviced only after the RTI.",
+   "detail": {
+    "adversary": "vblank_flag may be set or cleared on any cycle",
+    "adversary_strategies_covered": {
+     "write_visible_same_cycle=false,detector_latency=false": 6973568802,
+     "write_visible_same_cycle=false,detector_latency=true": 6973568802,
+     "write_visible_same_cycle=true,detector_latency=false": 6973568802,
+     "write_visible_same_cycle=true,detector_latency=true": 6973568802
+    },
+    "answer_with_premise": "no",
+    "earliest_service_after_the_rti_completes": {
+     "write_visible_same_cycle=false,detector_latency=false": 21,
+     "write_visible_same_cycle=false,detector_latency=true": 21,
+     "write_visible_same_cycle=true,detector_latency=false": 21,
+     "write_visible_same_cycle=true,detector_latency=true": 21
+    },
+    "not_vacuous": "the model does admit a service in this window: under every timing parameter setting there is an adversarial vblank_flag timing for which the NMI is serviced on absolute cycle 21, the cycle after the RTI completes. The derivation says the NMI arrives one instruction late, not that it never arrives.",
+    "question": "can the interrupt sequence be entered between the STA $2000 at $817E and the RTI at $8181?",
+    "rti_completes_on_absolute_cycle": 20,
+    "services_between_sta_and_rti": {
+     "write_visible_same_cycle=false,detector_latency=false": [],
+     "write_visible_same_cycle=false,detector_latency=true": [],
+     "write_visible_same_cycle=true,detector_latency=false": [],
+     "write_visible_same_cycle=true,detector_latency=true": []
+    },
+    "states_explored": {
+     "write_visible_same_cycle=false,detector_latency=false": 102,
+     "write_visible_same_cycle=false,detector_latency=true": 102,
+     "write_visible_same_cycle=true,detector_latency=false": 106,
+     "write_visible_same_cycle=true,detector_latency=true": 106
+    },
+    "step_names": [
+     "$8178 LDA $2002",
+     "$817B PLA",
+     "$817C ORA #$80",
+     "$817E STA $2000",
+     "$8181 RTI"
+    ],
+    "verdict_identical_under_all_timing_parameters": true,
+    "window": {
+     "bytes": "ad02206809808d002040",
+     "cycles": 20,
+     "instructions": [
+      "$8178: LDA $2002",
+      "$817B: PLA",
+      "$817C: ORA #$80",
+      "$817E: STA $2000",
+      "$8181: RTI"
+     ],
+     "label": "$8178-$8181 epilogue",
+     "steps": [
+      {
+       "cycles": 4,
+       "name": "$8178 LDA $2002",
+       "poll_at_end_of_cycle": 3,
+       "ppuctrl_write_cycle": null,
+       "ppuctrl_write_enables_nmi": null,
+       "ppustatus_read_cycle": 4
+      },
+      {
+       "cycles": 4,
+       "name": "$817B PLA",
+       "poll_at_end_of_cycle": 3,
+       "ppuctrl_write_cycle": null,
+       "ppuctrl_write_enables_nmi": null,
+       "ppustatus_read_cycle": null
+      },
+      {
+       "cycles": 2,
+       "name": "$817C ORA #$80",
+       "poll_at_end_of_cycle": 1,
+       "ppuctrl_write_cycle": null,
+       "ppuctrl_write_enables_nmi": null,
+       "ppustatus_read_cycle": null
+      },
+      {
+       "cycles": 4,
+       "name": "$817E STA $2000",
+       "poll_at_end_of_cycle": 3,
+       "ppuctrl_write_cycle": 4,
+       "ppuctrl_write_enables_nmi": true,
+       "ppustatus_read_cycle": null
+      },
+      {
+       "cycles": 6,
+       "name": "$8181 RTI",
+       "poll_at_end_of_cycle": 5,
+       "ppuctrl_write_cycle": null,
+       "ppuctrl_write_enables_nmi": null,
+       "ppustatus_read_cycle": null
+      }
+     ]
+    },
+    "without_the_premise": {
+     "reading": "if NMI_output is already set, or an NMI is already pending, when the epilogue starts, then the interrupt sequence can be entered between the STA and the RTI. MA-NMI-LATENCY is therefore not a statement about the instruction pair alone.",
+     "status": "refuted",
+     "witnesses": [
+      {
+       "adversary_trace": [],
+       "after_step": 3,
+       "initial_state": {
+        "flipflop": true,
+        "internal_signal": false,
+        "nmi_output": false,
+        "vblank_flag": false
+       },
+       "interrupt_sequence_begins_on_absolute_cycle": 15,
+       "poll_at_end_of_absolute_cycle": 13,
+       "step": "$817E STA $2000",
+       "timing_parameters": "write_visible_same_cycle=true,detector_latency=true"
+      },
+      {
+       "adversary_trace": [],
+       "after_step": 3,
+       "initial_state": {
+        "flipflop": true,
+        "internal_signal": true,
+        "nmi_output": false,
+        "vblank_flag": false
+       },
+       "interrupt_sequence_begins_on_absolute_cycle": 15,
+       "poll_at_end_of_absolute_cycle": 13,
+       "step": "$817E STA $2000",
+       "timing_parameters": "write_visible_same_cycle=true,detector_latency=true"
+      },
+      {
+       "adversary_trace": [
+        {
+         "cycle": 12,
+         "vblank_flag": "set"
+        }
+       ],
+       "after_step": 3,
+       "initial_state": {
+        "flipflop": false,
+        "internal_signal": false,
+        "nmi_output": true,
+        "vblank_flag": false
+       },
+       "interrupt_sequence_begins_on_absolute_cycle": 15,
+       "poll_at_end_of_absolute_cycle": 13,
+       "step": "$817E STA $2000",
+       "timing_parameters": "write_visible_same_cycle=true,detector_latency=true"
+      },
+      {
+       "adversary_trace": [],
+       "after_step": 3,
+       "initial_state": {
+        "flipflop": true,
+        "internal_signal": false,
+        "nmi_output": true,
+        "vblank_flag": false
+       },
+       "interrupt_sequence_begins_on_absolute_cycle": 15,
+       "poll_at_end_of_absolute_cycle": 13,
+       "step": "$817E STA $2000",
+       "timing_parameters": "write_visible_same_cycle=true,detector_latency=true"
+      }
+     ]
+    }
+   },
+   "method": "exhaustive enumeration of every adversarial vblank_flag timing over the window, by reachability over the 32-state NMI path; all four settings of the two unsettled timing parameters",
+   "obligation": "L-NMI-LATENCY",
+   "premises": [
+    {
+     "evidence": "Not a hardware premise. NMI_output false has to come from the image. The graph has three PPUCTRL writes that can happen between $808C and $817E, and the bit-7 provenance analysis settles each: $808C writes bit 7 clear (from the image's own AND #$7F / AND #$7E masks), $816C writes bit 7 of RAM[$0778], and the routine at $8EED, which the handler body reaches through JSR $8EED at $8E23, also writes bit 7 of RAM[$0778]. All three reduce to one RAM invariant - bit 7 of RAM[$0778] is clear - which verify/JOINT_INVARIANT.md section 1 already lists as open. 'No NMI pending' then follows from L-NMI-EDGE-DISABLED: with NMI_output false no edge can be latched. Not settled: the nine stores through a RAM pointer that the handler body reaches, whose effective address is not bounded here.",
+     "page": "formal/verify/JOINT_INVARIANT.md section 1",
+     "premise": "P-LATENCY-DISABLED",
+     "sourcing": "program",
+     "statement": "At the first cycle of the handler epilogue at $8178, NMI_output is false and no NMI is pending (neither the edge-detector flip-flop nor the internal signal is set)."
+    },
+    {
+     "evidence": "Read out of the SingleStepTests nes6502 vectors' per-cycle 'cycles' field; every vector for each opcode agrees. See the validation section of the report for the counts.",
+     "page": "https://github.com/SingleStepTests/65x02",
+     "premise": "P-WRITE-ON-LAST-CYCLE",
+     "sourcing": "vectors",
+     "statement": "STA abs takes 4 cycles and its write lands on the fourth; LDA abs takes 4 and reads its operand on the fourth; AND/ORA immediate take 2; PLA takes 4; RTI takes 6."
+    },
+    {
+     "evidence": "Composed from two separately stated sentences: 'it's really the status of the interrupt lines at the end of the second-to-last cycle that matters.' and 'The internal signal goes high during phi1 of the cycle that follows the one where the edge is detected,' (CPU_interrupts). No page composes them. Both settings are enumerated as the model parameter detector_latency, and neither derivation's verdict depends on it.",
+     "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+     "premise": "P-POLL-READS-DELAYED-SIGNAL",
+     "sourcing": "implied",
+     "statement": "The CPU's end-of-second-to-last-cycle poll reads the edge detector's delayed internal signal, not the flip-flop directly."
+    }
+   ],
+   "status": "conditional"
+  },
+  {
+   "claim": "No second NMI is taken between an NMI being taken and the completion of the disabling write STA $2000 at $808C.",
+   "detail": {
+    "adversary_strategies_covered": {
+     "write_visible_same_cycle=false,detector_latency=false": 33554432,
+     "write_visible_same_cycle=false,detector_latency=true": 33554432,
+     "write_visible_same_cycle=true,detector_latency=false": 33554432,
+     "write_visible_same_cycle=true,detector_latency=true": 33554432
+    },
+    "answer_with_premise": "no",
+    "disabling_write_lands_on_absolute_cycle": 23,
+    "entry_length_sensitivity": {
+     "1": true,
+     "2": true,
+     "3": true,
+     "4": true,
+     "5": true,
+     "6": true,
+     "7": true,
+     "8": true,
+     "9": true,
+     "10": true,
+     "11": true,
+     "12": true
+    },
+    "nmi_pending_at_window_end": {
+     "write_visible_same_cycle=false,detector_latency=false": false,
+     "write_visible_same_cycle=false,detector_latency=true": false,
+     "write_visible_same_cycle=true,detector_latency=false": false,
+     "write_visible_same_cycle=true,detector_latency=true": false
+    },
+    "not_vacuous": "the window's poll points can fire: dropping P-EDGE-NO-SET produces a service inside the window (see without_the_premise), so the 'no service' result is not an artefact of a window in which nothing can happen.",
+    "question": "with the enable bit still set, can a second edge be detected and a second NMI serviced between interrupt entry and the completion of the write at $808C?",
+    "services_inside_the_window": {
+     "write_visible_same_cycle=false,detector_latency=false": [],
+     "write_visible_same_cycle=false,detector_latency=true": [],
+     "write_visible_same_cycle=true,detector_latency=false": [],
+     "write_visible_same_cycle=true,detector_latency=true": []
+    },
+    "states_explored": {
+     "write_visible_same_cycle=false,detector_latency=false": 142,
+     "write_visible_same_cycle=false,detector_latency=true": 142,
+     "write_visible_same_cycle=true,detector_latency=false": 142,
+     "write_visible_same_cycle=true,detector_latency=true": 142
+    },
+    "verdict_identical_for_entry_sequence_lengths_1_to_12": true,
+    "verdict_identical_under_all_timing_parameters": true,
+    "why": "the enable bit is 1 throughout the window and the only PPUCTRL write in it, at $808C, writes bit 7 clear (derived from the image's AND #$7F and AND #$7E), so NMI_output never goes 0->1 inside the window. /NMI can therefore only go high->low again if vblank_flag goes 0->1, which is exactly what P-EDGE-NO-SET excludes.",
+    "window": {
+     "bytes": "ad7807297f8d7807297e8d0020",
+     "cycles": 23,
+     "instructions": [
+      "$8082: LDA $0778",
+      "$8085: AND #$7F",
+      "$8087: STA $0778",
+      "$808A: AND #$7E",
+      "$808C: STA $2000"
+     ],
+     "label": "$8082-$808C handler prologue",
+     "steps": [
+      {
+       "cycles": 7,
+       "name": "nmi entry sequence",
+       "poll_at_end_of_cycle": null,
+       "ppuctrl_write_cycle": null,
+       "ppuctrl_write_enables_nmi": null,
+       "ppustatus_read_cycle": null
+      },
+      {
+       "cycles": 4,
+       "name": "$8082 LDA $0778",
+       "poll_at_end_of_cycle": 3,
+       "ppuctrl_write_cycle": null,
+       "ppuctrl_write_enables_nmi": null,
+       "ppustatus_read_cycle": null
+      },
+      {
+       "cycles": 2,
+       "name": "$8085 AND #$7F",
+       "poll_at_end_of_cycle": 1,
+       "ppuctrl_write_cycle": null,
+       "ppuctrl_write_enables_nmi": null,
+       "ppustatus_read_cycle": null
+      },
+      {
+       "cycles": 4,
+       "name": "$8087 STA $0778",
+       "poll_at_end_of_cycle": 3,
+       "ppuctrl_write_cycle": null,
+       "ppuctrl_write_enables_nmi": null,
+       "ppustatus_read_cycle": null
+      },
+      {
+       "cycles": 2,
+       "name": "$808A AND #$7E",
+       "poll_at_end_of_cycle": 1,
+       "ppuctrl_write_cycle": null,
+       "ppuctrl_write_enables_nmi": null,
+       "ppustatus_read_cycle": null
+      },
+      {
+       "cycles": 4,
+       "name": "$808C STA $2000",
+       "poll_at_end_of_cycle": 3,
+       "ppuctrl_write_cycle": 4,
+       "ppuctrl_write_enables_nmi": false,
+       "ppustatus_read_cycle": null
+      }
+     ]
+    },
+    "window_cycles": 23,
+    "window_has_no_ppustatus_read": true,
+    "without_the_premise": {
+     "reading": "if vblank_flag may be cleared and set again inside the window, a second NMI is serviced before $8085. The whole weight of MA-NMI-EDGE's first half is on P-EDGE-NO-SET, a PPU frame-timing premise that the instruction-level model cannot see.",
+     "status": "refuted",
+     "witnesses": [
+      {
+       "adversary_trace": [
+        {
+         "cycle": 9,
+         "vblank_flag": "set"
+        }
+       ],
+       "after_step": 1,
+       "initial_state": {
+        "flipflop": false,
+        "internal_signal": false,
+        "nmi_output": true,
+        "vblank_flag": false
+       },
+       "interrupt_sequence_begins_on_absolute_cycle": 12,
+       "poll_at_end_of_absolute_cycle": 10,
+       "step": "$8082 LDA $0778",
+       "timing_parameters": "write_visible_same_cycle=true,detector_latency=true"
+      },
+      {
+       "adversary_trace": [
+        {
+         "cycle": 8,
+         "vblank_flag": "clear"
+        },
+        {
+         "cycle": 9,
+         "vblank_flag": "set"
+        }
+       ],
+       "after_step": 1,
+       "initial_state": {
+        "flipflop": false,
+        "internal_signal": false,
+        "nmi_output": true,
+        "vblank_flag": true
+       },
+       "interrupt_sequence_begins_on_absolute_cycle": 12,
+       "poll_at_end_of_absolute_cycle": 10,
+       "step": "$8082 LDA $0778",
+       "timing_parameters": "write_visible_same_cycle=true,detector_latency=true"
+      }
+     ]
+    }
+   },
+   "method": "exhaustive enumeration of every adversarial vblank_flag timing over the 23-cycle window, by reachability over the 32-state NMI path; all four settings of the two unsettled timing parameters; entry-sequence length varied over 1..12",
+   "obligation": "L-NMI-EDGE-WINDOW",
+   "premises": [
+    {
+     "evidence": "Arithmetic from stated numbers, not a stated sentence. vblank_flag is set true by one event only, 'Start of vertical blanking (scanline 241, dot 1): Set vblank_flag in PPU to true.' (NMI); a frame is '341*262/3 = 29780 2/3 CPU clocks long' and 'The NTSC PPU runs at 3 times the CPU clock rate' (PPU_frame_timing), so consecutive sets are about 29780 CPU cycles apart. The edge that caused this NMI needed vblank_flag true, and 'the VBL flag is cleared 6820 PPU clocks (exactly 20 scanlines) after it is set' (PPU_frame_timing), i.e. about 2273 CPU cycles, so that edge was at most ~2273 cycles after the last set; servicing follows the edge within one instruction plus one detector cycle. The next set is therefore some 27000 CPU cycles away, far outside a 23-cycle window. Neither page states 'vblank_flag is set once per frame' in words, and neither states the vblank duration in CPU cycles.",
+     "page": "https://www.nesdev.org/wiki/NMI, https://www.nesdev.org/wiki/PPU_frame_timing",
+     "premise": "P-EDGE-NO-SET",
+     "sourcing": "implied",
+     "statement": "From the first cycle of the NMI interrupt sequence, no event sets vblank_flag to true for the next 23 CPU cycles (the length of the window from interrupt entry to the completion of the disabling write at $808C)."
+    },
+    {
+     "evidence": "Checked from the image by the derivation itself: the window decodes to LDA $0778 / AND #$7F / STA $0778 / AND #$7E / STA $2000 and contains no $2002 access. Reported as window_has_no_ppustatus_read.",
+     "page": "the image",
+     "premise": "P-NO-STATUS-READ-IN-WINDOW",
+     "sourcing": "program",
+     "statement": "No instruction between $8082 and the disabling write at $808C reads PPUSTATUS, so the CPU does not clear vblank_flag inside that window."
+    },
+    {
+     "evidence": "The no-polling half is stated: 'The interrupt sequences themselves do not perform interrupt polling,' (CPU_interrupts). The length is not stated in words; CPU_interrupts gives a seven-row 'IRQ and NMI tick-by-tick execution' table, labelled as derived from Visual 6502, and the 7 is read off that table. The vectors do not cover interrupt entry, so this number is not validated here. L-NMI-EDGE-WINDOW is re-run for entry lengths 1..12 and its verdict does not change, so the number is not load-bearing.",
+     "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+     "premise": "P-ENTRY-SEQUENCE-7",
+     "sourcing": "stated",
+     "statement": "The NMI interrupt entry sequence is 7 CPU cycles long and polls no interrupt during them."
+    },
+    {
+     "evidence": "Read out of the SingleStepTests nes6502 vectors' per-cycle 'cycles' field; every vector for each opcode agrees. See the validation section of the report for the counts.",
+     "page": "https://github.com/SingleStepTests/65x02",
+     "premise": "P-WRITE-ON-LAST-CYCLE",
+     "sourcing": "vectors",
+     "statement": "STA abs takes 4 cycles and its write lands on the fourth; LDA abs takes 4 and reads its operand on the fourth; AND/ORA immediate take 2; PLA takes 4; RTI takes 6."
+    },
+    {
+     "evidence": "Composed from two separately stated sentences: 'it's really the status of the interrupt lines at the end of the second-to-last cycle that matters.' and 'The internal signal goes high during phi1 of the cycle that follows the one where the edge is detected,' (CPU_interrupts). No page composes them. Both settings are enumerated as the model parameter detector_latency, and neither derivation's verdict depends on it.",
+     "page": "https://www.nesdev.org/wiki/CPU_interrupts",
+     "premise": "P-POLL-READS-DELAYED-SIGNAL",
+     "sourcing": "implied",
+     "statement": "The CPU's end-of-second-to-last-cycle poll reads the edge detector's delayed internal signal, not the flip-flop directly."
+    }
+   ],
+   "status": "conditional"
+  },
+  {
+   "claim": "While the PPU NMI-enable bit is clear no NMI can be taken, so two NMI entries must have an intervening 0->1 write of that bit.",
+   "detail": {
+    "answer": "no",
+    "configurations_checked": 192,
+    "edges_latched_with_nmi_output_clear": 0,
+    "horizon": "none: the check is over every configuration and every adversary action, not over a window of some length, so the conclusion holds for an unbounded number of cycles",
+    "question": "with NMI_output false, can the edge detector latch an edge, for any vblank_flag behaviour whatever?",
+    "what_this_does_not_say": "it does not say when the enable bit is next set. That is a program question: see PROG-PPUCTRL-WRITERS.",
+    "why": "/NMI low requires vblank_flag AND NMI_output; with NMI_output false the line is high on every phi2 sample, so no high->low transition occurs and the flip-flop is never set."
+   },
+   "method": "exhaustive enumeration over the whole 32-state configuration space and all three adversary actions, under all four settings of the two unsettled timing parameters; no horizon",
+   "obligation": "L-NMI-EDGE-DISABLED",
+   "premises": [],
+   "status": "proved"
+  }
+ ],
+ "status_counts": {
+  "conditional": 2,
+  "proved": 1
+ },
+ "validation": {
+  "derived_from_it": [
+   "cycle count per opcode",
+   "which cycle each write lands on",
+   "which cycles touch the operand rather than the instruction's own bytes"
+  ],
+  "disagreements": 0,
+  "field_compared": "cycles: one entry per CPU cycle, [address, value, read|write]",
+  "note": "every vector for each opcode agreed on the whole shape; a disagreement would have raised rather than been averaged",
+  "opcodes": {
+   "0x09": {
+    "cycles": 2,
+    "opcode": "0x09",
+    "operand_access_cycles": [],
+    "vectors_agreeing": 300,
+    "write_cycles": []
+   },
+   "0x29": {
+    "cycles": 2,
+    "opcode": "0x29",
+    "operand_access_cycles": [],
+    "vectors_agreeing": 300,
+    "write_cycles": []
+   },
+   "0x40": {
+    "cycles": 6,
+    "opcode": "0x40",
+    "operand_access_cycles": [
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "vectors_agreeing": 300,
+    "write_cycles": []
+   },
+   "0x68": {
+    "cycles": 4,
+    "opcode": "0x68",
+    "operand_access_cycles": [
+     2,
+     3,
+     4
+    ],
+    "vectors_agreeing": 300,
+    "write_cycles": []
+   },
+   "0x8D": {
+    "cycles": 4,
+    "opcode": "0x8D",
+    "operand_access_cycles": [
+     4
+    ],
+    "vectors_agreeing": 300,
+    "write_cycles": [
+     4
+    ]
+   },
+   "0xAD": {
+    "cycles": 4,
+    "opcode": "0xAD",
+    "operand_access_cycles": [
+     4
+    ],
+    "vectors_agreeing": 300,
+    "write_cycles": []
+   }
+  },
+  "opcodes_read": 6,
+  "source": "SingleStepTests nes6502 vectors",
+  "vectors_read": 1800
+ }
+}

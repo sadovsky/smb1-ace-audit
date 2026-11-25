@@ -36,19 +36,32 @@ MA-PPU-WARMUP    writes to PPU control are assumed to take effect.  A real PPU
                  Which consoles reset the PPU on the button varies (the
                  front-loading NES does; the Famicom and the top-loader are
                  documented as not doing so).
-MA-NMI-EDGE      two NMI entries with no intervening 0->1 write of the enable
-                 bit are at least one frame apart.  Not built into `T`.  The
-                 edge rule (NMI on a rising edge of vblank flag AND enable) is
-                 documented by NESdev; the consequence used here is derived
-                 from it.
-MA-NMI-LATENCY   an NMI whose edge is caused by the final cycle of an
-                 instruction is serviced after the *following* instruction.
-                 Not built into `T`.  NESdev documents that the interrupt
-                 lines are sampled at the end of the second-to-last cycle;
-                 this assumption is an inference from that, not a quoted
-                 statement.  The uniform rule is wrong for taken branches,
-                 which does not matter for the two instructions it is applied
-                 to (`STA $2000` and `RTI`).
+MA-NMI-EDGE      no second NMI is taken in the 23 cycles from interrupt entry
+                 to the handler's disabling write at `$808C`.  Not built into
+                 `T`.  Only this narrow part is assumed.  That no NMI can be
+                 taken while the enable bit is clear is a lemma
+                 (`L-NMI-EDGE-DISABLED`, proved against the cycle model in
+                 `model/interrupt_timing.py` with no premise).  The window
+                 part is derived there too (`L-NMI-EDGE-WINDOW`) but is
+                 conditional on a PPU frame-timing premise, that the vblank
+                 flag is not set again within those cycles, which NESdev
+                 implies by arithmetic and states nowhere; without it the
+                 claim is refuted with a witness.  The program-side premise
+                 (nothing sets the bit between `$808C` and `$817E`) is
+                 settled for the direct PPU-control writes and open for nine
+                 stores through a RAM pointer.
+MA-NMI-LATENCY   no NMI is taken between the handler's enabling write at
+                 `$817E` and the completion of the `RTI` at `$8181`.  Not
+                 built into `T`.  Derived (`L-NMI-LATENCY`) by exhaustive
+                 enumeration over the epilogue `$8178-$8181` and every
+                 vblank-flag timing, under both settings of the two timing
+                 rules NESdev leaves open, but conditional on a *program*
+                 premise: NMI output is clear and no NMI is pending when the
+                 epilogue starts.  Without that it is refuted with two
+                 witnesses.  The interrupt sample point is quoted from
+                 NESdev; the consequence is derived.  The cycle model is
+                 validated against per-cycle bus data for the six opcodes
+                 involved and against no hardware measurement.
 MA-CPU           `cpu.py` matches the 2A03 at instruction granularity; see the
                  validation report for what that rests on.
 

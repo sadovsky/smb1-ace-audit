@@ -148,6 +148,7 @@ def build():
     observed = load("reports", "dyn_observations.json")
     observed2 = load("reports", "dyn_observations_nespy.json")
     storm = load("reports", "dyn_nmi_storm.json")
+    timing = load("reports", "interrupt_timing.json")
     init_path = os.path.join(RESULTS, "reports", "init_memory.json")
     init = json.load(open(init_path)) if os.path.exists(init_path) else None
     replication_path = os.path.join(RESULTS, "reports", "replication.json")
@@ -602,18 +603,49 @@ def build():
           "console.</b> An NES delivers at most one NMI per vertical blank. "
           "Its value is diagnostic: P1 cannot be proved for the "
           "over-approximate interrupt rule, so a proof must assume timing. "
-          "We use two assumptions. MA-NMI-EDGE: after an NMI is taken, none "
-          "follows until the enable bit has been written from 0 to 1; this "
-          "follows from the documented edge rule " + cite("nesdev-int")
-          + " given that a handler finishes its prologue within a frame. "
-          "MA-NMI-LATENCY: an NMI whose edge is caused by the last cycle of "
-          "an instruction is serviced after the following instruction. The "
-          "documentation states that interrupt lines are sampled before the "
-          "final cycle; the consequence is our inference, it is known to be "
-          "inexact for taken branches, and we apply it only to "
-          + C("STA $2000") + " followed by " + C("RTI") + ". So the "
+          "We use two assumptions. MA-NMI-EDGE: no second NMI is taken "
+          "between interrupt entry and the handler's disabling write. "
+          "MA-NMI-LATENCY: no NMI is taken between the handler's enabling "
+          "write and the completion of its " + C("RTI") + ". So the "
           "invariant is refuted for the unrestricted model and open for "
           "the model restricted by these two assumptions."))
+    tc = timing["status_counts"]
+    add(P("<b>Are the assumptions true of hardware?</b> To move them from "
+          "assumed toward derived we built a small cycle-level model of the "
+          "NMI edge detector and the CPU's interrupt poll, with cycle "
+          "counts and write positions taken from the per-cycle bus records "
+          f"of {n(timing['validation']['vectors_read'])} test vectors "
+          + cite("sst") + " and each rule tied to its NESdev sentence "
+          + cite("nesdev-int") + ". Two timing rules the documentation "
+          "leaves open are enumerated both ways. Exhaustive enumeration "
+          "over every adversarial vertical-blank timing gives "
+          f"{tc.get('proved', 0)} result proved and "
+          f"{tc.get('conditional', 0)} conditional:"))
+    rows = [["Claim", "Status", "Premise"],
+            ["No NMI can be taken while the enable bit is clear",
+             "proved", "none"],
+            ["No second NMI in the 23 cycles from entry to the disabling "
+             "write", "conditional",
+             "the vertical-blank flag is not set again in that window; "
+             "implied by documented frame timing, stated nowhere"],
+            ["No NMI between the enabling write and the end of RTI",
+             "conditional",
+             "NMI is disabled and none is pending when the handler's exit "
+             "sequence begins; a property of the program, not of timing"]]
+    add(table(rows, [cwi * 0.36, cwi * 0.2, cwi * 0.44]))
+    add(P("Table 1. Interrupt-timing claims derived from the cycle model.",
+          CAP))
+    add(P("Each conditional claim is refuted, with a witness timing, when "
+          "its premise is dropped. The second premise matters: the latency "
+          "assumption is not a fact about two instructions but depends on "
+          "the handler body leaving NMI disabled, which is exactly the "
+          "open invariant about the PPU-control mirror cell. The analysis "
+          "also found that the handler body does write PPU control, "
+          "through a shared routine, with a value read from that same "
+          "cell; and nine stores through a RAM pointer reachable from the "
+          "handler are not yet bounded away from the register. The cycle "
+          "model itself is checked against bus records for six opcodes "
+          "and against no hardware measurement."))
     FIG(figures.handler_timeline(),
         "The NMI handler and the two windows in which the assumptions "
         "exclude a further NMI (schematic; addresses from the image).")
@@ -642,10 +674,26 @@ def build():
     add(P("The proposer is an abstract interpreter and is untrusted. The "
           "checker shares no code with it, treats any context the "
           "certificate omits as unreachable, and turns each condition into "
-          "one quantifier-free query over the machine model. The step from "
-          "&quot;every condition holds&quot; to &quot;the conjunction is "
-          "inductive&quot; is a standard argument that we give on paper and "
-          "have <i>not</i> mechanised; it is part of the trusted base."))
+          "one quantifier-free query over the machine model."))
+    add(P("The step from &quot;every condition holds&quot; to &quot;the "
+          "conjunction is inductive&quot; we mechanised in Lean 4 for an "
+          "abstract machine (seven opaque transition relations and the "
+          "constraints linking control flow to the stack). The theorem "
+          "that every reachable program counter is a live context is "
+          "proved with no unproved steps, but only after adding hypotheses "
+          "the design had omitted, and the development includes a small "
+          "concrete certificate that satisfies every condition as "
+          "originally written yet reaches an unsafe address. The "
+          "conditions as designed therefore did not imply safety. The "
+          "omissions are: the interrupt windows were taken from the "
+          "certificate unvalidated; an interrupt inside a callee was not "
+          "charged to its suspended callers; the handler's postcondition "
+          "was checked before " + C("RTI") + " and assumed after it; and "
+          "stack depth was compared in 8-bit modular arithmetic with no "
+          "bound on total depth. The mechanisation does not cover the "
+          "6502 semantics, the SMT encoding of each condition, or the "
+          "checker's code, and it models the stack pointer as an integer, "
+          "which assumes the missing depth bound."))
     if joint_kinds:
         rows = [["Condition kind", "Holds", "Total", "Status"]]
         for o in joint_kinds:
@@ -653,7 +701,7 @@ def build():
             rows.append([o["id"].replace("JOINT-", ""), n(d["holds"]),
                          n(d["conditions"]), o["status"]])
         add(table(rows, [cwi * 0.36, cwi * 0.2, cwi * 0.2, cwi * 0.24]))
-        add(P("Table 1. Verification conditions of the proposed "
+        add(P("Table 2. Verification conditions of the proposed "
               "certificate, by kind, as recorded by the checker.", CAP))
         cert = obligations["JOINT-CERTIFICATE"]
         d = cert["detail"]
@@ -716,7 +764,7 @@ def build():
                 [", ".join(never["ranges"]), n(never["count"]),
                  "never written: whatever power-on left there"]]
         add(table(rows, [cwi * 0.36, cwi * 0.14, cwi * 0.5]))
-        add(P("Table 2. Initial-memory partition, proved from the image.",
+        add(P("Table 3. Initial-memory partition, proved from the image.",
               CAP))
         add(P("The warm-boot case is taken exactly when "
               + C(init["warm_boot_condition"].replace("<u", "&lt;"))
@@ -814,7 +862,7 @@ def build():
         "Decomposition of P1 with the settled status of each obligation. "
         "An arrow reads &quot;depends on&quot;.")
     add(table(rows, [cwi * 0.6, cwi * 0.4]))
-    add(P("Table 3. The decomposition of P1, as settled by the ledger.", CAP))
+    add(P("Table 4. The decomposition of P1, as settled by the ledger.", CAP))
     add(P("Direct transfers, the dispatcher's own code and the interrupt "
           "vectors are proved to stay on the graph. What remains is that "
           "every dispatch index is in range and every return frame is "
@@ -834,16 +882,11 @@ def build():
           "with cvc5 and Bitwuzla as cross-checks on the lemma and slice "
           "queries; the Python that builds queries, "
           "including the ledger; and, for the certificate route, the "
-          "unmechanised soundness argument and the checker. A review of the "
-          "checker during this work found four soundness gaps (interrupt "
-          "windows accepted from the certificate without validation, "
-          "interrupts inside a callee not charged to its contract, a "
-          "postcondition checked on the wrong side of " + C("RTI")
-          + ", and a havoc optimisation that could make hypotheses "
-          "vacuous). The repository history records which were closed "
-          "before the numbers above were produced. That such gaps existed "
-          "is the argument for mechanising the meta-theory in a proof "
-          "assistant before any stronger claim is made."))
+          "soundness argument, mechanised only for an abstract machine, "
+          "and the checker, whose encoding of each condition is not "
+          "verified against that mechanisation. Until the checker "
+          "implements the corrected conditions, its verdicts do not carry "
+          "the meaning the argument needs, and none are reported here."))
     add(P("The model is at instruction granularity and says nothing about "
           "behaviour that depends on cycles within an instruction. The "
           "interrupt assumptions are inferences from community hardware "
