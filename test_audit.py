@@ -73,5 +73,53 @@ class JumpEngineTests(unittest.TestCase):
         self.assertEqual(ram[0xFF] | ram[(0xFF + 1) & 0xFF] << 8, 0x1234)
 
 
+class DispatchReachabilityTests(unittest.TestCase):
+    """The enemy-ID dispatch bounds must be DERIVED from the routing tables,
+    not assumed. These pin the derivation so a regression is visible."""
+
+    @classmethod
+    def setUpClass(cls):
+        import os
+        import reach
+        if not os.path.exists(reach.TRACE):
+            raise unittest.SkipTest("trace.json missing; run python3 trace.py")
+        cls.reach = reach
+        cls.JT = reach.load_tables()
+
+    def test_c907_receives_only_ids_below_15(self):
+        """$C905 is reached only via collision-table entry 0, which CPY #$15/BCC
+        selects for IDs < $15. That fills its 21-entry table exactly."""
+        ids = self.reach.derive(self.JT)[0xC907][2]
+        self.assertEqual(ids, set(range(0x15)))
+        self.assertEqual(max(ids), 0x14)
+        self.assertEqual(self.JT[0xC907][1], 21)
+
+    def test_dangerous_ids_never_arrive_at_c907(self):
+        """$34/$35 resolve into controllable RAM but the routing excludes them."""
+        ids = self.reach.derive(self.JT)[0xC907][2]
+        for bad in (0x34, 0x35, 0x3C):
+            self.assertNotIn(bad, ids)
+
+    def test_only_out_of_bounds_dispatch_is_id36_into_ppu(self):
+        """Exactly one legal identifier indexes past its table, and it lands in
+        PPU space, so it cannot execute controllable bytes."""
+        oob = [(pc, i, v) for pc, _r, _n, _ids, _rng, o in self.reach.analyse(self.JT)
+               for i, _ix, v in o]
+        self.assertEqual(len(oob), 1)
+        pc, ID, target = oob[0]
+        self.assertEqual((pc, ID), (0xC88F, 0x36))
+        self.assertEqual(self.reach.memory_region(target), "ppu_registers")
+        self.assertNotIn(self.reach.memory_region(target), self.reach.RAM_REGIONS)
+
+    def test_every_in_bounds_target_stays_in_rom(self):
+        """The core structural claim: an in-range index always yields ROM."""
+        from memory import memory_region
+        for pc, (tbl, n) in self.JT.items():
+            for i in range(n):
+                t = self.reach.target(tbl, i)
+                self.assertEqual(memory_region(t), "prg_rom",
+                                 f"${pc:04X} index {i} -> ${t:04X}")
+
+
 if __name__ == "__main__":
     unittest.main()

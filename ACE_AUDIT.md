@@ -160,10 +160,47 @@ ID $35 -> $C307:  A9 B8        LDA #$B8
 ```
 
 No master-dispatch handler points into the `$C8D7–$C905` block at all, and
-`$C905` has exactly one caller (`$C8FF`), inside the enemy-graphics routine,
-which is gated to low IDs. This gate is *empirically proven* by normal play:
-Bowser's ID is `$2D` (> `$14`, the table limit) and he renders every time you
-reach `8-4` without the game crashing. So high IDs never enter the `$C905` path.
+`$C905` has exactly one caller (`$C8FF`), inside the enemy-graphics routine.
+
+**The gate itself, derived rather than inferred.** An earlier version argued the
+gate must exist because Bowser (ID `$2D`, far past the 21-entry table) renders
+without crashing. That is evidence, not a proof. The gate is in fact readable
+straight out of the collision dispatch:
+
+```
+$C882  LDX $08 / LDA #$00 / LDY $16,X
+$C888  CPY #$15
+$C88A  BCC $C88F        ; ID <  $15 -> dispatch with index 0
+$C88C  TYA / SBC #$14   ; ID >= $15 -> index = ID - $14
+$C88F  JSR $8E04        ; 34-entry collision table
+
+   collision entry 0        -> $C8E0 -> ... -> $C8FF JSR $C905 -> $C907
+   collision entries 16..22 -> $C965 -> ... -> $C976 JSR $C982 -> $C987
+```
+
+The only route into the `$C8E0` block is **collision-table entry 0**, which
+`CPY #$15 / BCC` selects *only for identifiers below `$15`*. So `$C907` receives
+identifiers `$00`–`$14`, giving indices 0–20 — exactly its 21 entries. The table
+is not under-sized; it is sized precisely to the identifier set that can arrive,
+and `$34`, `$35` and `$3C` are all `>= $15`.
+
+`reach.py` derives this mechanically for every enemy dispatch, using the exact
+JumpEngine model and the mirroring-aware classifier:
+
+| dispatch | N | identifiers that arrive | index range | verdict |
+|---|---|---|---|---|
+| `$C27F` behavior | 55 | `$00`–`$36` | 0–54 | exact fit |
+| `$C88F` collision | 34 | all (0 if `< $15`, else ID−`$14`) | 0–34 | **ID `$36` → idx 34, out of bounds** |
+| `$C907` graphics | 21 | `$00`–`$14` | 0–20 | exact fit |
+| `$C987` sub | 7 | `$24`–`$2A` | 0–6 | exact fit |
+| `$C7A8` sub | 8 | `$12`,`$14`–`$17` | 0–5 | within bounds |
+
+Two results follow. First, **every in-bounds index at all 18 dispatches resolves
+to PRG ROM** (asserted by `test_every_in_bounds_target_stays_in_rom`). Second,
+exactly one legal identifier indexes past its table anywhere in the game:
+**ID `$36` at `$C88F`**, index 34 against 34 entries, resolving to `$2060` —
+PPU register space. That can hang the machine but cannot execute controllable
+bytes, so it is **not** an ACE vector.
 
 ---
 
