@@ -1,0 +1,46 @@
+{
+  "masking": {
+    "caveats": [
+      "101 bytes in PRG hold $58 (CLI); the induction covers reachable instruction starts only, so already-derailed control flow could clear I. That is a consequence of derailment, not a mechanism for causing it.",
+      "the NMI runs every frame regardless of the I flag; it is the interrupt that actually occurs, and it is in the reachable set."
+    ],
+    "cli_sites": [],
+    "conclusion": "a maskable IRQ can never be serviced: I is set by SEI at reset and no reachable CLI or PLP exists; RTI can only restore a status byte that already had I set",
+    "i_flag_clearable_on_reachable_paths": false,
+    "plp_sites": [],
+    "rti_sites": [
+      "0x8181"
+    ],
+    "sei_sites": [
+      "0x8000"
+    ],
+    "stray_cli_bytes_in_prg": 101
+  },
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "vectors": [
+    {
+      "first_instruction_if_decoded": "LDA $0778",
+      "name": "nmi",
+      "region": "prg_rom",
+      "target": "0x8082",
+      "target_also_reached_by_normal_flow": false,
+      "vector_at": "0xFFFA"
+    },
+    {
+      "first_instruction_if_decoded": "SEI",
+      "name": "reset",
+      "region": "prg_rom",
+      "target": "0x8000",
+      "target_also_reached_by_normal_flow": false,
+      "vector_at": "0xFFFC"
+    },
+    {
+      "first_instruction_if_decoded": "ORA $1A19,Y",
+      "name": "irq",
+      "region": "prg_rom",
+      "target": "0xFFF0",
+      "target_also_reached_by_normal_flow": false,
+      "vector_at": "0xFFFE"
+    }
+  ]
+}

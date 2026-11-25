@@ -1,0 +1,17 @@
+{
+  "indirect_jumps": [
+    "0x8E16"
+  ],
+  "instruction_starts": 10708,
+  "model": "value-set derivation over established table boundaries",
+  "occupied_bytes": 22806,
+  "overlapping_decodings": 10,
+  "ram_destinations": 1198,
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "sites_overrunning_their_table": [
+    "0x9664",
+    "0x9743",
+    "0xC88F"
+  ],
+  "stack_derived_returns": 337
+}

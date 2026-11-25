@@ -87,6 +87,15 @@ class SiteDerivation:
         if maximum is None:
             return Bound(None, BoundProvenance.UNPROVED,
                          mechanism or "no path to the dispatch was found")
+        if self.overruns_table:
+            # A "bound" that does not keep the index inside the table is not a
+            # bound.  Reporting a maximum of 255 over a 47-entry table as
+            # PROVEN would read as "proved safe" when it means the opposite.
+            return Bound(None, BoundProvenance.UNPROVED,
+                         mechanism or
+                         f"derived maximum index {maximum} exceeds the "
+                         f"{self.entries}-entry table, so no bound keeping "
+                         "the index in range is established")
         if self.assumed_invariants:
             assumptions = tuple(
                 f"RAM[${address:04X}] {text}"

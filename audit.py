@@ -1,121 +1,148 @@
-"""ACE audit over the single computed jump in SMB1.
+"""ACE audit over the computed transfers in SMB1.
 
-Run trace.py first (it writes trace.json: the reached code set, the sole
-indirect JMP, and every JSR $8E04 dispatch table). This script then answers, for
-each of the 18 dispatch sites, the only question that matters for ACE:
+This script used to carry a hand-written table of per-site index bounds, with
+a note for each explaining why the index was in range.  Three of those notes
+were wrong about the ROM:
 
-    can the index be driven past the table so that JMP ($0006) reads ROM bytes
-    that form a <$0800 pointer into controllable RAM?
+  $92C8  "forced 1..8 -> 0..7, structural"  -- the BNE only substitutes for
+         zero; nothing clamps the upper end, so the index is bounded only by
+         an invariant on RAM[$071F].
+  $B34E  "CMP #$03, checked"                -- that comparison only decides
+         whether STY $0789 runs; both paths dispatch with A = $1D unchanged.
+  $9664  "GameEngine ($0E), bound 46"       -- the index is $00 + $07, formed
+         at $965F-$9662.  $0E is not the index source.
 
-Output mirrors ACE_AUDIT.md sections 3 and 4.
+and one was right for the wrong reason ($BDBD is bounded by $BDF6 returning
+Y <= 13, not by its CMP #$09).  So the table is gone: bounds come from
+`analysis.index_derivation`, table sizes from `analysis.dispatch_tables`, and
+destinations from `analysis.destinations`.
+
+Run `python3 trace.py` first only if you also want the legacy trace.json;
+this script builds its own CFG.
 """
+from __future__ import annotations
+
 import json
-import os
-import sys
 
-from jumpengine import resolve_table
-from memory import is_internal_ram, memory_region
+from analysis.cfg import build_from_vectors
+from analysis.destinations import RAM_REGIONS, resolve_all
+from analysis.dispatch_tables import establish
+from analysis.index_derivation import (
+    CANDIDATE_INVARIANTS,
+    ENEMY_SITES,
+    derive_conditional,
+    derive_site,
+    enemy_assumptions,
+)
+from analysis.interrupts import masking_report, vectors
+from analysis.provenance import ExecutionOutcome
+from memory import memory_region
 from rom import b, image
-
-TRACE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "trace.json")
-if not os.path.exists(TRACE):
-    sys.exit("trace.json missing - run:  python3 trace.py")
-
-J = json.load(open(TRACE))
-JT = sorted(J["jt"])          # (dispatch_pc, table_addr, n_entries)
-
-
-def target(tbl, idx):
-    """Address JMP ($0006) reaches using the actual 6502 instruction sequence."""
-    return resolve_table(b, tbl, idx).target
-
-
-def region(v):
-    return memory_region(v)
-
-
-# Index source and in-range bound for each dispatch, read from the disassembly.
-# 'maxidx' is the largest index the site can pass under the stated bound; None
-# means "no local bound - depends on an upstream invariant" (see notes).
-SITES = {
-    0x8215: ("$0770 OperMode",            3,    "state counter 0-3"),
-    0x8234: ("$0772 OperMode_Task",       3,    "task counter"),
-    0x83A3: ("$0772",                      4,    "task counter"),
-    0x856A: ("$073C screen task",         14,   "screen-routine counter"),
-    0x921B: ("$0772",                      2,    "task counter"),
-    0x92C8: ("$071F forced 1..8",         7,    "STRUCTURAL: 0..7"),
-    0x9664: ("GameEngine ($0E)",          46,   "engine state"),
-    0x9743: ("$0733",                      4,    "state counter"),
-    0xAEDF: ("$0772",                      3,    "task counter"),
-    0xB04C: ("$0E",                        12,   "state value"),
-    0xB34E: ("$1D (CMP #$03)",             3,    "player state, checked"),
-    0xBDBD: ("$05 via $BDF6",              8,    "CMP #$09 / BCC"),
-    0xC27F: ("$16,x enemy ID",            54,    "table sized to ID space 0..$36"),
-    0xC7A8: ("$16,x - $12",               7,    "routed IDs $12..$19"),
-    0xC88F: ("$16,x (CPY #$15, SBC #$14)", 33,   "worst case -> I/O crash"),
-    0xC907: ("$16,x RAW, no local bound", None,  "upstream routing only"),
-    0xC987: ("$16,x - $24",               6,    "routed IDs $24..$2A"),
-    0xD2E5: ("$0746 (CMP #$05 / BCS)",     4,    "explicit clamp"),
-}
 
 
 def main():
-    code = set(J["instruction_bytes"])
-    print(f"reached {len(code)} PRG bytes ({len(code) * 100 // 0x8000}%)")
-    print(f"sole computed jump: JMP ($0006) at $8E16 (JumpEngine $8E04)")
-    print(f"dispatch sites: {len(JT)}\n")
+    graph = build_from_vectors(b)
+    boundaries = establish(b, graph)
+    resolutions = resolve_all(b, graph)
+    enemy = enemy_assumptions(graph)
 
-    print("site   table   N  idx<=  index source                 bound / note")
-    print("-" * 78)
-    reach_ram = []
-    candidates = []
-    for pc, tbl, n in JT:
-        src, maxidx, note = SITES.get(pc, ("?", None, ""))
-        # in-range target is always ROM; check whether ANY index up to a generous
-        # out-of-bounds reaches controllable RAM, and whether the bound blocks it.
-        resolutions = [resolve_table(b, tbl, i) for i in range(256)]
-        ram_idx = [r.index for r in resolutions if is_internal_ram(r.target)]
-        blocked = maxidx is not None and all(i > maxidx for i in ram_idx)
-        mx = "-" if maxidx is None else maxidx
-        flag = ""
-        if ram_idx and not blocked:
-            flag = "  <-- internal RAM reachable within bound"
-            reach_ram.append((pc, tbl, n, maxidx, ram_idx))
-        for resolution in resolutions:
-            if is_internal_ram(resolution.target):
-                candidates.append({
-                    "entry_point": f"0x{pc:04X}", "index": resolution.index,
-                    "destination": f"0x{resolution.target:04X}",
-                    "memory_region": region(resolution.target),
-                    "index_source": src, "local_bound": maxidx,
-                    "reachability": "unproved" if maxidx is None else "excluded_by_bound",
-                    "exploitability": "unknown" if maxidx is None else "impossible_under_local_bound",
-                    "evidence": "static_exact_6502_model",
-                })
-        print(f"${pc:04X} ${tbl:04X} {n:3} {str(mx):>5}  {src:28} {note}{flag}")
+    print(f"ROM sha1 {image().sha1}")
+    print(f"instruction starts reached: {len(graph.nodes)} "
+          f"({len(graph.occupied_bytes())} bytes, "
+          f"{len(graph.occupied_bytes()) * 100 // 0x8000}% of PRG)")
+    print(f"overlapping instruction decodings preserved: "
+          f"{len(graph.overlapping_starts())}")
 
-    print("\n--- sites whose bound does NOT exclude a controllable-RAM target ---")
-    if not reach_ram:
-        print("none: every site's index bound keeps JMP ($0006) in ROM.")
-    for pc, tbl, n, maxidx, ram_idx in reach_ram:
-        hits = [(i, target(tbl, i)) for i in ram_idx if maxidx is None or i <= (maxidx or 0) + 64]
-        print(f"${pc:04X}: table ${tbl:04X} N={n} maxidx={maxidx}")
-        for i, v in hits[:6]:
-            print(f"    index {i} -> ${v:04X} ({region(v)})")
+    indirect = [u for u in graph.unresolved if u[1] == "indirect_jump"]
+    returns = [u for u in graph.unresolved if u[1] in ("rts", "rti")]
+    print(f"\ncomputed transfers:")
+    print(f"  direct indirect jumps : {len(indirect)}  "
+          + ", ".join(f"${a:04X}" for a, _k, _d in indirect))
+    print(f"  stack-derived returns : {len(returns)}  (each RTS/RTI takes its "
+          "destination from memory)")
+    print("  the 'exactly one computed jump' claim counts only the first "
+          "kind.")
 
-    # The headline detail: C907, the only raw-ID dispatch into an undersized table.
-    print("\n--- $C907 (enemy graphics, raw ID, 21-entry table) ---")
-    tbl = dict((p, t) for p, t, _ in JT)[0xC907]
-    for ID in range(0x00, 0x37):
-        v = target(tbl, ID)
-        if is_internal_ram(v):
-            print(f"    enemy ID ${ID:02X} -> ${v:04X} (controllable RAM)")
-    print("    (IDs $34/$35 route via master $C27F to RTS stubs $C2F0/$C307,")
-    print("     so they never reach $C905; Bowser ID $2D proves the gate empirically.)")
-    report = {"rom_sha1": image().sha1, "model": "exact_6502_jumpengine",
-              "candidate_control_flow_anomalies": candidates}
-    with open("exploitability_candidates.json", "w") as out:
-        json.dump(report, out, indent=2, sort_keys=True)
+    print(f"\ndispatch sites: {len(graph.dispatches)}")
+    print("\nsite   table  entries  idx(no assumption)  idx(under invariant)  "
+          "in range  provenance")
+    print("-" * 94)
+
+    overruns = []
+    for dispatch in sorted(graph.dispatches):
+        site = graph.dispatches[dispatch]
+        assumption = (enemy.get(dispatch) if dispatch in ENEMY_SITES
+                      else CANDIDATE_INVARIANTS.get(dispatch))
+        plain = derive_site(b, graph, dispatch)
+        conditional = derive_conditional(b, graph, dispatch, assumption)
+        bound = conditional.bound()
+        in_range = not conditional.overruns_table and not conditional.truncated
+        if not in_range:
+            overruns.append((dispatch, conditional))
+        print(f"${dispatch:04X} ${site.table:04X} {conditional.entries:8} "
+              f"{str(plain.maximum):>19} {str(conditional.maximum):>21} "
+              f"{'yes' if in_range else 'NO':>9}  {bound.provenance.value}")
+
+    print("\n--- table boundaries where the old heuristic was wrong ---")
+    wrong = [row for row in boundaries.values() if row.heuristic_was_wrong]
+    if not wrong:
+        print("none")
+    for row in wrong:
+        print(f"  ${row.dispatch:04X} (${row.table:04X}): heuristic read "
+              f"{row.heuristic} entries, independent evidence gives "
+              f"{row.entries}")
+
+    print("\n--- sites whose index is not kept inside the table ---")
+    if not overruns:
+        print("none")
+    for dispatch, conditional in overruns:
+        site = graph.dispatches[dispatch]
+        escaping = [i for i in conditional.indices if i >= conditional.entries]
+        print(f"  ${dispatch:04X}: {len(escaping)} index/indices past the "
+              f"{conditional.entries}-entry table "
+              f"(max {max(escaping) if escaping else '-'})")
+        shown = 0
+        for index in escaping:
+            match = [r for r in resolutions
+                     if r.dispatch == dispatch and r.raw_index == index]
+            if not match:
+                continue
+            resolution = match[0]
+            if resolution.outcome is ExecutionOutcome.INTERNAL_RAM or shown < 3:
+                print(f"      index {index:3} -> ${resolution.destination:04X} "
+                      f"[{resolution.region}] {resolution.rom_role}")
+                shown += 1
+            if shown >= 6:
+                break
+
+    ram = [r for r in resolutions if r.region in RAM_REGIONS]
+    print(f"\n--- destinations in controllable RAM, over all 18x256 "
+          f"resolutions: {len(ram)} ---")
+    print("These are the only resolutions that could execute player-influenced "
+          "bytes.")
+    print("Whether any is reachable is the open question; see classify.py.")
+
+    print("\n--- interrupt entry ---")
+    for report in vectors(b, graph):
+        print(f"  {report.name:5} vector -> ${report.target:04X} "
+              f"[{report.region}] decodes as {report.decoded}")
+    masking = masking_report(b, graph)
+    print(f"  {masking['conclusion']}")
+
+    report = {
+        "rom_sha1": image().sha1,
+        "model": "value-set derivation over established table boundaries",
+        "instruction_starts": len(graph.nodes),
+        "occupied_bytes": len(graph.occupied_bytes()),
+        "overlapping_decodings": len(graph.overlapping_starts()),
+        "indirect_jumps": [f"0x{a:04X}" for a, _k, _d in indirect],
+        "stack_derived_returns": len(returns),
+        "sites_overrunning_their_table": [f"0x{d:04X}" for d, _c in overruns],
+        "ram_destinations": len(ram),
+    }
+    with open("results/audit_summary.json", "w") as handle:
+        json.dump(report, handle, indent=2, sort_keys=True)
+    print("\nwrote results/audit_summary.json")
 
 
 if __name__ == "__main__":

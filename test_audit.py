@@ -157,34 +157,98 @@ class ControlFlowTests(unittest.TestCase):
 
 
 class ClassificationTests(unittest.TestCase):
-    """Review item 8: the exploitability classification."""
+    """The exploitability classification, after the provenance correction.
+
+    The assertions this class used to make were:
+
+        test_only_live_candidate_is_id36_and_it_is_not_ace
+            len(live) == 1, where live = exploitability != "excluded"
+
+    That encoded the overstatement the audit was corrected for.  It held only
+    because every ROM destination was skipped before classification and
+    because an *observed* bound was allowed to exclude an index outright.  With
+    both corrected there are many unexcluded destinations, so the test is
+    replaced rather than repaired, and the old numbers are preserved in
+    results/baseline/.
+    """
 
     @classmethod
     def setUpClass(cls):
-        import os
-        import reach
-        if not os.path.exists(reach.TRACE):
-            raise unittest.SkipTest("trace.json missing; run python3 trace.py")
         import classify
-        cls.records = classify.build()
 
-    def test_no_in_bounds_destination_leaves_rom(self):
-        """An in-bounds index must always resolve to PRG ROM."""
-        bad = [r for r in self.records if r["reachability"] == "in_bounds_non_rom"]
-        self.assertEqual(bad, [])
+        cls.records, cls.derivations = classify.build()
 
-    def test_only_live_candidate_is_id36_and_it_is_not_ace(self):
-        live = [r for r in self.records if r["exploitability"] != "excluded"]
-        self.assertEqual(len(live), 1)
-        r = live[0]
-        self.assertEqual((r["entry_point"], r["index"]), ("0xC88F", 34))
-        self.assertEqual(r["exploitability"], "not_ace")
-        self.assertEqual(r["memory_region"], "ppu_registers")
+    def test_in_table_destinations_always_resolve_into_rom(self):
+        """Every expected table entry points into PRG ROM."""
+        for record in self.records:
+            if record["execution_outcome"] == "expected_rom":
+                with self.subTest(site=record["entry_point"]):
+                    self.assertEqual(record["memory_region"], "prg_rom")
+
+    def test_rom_destinations_are_classified_not_discarded(self):
+        """Unexpected ROM destinations must appear in the record set."""
+        rom = [r for r in self.records
+               if r["execution_outcome"] == "unexpected_rom"]
+        self.assertGreater(len(rom), 500)
+
+    def test_unexpected_rom_includes_operand_bytes(self):
+        mid_instruction = [
+            r for r in self.records
+            if r["rom_role"] == "operand_byte_of_another_instruction"]
+        self.assertGreater(len(mid_instruction), 100)
+
+    def test_observed_bounds_never_exclude_unconditionally(self):
+        """The central rule of the corrected classifier."""
+        for record in self.records:
+            if record["exploitability"] == "excluded":
+                with self.subTest(site=record["entry_point"],
+                                  index=record["index"]):
+                    self.assertEqual(record["reachability"],
+                                     "proven_unreachable")
+
+    def test_conditional_exclusions_carry_their_assumptions(self):
+        conditional = [r for r in self.records
+                       if r["exploitability"] == "excluded_conditionally"]
+        self.assertTrue(conditional)
+        for record in conditional:
+            with self.subTest(site=record["entry_point"],
+                              index=record["index"]):
+                self.assertFalse(record["bound_unconditional"])
+                self.assertTrue(record["bound_assumptions"]
+                                or record["reachability_detail"])
+
+    def test_some_ram_destinations_remain_unexcluded(self):
+        """The corrected result has unknowns; the old one reported none."""
+        unknown = [r for r in self.records
+                   if r["exploitability"] == "unknown"]
+        self.assertTrue(unknown)
+        for record in unknown:
+            with self.subTest(site=record["entry_point"]):
+                self.assertIn(record["memory_region"],
+                              ("internal_ram", "internal_ram_mirror"))
+
+    def test_id36_at_c88f_is_still_not_ace(self):
+        """The one previously reported candidate is unchanged on its merits."""
+        match = [r for r in self.records
+                 if r["entry_point"] == "0xC88F" and r["index"] == 34]
+        self.assertEqual(len(match), 1)
+        self.assertEqual(match[0]["destination"], "0x2060")
+        self.assertEqual(match[0]["memory_region"], "ppu_registers")
+        self.assertEqual(match[0]["exploitability"], "not_ace")
 
     def test_every_record_has_a_bound_provenance(self):
-        allowed = {"structural", "derived", "observed", "unproved"}
-        for r in self.records:
-            self.assertIn(r["bound_provenance"], allowed)
+        allowed = {"proven", "structural_conditional", "derived_conditional",
+                   "observed", "assumed", "unproved"}
+        for record in self.records:
+            with self.subTest(site=record["entry_point"]):
+                self.assertIn(record["bound_provenance"], allowed)
+
+    def test_only_two_sites_are_bounded_with_no_assumption(self):
+        unconditional = sorted(
+            dispatch for dispatch, (_plain, conditional, _a)
+            in self.derivations.items()
+            if conditional.bound().is_unconditional)
+        self.assertEqual(unconditional, [0xBDBD, 0xD2E5])
 
 
 if __name__ == "__main__":
