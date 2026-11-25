@@ -24,7 +24,7 @@
       },
       "id": "A",
       "limitations": [
-        "336 RTS and 1 RTI destinations are not resolved; obligation D covers them",
+        "336 RTS and 1 RTI destinations are not enumerated in the graph itself; obligation D verifies their frames separately",
         "coverage is of the CFG built from the three vectors and the JumpEngine, not of all states reachable by input"
       ],
       "obligation": "All reachable instruction starts and transfers identified or conservatively represented",
@@ -52,7 +52,7 @@
       "id": "B",
       "limitations": [
         "table boundaries at ['0x8234'] rest on the heuristic alone",
-        "the engine's consumption of the return address is modelled, not proved against a stack analysis"
+        "the engine's consumption of its caller's return address is now confirmed by analysis/stack.py, which classifies $8E04 as the one routine that consumes its caller's frame; the legality of the targets it then reaches still rests on the table boundaries above"
       ],
       "obligation": "JumpEngine consumes the expected return address and resolves to allowed targets",
       "status": "partially established",
@@ -417,19 +417,41 @@
       "verification_method": "analysis/index_derivation.py, analysis/write_census.py"
     },
     {
-      "artifacts": [],
-      "assumptions": [],
+      "artifacts": [
+        "results/stack_analysis.json"
+      ],
+      "assumptions": [
+        "a routine summarised balanced returns to its call site with the stack as it found it; the fixpoint makes this consistent, it does not prove it against hardware",
+        "abstract cells track provenance, not values"
+      ],
       "evidence": {
         "intentional_alternative_modelled": "JumpEngine ($8E04) consumes its caller's return address",
-        "stack_derived_returns": 337
+        "return_sites": 628,
+        "routines_analysed": 460,
+        "routines_balanced": 457,
+        "routines_consuming_their_caller_frame": [
+          "0x8E04"
+        ],
+        "routines_unresolved": [
+          "0x8000",
+          "0x8082"
+        ],
+        "stack_page_stores_not_ruled_out": 29,
+        "unverified_other": [
+          "0x8181"
+        ],
+        "unverified_rts": [],
+        "verified_returns": 627
       },
       "id": "D",
       "limitations": [
-        "the replacement for the RTS pattern scan (plan section 8, analysis with abstract stack semantics over the CFG) is not implemented; stack_depth.py measures a band, which is not return-frame integrity"
+        "29 indexed stores could reach $0100-$01FF without a stack instruction; a frame rewritten that way would not be detected, and none has had its index range bounded",
+        "the NMI's RTI frame is not modelled per routine",
+        "paths are those of the CFG, so obligation A's limits apply here too"
       ],
       "obligation": "RTS/RTI consume valid frames except for explicitly modelled intentional alternatives",
-      "status": "open",
-      "verification_method": "not yet implemented"
+      "status": "partially established",
+      "verification_method": "analysis/stack.py"
     },
     {
       "artifacts": [

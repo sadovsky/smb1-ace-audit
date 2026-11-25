@@ -20,7 +20,12 @@ What the ROM actually supports, all derived rather than asserted
 
 Also note that "exactly one computed jump" counts only direct indirect jumps:
 336 `RTS` instructions and one `RTI` likewise take their destinations from
-memory, and return-frame integrity is **not** established here
+memory. A per-routine abstract stack analysis verifies that all 627 reachable
+`RTS` sites consume exactly their routine's entry frame, and identifies the
+JumpEngine as the single routine that deliberately consumes its caller's frame
+— so the earlier claim about returns holds, now on evidence that can carry it.
+It is still not a proof: 29 indexed stores could reach `$0100–$01FF` without a
+stack instruction, and a frame rewritten that way would not be detected
 (`results/proof_obligations.json`, obligation D).
 
 Classified over all 18 × 256 resolutions with nothing skipped: 505 destinations

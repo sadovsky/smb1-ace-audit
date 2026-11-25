@@ -1,0 +1,44 @@
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+
+routines analysed: 460
+  balanced                 457
+  unresolved               2
+  consumes_caller_frame    1
+
+return sites: 628
+  verified against the entry frame : 627
+  not verified                     : 1
+
+The old pattern scan claimed 'every RTS in reached code returns to a JSR frame' from
+a 24-instruction window in address order, which cannot establish it.  This analysis
+supports it along the paths it models: every reachable RTS consumes exactly its
+routine's entry frame.  The claim stands, now on evidence that can carry it, and
+subject to the assumptions listed below.
+
+unverified return sites by reason (RTI is not modelled per routine):
+     1  RTI consumes an interrupt frame, which this per-routine analysis does not model
+          $8181 in routine $8082
+
+JumpEngine $8E04: consumes_caller_frame
+  $8E06: PLA pulls frame_lo of the caller's return frame
+  $8E09: PLA pulls frame_hi of the caller's return frame
+  $8E16: JMP (ind) leaves with the stack unchanged
+
+stores that could reach the stack page without a stack instruction: 29
+  $84CE STA abx (indexed_range)
+  $84D7 STA abx (indexed_range)
+  $84DB DEC abx (indexed_range)
+  $84FA STA abx (indexed_range)
+  $8534 STA abx (indexed_range)
+  $8F80 STA abx (indexed_range)
+A store that rewrites a saved frame would defeat the analysis above, so these
+are reported rather than assumed harmless.  Each needs its index range bounded
+before it can be dismissed.
+
+assumptions this result rests on:
+  - a routine summarised balanced returns to its call site with the stack as it found it (the fixpoint makes this consistent, not proved against hardware)
+  - cells track provenance, not values: a frame overwritten by one of the 29 stores above would not be detected
+  - the NMI's RTI frame is not modelled per routine
+  - paths are those in the CFG, pruned only where flags prove an edge impossible
+
+wrote results/stack_analysis.json

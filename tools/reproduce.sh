@@ -12,6 +12,7 @@ run python3 -m analysis.enemy_routing      > results/revised/enemy_routing.out
 run python3 -m analysis.destinations       > results/revised/destinations.out
 run python3 -m analysis.interrupts         > results/revised/interrupts.out
 run python3 -m analysis.write_census       > results/revised/write_census.out
+run python3 -m analysis.stack              > results/revised/stack.out
 run python3 -m tools.proof_obligations     > results/revised/proof_obligations.out
 run python3 audit.py                       > results/revised/audit.out
 run python3 classify.py --json             > results/revised/classify.out

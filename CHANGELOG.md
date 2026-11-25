@@ -73,6 +73,18 @@ run. Pre-correction outputs preserved in `results/baseline/`.
   reachable instruction is `CLI` or `PLP`, so `RTI` can only restore a status
   byte that already had I set. Caveat recorded: 101 PRG bytes hold `$58`, and
   the induction covers reachable instruction starts only.
+- **Return-frame integrity now has evidence behind it.** `controlflow.py`
+  concluded "every RTS in reached code returns to a JSR frame" from a
+  24-instruction window in address order, which cannot establish it.
+  `analysis/stack.py` replaces that with per-routine abstract stack semantics
+  over the CFG and a fixpoint over callee summaries: 456 of 459 routines are
+  balanced, all 627 reachable `RTS` sites consume exactly their entry frame,
+  and `$8E04` is identified as the one routine that deliberately consumes its
+  caller's frame. The two unresolved routines are reset (whose `TXS`
+  initialises the stack pointer) and the NMI handler (whose `RTI` frame this
+  method does not model). Still not a proof: 29 indexed stores could reach
+  `$0100-$01FF` without a stack instruction. Obligation D moves from open to
+  partially established.
 - **`ASL` aliasing bounds how far any overrun can read.** The JumpEngine
   discards bit 7, so only 128 of 256 indices are distinct and a table overrun
   can never read beyond 256 bytes past the `JSR`.
@@ -92,8 +104,9 @@ numbers are taken from.
 
 ### Still open
 
-All six proof obligations (`results/proof_obligations.json`). In particular:
-no critical variable has a fully resolved writer set, so no state invariant is
-established inductively; return-frame integrity is not analysed (the RTS
-pattern scan is not a substitute); no emulator fidelity comparison was run in
-this revision; and no input sequence is known for any out-of-range index.
+All six proof obligations (`results/proof_obligations.json`): four are
+partially established (A, B, D, E) and two are open (C, F). In particular: no
+critical variable has a fully resolved writer set, so no state invariant is
+established inductively; the stores that could rewrite a stack frame have not
+had their index ranges bounded; no emulator fidelity comparison was run in this
+revision; and no input sequence is known for any out-of-range index.

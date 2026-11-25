@@ -28,6 +28,7 @@ from analysis.index_derivation import (                  # noqa: E402
 )
 from analysis.interrupts import masking_report, vectors  # noqa: E402
 from analysis.provenance import BoundProvenance          # noqa: E402
+from analysis.stack import Summary, analyse as analyse_stack, stack_page_writers  # noqa: E402
 from analysis.write_census import census, writers_of     # noqa: E402
 from rom import b, image                                 # noqa: E402
 
@@ -59,6 +60,14 @@ def build() -> dict:
     enemy = enemy_assumptions(graph)
     writers = census(b, scope="linear")
     masking = masking_report(b, graph)
+    stack_results = analyse_stack(graph)
+    stack_writers = stack_page_writers(b)
+    all_returns = [r for result in stack_results.values()
+                   for r in result.returns]
+    unverified_rts = [r for r in all_returns
+                      if not r.verified and r.mnemonic == "RTS"]
+    unverified_other = [r for r in all_returns
+                        if not r.verified and r.mnemonic != "RTS"]
 
     derivations = {}
     for dispatch in sorted(graph.dispatches):
@@ -119,7 +128,8 @@ def build() -> dict:
             "limitations": [
                 f"{unresolved_transfers.get('rts', 0)} RTS and "
                 f"{unresolved_transfers.get('rti', 0)} RTI destinations are "
-                "not resolved; obligation D covers them",
+                "not enumerated in the graph itself; obligation D verifies "
+                "their frames separately",
                 "coverage is of the CFG built from the three vectors and the "
                 "JumpEngine, not of all states reachable by input",
             ],
@@ -149,8 +159,11 @@ def build() -> dict:
                 f"table boundaries at {unconfirmed_tables} rest on the "
                 "heuristic alone" if unconfirmed_tables else
                 "every table boundary has independent confirmation",
-                "the engine's consumption of the return address is modelled, "
-                "not proved against a stack analysis",
+                "the engine's consumption of its caller's return address is "
+                "now confirmed by analysis/stack.py, which classifies $8E04 as "
+                "the one routine that consumes its caller's frame; the "
+                "legality of the targets it then reaches still rests on the "
+                "table boundaries above",
             ],
             "verification_method": ("analysis/dispatch_tables.py, "
                                     "analysis/destinations.py"),
@@ -193,22 +206,44 @@ def build() -> dict:
             "id": "D",
             "obligation": ("RTS/RTI consume valid frames except for "
                            "explicitly modelled intentional alternatives"),
-            "status": _status(False),
+            "status": _status(False, partial=not unverified_rts),
             "evidence": {
-                "stack_derived_returns": unresolved_transfers.get("rts", 0)
-                + unresolved_transfers.get("rti", 0),
+                "routines_analysed": len(stack_results),
+                "routines_balanced": sum(
+                    1 for r in stack_results.values()
+                    if r.summary is Summary.BALANCED),
+                "routines_consuming_their_caller_frame": [
+                    f"0x{e:04X}" for e, r in sorted(stack_results.items())
+                    if r.summary is Summary.CONSUMES_FRAME],
+                "routines_unresolved": [
+                    f"0x{e:04X}" for e, r in sorted(stack_results.items())
+                    if r.summary is Summary.UNRESOLVED],
+                "return_sites": len(all_returns),
+                "verified_returns": sum(1 for r in all_returns if r.verified),
+                "unverified_rts": [f"0x{r.address:04X}"
+                                   for r in unverified_rts],
+                "unverified_other": [f"0x{r.address:04X}"
+                                     for r in unverified_other],
                 "intentional_alternative_modelled":
                     "JumpEngine ($8E04) consumes its caller's return address",
+                "stack_page_stores_not_ruled_out": len(stack_writers),
             },
-            "assumptions": [],
-            "limitations": [
-                "the replacement for the RTS pattern scan (plan section 8, "
-                "analysis with abstract stack semantics over the CFG) is not "
-                "implemented; stack_depth.py measures a band, which is not "
-                "return-frame integrity",
+            "assumptions": [
+                "a routine summarised balanced returns to its call site with "
+                "the stack as it found it; the fixpoint makes this consistent, "
+                "it does not prove it against hardware",
+                "abstract cells track provenance, not values",
             ],
-            "verification_method": "not yet implemented",
-            "artifacts": [],
+            "limitations": [
+                f"{len(stack_writers)} indexed stores could reach $0100-$01FF "
+                "without a stack instruction; a frame rewritten that way would "
+                "not be detected, and none has had its index range bounded",
+                "the NMI's RTI frame is not modelled per routine",
+                "paths are those of the CFG, so obligation A's limits apply "
+                "here too",
+            ],
+            "verification_method": "analysis/stack.py",
+            "artifacts": ["results/stack_analysis.json"],
         },
         {
             "id": "E",

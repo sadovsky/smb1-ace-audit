@@ -87,6 +87,10 @@ class CFG:
         self.undocumented: list[int] = []
         self._table_reader = table_reader or self._default_table_reader
         self._queue: deque[tuple[int, str]] = deque()
+        #: addresses seeded before the walk started, i.e. the graph's own
+        #: entry points (vectors, the JumpEngine, or a caller's choice)
+        self.seeds: set[int] = set()
+        self._building = False
 
     # -- construction ------------------------------------------------------
 
@@ -112,9 +116,13 @@ class CFG:
         return tuple(out)
 
     def add_entry(self, address: int, discovery: str) -> None:
-        self._queue.append((address & 0xFFFF, discovery))
+        address &= 0xFFFF
+        if not self._building:
+            self.seeds.add(address)
+        self._queue.append((address, discovery))
 
     def build(self) -> "CFG":
+        self._building = True
         while self._queue:
             address, discovery = self._queue.popleft()
             self._visit(address, discovery)
