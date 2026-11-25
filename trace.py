@@ -3,10 +3,11 @@ Follows JSR/JMP/branches; for the RTS-dispatch jump tables (JSR $8E04 and the
 handful of hand-rolled ones) it reads the table and queues every target. Records
 every indirect control transfer and every computed dispatch as an ACE candidate.
 """
-from rom import PRG, b
+from rom import b, image
 from d65 import M, LEN
 
-code = set()          # addresses that are real instruction starts
+code = set()          # occupied instruction bytes
+starts = set()        # real instruction starts (kept separate from operands)
 indirect = []         # (addr, kind, detail)
 jumptables = []       # (dispatch_addr, table_addr, n_entries)
 
@@ -30,6 +31,7 @@ def walk(start, queue):
         if o not in M:               # hit data; stop this trace
             return
         name, mode = M[o]; L = LEN[mode]
+        starts.add(pc)
         for k in range(L): code.add(pc+k)
         nxt = pc + L
         if name == "JSR":
@@ -55,7 +57,8 @@ def walk(start, queue):
         pc = nxt
 
 def run():
-    q = [b(0xFFFC)|b(0xFFFD)<<8, b(0xFFFA)|b(0xFFFB)<<8, b(0xFFFE)|b(0xFFFF)<<8]
+    q = [b(0xFFFC)|b(0xFFFD)<<8, b(0xFFFA)|b(0xFFFB)<<8, b(0xFFFE)|b(0xFFFF)<<8,
+         JUMPENGINE]
     seen=set()
     while q:
         s = q.pop()
@@ -70,4 +73,5 @@ print(f"real indirect JMPs: {len(indirect)}")
 for a,k,d in indirect: print(f"  ${a:04X}  {k} {d}")
 # save for next step
 import json
-json.dump({"code":sorted(code),"ind":indirect,"jt":jumptables}, open("trace.json","w"))
+json.dump({"instruction_bytes": sorted(code), "instruction_starts": sorted(starts),
+           "ind": indirect, "jt": jumptables}, open("trace.json", "w"))

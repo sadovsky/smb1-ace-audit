@@ -36,17 +36,17 @@ that code there is **exactly one computed/indirect jump**:
 
 ```
 8E04  JumpEngine:
-8E04  0A        ASL A          ; A = index * 2
+8E04  0A        ASL A          ; 8-bit shift; bit 7 is discarded
 8E05  A8        TAY
 8E06  68        PLA            ; pull caller return addr -> $04/$05
 8E07  85 04     STA $04        ;   (= address of the table minus 1)
 8E09  68        PLA
 8E0A  85 05     STA $05
 8E0C  C8        INY
-8E0D  B1 04     LDA ($04),Y    ; $06 = ROM[table + 2*index]
+8E0D  B1 04     LDA ($04),Y    ; $06 = CPU[($04/$05) + wrapped Y]
 8E0F  85 06     STA $06
 8E11  C8        INY
-8E12  B1 04     LDA ($04),Y    ; $07 = ROM[table + 2*index + 1]
+8E12  B1 04     LDA ($04),Y    ; $07 = CPU[($04/$05) + wrapped Y]
 8E14  85 07     STA $07
 8E16  6C 06 00  JMP ($0006)    ; <-- the only computed jump in the game
 ```
@@ -66,6 +66,13 @@ RAM?**
 from a table in ROM (the bytes right after each `JSR $8E04`), indexed by the
 value the caller passes in `A`. For every **in-range** index it reads a valid
 in-ROM routine address, so the PC stays in ROM.
+
+The audit models these instructions directly for all 256 accumulator values.
+This matters: `ASL A` aliases `$80–$FF` to `$00–$7F`, and at index `$7F` the
+second `INY` wraps `$FF → $00`, making the high byte come from the caller's
+return-address base rather than the next linear byte. The historical shortcut
+`table + 2*index` is valid only for indices `$00–$7E`; it is not used for the
+current results.
 
 To reach RAM you must drive a dispatch's index **past the end of its table**,
 onto whatever ROM bytes follow, and have those bytes form a `<$0800` value.
@@ -119,7 +126,7 @@ smaller than the index domain it is fed (raw enemy ID `$16,x`, up to `$36`) with
 **no bounds check at the dispatch**:
 
 ```
-C905  A5 16     LDA $16,X      ; raw enemy ID, no CMP
+C905  B5 16     LDA $16,X      ; raw enemy ID, no CMP
 C907  20 04 8E  JSR $8E04      ; 21-entry table at $C90A
 ```
 
@@ -134,6 +141,13 @@ RAM:
 Every other out-of-range ID lands in ROM (jump to unintended code) or in
 `$2000–$7FFF` I/O space (instant crash on open-bus / PPU read) — not
 controllable RAM.
+
+The exact 6502 model also reproduces the previously reported *static* candidate
+`$3C → $16B5`. `$16B5` is an internal-RAM mirror and normalizes to physical RAM
+`$06B5`. It is outside the legal `$00–$36` enemy-ID range. At the upstream
+`$C27F` master dispatch, a hypothetical `$3C` instead resolves to `$95B6`; it
+does not reach `$C905`. This is a static control-flow observation, not a
+controller-only demonstration.
 
 **Why this is not reachable in practice.** The enemy *behavior* master dispatch
 `$C27F` routes those exact IDs to inert stubs:
@@ -235,9 +249,16 @@ Tooling lives in `../gamegenie/`:
   `trace.json` with the reached code set, indirect jumps, and the 18 dispatch
   tables.
 
+The loader now verifies the complete iNES layout before analysis: magic,
+mapper 0, 32 KiB PRG, 8 KiB CHR, interrupt vectors, and the expected complete
+file SHA-1. Alternate builds require an explicit programmatic override. The
+memory classifier recognizes NES internal-RAM mirrors (`$0800–$1FFF`), so
+`$16B5` is reported as mirrored internal RAM rather than an unrelated region.
+
 The per-site enumeration (index → `JMP ($0006)` target → region) and the
 table-bounds scan are short scripts over `trace.json` and the ROM; the numbers
-in §3–§4 come directly from them.
+in §3–§4 come directly from them. Run `python3 -m unittest -v` for the loader,
+memory-map, and 6502 wrapping regressions.
 
 ```bash
 cd ../gamegenie

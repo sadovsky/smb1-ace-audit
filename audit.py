@@ -13,7 +13,9 @@ import json
 import os
 import sys
 
-from rom import b
+from jumpengine import resolve_table
+from memory import is_internal_ram, memory_region
+from rom import b, image
 
 TRACE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "trace.json")
 if not os.path.exists(TRACE):
@@ -24,17 +26,12 @@ JT = sorted(J["jt"])          # (dispatch_pc, table_addr, n_entries)
 
 
 def target(tbl, idx):
-    """Address JMP ($0006) would take for this index (JumpEngine offset model)."""
-    a = tbl + 2 * idx
-    return b(a) | b(a + 1) << 8
+    """Address JMP ($0006) reaches using the actual 6502 instruction sequence."""
+    return resolve_table(b, tbl, idx).target
 
 
 def region(v):
-    if v < 0x0800:
-        return "RAM"          # controllable -> potential ACE
-    if v < 0x8000:
-        return "I/O"          # $2000-$7FFF PPU/APU/open-bus -> crash, not ACE
-    return "ROM"              # fixed code -> safe
+    return memory_region(v)
 
 
 # Index source and in-range bound for each dispatch, read from the disassembly.
@@ -63,7 +60,7 @@ SITES = {
 
 
 def main():
-    code = set(J["code"])
+    code = set(J["instruction_bytes"])
     print(f"reached {len(code)} PRG bytes ({len(code) * 100 // 0x8000}%)")
     print(f"sole computed jump: JMP ($0006) at $8E16 (JumpEngine $8E04)")
     print(f"dispatch sites: {len(JT)}\n")
@@ -75,12 +72,13 @@ def main():
         src, maxidx, note = SITES.get(pc, ("?", None, ""))
         # in-range target is always ROM; check whether ANY index up to a generous
         # out-of-bounds reaches controllable RAM, and whether the bound blocks it.
-        ram_idx = [i for i in range(0, 96) if region(target(tbl, i)) == "RAM"]
+        resolutions = [resolve_table(b, tbl, i) for i in range(256)]
+        ram_idx = [r.index for r in resolutions if is_internal_ram(r.target)]
         blocked = maxidx is not None and all(i > maxidx for i in ram_idx)
         mx = "-" if maxidx is None else maxidx
         flag = ""
         if ram_idx and not blocked:
-            flag = "  <-- RAM reachable within bound"
+            flag = "  <-- internal RAM reachable within bound"
             reach_ram.append((pc, tbl, n, maxidx, ram_idx))
         print(f"${pc:04X} ${tbl:04X} {n:3} {str(mx):>5}  {src:28} {note}{flag}")
 
@@ -91,14 +89,14 @@ def main():
         hits = [(i, target(tbl, i)) for i in ram_idx if maxidx is None or i <= (maxidx or 0) + 64]
         print(f"${pc:04X}: table ${tbl:04X} N={n} maxidx={maxidx}")
         for i, v in hits[:6]:
-            print(f"    index {i} -> ${v:04X} (RAM)")
+            print(f"    index {i} -> ${v:04X} ({region(v)})")
 
     # The headline detail: C907, the only raw-ID dispatch into an undersized table.
     print("\n--- $C907 (enemy graphics, raw ID, 21-entry table) ---")
     tbl = dict((p, t) for p, t, _ in JT)[0xC907]
     for ID in range(0x00, 0x37):
         v = target(tbl, ID)
-        if region(v) == "RAM":
+        if is_internal_ram(v):
             print(f"    enemy ID ${ID:02X} -> ${v:04X} (controllable RAM)")
     print("    (IDs $34/$35 route via master $C27F to RTS stubs $C2F0/$C307,")
     print("     so they never reach $C905; Bowser ID $2D proves the gate empirically.)")

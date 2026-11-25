@@ -48,7 +48,7 @@ def P(t, s=BODY):
 # ---------------------------------------------------------------- document
 def build():
     doc = BaseDocTemplate(OUT, pagesize=letter, title="Static Audit of Controller-Only ACE in Super Mario Bros.",
-                          author="Alexander Sadovsky and Claude (Anthropic)",
+                          author="Alexander Sadovsky and ChatGPT (OpenAI)",
                           leftMargin=0.8 * inch, rightMargin=0.8 * inch,
                           topMargin=0.8 * inch, bottomMargin=0.8 * inch)
     fw = doc.width
@@ -80,7 +80,7 @@ def build():
     e = []
     # ---- title block (full width) ----
     e.append(P("A Static Audit of Controller-Only Arbitrary Code Execution in <i>Super Mario Bros.</i> (NES)", TITLE))
-    e.append(P("Alexander Sadovsky and Claude (Anthropic)", AUTH))
+    e.append(P("Alexander Sadovsky and ChatGPT (OpenAI)", AUTH))
     e.append(P("November 2026", AUTH))
     e.append(Spacer(1, 6))
     e.append(P("<b>Abstract.</b> We ask whether the NES game <i>Super Mario Bros.</i> (NTSC/World, "
@@ -169,13 +169,16 @@ def build():
 
     # ---- 3 ----
     e.append(P("3&nbsp;&nbsp;Targets come from fixed ROM tables", H1))
-    e.append(P("The engine computes <font face='Courier'>$06/$07</font> = "
-               "<font face='Courier'>ROM[table + 2&middot;index]</font>, where the table immediately "
-               "follows the <font face='Courier'>JSR</font> in program ROM and the index is supplied by "
-               "the caller. For any in-range index the fetched address is a valid routine in ROM, so "
-               "the PC stays in ROM. To reach writable RAM the index must run off the end of the table "
-               "onto trailing ROM bytes that happen to encode a value below "
-               "<font face='Courier'>$0800</font>.", BODY))
+    e.append(P("The engine forms <font face='Courier'>$06/$07</font> from the caller return address and "
+               "the 6502's 8-bit <font face='Courier'>ASL</font>/<font face='Courier'>INY</font> "
+               "sequence. For indices <font face='Courier'>$00..$7E</font> this agrees with "
+               "<font face='Courier'>ROM[table + 2&middot;index]</font>. At <font face='Courier'>$7F</font> "
+               "the second <font face='Courier'>INY</font> wraps and splits the byte pair; indices "
+               "<font face='Courier'>$80..$FF</font> alias <font face='Courier'>$00..$7F</font> after "
+               "the shift. The audit executes this exact model for all 256 accumulator values. For an "
+               "in-range index the fetched address is a valid ROM routine, so the PC stays in ROM. To "
+               "reach writable RAM the index must select bytes that encode a value below "
+               "<font face='Courier'>$2000</font>, including mirrored internal RAM.", BODY))
     e.append(P("A scan of the trailing bytes of all 18 tables shows that such sub-"
                "<font face='Courier'>$0800</font> words are common &mdash; the game is therefore "
                "<i>not</i> protected by what its tables contain. It is protected entirely by each "
@@ -262,6 +265,12 @@ def build():
                "reads rather than executing controllable data. So <font face='Courier'>$C907</font> is "
                "the sole place the game's only computed jump can reach writable memory, via identifiers "
                "<font face='Courier'>$34</font> or <font face='Courier'>$35</font>.", BODY))
+    e.append(P("The exact model also yields the historical static candidate "
+               "<font face='Courier'>$3C &rarr; $16B5</font>. This address is a mirror of physical "
+               "internal RAM <font face='Courier'>$06B5</font>, but <font face='Courier'>$3C</font> is "
+               "outside the legal identifier range. At the upstream master dispatch it resolves to "
+               "<font face='Courier'>$95B6</font>, not the graphics dispatch, so it is not evidence of "
+               "controller-only reachability.", BODY))
     e.append(P("These identifiers cannot arrive there in practice. The behavior master "
                "<font face='Courier'>$C27F</font> routes them to inert stubs, and no master handler "
                "feeds the <font face='Courier'>$C905</font> block; its sole caller sits in the "
