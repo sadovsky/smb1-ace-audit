@@ -3,6 +3,14 @@
 A static audit of **arbitrary code execution (ACE) from controller input** in
 the NES game *Super Mario Bros.* (NTSC / World, NROM / mapper 0).
 
+**Papers**
+
+- [A Static Audit of Controller-Only Arbitrary Code Execution in *Super Mario Bros.*](paper/smb1_ace_audit.pdf):
+  the static audit, its dispatch bounds and what it withdraws.
+- [Toward a Machine-Checked Instruction-Location Invariant for *Super Mario Bros.*](formal/paper/smb1_formal_report.pdf):
+  the formal track. Draft; the theorem is unproved and the joint-invariant
+  section is not yet filled in.
+
 **Result in one line:** no controller-only ACE vector was found, and the game's
 one *direct* computed jump (`JMP ($0006)` at `$8E16`) always reads its target
 from fixed ROM tables — but the stronger claim that **every** one of the 18
