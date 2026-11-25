@@ -9,6 +9,10 @@ from fixed ROM tables — but the stronger claim that **every** one of the 18
 dispatch sites provably keeps its index in range does not hold, and this
 revision withdraws it.
 
+A separate formal track (`formal/README.md`) states the instruction-location
+property as a theorem over a validated machine model and records which of its
+proof obligations are discharged. That theorem is currently **unproved**.
+
 What the ROM actually supports, all derived rather than asserted
 (`results/dispatch_bounds.json`):
 

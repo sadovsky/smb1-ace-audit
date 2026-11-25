@@ -1,5 +1,29 @@
 # Changelog
 
+## Formal track (2026-11-25)
+
+Follows `FORMAL_VERIFICATION_PLAN.md`; details and limits in `formal/README.md`.
+The primary theorem (every instruction fetch is in PRG ROM, for all inputs) is
+**neither proved nor refuted**.
+
+- Added a Z3 instruction-level model of the 2A03 and the NROM address map
+  (`formal/model`). Validated against 71,100 recorded single-instruction
+  vectors (237 opcodes) and 6,040 py65 comparisons with no mismatch; unstable
+  undocumented instructions are modelled as havoc and not compared.
+- Proved, with Z3 and cvc5 agreeing: the `$92C8` arithmetic lemma, the same
+  lemma derived from the image's bytes, and a dispatch contract for each of
+  the 18 sites. Each has a negative twin that is refuted.
+- Proved by exhaustive model execution: every statically determined successor
+  of the 10,370 non-computed instruction starts is in the graph.
+- Conditional on the joint invariant: `$D2E5` and `$BDBD` indices in range
+  from the code alone (independently matching `analysis/`), and 22 of the 45
+  possible writers of `RAM[$071F]` preserve `<= 8`.
+- Open: 16 site indices, the `$071F` invariant (initialisation and 23
+  writers), return-frame integrity, and the two interrupt invariants. The
+  model also found three writers of `$071F` the census did not list (`SHA*` at
+  `$F3B1`/`$F3BD`, shown unreachable, and `ASL $1F1E,X` at `$FFF7` on the IRQ
+  path).
+
 ## Remediation revision (2026-11-25)
 
 Follows `AUDIT_REMEDIATION.md`. Outcome-neutral: the corrections below both

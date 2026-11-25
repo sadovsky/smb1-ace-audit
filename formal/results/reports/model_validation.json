@@ -1,0 +1,49 @@
+{
+  "kind": "model validation on a finite sample, not a proof",
+  "model": "formal/model/cpu.py",
+  "not_covered": [
+    "cycle-level behaviour, dummy reads, DMA",
+    "the six unstable undocumented instructions (havoc)",
+    "NESMemory's region map (unit-tested separately)",
+    "interrupt and reset entry (unit-tested, no vectors)"
+  ],
+  "py65": {
+    "instructions_compared": 6040,
+    "known_difference": "py65 implements decimal-mode ADC/SBC, the 2A03 does not; D is cleared for those two",
+    "mismatch_count": 0,
+    "mismatches": [],
+    "per_opcode": 40,
+    "seed": 20261125,
+    "source": "py65"
+  },
+  "vectors": {
+    "instructions_compared": 71100,
+    "mismatch_count": 0,
+    "mismatches": [],
+    "opcodes_compared": 237,
+    "per_opcode": 300,
+    "skipped": {
+      "0x02 JAM": "halts the processor; the vectors record bus activity only",
+      "0x12 JAM": "halts the processor; the vectors record bus activity only",
+      "0x22 JAM": "halts the processor; the vectors record bus activity only",
+      "0x32 JAM": "halts the processor; the vectors record bus activity only",
+      "0x42 JAM": "halts the processor; the vectors record bus activity only",
+      "0x52 JAM": "halts the processor; the vectors record bus activity only",
+      "0x62 JAM": "halts the processor; the vectors record bus activity only",
+      "0x72 JAM": "halts the processor; the vectors record bus activity only",
+      "0x8B XAA": "modelled as havoc (unstable); nothing to compare",
+      "0x92 JAM": "halts the processor; the vectors record bus activity only",
+      "0x93 SHA": "modelled as havoc (unstable); nothing to compare",
+      "0x9B TAS": "modelled as havoc (unstable); nothing to compare",
+      "0x9C SHY": "modelled as havoc (unstable); nothing to compare",
+      "0x9E SHX": "modelled as havoc (unstable); nothing to compare",
+      "0x9F SHA": "modelled as havoc (unstable); nothing to compare",
+      "0xAB LXA": "modelled as havoc (unstable); nothing to compare",
+      "0xB2 JAM": "halts the processor; the vectors record bus activity only",
+      "0xD2 JAM": "halts the processor; the vectors record bus activity only",
+      "0xF2 JAM": "halts the processor; the vectors record bus activity only"
+    },
+    "source": "SingleStepTests/65x02 nes6502/v1"
+  },
+  "wall_seconds": 250.4
+}

@@ -1,0 +1,4383 @@
+{
+  "counts": {
+    "abstract_counterexample": 40,
+    "conditional": 25,
+    "proved": 24,
+    "refuted": 3,
+    "unknown": 7
+  },
+  "instruction_starts_N": 10708,
+  "machine_model": "formal/model (instruction-level 2A03, NROM-256)",
+  "model_validation": {
+    "py65": {
+      "instructions_compared": 6040,
+      "mismatch_count": 0,
+      "source": "py65"
+    },
+    "vectors": {
+      "instructions_compared": 71100,
+      "mismatch_count": 0,
+      "source": "SingleStepTests/65x02 nes6502/v1"
+    }
+  },
+  "obligations": [
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {},
+      "id": "L-92C8-ARITH",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/L-92C8-ARITH.smt2",
+      "query_sha256": "38bc0ae4539303295ae065e6ed6557dd1f76e017e65d31846a7886dc151ffa44",
+      "result_artifact": null,
+      "scope": "local arithmetic lemma (no program bytes involved)",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "v <= 8 implies ((v or 8) - 1) mod 256 <= 7",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "counterexample": {
+          "v": "16"
+        },
+        "purpose": "shows the precondition is doing the work; a 'proved' here would mean the check is vacuous"
+      },
+      "id": "L-92C8-ARITH-NEG",
+      "independent_check": "cvc5: sat",
+      "query_artifact": "formal/results/queries/L-92C8-ARITH-NEG.smt2",
+      "query_sha256": "2ed6bc79fe3d15be82a5d3cf76415e07caee993883594b3ee730d8b7cb1c2b56",
+      "result_artifact": null,
+      "scope": "negative regression test: the lemma without its precondition",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "for all v: ((v or 8) - 1) mod 256 <= 7   [expected to be refuted]",
+      "status": "refuted"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entry": "0x92B0",
+        "exit": "0x92C8",
+        "instructions": "decoded from the verified image by the model",
+        "paths": 2
+      },
+      "id": "L-92C8-ROM-EXACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/L-92C8-ROM-EXACT.smt2",
+      "query_sha256": "7c127b3482f4e82067dc11311770b8054bdd2dba5ad0f3428cfdf1846d268d8e",
+      "result_artifact": null,
+      "scope": "local lemma over program bytes",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "executing $92B0 to the fetch at $92C8 leaves A = ((RAM[$071F] or 8) - 1) mod 256, for every initial state",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entry": "0x92B0",
+        "exit": "0x92C8",
+        "instructions": "decoded from the verified image by the model",
+        "paths": 2
+      },
+      "id": "L-92C8-ROM",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/L-92C8-ROM.smt2",
+      "query_sha256": "5154019e8f21a2c5ee70badd35153ad839da9fc3d19ea8f4394c02fc1d3cf051",
+      "result_artifact": null,
+      "scope": "local lemma over program bytes",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "RAM[$071F] <= 8 at $92B0 implies A <= 7 at the fetch of $92C8",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "purpose": "the routine has no upper clamp"
+      },
+      "id": "L-92C8-ROM-NEG",
+      "independent_check": "cvc5: sat",
+      "query_artifact": "formal/results/queries/L-92C8-ROM-NEG.smt2",
+      "query_sha256": "388045debfc6b22d3251c9fe006402a1129d0122b6359437aa33e2f1528d62d9",
+      "result_artifact": null,
+      "scope": "negative regression test over program bytes",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "A <= 7 at the fetch of $92C8 for every RAM[$071F]   [expected to be refuted]",
+      "status": "refuted"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 4,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0x8218"
+      },
+      "id": "D-8215-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-8215-CONTRACT.rom.smt2",
+      "query_sha256": "89706f5bdb7d608f4f9f6be4776dac66777e324be1fe6aea6470bb29926bb7a7",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 4 when JSR $8E04 at $8215 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 4,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0x8237"
+      },
+      "id": "D-8234-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-8234-CONTRACT.rom.smt2",
+      "query_sha256": "20a1a397162944375fc69938c0fb5705a035aaeadd07f1f65b0aa5abd338e573",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 4 when JSR $8E04 at $8234 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 5,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0x83A6"
+      },
+      "id": "D-83A3-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-83A3-CONTRACT.rom.smt2",
+      "query_sha256": "1c58f4edfa2dda8ac12e173c15b7e980bdf692cd38f0c2b951e6d86c7c3fcdc0",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 5 when JSR $8E04 at $83A3 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 15,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0x856D"
+      },
+      "id": "D-856A-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-856A-CONTRACT.rom.smt2",
+      "query_sha256": "c5d662412a6ad37525c075e9299c96a509af1f573c3478c396f36c2f3201b396",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 15 when JSR $8E04 at $856A is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 3,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0x921E"
+      },
+      "id": "D-921B-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-921B-CONTRACT.rom.smt2",
+      "query_sha256": "76c677cac843e6b5d6c5d498e72ed39cb36e32b7f5df3aec30f2914fb6f89116",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 3 when JSR $8E04 at $921B is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 8,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0x92CB"
+      },
+      "id": "D-92C8-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-92C8-CONTRACT.rom.smt2",
+      "query_sha256": "f6fa6902650a6b7055a632514c7acafa32b6da541b22d10476ee69b30e8685d0",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 8 when JSR $8E04 at $92C8 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "counterexample": {
+          "A": "8",
+          "S": "128",
+          "bus!10": "0",
+          "bus!11": "0"
+        },
+        "purpose": "index 8 reads the two bytes after the table and leaves it"
+      },
+      "id": "D-92C8-CONTRACT-NEG",
+      "independent_check": "cvc5: sat",
+      "query_artifact": "formal/results/queries/D-92C8-CONTRACT-NEG.rom.smt2",
+      "query_sha256": "d39fc0f47e5b15d4fb0520e3008c60febbfdfa347a78cae404025fe8f2c34898",
+      "result_artifact": null,
+      "scope": "negative regression test: one index past the table",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "the same conclusion for (A and $7F) <= 8   [expected to be refuted]",
+      "status": "refuted"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 47,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0x9667"
+      },
+      "id": "D-9664-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-9664-CONTRACT.rom.smt2",
+      "query_sha256": "47f30e190582582e037920678cf3583a509003de8dcfec58a63b5621282e9917",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 47 when JSR $8E04 at $9664 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 3,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0x9746"
+      },
+      "id": "D-9743-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-9743-CONTRACT.rom.smt2",
+      "query_sha256": "54fb20a017cb618a0f9b751f932d110877c352bbff5365b55b2df54ff4a6644f",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 3 when JSR $8E04 at $9743 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 4,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xAEE2"
+      },
+      "id": "D-AEDF-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-AEDF-CONTRACT.rom.smt2",
+      "query_sha256": "fe3baa633bcd3646486c4e18fcb83e6e16b3cd15dd3ea8627f15072234b9da83",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 4 when JSR $8E04 at $AEDF is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 13,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xB04F"
+      },
+      "id": "D-B04C-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-B04C-CONTRACT.rom.smt2",
+      "query_sha256": "a5938530f10f16e9138b3aa8b02392f3e889073d96ea842926dc567044320b3a",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 13 when JSR $8E04 at $B04C is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 4,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xB351"
+      },
+      "id": "D-B34E-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-B34E-CONTRACT.rom.smt2",
+      "query_sha256": "813710dcab8c0c1164a235e39536e16d3f986b9b41ba6cca0eb1186f9f4f91ba",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 4 when JSR $8E04 at $B34E is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 9,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xBDC0"
+      },
+      "id": "D-BDBD-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-BDBD-CONTRACT.rom.smt2",
+      "query_sha256": "aeb55c31b559809947b1481159909583d79d5aeda3bc1ecb19875c937f229a56",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 9 when JSR $8E04 at $BDBD is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 55,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xC282"
+      },
+      "id": "D-C27F-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-C27F-CONTRACT.rom.smt2",
+      "query_sha256": "8607630b100c0f9bf062bd0d2b926c25fa86bfc9149e2b92ea23c86e90a6472f",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 55 when JSR $8E04 at $C27F is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 6,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xC7AB"
+      },
+      "id": "D-C7A8-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-C7A8-CONTRACT.rom.smt2",
+      "query_sha256": "907641e8cd95376826344aa53df2fecabb8791a107906b7924270f01f2ba8a0a",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 6 when JSR $8E04 at $C7A8 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 34,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xC892"
+      },
+      "id": "D-C88F-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-C88F-CONTRACT.rom.smt2",
+      "query_sha256": "47c2eae5f6638fdf33f3e0bdf71181eef960522dbd0be7aea9817453bbef32af",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 34 when JSR $8E04 at $C88F is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 21,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xC90A"
+      },
+      "id": "D-C907-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-C907-CONTRACT.rom.smt2",
+      "query_sha256": "ed3eab559128fac4f4e0fe185a9e7dac176d345722e1a3775d9a9523701b11da",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 21 when JSR $8E04 at $C907 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 7,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xC98A"
+      },
+      "id": "D-C987-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-C987-CONTRACT.rom.smt2",
+      "query_sha256": "dcef6e65ccc38535f1d365056453bf0cdbbc24ca254dc89e253b6ead68938a7b",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 7 when JSR $8E04 at $C987 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "entries": 5,
+        "entries_not_instruction_starts": [],
+        "frame": "pushed by the JSR itself inside the query, so frame authenticity is not an assumption here",
+        "table": "0xD2E8"
+      },
+      "id": "D-D2E5-CONTRACT",
+      "independent_check": "cvc5: unsat",
+      "query_artifact": "formal/results/queries/D-D2E5-CONTRACT.rom.smt2",
+      "query_sha256": "df0b1ba7ad0865cb380a62cd3a278f6b705b980f287fafc8c92b5f201a4df828",
+      "result_artifact": null,
+      "scope": "dispatch contract (P2, P3) for one site",
+      "solver": "z3",
+      "solver_version": "5.4.1",
+      "statement": "if (A and $7F) < 5 when JSR $8E04 at $D2E5 is fetched, the next fetch after the JumpEngine is at the table entry for that index, for every stack pointer and RAM content",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h13_S": "128"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 4,
+        "unclosed_suffix": [
+          "0x815A",
+          "0x815C",
+          "0x815F",
+          "0x8162",
+          "0x8165",
+          "0x8168",
+          "0x816B",
+          "0x816C",
+          "0x816F",
+          "0x8172",
+          "0x8173",
+          "0x8175",
+          "0x8212",
+          "0x8215"
+        ]
+      },
+      "id": "P6-8215-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 4 whenever JSR $8E04 at $8215 is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus!58": "0",
+          "bus!59": "0",
+          "h27_S": "128"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 4,
+        "unclosed_suffix": [
+          "0x815F",
+          "0x8162",
+          "0x8165",
+          "0x8168",
+          "0x816B",
+          "0x816C",
+          "0x816F",
+          "0x8172",
+          "0x8173",
+          "0x8175",
+          "0x8212",
+          "0x8215",
+          "0x8231",
+          "0x8234"
+        ]
+      },
+      "id": "P6-8234-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 4 whenever JSR $8E04 at $8234 is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus!80": "0",
+          "bus!81": "0",
+          "h41_S": "128"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 5,
+        "unclosed_suffix": [
+          "0x8162",
+          "0x8165",
+          "0x8168",
+          "0x816B",
+          "0x816C",
+          "0x816F",
+          "0x8172",
+          "0x8173",
+          "0x8175",
+          "0x8212",
+          "0x8215",
+          "0x838B",
+          "0x83A0",
+          "0x83A3"
+        ]
+      },
+      "id": "P6-83A3-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 5 whenever JSR $8E04 at $83A3 is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus!122": "0",
+          "bus!123": "0",
+          "bus!124": "0",
+          "bus!125": "0",
+          "h55_S": "128"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 15,
+        "unclosed_suffix": [
+          "0x8165",
+          "0x8168",
+          "0x816B",
+          "0x816C",
+          "0x816F",
+          "0x8172",
+          "0x8173",
+          "0x8175",
+          "0x8212",
+          "0x8215",
+          "0xAEDC",
+          "0xAEDF",
+          "0x8567",
+          "0x856A"
+        ]
+      },
+      "id": "P6-856A-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 15 whenever JSR $8E04 at $856A is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus!148": "0",
+          "bus!149": "0",
+          "h69_S": "128"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 3,
+        "unclosed_suffix": [
+          "0x815F",
+          "0x8162",
+          "0x8165",
+          "0x8168",
+          "0x816B",
+          "0x816C",
+          "0x816F",
+          "0x8172",
+          "0x8173",
+          "0x8175",
+          "0x8212",
+          "0x8215",
+          "0x9218",
+          "0x921B"
+        ]
+      },
+      "id": "P6-921B-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 3 whenever JSR $8E04 at $921B is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h85_A": "128"
+        },
+        "longest_suffix": 6,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 16,
+        "suffixes_proved": 1,
+        "table_entries": 8,
+        "unclosed_suffix": [
+          "0xAF7E",
+          "0xAF80",
+          "0xAF82",
+          "0xAF85",
+          "0xAF87",
+          "0xAF8A",
+          "0xAF8C",
+          "0xAF8F",
+          "0x92B0",
+          "0x92B3",
+          "0x92BA",
+          "0x92BB",
+          "0x92BC",
+          "0x92C8"
+        ]
+      },
+      "id": "P6-92C8-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 8 whenever JSR $8E04 at $92C8 is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h99_A": "0",
+          "h99_S": "128",
+          "h99_X": "169"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 47,
+        "unclosed_suffix": [
+          "0x964B",
+          "0x964D",
+          "0x964E",
+          "0x964F",
+          "0x9650",
+          "0x9651",
+          "0x9654",
+          "0x9656",
+          "0x9659",
+          "0x965C",
+          "0x965F",
+          "0x9661",
+          "0x9662",
+          "0x9664"
+        ]
+      },
+      "id": "P6-9664-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 47 whenever JSR $8E04 at $9664 is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus!172": "0",
+          "bus!173": "0",
+          "h113_A": "0",
+          "h113_S": "128",
+          "h113_X": "209"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 3,
+        "unclosed_suffix": [
+          "0x964E",
+          "0x964F",
+          "0x9650",
+          "0x9651",
+          "0x9654",
+          "0x9656",
+          "0x9659",
+          "0x965C",
+          "0x965F",
+          "0x9661",
+          "0x9662",
+          "0x9664",
+          "0x9740",
+          "0x9743"
+        ]
+      },
+      "id": "P6-9743-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 3 whenever JSR $8E04 at $9743 is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus!196": "0",
+          "bus!197": "0",
+          "h127_S": "128"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 4,
+        "unclosed_suffix": [
+          "0x815F",
+          "0x8162",
+          "0x8165",
+          "0x8168",
+          "0x816B",
+          "0x816C",
+          "0x816F",
+          "0x8172",
+          "0x8173",
+          "0x8175",
+          "0x8212",
+          "0x8215",
+          "0xAEDC",
+          "0xAEDF"
+        ]
+      },
+      "id": "P6-AEDF-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 4 whenever JSR $8E04 at $AEDF is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus!231": "220",
+          "bus!232": "174",
+          "bus!233": "0",
+          "bus!234": "0",
+          "h141_S": "128"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 13,
+        "unclosed_suffix": [
+          "0x816F",
+          "0x8172",
+          "0x8173",
+          "0x8175",
+          "0x8212",
+          "0x8215",
+          "0xAEDC",
+          "0xAEDF",
+          "0xAEEA",
+          "0xAEED",
+          "0xAEF0",
+          "0xAEF3",
+          "0xB04A",
+          "0xB04C"
+        ]
+      },
+      "id": "P6-B04C-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 13 whenever JSR $8E04 at $B04C is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {},
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 4,
+        "unclosed_suffix": [
+          "0xB330",
+          "0xB332",
+          "0xB334",
+          "0xB336",
+          "0xB338",
+          "0xB33B",
+          "0xB33E",
+          "0xB341",
+          "0xB343",
+          "0xB345",
+          "0xB347",
+          "0xB349",
+          "0xB34B",
+          "0xB34E"
+        ]
+      },
+      "id": "P6-B34E-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 4 whenever JSR $8E04 at $B34E is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "longest_suffix": 7,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 9,
+        "suffixes_proved": 2,
+        "table_entries": 9
+      },
+      "id": "P6-BDBD-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 9 whenever JSR $8E04 at $BDBD is fetched",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h193_A": "192",
+          "h193_X": "237"
+        },
+        "longest_suffix": 10,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 23,
+        "suffixes_proved": 1,
+        "table_entries": 55,
+        "unclosed_suffix": [
+          "0xC76A",
+          "0xC76C",
+          "0xC76E",
+          "0xC770",
+          "0xC772",
+          "0xC774",
+          "0xC776",
+          "0xC778",
+          "0xC77A",
+          "0xC77C",
+          "0xC26C",
+          "0xC26E",
+          "0xC270",
+          "0xC27F"
+        ]
+      },
+      "id": "P6-C27F-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 55 whenever JSR $8E04 at $C27F is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h207_A": "61",
+          "h207_S": "128",
+          "h207_X": "232"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 6,
+        "unclosed_suffix": [
+          "0xC270",
+          "0xC272",
+          "0xC273",
+          "0xC275",
+          "0xC277",
+          "0xC279",
+          "0xC27B",
+          "0xC27E",
+          "0xC27F",
+          "0xC7A0",
+          "0xC7A2",
+          "0xC7A5",
+          "0xC7A6",
+          "0xC7A8"
+        ]
+      },
+      "id": "P6-C7A8-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 6 whenever JSR $8E04 at $C7A8 is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h221_A": "1",
+          "h221_S": "0"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 34,
+        "unclosed_suffix": [
+          "0xC049",
+          "0xC04A",
+          "0xC04B",
+          "0xC04D",
+          "0xC04E",
+          "0xC050",
+          "0xC882",
+          "0xC884",
+          "0xC886",
+          "0xC888",
+          "0xC88A",
+          "0xC88C",
+          "0xC88D",
+          "0xC88F"
+        ]
+      },
+      "id": "P6-C88F-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 34 whenever JSR $8E04 at $C88F is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h607_S": "33",
+          "h609_X": "55",
+          "h658_X": "234"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 21,
+        "unclosed_suffix": [
+          "0xC8E0",
+          "0xC8E2",
+          "0xC8E5",
+          "0xC8E8",
+          "0xC8EB",
+          "0xC8EE",
+          "0xC8F1",
+          "0xC8F4",
+          "0xC8F7",
+          "0xC8FA",
+          "0xC8FD",
+          "0xC8FF",
+          "0xC905",
+          "0xC907"
+        ]
+      },
+      "id": "P6-C907-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 21 whenever JSR $8E04 at $C907 is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus!6040": "0",
+          "bus!6041": "0",
+          "h709_S": "128",
+          "h709_Y": "106",
+          "h712_X": "234"
+        },
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "table_entries": 7,
+        "unclosed_suffix": [
+          "0xC88C",
+          "0xC88D",
+          "0xC88F",
+          "0xC965",
+          "0xC968",
+          "0xC96B",
+          "0xC96E",
+          "0xC971",
+          "0xC974",
+          "0xC976",
+          "0xC982",
+          "0xC984",
+          "0xC985",
+          "0xC987"
+        ]
+      },
+      "id": "P6-C987-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 7 whenever JSR $8E04 at $C987 is fetched",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "longest_suffix": 3,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 3,
+        "suffixes_proved": 1,
+        "table_entries": 5
+      },
+      "id": "P6-D2E5-INDEX",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 5 whenever JSR $8E04 at $D2E5 is fetched",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [
+        "P6-071F-PP"
+      ],
+      "detail": {
+        "longest_suffix": 6,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 8,
+        "suffixes_proved": 2
+      },
+      "id": "P6-92C8-INDEX-GIVEN-071F",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant, relative to another",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "(A and $7F) < 8 at the fetch of $92C8, given RAM[$071F] <= 8 whenever $92B0 is fetched",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11445_A": "248",
+          "h11445_X": "60"
+        },
+        "instruction": "STA $06E4,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x81E0",
+          "0x81E2",
+          "0x81E5",
+          "0x81E6",
+          "0x81CF",
+          "0x81D2",
+          "0x81D4",
+          "0x81D6",
+          "0x81D9",
+          "0x81DA",
+          "0x81DD",
+          "0x81DF",
+          "0x81E0",
+          "0x81E2"
+        ]
+      },
+      "id": "W-071F-81E2",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $81E2 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11459_A": "233",
+          "h11459_X": "49",
+          "h11459_Y": "60"
+        },
+        "instruction": "STA $06F1,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x81FC",
+          "0x81FF",
+          "0x8200",
+          "0x8202",
+          "0x8205",
+          "0x8206",
+          "0x8208",
+          "0x820B",
+          "0x820C",
+          "0x820D",
+          "0x820E",
+          "0x820F",
+          "0x81F9",
+          "0x81FC"
+        ]
+      },
+      "id": "W-071F-81FC",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $81FC never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11473_A": "233",
+          "h11473_X": "48",
+          "h11473_Y": "59"
+        },
+        "instruction": "STA $06F2,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x8202",
+          "0x8205",
+          "0x8206",
+          "0x8208",
+          "0x820B",
+          "0x820C",
+          "0x820D",
+          "0x820E",
+          "0x820F",
+          "0x81F9",
+          "0x81FC",
+          "0x81FF",
+          "0x8200",
+          "0x8202"
+        ]
+      },
+      "id": "W-071F-8202",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $8202 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11487_A": "0",
+          "h11487_X": "47",
+          "h11487_Y": "22"
+        },
+        "instruction": "STA $06F3,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x8208",
+          "0x820B",
+          "0x820C",
+          "0x820D",
+          "0x820E",
+          "0x820F",
+          "0x81F9",
+          "0x81FC",
+          "0x81FF",
+          "0x8200",
+          "0x8202",
+          "0x8205",
+          "0x8206",
+          "0x8208"
+        ]
+      },
+      "id": "W-071F-8208",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $8208 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus_2007!7110": "24",
+          "bus_2007!7111": "25",
+          "h11508_Y": "255"
+        },
+        "instruction": "STA ($00),Y",
+        "longest_suffix": 12,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 21,
+        "suffixes_proved": 2,
+        "unclosed_suffix": [
+          "0x8721",
+          "0x8723",
+          "0x8725",
+          "0x8727",
+          "0x8719",
+          "0x871C",
+          "0x871E",
+          "0x871F",
+          "0x8721",
+          "0x8723",
+          "0x8725",
+          "0x8727",
+          "0x8719",
+          "0x871C"
+        ]
+      },
+      "id": "W-071F-871C",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $871C never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "bus!7116": "1",
+          "h11522_A": "6",
+          "h11522_S": "0",
+          "h11522_X": "35",
+          "h11522_Y": "2"
+        },
+        "instruction": "STA $06FC,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x8E77",
+          "0x8E78",
+          "0x8E79",
+          "0x8E6C",
+          "0x8E6D",
+          "0x8E70",
+          "0x8E72",
+          "0x8E73",
+          "0x8E75",
+          "0x8E76",
+          "0x8E77",
+          "0x8E78",
+          "0x8E79",
+          "0x8E7B"
+        ]
+      },
+      "id": "W-071F-8E7B",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $8E7B never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06FC,X",
+        "longest_suffix": 8,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 8,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-8E89",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $8E89 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11544_X": "62"
+        },
+        "instruction": "STA $06E4,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x90AB",
+          "0x90AE",
+          "0x90B1",
+          "0x90B2",
+          "0x90AB",
+          "0x90AE",
+          "0x90B1",
+          "0x90B2",
+          "0x90AB",
+          "0x90AE",
+          "0x90B1",
+          "0x90B2",
+          "0x90AB",
+          "0x90AE"
+        ]
+      },
+      "id": "W-071F-90AE",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $90AE never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11558_A": "24",
+          "h11558_X": "1",
+          "h11558_Y": "16"
+        },
+        "instruction": "STA ($06),Y",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x90E1",
+          "0x90D4",
+          "0x90D6",
+          "0x90D8",
+          "0x90DA",
+          "0x90DC",
+          "0x90DE",
+          "0x90DF",
+          "0x90E1",
+          "0x90D4",
+          "0x90D6",
+          "0x90D8",
+          "0x90DA",
+          "0x90DC"
+        ]
+      },
+      "id": "W-071F-90DC",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $90DC never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STY $071F",
+        "longest_suffix": 2,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 2,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-92B7",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $92B7 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {},
+        "instruction": "DEC $071F",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0xAF82",
+          "0xAF85",
+          "0xAF87",
+          "0xAF8A",
+          "0xAF8C",
+          "0xAF8F",
+          "0x92B0",
+          "0x92B3",
+          "0x92B5",
+          "0x92B7",
+          "0x92BA",
+          "0x92BB",
+          "0x92BC",
+          "0x92BF"
+        ]
+      },
+      "id": "W-071F-92BF",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $92BF never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 9,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 12,
+        "suffixes_proved": 4
+      },
+      "id": "W-071F-9408",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9408 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11613_X": "255",
+          "h11613_Y": "125"
+        },
+        "instruction": "STA $06A1,Y",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x944D",
+          "0x944F",
+          "0x9451",
+          "0x9453",
+          "0x9445",
+          "0x9448",
+          "0x944B",
+          "0x944C",
+          "0x944D",
+          "0x944F",
+          "0x9451",
+          "0x9453",
+          "0x9445",
+          "0x9448"
+        ]
+      },
+      "id": "W-071F-9448",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9448 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11627_X": "124"
+        },
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x9467",
+          "0x9468",
+          "0x9469",
+          "0x946B",
+          "0x945F",
+          "0x9462",
+          "0x9464",
+          "0x9467",
+          "0x9468",
+          "0x9469",
+          "0x946B",
+          "0x945F",
+          "0x9462",
+          "0x9464"
+        ]
+      },
+      "id": "W-071F-9464",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9464 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11645_X": "126",
+          "h11645_Y": "248"
+        },
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 12,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 18,
+        "suffixes_proved": 1,
+        "unclosed_suffix": [
+          "0x94B9",
+          "0x94BB",
+          "0x94BE",
+          "0x94C0",
+          "0x94C2",
+          "0x94C4",
+          "0x94CA",
+          "0x94CB",
+          "0x94CD",
+          "0x94AA",
+          "0x94AD",
+          "0x94AF",
+          "0x94B1",
+          "0x94B3"
+        ]
+      },
+      "id": "W-071F-94B3",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $94B3 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11660_X": "12",
+          "h11660_Y": "239"
+        },
+        "instruction": "STA ($06),Y",
+        "longest_suffix": 3,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 15,
+        "suffixes_proved": 1,
+        "unclosed_suffix": [
+          "0x94FF",
+          "0x9501",
+          "0x94E0",
+          "0x94E2",
+          "0x94E5",
+          "0x94E7",
+          "0x94E8",
+          "0x94E9",
+          "0x94EA",
+          "0x94EB",
+          "0x94EE",
+          "0x94F1",
+          "0x94F5",
+          "0x94F7"
+        ]
+      },
+      "id": "W-071F-94F7",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $94F7 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 12,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 16,
+        "suffixes_proved": 2
+      },
+      "id": "W-071F-976B",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $976B never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 11,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 11,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-979B",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $979B never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11701_X": "81"
+        },
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x977D",
+          "0x978B",
+          "0x978D",
+          "0x9790",
+          "0x9792",
+          "0x9795",
+          "0x9797",
+          "0x9799",
+          "0x979B",
+          "0x979E",
+          "0x97A0",
+          "0x97A2",
+          "0x97A3",
+          "0x97A5"
+        ]
+      },
+      "id": "W-071F-97A5",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $97A5 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11715_X": "125",
+          "h11715_Y": "251"
+        },
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x981E",
+          "0x9821",
+          "0x9822",
+          "0x9824",
+          "0x9826",
+          "0x9827",
+          "0x9828",
+          "0x9829",
+          "0x982A",
+          "0x982B",
+          "0x982D",
+          "0x982F",
+          "0x981B",
+          "0x981E"
+        ]
+      },
+      "id": "W-071F-981E",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $981E never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 5,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 5,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-9879",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9879 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A2,X",
+        "longest_suffix": 7,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 7,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-987E",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $987E never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 2,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 2,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-9892",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9892 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11752_X": "192",
+          "h11753_X": "126"
+        },
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x98B7",
+          "0x98BA",
+          "0x98BC",
+          "0x98BE",
+          "0x98BF",
+          "0x98C2",
+          "0x98C4",
+          "0x98C6",
+          "0x98C8",
+          "0x98CA",
+          "0x98CD",
+          "0x98CE",
+          "0x98D0",
+          "0x98D3"
+        ]
+      },
+      "id": "W-071F-98D3",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $98D3 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11774_Y": "0",
+          "h11775_X": "125"
+        },
+        "instruction": "STA $06A2,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x98BC",
+          "0x98BE",
+          "0x98BF",
+          "0x98C2",
+          "0x98C4",
+          "0x98C6",
+          "0x98C8",
+          "0x98CA",
+          "0x98CD",
+          "0x98CE",
+          "0x98D0",
+          "0x98D3",
+          "0x98D6",
+          "0x98D9"
+        ]
+      },
+      "id": "W-071F-98D9",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $98D9 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11789_A": "0",
+          "h11789_S": "128",
+          "h11789_X": "201"
+        },
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x9911",
+          "0x9913",
+          "0x9915",
+          "0x9917",
+          "0x9919",
+          "0x991C",
+          "0x991E",
+          "0x9920",
+          "0x9922",
+          "0x9925",
+          "0x9926",
+          "0x9927",
+          "0x9929",
+          "0x992C"
+        ]
+      },
+      "id": "W-071F-992C",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $992C never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 8,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 9,
+        "suffixes_proved": 2
+      },
+      "id": "W-071F-9975",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9975 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 9,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 11,
+        "suffixes_proved": 3
+      },
+      "id": "W-071F-9989",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9989 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 4,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 4,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-9A70",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9A70 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 9,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 9,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-9A79",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9A79 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11836_A": "0",
+          "h11836_S": "128",
+          "h11836_X": "201"
+        },
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x9ADC",
+          "0x9ADE",
+          "0x9AE1",
+          "0x9AE3",
+          "0x9AE6",
+          "0x9AE8",
+          "0x9AEA",
+          "0x9AEC",
+          "0x9AEE",
+          "0x9AF0",
+          "0x9AF2",
+          "0x9AF4",
+          "0x9AF6",
+          "0x9AF8"
+        ]
+      },
+      "id": "W-071F-9AF8",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9AF8 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11850_A": "0",
+          "h11850_S": "128",
+          "h11850_X": "248"
+        },
+        "instruction": "STA $06A2,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x9AE1",
+          "0x9AE3",
+          "0x9AE6",
+          "0x9AE8",
+          "0x9AEA",
+          "0x9AEC",
+          "0x9AEE",
+          "0x9AF0",
+          "0x9AF2",
+          "0x9AF4",
+          "0x9AF6",
+          "0x9AF8",
+          "0x9AFB",
+          "0x9AFD"
+        ]
+      },
+      "id": "W-071F-9AFD",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9AFD never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11864_A": "12",
+          "h11864_X": "126",
+          "h11864_Y": "84"
+        },
+        "instruction": "STA $06A1,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0x9B83",
+          "0x9B85",
+          "0x9B87",
+          "0x9B89",
+          "0x9B8B",
+          "0x9B8D",
+          "0x9B8F",
+          "0x9B91",
+          "0x9B93",
+          "0x9B95",
+          "0x9B97",
+          "0x9B99",
+          "0x9B9B",
+          "0x9B9D"
+        ]
+      },
+      "id": "W-071F-9B9D",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $9B9D never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {},
+        "instruction": "STA ($06),Y",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 14,
+        "suffixes_proved": 0,
+        "unclosed_suffix": [
+          "0xB999",
+          "0xB99C",
+          "0xB99E",
+          "0xB9A0",
+          "0xB9A2",
+          "0xB9A4",
+          "0xB9A6",
+          "0xB9A9",
+          "0xB9AB",
+          "0xB9AD",
+          "0xB9AF",
+          "0xB9B1",
+          "0xB9B3",
+          "0xB9B5"
+        ]
+      },
+      "id": "W-071F-B9B5",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $B9B5 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06AE,Y",
+        "longest_suffix": 11,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 12,
+        "suffixes_proved": 2
+      },
+      "id": "W-071F-BAB0",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $BAB0 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "abstract_state": {
+          "h11912_S": "16",
+          "h11912_X": "162",
+          "h11912_Y": "93"
+        },
+        "instruction": "STA ($06),Y",
+        "longest_suffix": 12,
+        "method": "backward-deepening symbolic execution",
+        "reason": "still satisfiable at depth 14",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 17,
+        "suffixes_proved": 1,
+        "unclosed_suffix": [
+          "0xBD26",
+          "0xBD28",
+          "0xBD2A",
+          "0xBD2C",
+          "0xBD2F",
+          "0xBD39",
+          "0xBD3C",
+          "0xBD3E",
+          "0xBD40",
+          "0xBD41",
+          "0xBD44",
+          "0xBD47",
+          "0xBD49",
+          "0xBD4B"
+        ]
+      },
+      "id": "W-071F-BD4B",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $BD4B never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA ($06),Y",
+        "longest_suffix": 2,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 2,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-BE35",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $BE35 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA ($06),Y",
+        "longest_suffix": 7,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 7,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-BEF4",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $BEF4 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06BE,X",
+        "longest_suffix": 2,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 2,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-D7E6",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $D7E6 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA $06BE,X",
+        "longest_suffix": 2,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 2,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-D7FC",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $D7FC never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA ($06),Y",
+        "longest_suffix": 2,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 2,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-DE20",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $DE20 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "STA ($06),Y",
+        "longest_suffix": 2,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 2,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-E007",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $E007 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "SHA* $989B,Y",
+        "longest_suffix": 3,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 3,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-F3B1",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $F3B1 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "SHA* ($92),Y",
+        "longest_suffix": 9,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 9,
+        "suffixes_proved": 1
+      },
+      "id": "W-071F-F3BD",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $F3BD never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [
+        "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+        "J-ASYNC: no interrupt handler runs between the instructions of a slice",
+        "J-IRQ: no maskable interrupt is ever serviced (the I flag stays set), so the IRQ vector target $FFF0 is never entered"
+      ],
+      "dependencies": [],
+      "detail": {
+        "instruction": "ASL $1F1E,X",
+        "longest_suffix": 0,
+        "method": "backward-deepening symbolic execution",
+        "scope": "statement about the machine model in formal/model",
+        "solver_calls": 4,
+        "suffixes_proved": 0
+      },
+      "id": "W-071F-FFF7",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "preservation obligation for one writer",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "the instruction at $FFF7 never stores a value above 8 into RAM[$071F] (mirrors included)",
+      "status": "conditional"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "why_open": "cold-boot RAM is unconstrained; the cell is cleared by the memory-initialisation loop at $90CC, whose store is the indirect writer $90DC.  Closing this needs a loop invariant for that routine and a proof that the NMI handler cannot run before it (MA-PPU-POWERON, MA-PPU-WARMUP and the PPU-control write obligations).  Not attempted."
+      },
+      "id": "INIT-071F",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "initialisation obligation",
+      "solver": null,
+      "solver_version": null,
+      "statement": "RAM[$071F] <= 8 at the first fetch of $92B0 after cold boot",
+      "status": "unknown"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [
+        "INIT-071F",
+        "W-071F-81E2",
+        "W-071F-81FC",
+        "W-071F-8202",
+        "W-071F-8208",
+        "W-071F-871C",
+        "W-071F-8E7B",
+        "W-071F-8E89",
+        "W-071F-90AE",
+        "W-071F-90DC",
+        "W-071F-92B7",
+        "W-071F-92BF",
+        "W-071F-9408",
+        "W-071F-9448",
+        "W-071F-9464",
+        "W-071F-94B3",
+        "W-071F-94F7",
+        "W-071F-976B",
+        "W-071F-979B",
+        "W-071F-97A5",
+        "W-071F-981E",
+        "W-071F-9879",
+        "W-071F-987E",
+        "W-071F-9892",
+        "W-071F-98D3",
+        "W-071F-98D9",
+        "W-071F-992C",
+        "W-071F-9975",
+        "W-071F-9989",
+        "W-071F-9A70",
+        "W-071F-9A79",
+        "W-071F-9AF8",
+        "W-071F-9AFD",
+        "W-071F-9B9D",
+        "W-071F-B9B5",
+        "W-071F-BAB0",
+        "W-071F-BD4B",
+        "W-071F-BE35",
+        "W-071F-BEF4",
+        "W-071F-D7E6",
+        "W-071F-D7FC",
+        "W-071F-DE20",
+        "W-071F-E007",
+        "W-071F-F3B1",
+        "W-071F-F3BD",
+        "W-071F-FFF7"
+      ],
+      "detail": {
+        "candidate_domain": "unsigned interval [0, 8]",
+        "needed_at": [
+          "0x92B0"
+        ],
+        "possible_writers": 45,
+        "strengthening": "stated here as a global invariant of the cell, which is stronger than the program-point form and is what the writer obligations preserve",
+        "why_unknown": "initialisation is open and most writers are open; see the dependencies",
+        "writers_closed": 22,
+        "writers_open": 23
+      },
+      "id": "P6-071F-PP",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "program-point invariant",
+      "solver": null,
+      "solver_version": null,
+      "statement": "RAM[$071F] <= 8 whenever $92B0 is fetched",
+      "status": "unknown"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "computed_transfers": 338,
+        "halting_instructions": [
+          "0xD965",
+          "0xF34A"
+        ],
+        "instruction_starts": 10708,
+        "nodes_with_a_successor_outside_N": {},
+        "of_those_not_shown_unreachable": {},
+        "of_those_shown_unreachable": {},
+        "scope": "statement about the machine model in formal/model"
+      },
+      "id": "LOC-DIRECT",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "consecution of J_location for direct transfers",
+      "solver": "exhaustive execution of the CPU model, one node at a time",
+      "solver_version": null,
+      "statement": "every instruction start in N with a statically determined successor has all its successors in N",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "body": [
+          "0x8E04",
+          "0x8E05",
+          "0x8E06",
+          "0x8E07",
+          "0x8E09",
+          "0x8E0A",
+          "0x8E0C",
+          "0x8E0D",
+          "0x8E0F",
+          "0x8E11",
+          "0x8E12",
+          "0x8E14",
+          "0x8E16"
+        ],
+        "calling_sites": 18,
+        "indirect_jumps": [
+          "0x8E16"
+        ],
+        "other_jumps_in": [],
+        "side_entries": {}
+      },
+      "id": "LOC-ENGINE",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "structural fact about N",
+      "solver": "graph inspection",
+      "solver_version": null,
+      "statement": "the only JMP (abs) in N is the JumpEngine's, the JumpEngine is straight-line, and it is entered only by JSR from the dispatch sites",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [
+        "LOC-ENGINE",
+        "D-8215-CONTRACT",
+        "D-8234-CONTRACT",
+        "D-83A3-CONTRACT",
+        "D-856A-CONTRACT",
+        "D-921B-CONTRACT",
+        "D-92C8-CONTRACT",
+        "D-9664-CONTRACT",
+        "D-9743-CONTRACT",
+        "D-AEDF-CONTRACT",
+        "D-B04C-CONTRACT",
+        "D-B34E-CONTRACT",
+        "D-BDBD-CONTRACT",
+        "D-C27F-CONTRACT",
+        "D-C7A8-CONTRACT",
+        "D-C88F-CONTRACT",
+        "D-C907-CONTRACT",
+        "D-C987-CONTRACT",
+        "D-D2E5-CONTRACT",
+        "P6-8215-INDEX",
+        "P6-8234-INDEX",
+        "P6-83A3-INDEX",
+        "P6-856A-INDEX",
+        "P6-921B-INDEX",
+        "P6-92C8-INDEX",
+        "P6-9664-INDEX",
+        "P6-9743-INDEX",
+        "P6-AEDF-INDEX",
+        "P6-B04C-INDEX",
+        "P6-B34E-INDEX",
+        "P6-BDBD-INDEX",
+        "P6-C27F-INDEX",
+        "P6-C7A8-INDEX",
+        "P6-C88F-INDEX",
+        "P6-C907-INDEX",
+        "P6-C987-INDEX",
+        "P6-D2E5-INDEX"
+      ],
+      "detail": {
+        "why_unknown": "follows from the contracts once every site's index invariant holds; see the P6 items"
+      },
+      "id": "LOC-DISPATCH",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "consecution of J_location for the indirect jump",
+      "solver": null,
+      "solver_version": null,
+      "statement": "every fetch that follows the JumpEngine's JMP ($0006) is in N",
+      "status": "unknown"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "closed_by_slicing": 10,
+        "non_push_instructions_that_can_address_the_stack_page": 71,
+        "note": "stronger than needed: the game legitimately keeps data at the bottom of page 1, so an open item here is not evidence of a fault",
+        "open": 61,
+        "per_instruction": {
+          "0x84CE": {
+            "instruction": "STA $0110,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xAF0B",
+              "0xAF0C",
+              "0xAF0E",
+              "0xAF03",
+              "0xAF05",
+              "0xAF08",
+              "0x84C3",
+              "0x84C6",
+              "0x84C8",
+              "0x84CA",
+              "0x84CC",
+              "0x84CE"
+            ]
+          },
+          "0x84D7": {
+            "instruction": "STA $0110,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xAF05",
+              "0xAF08",
+              "0x84C3",
+              "0x84C6",
+              "0x84C8",
+              "0x84CA",
+              "0x84CC",
+              "0x84CE",
+              "0x84D1",
+              "0x84D2",
+              "0x84D5",
+              "0x84D7"
+            ]
+          },
+          "0x84DB": {
+            "instruction": "DEC $012C,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xAF05",
+              "0xAF08",
+              "0x84C3",
+              "0x84C6",
+              "0x84C8",
+              "0x84CA",
+              "0x84CC",
+              "0x84CE",
+              "0x84D1",
+              "0x84D2",
+              "0x84D5",
+              "0x84DB"
+            ]
+          },
+          "0x84FA": {
+            "instruction": "STA $0134,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0x84E6",
+              "0x84E9",
+              "0x84EB",
+              "0x84ED",
+              "0x84F0",
+              "0x84F1",
+              "0x84F2",
+              "0x84F3",
+              "0x84F4",
+              "0x84F5",
+              "0x84F8",
+              "0x84FA"
+            ]
+          },
+          "0x8534": {
+            "instruction": "STA $011E,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0x851B",
+              "0x851D",
+              "0x851F",
+              "0x8521",
+              "0x8523",
+              "0x8526",
+              "0x8529",
+              "0x852B",
+              "0x852E",
+              "0x8530",
+              "0x8532",
+              "0x8534"
+            ]
+          },
+          "0x871C": {
+            "instruction": "STA ($00),Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0x8725",
+              "0x8727",
+              "0x8719",
+              "0x871C",
+              "0x871E",
+              "0x871F",
+              "0x8721",
+              "0x8723",
+              "0x8725",
+              "0x8727",
+              "0x8719",
+              "0x871C"
+            ]
+          },
+          "0x8F80": {
+            "instruction": "STA $0133,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0x8F83",
+              "0x8F84",
+              "0x8F80",
+              "0x8F83",
+              "0x8F84",
+              "0x8F80",
+              "0x8F83",
+              "0x8F84",
+              "0x8F80",
+              "0x8F83",
+              "0x8F84",
+              "0x8F80"
+            ]
+          },
+          "0x8F87": {
+            "instruction": "DEC $0133,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0x8F8F",
+              "0x8F91",
+              "0x8F94",
+              "0x8F75",
+              "0x8F78",
+              "0x8F79",
+              "0x8F7A",
+              "0x8F68",
+              "0x8F6B",
+              "0x8F6C",
+              "0x8F6F",
+              "0x8F87"
+            ]
+          },
+          "0x8F91": {
+            "instruction": "INC $0133,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0x8F78",
+              "0x8F79",
+              "0x8F7A",
+              "0x8F68",
+              "0x8F6B",
+              "0x8F6C",
+              "0x8F6F",
+              "0x8F71",
+              "0x8F73",
+              "0x8F8E",
+              "0x8F8F",
+              "0x8F91"
+            ]
+          },
+          "0x90DC": {
+            "instruction": "STA ($06),Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0x90D6",
+              "0x90D8",
+              "0x90DA",
+              "0x90DC",
+              "0x90DE",
+              "0x90DF",
+              "0x90E1",
+              "0x90D4",
+              "0x90D6",
+              "0x90D8",
+              "0x90DA",
+              "0x90DC"
+            ]
+          },
+          "0x94F7": {
+            "instruction": "STA ($06),Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0x94E2",
+              "0x94E5",
+              "0x94E7",
+              "0x94E8",
+              "0x94E9",
+              "0x94EA",
+              "0x94EB",
+              "0x94EE",
+              "0x94F1",
+              "0x94F3",
+              "0x94F5",
+              "0x94F7"
+            ]
+          },
+          "0x99C6": {
+            "instruction": "STA $010D",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0x99AE",
+              "0x99B1",
+              "0x99B4",
+              "0x99B5",
+              "0x99B7",
+              "0x99B9",
+              "0x99BC",
+              "0x99BE",
+              "0x99C0",
+              "0x99C2",
+              "0x99C4",
+              "0x99C6"
+            ]
+          },
+          "0xB78F": {
+            "instruction": "STA $0139",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xB777",
+              "0xB778",
+              "0xB77A",
+              "0xB77D",
+              "0xB780",
+              "0xB782",
+              "0xB784",
+              "0xB786",
+              "0xB788",
+              "0xB78B",
+              "0xB78D",
+              "0xB78F"
+            ]
+          },
+          "0xB88B": {
+            "instruction": "STA $010E",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xB873",
+              "0xB875",
+              "0xB877",
+              "0xB87A",
+              "0xB87C",
+              "0xB87F",
+              "0xB881",
+              "0xB883",
+              "0xB885",
+              "0xB888",
+              "0xB889",
+              "0xB88B"
+            ]
+          },
+          "0xB893": {
+            "instruction": "STA $010D",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xB87A",
+              "0xB87C",
+              "0xB87F",
+              "0xB881",
+              "0xB883",
+              "0xB885",
+              "0xB888",
+              "0xB889",
+              "0xB88B",
+              "0xB88E",
+              "0xB891",
+              "0xB893"
+            ]
+          },
+          "0xB8A2": {
+            "instruction": "STA $0134,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xB867",
+              "0xB869",
+              "0xB86B",
+              "0xB86D",
+              "0xB86F",
+              "0xB871",
+              "0xB873",
+              "0xB875",
+              "0xB899",
+              "0xB89C",
+              "0xB89F",
+              "0xB8A2"
+            ]
+          },
+          "0xB9B5": {
+            "instruction": "STA ($06),Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xB99E",
+              "0xB9A0",
+              "0xB9A2",
+              "0xB9A4",
+              "0xB9A6",
+              "0xB9A9",
+              "0xB9AB",
+              "0xB9AD",
+              "0xB9AF",
+              "0xB9B1",
+              "0xB9B3",
+              "0xB9B5"
+            ]
+          },
+          "0xBAB5": {
+            "instruction": "STA $002A,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBA99",
+              "0xBAA0",
+              "0xBAA1",
+              "0xBAA4",
+              "0xBAA6",
+              "0xBAA9",
+              "0xBAAB",
+              "0xBAAD",
+              "0xBAAF",
+              "0xBAB0",
+              "0xBAB3",
+              "0xBAB5"
+            ]
+          },
+          "0xBAFC": {
+            "instruction": "STA $001E,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBAC3",
+              "0xBAC6",
+              "0xBAC8",
+              "0xBACA",
+              "0xBACC",
+              "0xBACF",
+              "0xBAD1",
+              "0xBAF3",
+              "0xBAF5",
+              "0xBAF7",
+              "0xBAFA",
+              "0xBAFC"
+            ]
+          },
+          "0xBB3D": {
+            "instruction": "STA $007A,Y",
+            "status": "conditional"
+          },
+          "0xBB44": {
+            "instruction": "STA $0093,Y",
+            "status": "conditional"
+          },
+          "0xBB4B": {
+            "instruction": "STA $00DB,Y",
+            "status": "conditional"
+          },
+          "0xBB57": {
+            "instruction": "STA $007A,Y",
+            "status": "conditional"
+          },
+          "0xBB62": {
+            "instruction": "STA $0093,Y",
+            "status": "conditional"
+          },
+          "0xBB69": {
+            "instruction": "STA $00DB,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBB54",
+              "0xBB57",
+              "0xBB5A",
+              "0xBB5C",
+              "0xBB5D",
+              "0xBB5E",
+              "0xBB5F",
+              "0xBB60",
+              "0xBB62",
+              "0xBB65",
+              "0xBB67",
+              "0xBB69"
+            ]
+          },
+          "0xBB6E": {
+            "instruction": "STA $00AC,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBB5A",
+              "0xBB5C",
+              "0xBB5D",
+              "0xBB5E",
+              "0xBB5F",
+              "0xBB60",
+              "0xBB62",
+              "0xBB65",
+              "0xBB67",
+              "0xBB69",
+              "0xBB6C",
+              "0xBB6E"
+            ]
+          },
+          "0xBB73": {
+            "instruction": "STA $00C2,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBB5D",
+              "0xBB5E",
+              "0xBB5F",
+              "0xBB60",
+              "0xBB62",
+              "0xBB65",
+              "0xBB67",
+              "0xBB69",
+              "0xBB6C",
+              "0xBB6E",
+              "0xBB71",
+              "0xBB73"
+            ]
+          },
+          "0xBB76": {
+            "instruction": "STA $002A,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBB5E",
+              "0xBB5F",
+              "0xBB60",
+              "0xBB62",
+              "0xBB65",
+              "0xBB67",
+              "0xBB69",
+              "0xBB6C",
+              "0xBB6E",
+              "0xBB71",
+              "0xBB73",
+              "0xBB76"
+            ]
+          },
+          "0xBC00": {
+            "instruction": "STA $0139",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xDD95",
+              "0xDD9C",
+              "0xDD9F",
+              "0xDDA1",
+              "0xDDA4",
+              "0xDDA9",
+              "0xDDAC",
+              "0xDE05",
+              "0xDE08",
+              "0xDE0B",
+              "0xBBFE",
+              "0xBC00"
+            ]
+          },
+          "0xBC24": {
+            "instruction": "STA $0138",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBC09",
+              "0xBC0C",
+              "0xBC0F",
+              "0xBC12",
+              "0xBC14",
+              "0xBC16",
+              "0xBC18",
+              "0xBC1B",
+              "0xBC1E",
+              "0xBC20",
+              "0xBC22",
+              "0xBC24"
+            ]
+          },
+          "0xBD4B": {
+            "instruction": "STA ($06),Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBD2A",
+              "0xBD2C",
+              "0xBD2F",
+              "0xBD39",
+              "0xBD3C",
+              "0xBD3E",
+              "0xBD40",
+              "0xBD41",
+              "0xBD44",
+              "0xBD47",
+              "0xBD49",
+              "0xBD4B"
+            ]
+          },
+          "0xBE15": {
+            "instruction": "STA $0139",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBD6E",
+              "0xBD70",
+              "0xBD72",
+              "0xBE02",
+              "0xBE05",
+              "0xBE07",
+              "0xBE0A",
+              "0xBE0C",
+              "0xBE0F",
+              "0xBE11",
+              "0xBE13",
+              "0xBE15"
+            ]
+          },
+          "0xBE35": {
+            "instruction": "STA ($06),Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xBE22",
+              "0xBE24",
+              "0xBE26",
+              "0xBE27",
+              "0xBE28",
+              "0xBE2A",
+              "0xBE2C",
+              "0xBE2D",
+              "0xBE2F",
+              "0xBE31",
+              "0xBE33",
+              "0xBE35"
+            ]
+          },
+          "0xBEF4": {
+            "instruction": "STA ($06),Y",
+            "status": "conditional"
+          },
+          "0xC583": {
+            "instruction": "STA $000F,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xC578",
+              "0xC57B",
+              "0xC577",
+              "0xC578",
+              "0xC57B",
+              "0xC577",
+              "0xC578",
+              "0xC57B",
+              "0xC57D",
+              "0xC580",
+              "0xC581",
+              "0xC583"
+            ]
+          },
+          "0xC588": {
+            "instruction": "STA $006E,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xC577",
+              "0xC578",
+              "0xC57B",
+              "0xC577",
+              "0xC578",
+              "0xC57B",
+              "0xC57D",
+              "0xC580",
+              "0xC581",
+              "0xC583",
+              "0xC586",
+              "0xC588"
+            ]
+          },
+          "0xC58D": {
+            "instruction": "STA $0087,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xC57B",
+              "0xC577",
+              "0xC578",
+              "0xC57B",
+              "0xC57D",
+              "0xC580",
+              "0xC581",
+              "0xC583",
+              "0xC586",
+              "0xC588",
+              "0xC58B",
+              "0xC58D"
+            ]
+          },
+          "0xC594": {
+            "instruction": "STA $00B6,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xC57B",
+              "0xC57D",
+              "0xC580",
+              "0xC581",
+              "0xC583",
+              "0xC586",
+              "0xC588",
+              "0xC58B",
+              "0xC58D",
+              "0xC590",
+              "0xC592",
+              "0xC594"
+            ]
+          },
+          "0xC599": {
+            "instruction": "STA $00CF,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xC580",
+              "0xC581",
+              "0xC583",
+              "0xC586",
+              "0xC588",
+              "0xC58B",
+              "0xC58D",
+              "0xC590",
+              "0xC592",
+              "0xC594",
+              "0xC597",
+              "0xC599"
+            ]
+          },
+          "0xC7C3": {
+            "instruction": "STA $001E,Y",
+            "status": "conditional"
+          },
+          "0xC9A0": {
+            "instruction": "STA $0110,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xEB9A",
+              "0xEB9C",
+              "0xEB9E",
+              "0xEBA0",
+              "0xEBA2",
+              "0xEBA4",
+              "0xEBA6",
+              "0xC998",
+              "0xC99A",
+              "0xC99C",
+              "0xC99E",
+              "0xC9A0"
+            ]
+          },
+          "0xC9A6": {
+            "instruction": "STA $0125,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xEB9E",
+              "0xEBA0",
+              "0xEBA2",
+              "0xEBA4",
+              "0xEBA6",
+              "0xC998",
+              "0xC99A",
+              "0xC99C",
+              "0xC99E",
+              "0xC9A0",
+              "0xC9A3",
+              "0xC9A6"
+            ]
+          },
+          "0xCF4A": {
+            "instruction": "STA $0001,Y",
+            "status": "conditional"
+          },
+          "0xD18E": {
+            "instruction": "STA $0087,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD178",
+              "0xD17B",
+              "0xD17E",
+              "0xD180",
+              "0xD182",
+              "0xD183",
+              "0xD185",
+              "0xD187",
+              "0xD188",
+              "0xD189",
+              "0xD18B",
+              "0xD18E"
+            ]
+          },
+          "0xD196": {
+            "instruction": "STA $00CF,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD182",
+              "0xD183",
+              "0xD185",
+              "0xD187",
+              "0xD188",
+              "0xD189",
+              "0xD18B",
+              "0xD18E",
+              "0xD191",
+              "0xD193",
+              "0xD194",
+              "0xD196"
+            ]
+          },
+          "0xD19B": {
+            "instruction": "STA $001E,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD185",
+              "0xD187",
+              "0xD188",
+              "0xD189",
+              "0xD18B",
+              "0xD18E",
+              "0xD191",
+              "0xD193",
+              "0xD194",
+              "0xD196",
+              "0xD199",
+              "0xD19B"
+            ]
+          },
+          "0xD1A0": {
+            "instruction": "STA $0046,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD188",
+              "0xD189",
+              "0xD18B",
+              "0xD18E",
+              "0xD191",
+              "0xD193",
+              "0xD194",
+              "0xD196",
+              "0xD199",
+              "0xD19B",
+              "0xD19E",
+              "0xD1A0"
+            ]
+          },
+          "0xD2C7": {
+            "instruction": "STA $0138",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD299",
+              "0xD29B",
+              "0xD29D",
+              "0xD29F",
+              "0xD2A1",
+              "0xD2A3",
+              "0xD2BD",
+              "0xD2BF",
+              "0xD2C1",
+              "0xD2C3",
+              "0xD2C5",
+              "0xD2C7"
+            ]
+          },
+          "0xD32B": {
+            "instruction": "STA $0139",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD312",
+              "0xD315",
+              "0xD318",
+              "0xD31B",
+              "0xD31D",
+              "0xD31F",
+              "0xD321",
+              "0xD323",
+              "0xD325",
+              "0xD327",
+              "0xD329",
+              "0xD32B"
+            ]
+          },
+          "0xD333": {
+            "instruction": "STA $0139",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD31B",
+              "0xD31D",
+              "0xD31F",
+              "0xD321",
+              "0xD323",
+              "0xD325",
+              "0xD327",
+              "0xD329",
+              "0xD32B",
+              "0xD32E",
+              "0xD331",
+              "0xD333"
+            ]
+          },
+          "0xD46E": {
+            "instruction": "STA $00CF,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD446",
+              "0xD448",
+              "0xD44D",
+              "0xD44F",
+              "0xD451",
+              "0xD462",
+              "0xD465",
+              "0xD467",
+              "0xD469",
+              "0xD46B",
+              "0xD46C",
+              "0xD46E"
+            ]
+          },
+          "0xD4B1": {
+            "instruction": "STA $00CF,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD477",
+              "0xD47A",
+              "0xD494",
+              "0xD496",
+              "0xD4A4",
+              "0xD4A7",
+              "0xD4A9",
+              "0xD4AA",
+              "0xD4AB",
+              "0xD4AD",
+              "0xD4AE",
+              "0xD4B1"
+            ]
+          },
+          "0xD5A5": {
+            "instruction": "STA $0117,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD462",
+              "0xD465",
+              "0xD467",
+              "0xD469",
+              "0xD45F",
+              "0xD598",
+              "0xD599",
+              "0xD59A",
+              "0xD59D",
+              "0xD59F",
+              "0xD5A2",
+              "0xD5A5"
+            ]
+          },
+          "0xD5AA": {
+            "instruction": "STA $011E,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD467",
+              "0xD469",
+              "0xD45F",
+              "0xD598",
+              "0xD599",
+              "0xD59A",
+              "0xD59D",
+              "0xD59F",
+              "0xD5A2",
+              "0xD5A5",
+              "0xD5A8",
+              "0xD5AA"
+            ]
+          },
+          "0xD5B4": {
+            "instruction": "STA $00A0,Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD599",
+              "0xD59A",
+              "0xD59D",
+              "0xD59F",
+              "0xD5A2",
+              "0xD5A5",
+              "0xD5A8",
+              "0xD5AA",
+              "0xD5AD",
+              "0xD5AF",
+              "0xD5B1",
+              "0xD5B4"
+            ]
+          },
+          "0xD83C": {
+            "instruction": "STA $0110,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xD800",
+              "0xD803",
+              "0xD805",
+              "0xD808",
+              "0xD80A",
+              "0xD80C",
+              "0xD80E",
+              "0xD810",
+              "0xD812",
+              "0xD814",
+              "0xD83A",
+              "0xD83C"
+            ]
+          },
+          "0xDA11": {
+            "instruction": "STA $0110,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xE003",
+              "0xE005",
+              "0xE007",
+              "0xE009",
+              "0xE00B",
+              "0xE00D",
+              "0xE00F",
+              "0xE011",
+              "0xE013",
+              "0xE016",
+              "0xE018",
+              "0xDA11"
+            ]
+          },
+          "0xDA16": {
+            "instruction": "STA $012C,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xE007",
+              "0xE009",
+              "0xE00B",
+              "0xE00D",
+              "0xE00F",
+              "0xE011",
+              "0xE013",
+              "0xE016",
+              "0xE018",
+              "0xDA11",
+              "0xDA14",
+              "0xDA16"
+            ]
+          },
+          "0xDA1B": {
+            "instruction": "STA $011E,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xE00B",
+              "0xE00D",
+              "0xE00F",
+              "0xE011",
+              "0xE013",
+              "0xE016",
+              "0xE018",
+              "0xDA11",
+              "0xDA14",
+              "0xDA16",
+              "0xDA19",
+              "0xDA1B"
+            ]
+          },
+          "0xDA21": {
+            "instruction": "STA $0117,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xE00F",
+              "0xE011",
+              "0xE013",
+              "0xE016",
+              "0xE018",
+              "0xDA11",
+              "0xDA14",
+              "0xDA16",
+              "0xDA19",
+              "0xDA1B",
+              "0xDA1E",
+              "0xDA21"
+            ]
+          },
+          "0xDAED": {
+            "instruction": "INC $0125,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xDAD7",
+              "0xDAD9",
+              "0xDADA",
+              "0xDADB",
+              "0xDADE",
+              "0xDAE0",
+              "0xDAE3",
+              "0xDAE4",
+              "0xDAE6",
+              "0xDAE8",
+              "0xDAEB",
+              "0xDAED"
+            ]
+          },
+          "0xDB11": {
+            "instruction": "INC $0125,X",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xDAF8",
+              "0xDAFB",
+              "0xDAFD",
+              "0xDAFF",
+              "0xDB02",
+              "0xDB04",
+              "0xDB07",
+              "0xDB08",
+              "0xDB0A",
+              "0xDB0C",
+              "0xDB0F",
+              "0xDB11"
+            ]
+          },
+          "0xDE20": {
+            "instruction": "STA ($06),Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xDD26",
+              "0xDD28",
+              "0xDD2A",
+              "0xDE0E",
+              "0xDE10",
+              "0xDE13",
+              "0xDE15",
+              "0xDE18",
+              "0xDE1A",
+              "0xDE1C",
+              "0xDE1E",
+              "0xDE20"
+            ]
+          },
+          "0xDE70": {
+            "instruction": "STX $010F",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xDE6B",
+              "0xDE6D",
+              "0xDE6E",
+              "0xDE68",
+              "0xDE6B",
+              "0xDE6D",
+              "0xDE6E",
+              "0xDE68",
+              "0xDE6B",
+              "0xDE6D",
+              "0xDE6E",
+              "0xDE70"
+            ]
+          },
+          "0xE007": {
+            "instruction": "STA ($06),Y",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xDFEC",
+              "0xDFEE",
+              "0xDFF0",
+              "0xDFF2",
+              "0xDFF5",
+              "0xDFFA",
+              "0xDFFD",
+              "0xDFFF",
+              "0xE001",
+              "0xE003",
+              "0xE005",
+              "0xE007"
+            ]
+          },
+          "0xE88D": {
+            "instruction": "STA $0109",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xC8E2",
+              "0xC8E5",
+              "0xC8E8",
+              "0xC8EB",
+              "0xE87D",
+              "0xE87F",
+              "0xE881",
+              "0xE884",
+              "0xE886",
+              "0xE889",
+              "0xE88B",
+              "0xE88D"
+            ]
+          },
+          "0xE8EF": {
+            "instruction": "INC $0109",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xE8D7",
+              "0xE8D9",
+              "0xE8DB",
+              "0xE8DE",
+              "0xE8E1",
+              "0xE8E3",
+              "0xE8E5",
+              "0xE8E7",
+              "0xE8E9",
+              "0xE8EB",
+              "0xE8ED",
+              "0xE8EF"
+            ]
+          },
+          "0xE946": {
+            "instruction": "STX $0109",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xE94F",
+              "0xE951",
+              "0xE953",
+              "0xE955",
+              "0xE957",
+              "0xE959",
+              "0xE95B",
+              "0xE95D",
+              "0xE95E",
+              "0xE960",
+              "0xE962",
+              "0xE946"
+            ]
+          },
+          "0xEA45": {
+            "instruction": "STY $0109",
+            "status": "abstract_counterexample",
+            "unclosed_suffix": [
+              "0xEA32",
+              "0xEA33",
+              "0xEA34",
+              "0xEA36",
+              "0xEA37",
+              "0xEA39",
+              "0xEA3B",
+              "0xEA3D",
+              "0xEA3F",
+              "0xEA41",
+              "0xEA43",
+              "0xEA45"
+            ]
+          },
+          "0xF3B1": {
+            "instruction": "SHA* $989B,Y",
+            "status": "conditional"
+          },
+          "0xF3BD": {
+            "instruction": "SHA* ($92),Y",
+            "status": "conditional"
+          }
+        }
+      },
+      "id": "STACK-PAGE-STORES",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "frame condition needed by P4 and P5",
+      "solver": "z3",
+      "solver_version": null,
+      "statement": "no instruction other than a push writes $0100-$01FF",
+      "status": "abstract_counterexample"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [
+        "STACK-PAGE-STORES",
+        "J-STACK-SHADOW"
+      ],
+      "detail": {
+        "returns_in_N": 337,
+        "supporting_evidence_not_a_proof": "results/stack_analysis.json: abstract stack semantics find every reachable RTS consuming its entry frame, assuming no store corrupts the frame",
+        "why_unknown": "no shadow-stack invariant has been stated or checked against the transition relation"
+      },
+      "id": "LOC-RETURN",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "consecution of J_location for returns (P4, P5)",
+      "solver": null,
+      "solver_version": null,
+      "statement": "every RTS and RTI in N transfers to an address in N",
+      "status": "unknown"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [],
+      "detail": {
+        "irq": "0xFFF0",
+        "nmi": "0x8082",
+        "reset": "0x8000"
+      },
+      "id": "LOC-ASYNC",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "consecution of J_location for interrupt and reset entry",
+      "solver": "graph inspection",
+      "solver_version": null,
+      "statement": "the NMI, reset and IRQ vectors each point at an instruction start in N",
+      "status": "proved"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [
+        "LOC-RETURN"
+      ],
+      "detail": {
+        "cli_or_plp_in_N": [],
+        "why_unknown": "no CLI or PLP is in N, so only RTI can clear I, and RTI restores a pushed status byte; that the byte it pulls is the one pushed is frame integrity, which is open"
+      },
+      "id": "J-IRQ",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "invariant used to close the IRQ entry",
+      "solver": null,
+      "solver_version": null,
+      "statement": "the I flag is set at every instruction boundary after reset",
+      "status": "unknown"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [
+        "J-IRQ"
+      ],
+      "detail": {
+        "instructions_that_can_write_ppu_control": 17,
+        "of_those_possibly_setting_nmi_enable": 6,
+        "per_instruction": {
+          "0x8004": {
+            "can_set_enable": false,
+            "instruction": "STA $2000"
+          },
+          "0x808C": {
+            "can_set_enable": false,
+            "instruction": "STA $2000"
+          },
+          "0x816C": {
+            "can_set_enable": true,
+            "instruction": "STA $2000"
+          },
+          "0x817E": {
+            "can_set_enable": true,
+            "instruction": "STA $2000"
+          },
+          "0x871C": {
+            "can_set_enable": true,
+            "instruction": "STA ($00),Y"
+          },
+          "0x8EED": {
+            "can_set_enable": true,
+            "instruction": "STA $2000"
+          },
+          "0x90DC": {
+            "can_set_enable": true,
+            "instruction": "STA ($06),Y"
+          },
+          "0x94F7": {
+            "can_set_enable": true,
+            "instruction": "STA ($06),Y"
+          },
+          "0xB9B5": {
+            "can_set_enable": false,
+            "instruction": "STA ($06),Y"
+          },
+          "0xBD4B": {
+            "can_set_enable": false,
+            "instruction": "STA ($06),Y"
+          },
+          "0xBE35": {
+            "can_set_enable": false,
+            "instruction": "STA ($06),Y"
+          },
+          "0xBEF4": {
+            "can_set_enable": false,
+            "instruction": "STA ($06),Y"
+          },
+          "0xDE20": {
+            "can_set_enable": false,
+            "instruction": "STA ($06),Y"
+          },
+          "0xE007": {
+            "can_set_enable": false,
+            "instruction": "STA ($06),Y"
+          },
+          "0xF3B1": {
+            "can_set_enable": false,
+            "instruction": "SHA* $989B,Y"
+          },
+          "0xF3BD": {
+            "can_set_enable": false,
+            "instruction": "SHA* ($92),Y"
+          },
+          "0xFFF7": {
+            "can_set_enable": false,
+            "instruction": "ASL $1F1E,X"
+          }
+        },
+        "why_unknown": "needs the invariant 'NMI enable is clear while the handler body runs' plus MA-NMI-EDGE; neither has been stated as a checked invariant"
+      },
+      "id": "J-ASYNC",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "invariant every slice-based result assumes",
+      "solver": null,
+      "solver_version": null,
+      "statement": "no interrupt handler runs between two instructions of game logic",
+      "status": "unknown"
+    },
+    {
+      "assumptions": [],
+      "dependencies": [
+        "LOC-DIRECT",
+        "LOC-DISPATCH",
+        "LOC-RETURN",
+        "LOC-ASYNC",
+        "J-ASYNC"
+      ],
+      "detail": {
+        "certificate": "J_location := Fetch => PC in N; initiation is LOC-ASYNC (reset vector), safety is N being a subset of ROM, consecution is the dependencies",
+        "why_unknown": "consecution is not discharged: see each dependency's status"
+      },
+      "id": "P1",
+      "independent_check": null,
+      "query_artifact": null,
+      "query_sha256": null,
+      "result_artifact": null,
+      "scope": "primary theorem (unbounded, all admissible inputs)",
+      "solver": null,
+      "solver_version": null,
+      "statement": "for every reachable state s: Fetch(s) implies $8000 <= PC(s) <= $FFFF",
+      "status": "unknown"
+    }
+  ],
+  "repository_commit": "49f1f7e6e8e20f7c88ec434c44e3e5e3e92520da",
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "seconds": {
+    "dispatch": 7.4,
+    "instruction_location": 111.0,
+    "state_domains": 73.7
+  },
+  "solver": {
+    "cvc5": "1.4.2",
+    "python": "3.10.12",
+    "z3": "5.4.1"
+  },
+  "trusted_base": [
+    "Z3 and cvc5 (no independently checkable proof certificates are produced for these bit-vector/array queries; agreement of two solvers is the cross-check)",
+    "the CPU and memory model, validated on a finite sample",
+    "the Python code that builds each query from the image",
+    "the control-flow graph construction (analysis/cfg.py), for every result that lists J-LOCATION"
+  ]
+}
