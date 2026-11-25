@@ -68,6 +68,7 @@ def main():
     print("site   table   N  idx<=  index source                 bound / note")
     print("-" * 78)
     reach_ram = []
+    candidates = []
     for pc, tbl, n in JT:
         src, maxidx, note = SITES.get(pc, ("?", None, ""))
         # in-range target is always ROM; check whether ANY index up to a generous
@@ -80,6 +81,17 @@ def main():
         if ram_idx and not blocked:
             flag = "  <-- internal RAM reachable within bound"
             reach_ram.append((pc, tbl, n, maxidx, ram_idx))
+        for resolution in resolutions:
+            if is_internal_ram(resolution.target):
+                candidates.append({
+                    "entry_point": f"0x{pc:04X}", "index": resolution.index,
+                    "destination": f"0x{resolution.target:04X}",
+                    "memory_region": region(resolution.target),
+                    "index_source": src, "local_bound": maxidx,
+                    "reachability": "unproved" if maxidx is None else "excluded_by_bound",
+                    "exploitability": "unknown" if maxidx is None else "impossible_under_local_bound",
+                    "evidence": "static_exact_6502_model",
+                })
         print(f"${pc:04X} ${tbl:04X} {n:3} {str(mx):>5}  {src:28} {note}{flag}")
 
     print("\n--- sites whose bound does NOT exclude a controllable-RAM target ---")
@@ -100,6 +112,10 @@ def main():
             print(f"    enemy ID ${ID:02X} -> ${v:04X} (controllable RAM)")
     print("    (IDs $34/$35 route via master $C27F to RTS stubs $C2F0/$C307,")
     print("     so they never reach $C905; Bowser ID $2D proves the gate empirically.)")
+    report = {"rom_sha1": image().sha1, "model": "exact_6502_jumpengine",
+              "candidate_control_flow_anomalies": candidates}
+    with open("exploitability_candidates.json", "w") as out:
+        json.dump(report, out, indent=2, sort_keys=True)
 
 
 if __name__ == "__main__":
