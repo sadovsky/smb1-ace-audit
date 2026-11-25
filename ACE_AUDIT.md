@@ -1,9 +1,62 @@
 # Can Super Mario Bros. (NES) do controller-only ACE?
 
-**Short answer: I did not find one, and the ROM's structure explains why none is
-known — but this is strong structural evidence, not a formal impossibility
-proof.** The question is reduced to three concrete, falsifiable residual
-conditions (see the end).
+**Short answer: no controller-only ACE has been demonstrated here. The ROM's
+indirect control flow is highly constrained, but this revision withdraws the
+claim that every dispatch index is provably in range.** Of the eighteen
+dispatch sites, **two** are bounded by instructions at the dispatch with no
+assumption about RAM; **fourteen** are bounded only under an invariant that is
+observed or derived rather than proved; and **two** are not bounded by the
+invariant the earlier revision asserted for them.
+
+Current interim conclusion:
+
+> Static analysis of this ROM identifies a highly constrained indirect
+> control-flow architecture centred on the JumpEngine at `$8E04`. No
+> controller-only arbitrary code execution has been demonstrated in the
+> experiments reported here. Some dispatch invariants can be established
+> locally or conditionally; others remain empirical. A definitive negative
+> result requires establishing control-flow completeness, state invariants,
+> return-address integrity, and the relevant hardware execution semantics
+> across all states the controller-input model permits.
+
+`results/proof_obligations.json` tracks what remains; all six obligations are
+open or only partially established, so impossibility is not claimed.
+
+## Corrections in this revision
+
+Each item below was asserted by an earlier revision of this document and is
+contradicted by the ROM. Every correction is machine-checked by a regression
+test, and the superseded outputs are preserved in `results/baseline/`.
+
+| claim as published | what the ROM shows | artifact |
+|---|---|---|
+| `$92C8`: `$071F` "forced to 1..8 → 0..7", **structural, provably safe** | `LDY $071F / BNE / LDY #$08 / STY $071F / DEY / TYA` substitutes 8 for zero and never clamps. The index is `((v or 8) - 1) & 0xFF`, derived as `{0..254}`; `$071F = 9` gives index 8 → `$26EE`. In range only while `RAM[$071F] <= 8`. | `analysis/dispatch_index.py` |
+| `$B34E`: `$1D` "player state, **checked**" by `CMP #$03` | `BEQ $B34E` only decides whether `STY $0789` runs. Both paths dispatch with `A = $1D` unchanged; derived index set is all 256 values over a 4-entry table. | `results/dispatch_bounds.json` |
+| `$BDBD`: bounded by `CMP #$09 / BCC` | Genuinely bounded (0..8 over 9 entries), but by `$BDF6` returning `Y <= 13`. The cited comparison alone does not bound it: the other path runs `SBC #$05`. Right conclusion, wrong mechanism. | `analysis/index_derivation.py` |
+| `$9664`: indexed by "GameEngine (`$0E`)", bound 46 | The index is formed at `$965F-$9662` as `LDA $00 / CLC / ADC $07`. `$0E` is not the index source. Bounding it needs a relational invariant over two scratch bytes with dozens of writers, over the game's largest table (47 entries). Recorded **unproved**. | `results/dispatch_bounds.json` |
+| `$9743`: table has 5 entries, bound `$0733 <= 4` | The table at `$9746` has **3** entries: its entry 0 points at `$974C`, which holds `JSR $9BBB`. The heuristic read that instruction's bytes as entries 3 and 4. Under the *asserted* bound of 4, indices 3 and 4 dispatch outside the table, to `$BB20` and `$BD9B`. | `data/dispatch_tables.json` |
+| `$C7A8`: table has 8 entries | 6 entries. Entry 1 points at `$C7B7`, which holds `RTS`. The over-read also manufactured a phantom dispatch target at `$A060`, from which the old tracer decoded data as `JAM`. Routed indices 0..5 exactly saturate the real table. | `data/dispatch_tables.json` |
+| "**exactly one** computed/indirect jump in the whole game" | One *direct* indirect jump (`JMP ($0006)` at `$8E16`), plus **336 `RTS` and one `RTI`**, each of which takes its destination from memory. The claim counted only the first kind. | `results/cfg.json` |
+| "2181 of 2182 non-ROM destinations are **excluded**, 0 unknown" | Every PRG-ROM destination was skipped before classifying, and an *observed* bound was allowed to exclude an index outright. Over all 18 × 256 resolutions: 505 excluded unconditionally, 1252 excluded only conditionally, 1633 not ACE-capable, **724 in controllable RAM and not excluded**. | `exploitability_classification.json` |
+| ROM destinations are safe because they are ROM | 1932 resolutions are unexpected-ROM destinations; **390 land on an operand byte** of another instruction and 874 on bytes the CFG never reaches. Landing mid-instruction is not a safe outcome. | `results/destination_matrix.json` |
+| I/O destinations are an "instant crash" | An instruction fetch from a register region is a bus transaction, not a defined crash. `$2060` is classified `io_dependent` pending hardware verification. | `memory.py`, `analysis/destinations.py` |
+| Undocumented opcodes stop a trace ("hit data") | All 256 NMOS encodings do something; 105 are undocumented and most are two or three bytes, so stopping mis-aligns the stream. Six families write memory and twelve encodings jam the CPU. | `analysis/decoder.py` |
+| IRQs dismissed because "NROM has no mapper IRQ" | The 2A03 has its own two IRQ sources, and SMB1's IRQ vector points at `$FFF0`, which is **table data**. The real reason no IRQ fires is stronger: `SEI` at reset and **no reachable `CLI` or `PLP`**, so `RTI` can only restore a status byte that already had I set. | `results/interrupts.json` |
+
+Two further method errors, with no single headline claim attached:
+
+- The recursive tracer guarded its walk with `if pc in code: return`, where
+  `code` held every *byte* already decoded. That discards an instruction whose
+  start is an operand byte of another — which is exactly SMB1's own `$2C`
+  filler idiom, used at `$8220`, `$996A`, `$BDD4`, `$BFB6`, `$DC20`, `$E3EB`
+  and `$F349` to give a routine two entry points. Ten such decodings were
+  being thrown away.
+- Branch feasibility was never considered, so the tracer followed the
+  fallthrough of always-taken branches (`LDA #$0B / BNE` cannot fall through)
+  into data and decoded it as instructions.
+
+The question is reduced to concrete, falsifiable residual conditions (see the
+end).
 
 - ROM: `smb1.nes`, NROM / mapper 0, PRG `$8000–$FFFF`, SHA-1
   `ea343f4e445a9050d4b4fbac2c77d0693b1d0922`.
@@ -32,7 +85,9 @@ Recursive-descent disassembly from the three CPU vectors —
 
 — reaches **22,762 of 32,768 PRG bytes (69%)** as executable code, following
 every `JSR`/`JMP`/branch and reading every RTS-dispatch jump table. In all of
-that code there is **exactly one computed/indirect jump**:
+that code there is exactly one *direct* indirect jump — but note that 336 `RTS`
+instructions and one `RTI` also take their destinations from memory, and the
+original claim counted only the first kind:
 
 ```
 8E04  JumpEngine:
@@ -97,25 +152,29 @@ questions.
 | `$83A3` | `$83A6` | 5 | `$0772` | task counter | in-range in normal play |
 | `$856A` | `$856D` | 15 | `$073C`-family screen task | screen-routine counter | in-range in normal play |
 | `$921B` | `$921E` | 3 | `$0772` | task counter | in-range in normal play |
-| `$92C8` | `$92CB` | 8 | `$071F` forced to 1..8 → 0..7 | **structural** (`LDY`/`BNE`/`LDY #$08`/`DEY`) | **provably safe** |
-| `$9664` | `$9667` | 47 | GameEngine area (`$0E`-driven) | game-engine state | in-range in normal play |
-| `$9743` | `$9746` | 5 | `$0733` | state counter | in-range in normal play |
+| `$92C8` | `$92CB` | 8 | `$071F`, zero substituted by 8, **not clamped** | conditional on `RAM[$071F] <= 8` | derived `{0..254}`; in range only under that invariant |
+| `$9664` | `$9667` | 47 | **`$00 + $07`** formed at `$965F-$9662`, not `$0E` | needs a relational invariant | **unproved** |
+| `$9743` | `$9746` | **3** (not 5) | `$0733` | asserted bound 4 exceeds the real table | **indices 3-4 dispatch outside the table** → `$BB20`, `$BD9B` |
 | `$AEDF` | `$AEE2` | 4 | `$0772` | task counter | in-range in normal play |
 | `$B04C` | `$B04F` | 13 | `$0E` player/game state | state value | in-range in normal play |
-| `$B34E` | `$B351` | 4 | `$1D` (`CMP #$03`) | player state, checked | in-range in normal play |
-| `$BDBD` | `$BDC0` | 9 | `$05` via `$BDF6` | **`CMP #$09 / BCC`** | **bounded at dispatch** |
+| `$B34E` | `$B351` | 4 | `$1D` raw; the `CMP #$03` does **not** clamp | conditional on `RAM[$1D] <= 3` (observed) | derived 0..255 unconditionally |
+| `$BDBD` | `$BDC0` | 9 | `$05` via `$BDF6` | **`$BDF6` returns `Y <= 13`** (not the `CMP` alone) | **bounded, no RAM assumption** |
 | `$C27F` | `$C282` | 55 | `$16,x` enemy ID | **table sized to ID space 0–`$36`** | **no legal ID out of range** |
-| `$C7A8` | `$C7AB` | 8 | `$16,x − $12` | routed sub-handler (IDs `$12`–`$19`) | in-range given routing |
-| `$C88F` | `$C892` | 34 | `$16,x` (`CPY #$15`, `SBC #$14`) | worst case index 34 → `$2060` (I/O crash, **not** RAM) | no RAM target |
-| `$C907` | `$C90A` | 21 | `$16,x` **raw, no local bound** | upstream routing only | **the one site that can reach RAM — see §4** |
+| `$C7A8` | `$C7AB` | **6** (not 8) | `$16,x − $12` | routed sub-handler (IDs `$12`–`$19`) | routed indices 0-5 exactly saturate the table |
+| `$C88F` | `$C892` | 34 | `$16,x` (`CPY #$15`, `SBC #$14`) | index 34 → `$2060`, a PPU register mirror (**hardware dependent**, not a defined crash) | out of range by one index; no RAM target |
+| `$C907` | `$C90A` | 21 | `$16,x` **raw, no local bound** | routed IDs only (derived, assumes preservation) | routed indices 0-20 in range; see §4 |
 | `$C987` | `$C98A` | 7 | `$16,x − $24` | routed sub-handler (IDs `$24`–`$2A`) | in-range given routing |
 | `$D2E5` | `$D2E8` | 5 | `$0746` (`CMP #$05 / BCS`) | **explicit clamp** | **bounded at dispatch** |
 
-Three sites are bounded right at the dispatch (`$92C8`, `$BDBD`, `$D2E5`). The
-enemy-ID master `$C27F` has a table sized exactly to the enemy-ID space, so no
-legal ID is out of range. The rest are indexed by **mode / task / engine-state
-counters** that the game only ever sets to small in-range values during normal
-play — which is also *why the game never crashes* at these dispatches.
+**Two** sites are bounded right at the dispatch with no assumption about RAM:
+`$BDBD` (via `$BDF6` returning `Y <= 13`) and `$D2E5` (`CMP #$05 / BCS`, a real
+clamp). `$92C8` was previously counted here and does not belong: its `BNE` only
+substitutes for zero. The enemy-ID master `$C27F` has a table sized exactly to
+the identifier space, conditional on that space being `$00..$36`, which is
+itself a table-boundary claim. The rest are indexed by **mode / task /
+engine-state counters** that the game is only *observed* to set to small
+in-range values — which is why the game does not crash in practice, but is not
+the same as a bound.
 
 ---
 
@@ -138,9 +197,12 @@ RAM:
 | `$34` | 52 | **`$0747`** | controllable RAM |
 | `$35` | 53 | **`$03D0`** | controllable RAM |
 
-Every other out-of-range ID lands in ROM (jump to unintended code) or in
-`$2000–$7FFF` I/O space (instant crash on open-bus / PPU read) — not
-controllable RAM.
+Every other out-of-range ID lands in ROM (an unintended entry, which may be
+an operand byte rather than an instruction start — see
+`results/destination_matrix.json`) or in the `$2000–$7FFF` register and
+unmapped space. A fetch from that space is a bus transaction whose result
+depends on the hardware; it is classified `io_dependent` or
+`open_bus_dependent`, not as a defined crash.
 
 The exact 6502 model also reproduces the previously reported *static* candidate
 `$3C → $16B5`. `$16B5` is an internal-RAM mirror and normalizes to physical RAM
@@ -363,18 +425,29 @@ bound derived from the ROM is a different claim from one inferred from play.
 
 | provenance | meaning | sites |
 |---|---|---|
-| `structural` | enforced by an instruction at the dispatch | 4 |
-| `derived` | computed from the routing tables (`reach.py`) | 5 |
-| `observed` | consistent with every state reached, not proved | **9** |
-| `unproved` | no bound established | 0 |
+| `proven` | enforced at the dispatch, no RAM assumption | **2** |
+| `structural_conditional` | instructions constrain it, given an upstream invariant | 1 |
+| `derived_conditional` | computed from the routing tables, given preservation | 4 |
+| `observed` | consistent with every state reached, not proved | 9 |
+| `unproved` | no bound keeping the index in range | **2** |
 
-Of 2182 non-ROM destinations across all 256 indices at all 18 sites:
+Only `proven` excludes an index unconditionally; `analysis/provenance.py`
+enforces that, and a conditional bound cannot be constructed without listing
+its assumptions.
 
-- **2181 are excluded** by a bound.
-- **1 is live**: `$C88F` index 34 (enemy ID `$36`) → `$2060`, PPU register
-  space. Classified `not_ace` — reachable in principle, but the destination
-  holds no controllable executable bytes.
-- **0 are `unknown`**, and none is `demonstrated`.
+Of 4114 non-expected destinations across all 256 indices at all 18 sites (the
+earlier count of 2182 omitted every PRG-ROM destination):
+
+- **505 are excluded unconditionally** — the index lies outside the set derived
+  while assuming nothing about RAM.
+- **1252 are excluded only conditionally**, each carrying its assumptions.
+- **1633 are `not_ace`** — reachable index, destination holds no
+  player-influenced bytes.
+- **724 are `unknown`**: destinations in controllable RAM that no proven bound
+  excludes. None is `demonstrated`; no input sequence is known for any of them.
+
+The earlier "2181 excluded, 0 unknown" result came from skipping ROM
+destinations and from letting an observed bound exclude an index outright.
 
 The nine `observed` sites are condition C1 and are the honest soft spot.
 

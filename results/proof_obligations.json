@@ -1,0 +1,488 @@
+{
+  "impossibility_claim_permitted": false,
+  "obligations": [
+    {
+      "artifacts": [
+        "results/cfg.json"
+      ],
+      "assumptions": [
+        "a JSR returns to the instruction after it unless the callee is the JumpEngine (modelled as a return_point edge, not verified by stack analysis)",
+        "indirect and stack-derived destinations are recorded as unresolved rather than enumerated"
+      ],
+      "evidence": {
+        "halt_instructions_reached": 2,
+        "instruction_starts": 10708,
+        "occupied_bytes": 22806,
+        "overlapping_decodings_preserved": 10,
+        "undocumented_instructions_reached": 8,
+        "unresolved_transfers": {
+          "halt": 2,
+          "indirect_jump": 1,
+          "rti": 1,
+          "rts": 336
+        }
+      },
+      "id": "A",
+      "limitations": [
+        "336 RTS and 1 RTI destinations are not resolved; obligation D covers them",
+        "coverage is of the CFG built from the three vectors and the JumpEngine, not of all states reachable by input"
+      ],
+      "obligation": "All reachable instruction starts and transfers identified or conservatively represented",
+      "status": "partially established",
+      "verification_method": "analysis/cfg.py, analysis/decoder.py"
+    },
+    {
+      "artifacts": [
+        "data/dispatch_tables.json",
+        "results/destination_matrix.json"
+      ],
+      "assumptions": [
+        "address formation follows jumpengine.resolve_table, which models ASL aliasing and the 8-bit INY wrap"
+      ],
+      "evidence": {
+        "dispatch_sites": 18,
+        "distinct_effective_indices_per_site": 128,
+        "resolutions_total": 4608,
+        "tables_over_read_by_the_old_heuristic": [
+          "0x9743",
+          "0xC7A8"
+        ],
+        "tables_with_independent_boundary_confirmation": 17
+      },
+      "id": "B",
+      "limitations": [
+        "table boundaries at ['0x8234'] rest on the heuristic alone",
+        "the engine's consumption of the return address is modelled, not proved against a stack analysis"
+      ],
+      "obligation": "JumpEngine consumes the expected return address and resolves to allowed targets",
+      "status": "partially established",
+      "verification_method": "analysis/dispatch_tables.py, analysis/destinations.py"
+    },
+    {
+      "artifacts": [
+        "results/dispatch_bounds.json",
+        "results/write_census.json"
+      ],
+      "assumptions": [
+        "the invariants listed per site in results/dispatch_bounds.json, most of them observed only"
+      ],
+      "evidence": {
+        "critical_variables_with_a_fully_resolved_writer_set": [],
+        "sites_bounded_only_under_an_assumption": 13,
+        "sites_bounded_with_no_ram_assumption": [
+          "0xBDBD",
+          "0xD2E5"
+        ],
+        "sites_not_bounded_under_their_stated_assumption": [
+          "0x9664",
+          "0x9743",
+          "0xC88F"
+        ],
+        "writer_manifests": {
+          "0x0000": {
+            "exact_writers": [
+              "0x80BC",
+              "0x8124",
+              "0x81CB",
+              "0x8608",
+              "0x8612",
+              "0x8714",
+              "0x87FC",
+              "0x88B8",
+              "0x8938",
+              "0x893A",
+              "0x8981",
+              "0x8A00",
+              "0x8A10",
+              "0x8A97",
+              "0x8E17",
+              "0x8E70",
+              "0x8EC5",
+              "0x8F06",
+              "0x938E",
+              "0x9391",
+              "0x9435",
+              "0x9443",
+              "0x9451",
+              "0x9494",
+              "0x94A6",
+              "0x94E0",
+              "0x95F8",
+              "0x9606",
+              "0x9616",
+              "0x9716",
+              "0x97D7",
+              "0xA623",
+              "0xAFE4",
+              "0xB005",
+              "0xB28A",
+              "0xB3E0",
+              "0xB51E",
+              "0xB546",
+              "0xB554",
+              "0xB6C5",
+              "0xB7F9",
+              "0xB808",
+              "0xB83D",
+              "0xBADC",
+              "0xBBD0",
+              "0xBD12",
+              "0xBF23",
+              "0xBF5C",
+              "0xBF7A",
+              "0xBF96",
+              "0xBFA8",
+              "0xBFC5",
+              "0xC4C4",
+              "0xC4CF",
+              "0xC4E8",
+              "0xC4F6",
+              "0xC660",
+              "0xC73A",
+              "0xCA1C",
+              "0xCA28",
+              "0xCA2C",
+              "0xCB3B",
+              "0xCB81",
+              "0xCD87",
+              "0xCD9A",
+              "0xCDB2",
+              "0xCE83",
+              "0xCF7B",
+              "0xCF85",
+              "0xCFA5",
+              "0xD1A1",
+              "0xD1F9",
+              "0xD229",
+              "0xD247",
+              "0xD3CD",
+              "0xD3EA",
+              "0xD444",
+              "0xD482",
+              "0xD55E",
+              "0xD588",
+              "0xD595",
+              "0xD640",
+              "0xD698",
+              "0xD736",
+              "0xDB6A",
+              "0xDB8A",
+              "0xDBB3",
+              "0xDBF7",
+              "0xDC04",
+              "0xDD0A",
+              "0xDD3F",
+              "0xDD64",
+              "0xDD97",
+              "0xDF74",
+              "0xE139",
+              "0xE148",
+              "0xE210",
+              "0xE245",
+              "0xE24E",
+              "0xE29C",
+              "0xE435",
+              "0xE59F",
+              "0xE6FA",
+              "0xE710",
+              "0xEBAD",
+              "0xEBEA",
+              "0xEC55",
+              "0xEC61",
+              "0xEC8F",
+              "0xEF81",
+              "0xEF8E",
+              "0xEFDF",
+              "0xF06F",
+              "0xF165",
+              "0xF1BA",
+              "0xF1CB",
+              "0xF1DE",
+              "0xFB33",
+              "0xFF3D"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 871,
+            "role": "$9664 dispatch index (summed with $07)",
+            "unresolved_writers": 130
+          },
+          "0x0007": {
+            "exact_writers": [
+              "0x8312",
+              "0x88AF",
+              "0x88E5",
+              "0x8E14",
+              "0x90D2",
+              "0x92DC",
+              "0x92DF",
+              "0x92E6",
+              "0x939E",
+              "0x9427",
+              "0x9488",
+              "0x94C8",
+              "0x95B3",
+              "0x95BD",
+              "0x95C9",
+              "0x95EF",
+              "0x9652",
+              "0x975E",
+              "0x9809",
+              "0x99FB",
+              "0x9AB2",
+              "0x9B1C",
+              "0x9BC2",
+              "0x9BCC",
+              "0x9BEA",
+              "0xA61E",
+              "0xAFAA",
+              "0xB186",
+              "0xB1A8",
+              "0xB2EA",
+              "0xB2EF",
+              "0xB2F7",
+              "0xB389",
+              "0xB4D5",
+              "0xB6FE",
+              "0xB911",
+              "0xB918",
+              "0xBD50",
+              "0xBEE9",
+              "0xBFE9",
+              "0xC021",
+              "0xC072",
+              "0xC0D2",
+              "0xC16C",
+              "0xCCCC",
+              "0xCD7B",
+              "0xCE06",
+              "0xD2DF",
+              "0xD30F",
+              "0xD39F",
+              "0xD410",
+              "0xDCE0",
+              "0xDED6",
+              "0xDF69",
+              "0xE32B",
+              "0xE380",
+              "0xE6F3",
+              "0xE702",
+              "0xEE1D",
+              "0xEFBE",
+              "0xEFE7",
+              "0xF200",
+              "0xF243",
+              "0xF2E4",
+              "0xF2FB",
+              "0xF342"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 873,
+            "role": "$9664 dispatch index (summed with $00)",
+            "unresolved_writers": 130
+          },
+          "0x000E": {
+            "exact_writers": [
+              "0x91BA",
+              "0x9277",
+              "0xB0D5",
+              "0xB1B8",
+              "0xB27A",
+              "0xB2BF",
+              "0xB584",
+              "0xB8AA",
+              "0xC49A",
+              "0xD948",
+              "0xDDFC",
+              "0xDE75",
+              "0xDE86",
+              "0xDF01",
+              "0xFAEF"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 873,
+            "role": "$B04C dispatch index",
+            "unresolved_writers": 130
+          },
+          "0x001D": {
+            "exact_writers": [
+              "0x9143",
+              "0x919E",
+              "0x9D7C",
+              "0xB0BF",
+              "0xB1D8",
+              "0xB4B9",
+              "0xD94A",
+              "0xDBF2",
+              "0xDC84",
+              "0xDD5C",
+              "0xDE8A"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 873,
+            "role": "$B34E dispatch index",
+            "unresolved_writers": 130
+          },
+          "0x071F": {
+            "exact_writers": [
+              "0x92B7",
+              "0x92BF"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 33,
+            "role": "$92C8 dispatch index",
+            "unresolved_writers": 130
+          },
+          "0x0733": {
+            "exact_writers": [
+              "0x9CA3"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 40,
+            "role": "$9743 dispatch index",
+            "unresolved_writers": 130
+          },
+          "0x073C": {
+            "exact_writers": [
+              "0x85EE",
+              "0x86A2",
+              "0x86E2",
+              "0x86F6",
+              "0x8745",
+              "0x88AA",
+              "0x9226"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 41,
+            "role": "$856A dispatch index",
+            "unresolved_writers": 130
+          },
+          "0x0746": {
+            "exact_writers": [
+              "0xB2EE",
+              "0xD30E",
+              "0xD39E"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 42,
+            "role": "$D2E5 dispatch index (clamped at the dispatch)",
+            "unresolved_writers": 130
+          },
+          "0x0770": {
+            "exact_writers": [
+              "0x8031",
+              "0x82CB",
+              "0x82F2",
+              "0x8483",
+              "0x91E5",
+              "0x9260",
+              "0x927E",
+              "0xDE15"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 45,
+            "role": "$8215 dispatch index",
+            "unresolved_writers": 130
+          },
+          "0x0772": {
+            "exact_writers": [
+              "0x82CE",
+              "0x82FD",
+              "0x845D",
+              "0x8475",
+              "0x874E",
+              "0x905D",
+              "0x90C8",
+              "0x91E0",
+              "0x9233",
+              "0x925A",
+              "0x9279",
+              "0xB218",
+              "0xD009",
+              "0xDE10"
+            ],
+            "fully_resolved": false,
+            "indexed_writers": 45,
+            "role": "$8234 / $83A3 / $AEDF dispatch index",
+            "unresolved_writers": 130
+          }
+        }
+      },
+      "id": "C",
+      "limitations": [
+        "no critical variable has a fully resolved writer set: every one is reachable in principle by an unresolved indirect store, so no invariant is established inductively",
+        "$9664's index is $00 + $07 and needs a relational invariant that is not attempted"
+      ],
+      "obligation": "Variables influencing dynamic control flow satisfy the required invariants",
+      "status": "open",
+      "verification_method": "analysis/index_derivation.py, analysis/write_census.py"
+    },
+    {
+      "artifacts": [],
+      "assumptions": [],
+      "evidence": {
+        "intentional_alternative_modelled": "JumpEngine ($8E04) consumes its caller's return address",
+        "stack_derived_returns": 337
+      },
+      "id": "D",
+      "limitations": [
+        "the replacement for the RTS pattern scan (plan section 8, analysis with abstract stack semantics over the CFG) is not implemented; stack_depth.py measures a band, which is not return-frame integrity"
+      ],
+      "obligation": "RTS/RTI consume valid frames except for explicitly modelled intentional alternatives",
+      "status": "open",
+      "verification_method": "not yet implemented"
+    },
+    {
+      "artifacts": [
+        "results/interrupts.json"
+      ],
+      "assumptions": [
+        "instruction fetches from register and open-bus regions are classified as hardware dependent, not as crashes"
+      ],
+      "evidence": {
+        "io_fetches_treated_as_bus_transactions": true,
+        "irq_conclusion": "a maskable IRQ can never be serviced: I is set by SEI at reset and no reachable CLI or PLP exists; RTI can only restore a status byte that already had I set",
+        "irq_vector_target": "0xFFF0",
+        "memory_regions_classified": true,
+        "undocumented_opcodes_modelled": 105
+      },
+      "id": "E",
+      "limitations": [
+        "open-bus fetch values are not modelled, only flagged",
+        "no emulator fidelity comparison has been run in this revision (plan section 14)",
+        "the input model is not yet formalised as an artifact"
+      ],
+      "obligation": "The hardware and input model covers all relevant execution semantics",
+      "status": "partially established",
+      "verification_method": "memory.py, analysis/decoder.py, analysis/interrupts.py"
+    },
+    {
+      "artifacts": [
+        "exploitability_classification.json"
+      ],
+      "assumptions": [],
+      "evidence": {
+        "resolutions_reaching_controllable_ram": 1198,
+        "unexpected_rom_destinations": 1932,
+        "unexpected_rom_landing_on_operand_bytes": 390
+      },
+      "id": "F",
+      "limitations": [
+        "no input sequence has been demonstrated for any out-of-range index; reachability under the controller-only model remains open",
+        "assisted experiments (inject.py) do not establish controller-only reachability"
+      ],
+      "obligation": "Unintended execution is independently evaluated for input controllability",
+      "status": "open",
+      "verification_method": "classify.py, search_oob.py, fuzz.py"
+    }
+  ],
+  "open_obligations": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+  ],
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "summary": "No controller-only arbitrary code execution has been demonstrated. Impossibility is not claimed: obligations A, B, C, D, E, F are unresolved."
+}

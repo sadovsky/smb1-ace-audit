@@ -1,4 +1,20 @@
-"""Recursive-descent disassembly of the SMB1 PRG from its real entry points.
+"""LEGACY recursive-descent disassembly of the SMB1 PRG from its entry points.
+
+Superseded by `analysis/cfg.py`.  Kept so its output can be compared against
+the corrected analysis (see `results/baseline/`), but it has three known
+defects, all of which the replacement fixes:
+
+  * `if pc in code: return` guards on occupied *bytes*, so an instruction whose
+    start is an operand byte of an already-decoded one is discarded.  That
+    throws away SMB1's own `$2C` filler idiom, used at $8220, $996A, $BDD4 and
+    elsewhere to give a routine two entry points.
+  * an opcode outside the documented 151 ends the trace as "data", but all 256
+    NMOS encodings act and most undocumented ones are two or three bytes long.
+  * `read_table` stops at the first word below $8000, which over-read the
+    tables at $9746 (3 entries, read as 5) and $C7AB (6, read as 8).  The
+    second over-read manufactured a phantom dispatch target at $A060.
+
+Use `python3 -m analysis.cfg` for the corrected graph.
 Follows JSR/JMP/branches; for the RTS-dispatch jump tables (JSR $8E04 and the
 handful of hand-rolled ones) it reads the table and queues every target. Records
 every indirect control transfer and every computed dispatch as an ACE candidate.
@@ -67,6 +83,8 @@ def run():
     return q
 
 run()
+print("NOTE: legacy tracer; see the docstring for three known defects and "
+      "use `python3 -m analysis.cfg` for the corrected graph.")
 print(f"reached {len(code)} code bytes  ({len(code)*100//0x8000}% of PRG)")
 print(f"JSR $8E04 dispatch tables: {len(jumptables)}")
 print(f"real indirect JMPs: {len(indirect)}")
