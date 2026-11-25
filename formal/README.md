@@ -40,6 +40,17 @@ proofs; there is no separate fast interpreter.
 |---|---|---|
 | SingleStepTests `nes6502` vectors, 300 per opcode, 237 opcodes | 71,100 | 0 |
 | py65 on random states, 40 per documented opcode | 6,040 | 0 |
+| SingleStepTests, every vector (10,000 per opcode), 237 opcodes (`tools/validate_full.py`) | 2,370,000 | 0 |
+| exhaustive over small input domains against the second CPU implementation in `dyn/` (`tools/exhaustive.py`) | 5,915,520 | 0 |
+
+For the seven unstable encodings the full runs check instead that everything
+the model fixes agrees (70,000 vectors and 196,608 exhaustive cases admitted);
+those are not counted as agreement. The exhaustive run covers, per opcode, the
+domains listed in `results/reports/model_exhaustive_equivalence.json`; state
+outside each domain is a fixed set of edge values. `JAM` differs from hardware
+in one dead field: the vectors advance PC by one, the model leaves it and
+halts. Interrupt hijacking (an NMI arriving during `BRK`) cannot be expressed
+at instruction granularity.
 
 Not covered, and stated in the report: the six unstable undocumented
 instructions (modelled as havoc), the twelve `JAM` encodings, cycle-level

@@ -450,6 +450,30 @@ def build():
           "single steps were compared with the independent py65 interpreter "
           f"({py['mismatch_count']} mismatches; decimal mode excluded "
           "because py65 implements it)."))
+    full_path = os.path.join(RESULTS, "reports", "model_validation_full.json")
+    exh_path = os.path.join(RESULTS, "reports",
+                            "model_exhaustive_equivalence.json")
+    if os.path.exists(full_path) and os.path.exists(exh_path):
+        full = json.load(open(full_path))["totals"]
+        exh = json.load(open(exh_path))["totals"]
+        add(P("Two larger runs followed. Every published vector, "
+              f"{n(full['stable']['compared'])} instructions over "
+              f"{full['stable']['opcodes']} opcodes, gives "
+              f"<b>{full['stable']['mismatches']}</b> mismatches. And for "
+              "each opcode, the input dimensions that are small enough "
+              "were enumerated completely against a second, independently "
+              "written CPU implementation: all operand-by-accumulator "
+              "pairs with both carries for the arithmetic group, all stack "
+              "pointers for stack operations, all displacements and status "
+              "bytes for branches, all 65,536 targets for the jumps. That "
+              f"is {n(exh['stable']['compared'])} cases with "
+              f"<b>{exh['stable']['mismatches']}</b> mismatches. State "
+              "outside each enumerated domain is a fixed set of edge "
+              "values, so this is exhaustive per dimension, not over the "
+              "machine state. For the unstable opcodes the runs check only "
+              "that what the model does fix agrees "
+              f"({n(full['havoc']['admitted'] + exh['havoc']['admitted'])} "
+              "cases admitted); those are not counted as agreement."))
     add(P("Not covered: cycle-level behaviour, interrupt polling inside an "
           "instruction, dummy reads and writes, and anything about the PPU "
           "or APU beyond the ghost bit. A defect in the model that the "
