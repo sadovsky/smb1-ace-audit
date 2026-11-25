@@ -4,9 +4,11 @@
 indirect control flow is highly constrained, but this revision withdraws the
 claim that every dispatch index is provably in range.** Of the eighteen
 dispatch sites, **two** are bounded by instructions at the dispatch with no
-assumption about RAM; **fourteen** are bounded only under an invariant that is
-observed or derived rather than proved; and **two** are not bounded by the
-invariant the earlier revision asserted for them.
+assumption about RAM; **thirteen** are bounded only under an invariant that is
+observed or derived rather than proved; and **three** do not keep the index
+inside the table even under the invariant asserted for them (`$9664` and
+`$9743`, both new, plus `$C88F`, whose single escaping index was already
+published).
 
 Current interim conclusion:
 

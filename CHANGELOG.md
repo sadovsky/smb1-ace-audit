@@ -77,7 +77,7 @@ run. Pre-correction outputs preserved in `results/baseline/`.
   concluded "every RTS in reached code returns to a JSR frame" from a
   24-instruction window in address order, which cannot establish it.
   `analysis/stack.py` replaces that with per-routine abstract stack semantics
-  over the CFG and a fixpoint over callee summaries: 456 of 459 routines are
+  over the CFG and a fixpoint over callee summaries: 457 of 460 routines are
   balanced, all 627 reachable `RTS` sites consume exactly their entry frame,
   and `$8E04` is identified as the one routine that deliberately consumes its
   caller's frame. The two unresolved routines are reset (whose `TXS`

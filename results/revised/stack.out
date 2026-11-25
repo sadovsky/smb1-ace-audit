@@ -1,3 +1,4 @@
+--- python3 -m analysis.stack
 ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
 
 routines analysed: 460

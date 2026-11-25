@@ -15,8 +15,11 @@ What the ROM actually supports, all derived rather than asserted
 | | sites |
 |---|---|
 | bounded at the dispatch, no assumption about RAM | **2** (`$BDBD`, `$D2E5`) |
-| bounded only under an invariant that is observed or derived, not proved | **14** |
-| not bounded by the invariant the earlier revision asserted | **2** (`$9664`, `$9743`) |
+| bounded only under an invariant that is observed or derived, not proved | **13** |
+| index not kept inside the table even under the stated invariant | **3** (`$9664`, `$9743`, `$C88F`) |
+
+Of those three, `$C88F`'s single escaping index was already published (enemy ID
+`$36` → index 34 → `$2060`); `$9664` and `$9743` are new.
 
 Also note that "exactly one computed jump" counts only direct indirect jumps:
 336 `RTS` instructions and one `RTI` likewise take their destinations from
