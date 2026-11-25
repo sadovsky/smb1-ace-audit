@@ -148,6 +148,8 @@ def build():
     observed = load("reports", "dyn_observations.json")
     observed2 = load("reports", "dyn_observations_nespy.json")
     storm = load("reports", "dyn_nmi_storm.json")
+    init_path = os.path.join(RESULTS, "reports", "init_memory.json")
+    init = json.load(open(init_path)) if os.path.exists(init_path) else None
     replication_path = os.path.join(RESULTS, "reports", "replication.json")
     replication = (json.load(open(replication_path))
                    if os.path.exists(replication_path) else None)
@@ -674,10 +676,51 @@ def build():
 
     # ------------------------------------------------------------------
     H("Initial memory, and a published result that constrains the theorem")
-    add(P("The model's cold-boot predicate constrains no RAM cell. The "
-          "game's initialisation clears most of RAM but deliberately "
-          "preserves a region across resets, and some cells are never "
-          "cleared. A published tool-assisted run " + cite("tas8991")
+    add(P("The model's cold-boot predicate constrains no RAM cell, so the "
+          "theorem has to say which cells its conclusion is quantified "
+          "over."))
+    if init is not None:
+        part = init["partition"]
+        over, never, warm = (part["always_overwritten"],
+                             part["never_initialised"],
+                             part["preserved_in_the_warm_case_only"])
+        st = init["statuses"]
+        proved = sum(1 for v in st.values() if v == "proved")
+        add(P("We computed that by executing the reset routine "
+              "symbolically, with all of RAM free, from the reset vector to "
+              "the first instruction that can enable NMI. Its two "
+              "wait-for-vertical-blank loops are closed by proved "
+              "invariants and its RAM-clearing loop is unrolled with trip "
+              "counts derived, not assumed. The 2,048 cells split three "
+              f"ways ({proved} of {len(st)} supporting obligations proved; "
+              "the partition itself is <b>" + st["INIT-MEM-PARTITION"]
+              + "</b>, on MA-PPU-POWERON):"))
+        rows = [["Cells", "Count", "At the first NMI-enabling instruction"],
+                [", ".join(over["ranges"]), n(over["count"]),
+                 "overwritten with a determined value on every path"],
+                [", ".join(warm["ranges"]), n(warm["count"]),
+                 "zero on a cold boot; kept on a warm boot"],
+                [", ".join(never["ranges"]), n(never["count"]),
+                 "never written: whatever power-on left there"]]
+        add(table(rows, [cwi * 0.36, cwi * 0.14, cwi * 0.5]))
+        add(P("Table 2. Initial-memory partition, proved from the image.",
+              CAP))
+        add(P("The warm-boot case is taken exactly when "
+              + C(init["warm_boot_condition"].replace("<u", "&lt;"))
+              + ", a condition recovered from the path conditions and "
+              "proved equal to them. So P1's free parameter is the "
+              f"{never['count']} never-written cells, which lie in the "
+              "upper half of the stack page, plus the "
+              f"{warm['count']} preserved cells when that condition holds. "
+              "Everything else is a constant by the time an interrupt can "
+              "occur. The same analysis shows every fetch in the "
+              "initialisation window is in ROM ("
+              + st["INIT-MEM-FETCHES-IN-ROM"] + "), and records as "
+              "<b>" + st["INIT-MEM-NMI-WARM-RESET"] + "</b> the claim that "
+              "no NMI can precede the routine's first store after a warm "
+              "reset, which is the reset finding of the previous section "
+              "seen from this side."))
+    add(P("A published tool-assisted run " + cite("tas8991")
           + " reports arbitrary code execution in this game from a state "
           "in which such cells were pre-loaded by running a different "
           "cartridge first. Cartridge swapping is outside our threat model, "
@@ -758,7 +801,7 @@ def build():
         "Decomposition of P1 with the settled status of each obligation. "
         "An arrow reads &quot;depends on&quot;.")
     add(table(rows, [cwi * 0.6, cwi * 0.4]))
-    add(P("Table 2. The decomposition of P1, as settled by the ledger.", CAP))
+    add(P("Table 3. The decomposition of P1, as settled by the ledger.", CAP))
     add(P("Direct transfers, the dispatcher's own code and the interrupt "
           "vectors are proved to stay on the graph. What remains is that "
           "every dispatch index is in range and every return frame is "

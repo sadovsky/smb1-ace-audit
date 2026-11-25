@@ -1,0 +1,266 @@
+{
+  "dynamic_crosscheck": {
+    "agreement": true,
+    "dynamic_manifest": {
+      "engine": "tracer",
+      "frames_total": 140000,
+      "instructions_total": 1353946027,
+      "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922"
+    },
+    "dynamic_never_written": [
+      "$0160-$01E6"
+    ],
+    "dynamic_never_written_count": 135,
+    "label": "observation only: a trace of a hardware-accurate emulator under particular inputs, not a statement about the model",
+    "never_in_the_trace_but_written_by_the_window": [],
+    "reading": "the window writes every cell outside $0160-$01FB, and the trace wrote every one of them, so the two agree.  The trace additionally wrote part of that range, which is the stack growing deeper during play than the reset code needs; that is consistent, since the dynamic report covers the whole run and this module covers the initialisation window only",
+    "source": "formal/results/reports/dyn_cell_domains.json",
+    "static_never_written_in_the_window": [
+      "$0160-$01FB"
+    ],
+    "written_by_the_window_but_never_in_the_trace": []
+  },
+  "partition": {
+    "always_overwritten": {
+      "count": 1852,
+      "ranges": [
+        "$0000-$015F",
+        "$01FC-$07D6",
+        "$07FF"
+      ],
+      "values": [
+        "$0000-$015F=$00",
+        "$01FC=$2A",
+        "$01FD=$8E",
+        "$01FE=$56",
+        "$01FF=$80",
+        "$0200=$F8",
+        "$0201-$0203=$00",
+        "$0204=$F8",
+        "$0205-$0207=$00",
+        "$0208=$F8",
+        "$0209-$020B=$00",
+        "$020C=$F8",
+        "$020D-$020F=$00",
+        "$0210=$F8",
+        "$0211-$0213=$00",
+        "$0214=$F8",
+        "$0215-$0217=$00",
+        "$0218=$F8",
+        "$0219-$021B=$00",
+        "$021C=$F8",
+        "$021D-$021F=$00",
+        "$0220=$F8",
+        "$0221-$0223=$00",
+        "$0224=$F8",
+        "$0225-$0227=$00",
+        "$0228=$F8",
+        "$0229-$022B=$00",
+        "$022C=$F8",
+        "$022D-$022F=$00",
+        "$0230=$F8",
+        "$0231-$0233=$00",
+        "$0234=$F8",
+        "$0235-$0237=$00",
+        "$0238=$F8",
+        "$0239-$023B=$00",
+        "$023C=$F8",
+        "$023D-$023F=$00",
+        "$0240=$F8",
+        "$0241-$0243=$00",
+        "$0244=$F8",
+        "$0245-$0247=$00",
+        "$0248=$F8",
+        "$0249-$024B=$00",
+        "$024C=$F8",
+        "$024D-$024F=$00",
+        "$0250=$F8",
+        "$0251-$0253=$00",
+        "$0254=$F8",
+        "$0255-$0257=$00",
+        "$0258=$F8",
+        "$0259-$025B=$00",
+        "$025C=$F8",
+        "$025D-$025F=$00",
+        "$0260=$F8",
+        "$0261-$0263=$00",
+        "$0264=$F8",
+        "$0265-$0267=$00",
+        "$0268=$F8",
+        "$0269-$026B=$00",
+        "$026C=$F8",
+        "$026D-$026F=$00",
+        "$0270=$F8",
+        "$0271-$0273=$00",
+        "$0274=$F8",
+        "$0275-$0277=$00",
+        "$0278=$F8",
+        "$0279-$027B=$00",
+        "$027C=$F8",
+        "$027D-$027F=$00",
+        "$0280=$F8",
+        "$0281-$0283=$00",
+        "$0284=$F8",
+        "$0285-$0287=$00",
+        "$0288=$F8",
+        "$0289-$028B=$00",
+        "$028C=$F8",
+        "$028D-$028F=$00",
+        "$0290=$F8",
+        "$0291-$0293=$00",
+        "$0294=$F8",
+        "$0295-$0297=$00",
+        "$0298=$F8",
+        "$0299-$029B=$00",
+        "$029C=$F8",
+        "$029D-$029F=$00",
+        "$02A0=$F8",
+        "$02A1-$02A3=$00",
+        "$02A4=$F8",
+        "$02A5-$02A7=$00",
+        "$02A8=$F8",
+        "$02A9-$02AB=$00",
+        "$02AC=$F8",
+        "$02AD-$02AF=$00",
+        "$02B0=$F8",
+        "$02B1-$02B3=$00",
+        "$02B4=$F8",
+        "$02B5-$02B7=$00",
+        "$02B8=$F8",
+        "$02B9-$02BB=$00",
+        "$02BC=$F8",
+        "$02BD-$02BF=$00",
+        "$02C0=$F8",
+        "$02C1-$02C3=$00",
+        "$02C4=$F8",
+        "$02C5-$02C7=$00",
+        "$02C8=$F8",
+        "$02C9-$02CB=$00",
+        "$02CC=$F8",
+        "$02CD-$02CF=$00",
+        "$02D0=$F8",
+        "$02D1-$02D3=$00",
+        "$02D4=$F8",
+        "$02D5-$02D7=$00",
+        "$02D8=$F8",
+        "$02D9-$02DB=$00",
+        "$02DC=$F8",
+        "$02DD-$02DF=$00",
+        "$02E0=$F8",
+        "$02E1-$02E3=$00",
+        "$02E4=$F8",
+        "$02E5-$02E7=$00",
+        "$02E8=$F8",
+        "$02E9-$02EB=$00",
+        "$02EC=$F8",
+        "$02ED-$02EF=$00",
+        "$02F0=$F8",
+        "$02F1-$02F3=$00",
+        "$02F4=$F8",
+        "$02F5-$02F7=$00",
+        "$02F8=$F8",
+        "$02F9-$02FB=$00",
+        "$02FC=$F8",
+        "$02FD-$0773=$00",
+        "$0774=$01",
+        "$0775-$0777=$00",
+        "$0778=$10",
+        "$0779-$07A6=$00",
+        "$07A7=$A5",
+        "$07A8-$07D6=$00",
+        "$07FF=$A5"
+      ]
+    },
+    "never_initialised": {
+      "count": 156,
+      "ranges": [
+        "$0160-$01FB"
+      ]
+    },
+    "preserved_in_the_warm_case_only": {
+      "constrained_by_phi": [
+        "$07D7-$07DC"
+      ],
+      "count": 40,
+      "ranges": [
+        "$07D7-$07FE"
+      ],
+      "unconstrained": [
+        "$07DD-$07FE"
+      ],
+      "value_on_the_cold_path": [
+        "$07D7-$07FE=$00"
+      ]
+    },
+    "written_only_in_the_warm_case": {
+      "count": 0,
+      "ranges": []
+    }
+  },
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "scope": "statement about the machine model in formal/model",
+  "statuses": {
+    "INIT-MEM-DETERMINED-COLD": "proved",
+    "INIT-MEM-DETERMINED-WARM": "proved",
+    "INIT-MEM-DETERMINED-WARM-NEG": "refuted",
+    "INIT-MEM-DYN": "observed",
+    "INIT-MEM-FETCHES-IN-ROM": "proved",
+    "INIT-MEM-LOOP-90CC": "proved",
+    "INIT-MEM-NMI-WARM-RESET": "refuted",
+    "INIT-MEM-NO-IRQ": "proved",
+    "INIT-MEM-NO-NMI": "conditional",
+    "INIT-MEM-P1-PARAMETER": "conditional",
+    "INIT-MEM-PARTITION": "conditional",
+    "INIT-MEM-PATHS-DISJOINT": "proved",
+    "INIT-MEM-PATHS-TOTAL": "proved",
+    "INIT-MEM-PRESERVED-COLD": "proved",
+    "INIT-MEM-PRESERVED-WARM": "proved",
+    "INIT-MEM-SPLIT-STATE": "proved",
+    "INIT-MEM-UNTOUCHED-COLD": "proved",
+    "INIT-MEM-UNTOUCHED-WARM": "proved",
+    "INIT-MEM-VBLANK-800A": "proved",
+    "INIT-MEM-VBLANK-800F": "proved",
+    "INIT-MEM-WARM-COND": "proved",
+    "INIT-MEM-WARM-COND-NEG": "refuted",
+    "INIT-MEM-WARM-DIGITS": "proved",
+    "INIT-MEM-WRITESET-COLD": "proved",
+    "INIT-MEM-WRITESET-WARM": "proved"
+  },
+  "warm_boot_condition": "RAM[$07D7] <u 10 and RAM[$07D8] <u 10 and RAM[$07D9] <u 10 and RAM[$07DA] <u 10 and RAM[$07DB] <u 10 and RAM[$07DC] <u 10 and RAM[$07FF] == $A5",
+  "window": {
+    "end": {
+      "cold": "$8EED",
+      "warm": "$8EED"
+    },
+    "end_instruction": "the STA $2000 of WritePPUReg1, reached through the JSR $8EED that follows ORA #$80",
+    "init_loop_at_90CC": {
+      "handling": "fully unrolled, trip counts derived",
+      "inner_iterations": {
+        "cold": 2047,
+        "warm": 2007
+      },
+      "page_iterations": {
+        "cold": 8,
+        "warm": 8
+      },
+      "stores": {
+        "cold": 1887,
+        "warm": 1847
+      }
+    },
+    "start": "$8000",
+    "steps": {
+      "cold": 19269,
+      "warm": 19029
+    },
+    "steps_before_the_split": 6,
+    "vblank_loops": {
+      "$800A": "closed by a proved invariant",
+      "$800F": "closed by a proved invariant"
+    },
+    "writes": {
+      "cold": 4046,
+      "warm": 4006
+    }
+  }
+}
