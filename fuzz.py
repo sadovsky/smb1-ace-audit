@@ -26,6 +26,9 @@ def episode(args):
     seed, start_area = args
     rng=random.Random(seed)
     env=CheatNESEnv(ROM); env.reset()
+    trace_enabled = os.environ.get("SMB1_TRACE_DISPATCH") == "1"
+    if trace_enabled:
+        env.enable_trace()
     for a,n in BOOT:
         for _ in range(n): env.step(a)
     if start_area is not None:
@@ -33,7 +36,7 @@ def episode(args):
         env.add_cheat((0x9CBC, start_area, None)); env.reset()
         for a,n in BOOT:
             for _ in range(n): env.step(a)
-    maxv={k:0 for k in IDX}; ids=set(); derail=False; frames=3000
+    maxv={k:0 for k in IDX}; ids=set(); derail=False; frames=3000; trace=[]
     # structured bias: mostly move right + jump, occasional random, occasional B
     for f in range(frames):
         roll=rng.random()
@@ -42,6 +45,9 @@ def episode(args):
         elif roll<0.85: a=A|(B if rng.random()<0.5 else 0)
         else: a=rng.getrandbits(8)
         env.step(a); r=env.ram
+        if trace_enabled:
+            trace.extend({"pc": int(e.pc), "opcode": int(e.opcode), "cycle": int(e.cycles)}
+                         for e in env.drain_trace() if e.pc in (0x8E04, 0x8E16))
         for k,(addr,_) in IDX.items():
             v=int(r[addr]);  maxv[k]=max(maxv[k],v)
         for s in ENEMY_SLOTS:
@@ -50,7 +56,7 @@ def episode(args):
         if int(r[0x0770]) not in (0,1,2,3): derail=True
         if int(r[0x075A])>200: break   # lives underflow -> game over garbage, stop
     env.close()
-    return dict(seed=seed, cov=start_area, maxv=maxv, ids=sorted(ids), derail=derail)
+    return dict(seed=seed, cov=start_area, maxv=maxv, ids=sorted(ids), derail=derail, trace=trace)
 
 if __name__=="__main__":
     N=int(sys.argv[1]) if len(sys.argv)>1 else 48
