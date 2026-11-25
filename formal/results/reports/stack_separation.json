@@ -1,0 +1,5029 @@
+{
+  "data_side": {
+    "obligations": [
+      "SEP-W-84CE",
+      "SEP-W-84D7",
+      "SEP-W-84DB",
+      "SEP-W-84FA",
+      "SEP-W-8534",
+      "SEP-W-871C",
+      "SEP-W-8F80",
+      "SEP-W-8F87",
+      "SEP-W-8F91",
+      "SEP-W-90DC",
+      "SEP-W-94F7",
+      "SEP-W-99C6",
+      "SEP-W-B78F",
+      "SEP-W-B88B",
+      "SEP-W-B893",
+      "SEP-W-B8A2",
+      "SEP-W-B9B5",
+      "SEP-W-BAB5",
+      "SEP-W-BAFC",
+      "SEP-W-BB3D",
+      "SEP-W-BB44",
+      "SEP-W-BB4B",
+      "SEP-W-BB57",
+      "SEP-W-BB62",
+      "SEP-W-BB69",
+      "SEP-W-BB6E",
+      "SEP-W-BB73",
+      "SEP-W-BB76",
+      "SEP-W-BC00",
+      "SEP-W-BC24",
+      "SEP-W-BD4B",
+      "SEP-W-BE15",
+      "SEP-W-BE35",
+      "SEP-W-BEF4",
+      "SEP-W-C583",
+      "SEP-W-C588",
+      "SEP-W-C58D",
+      "SEP-W-C594",
+      "SEP-W-C599",
+      "SEP-W-C7C3",
+      "SEP-W-C9A0",
+      "SEP-W-C9A6",
+      "SEP-W-CF4A",
+      "SEP-W-D18E",
+      "SEP-W-D196",
+      "SEP-W-D19B",
+      "SEP-W-D1A0",
+      "SEP-W-D2C7",
+      "SEP-W-D32B",
+      "SEP-W-D333",
+      "SEP-W-D46E",
+      "SEP-W-D4B1",
+      "SEP-W-D5A5",
+      "SEP-W-D5AA",
+      "SEP-W-D5B4",
+      "SEP-W-D83C",
+      "SEP-W-DA11",
+      "SEP-W-DA16",
+      "SEP-W-DA1B",
+      "SEP-W-DA21",
+      "SEP-W-DAED",
+      "SEP-W-DB11",
+      "SEP-W-DE20",
+      "SEP-W-DE70",
+      "SEP-W-E007",
+      "SEP-W-E88D",
+      "SEP-W-E8EF",
+      "SEP-W-E946",
+      "SEP-W-EA45",
+      "SEP-W-F3B1",
+      "SEP-W-F3BD"
+    ],
+    "open": [
+      "0x84CE",
+      "0x84D7",
+      "0x84DB",
+      "0x84FA",
+      "0x8534",
+      "0x871C",
+      "0x94F7",
+      "0xB8A2",
+      "0xB9B5",
+      "0xBD4B",
+      "0xBE35",
+      "0xC588",
+      "0xC58D",
+      "0xC594",
+      "0xC599",
+      "0xC9A0",
+      "0xC9A6",
+      "0xD18E",
+      "0xD196",
+      "0xD1A0",
+      "0xD46E",
+      "0xD4B1",
+      "0xD5A5",
+      "0xD5AA",
+      "0xD5B4",
+      "0xD83C",
+      "0xDA11",
+      "0xDA16",
+      "0xDA1B",
+      "0xDA21",
+      "0xDAED",
+      "0xDB11",
+      "0xDE20",
+      "0xE007"
+    ],
+    "open_statuses": [
+      "abstract_counterexample",
+      "unknown"
+    ],
+    "worst_offset": 95,
+    "writers": {
+      "0x84CE": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0x84CE",
+              "0xAF03"
+            ],
+            "failures": [
+              {
+                "cut_point": "0x84CE",
+                "edge": "fallthrough",
+                "from": "0x84CC",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0x84C3",
+                  "0x84C6",
+                  "0x84C8",
+                  "0x84CA",
+                  "0x84CC"
+                ]
+              },
+              {
+                "cut_point": "0xAF03",
+                "edge": "branch",
+                "from": "0xAF0E",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x29",
+            "provenance": "synthesised",
+            "rounds": 2
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0x84CE",
+            "edge": "fallthrough",
+            "from": "0x84CC",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xAF0C",
+              "0xAF0E",
+              "0xAF03",
+              "0xAF05",
+              "0xAF08",
+              "0xAF0B",
+              "0xAF0C",
+              "0xAF0E",
+              "0xAF03",
+              "0xAF05",
+              "0xAF08",
+              "0x84C3",
+              "0x84C6",
+              "0x84C8",
+              "0x84CA",
+              "0x84CC"
+            ]
+          },
+          "call_site": "0xAF05",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $0110,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 78,
+            "page_write_bound": 26,
+            "pc_uniqueness": 35
+          },
+          "cross_check": "clean",
+          "distinct_queries": 83,
+          "distinct_rechecked": 83,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "9f541c2ba5e2389b458ad89b569e444f45a1f5aa530612e04fffefa324787b15",
+          "relied_on_unsat": 10,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 83
+            },
+            "cvc5": {
+              "agree": 83
+            }
+          },
+          "solver_queries": 139,
+          "z3_no_answer": 0,
+          "z3_sat": 129
+        },
+        "status": "abstract_counterexample"
+      },
+      "0x84D7": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0x84D7",
+              "0xAF03"
+            ],
+            "failures": [
+              {
+                "cut_point": "0x84D7",
+                "edge": "fallthrough",
+                "from": "0x84D5",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0x84C3",
+                  "0x84C6",
+                  "0x84C8",
+                  "0x84CA",
+                  "0x84CC",
+                  "0x84CE",
+                  "0x84D1",
+                  "0x84D2",
+                  "0x84D5"
+                ]
+              },
+              {
+                "cut_point": "0xAF03",
+                "edge": "branch",
+                "from": "0xAF0E",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x29",
+            "provenance": "synthesised",
+            "rounds": 2
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0x84D7",
+            "edge": "fallthrough",
+            "from": "0x84D5",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xAF08",
+              "0xAF0B",
+              "0xAF0C",
+              "0xAF0E",
+              "0xAF03",
+              "0xAF05",
+              "0xAF08",
+              "0x84C3",
+              "0x84C6",
+              "0x84C8",
+              "0x84CA",
+              "0x84CC",
+              "0x84CE",
+              "0x84D1",
+              "0x84D2",
+              "0x84D5"
+            ]
+          },
+          "call_site": "0xAF08",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $0110,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 78,
+            "page_write_bound": 26,
+            "pc_uniqueness": 23
+          },
+          "cross_check": "clean",
+          "distinct_queries": 83,
+          "distinct_rechecked": 83,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a095e02df825fce0c5323b45f7627bea4c71bb0cf911e950c079dabd84fc3905",
+          "relied_on_unsat": 10,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 83
+            },
+            "cvc5": {
+              "agree": 83
+            }
+          },
+          "solver_queries": 127,
+          "z3_no_answer": 0,
+          "z3_sat": 117
+        },
+        "status": "abstract_counterexample"
+      },
+      "0x84DB": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0x84DB",
+              "0xAF03"
+            ],
+            "failures": [
+              {
+                "cut_point": "0x84DB",
+                "edge": "branch",
+                "from": "0x84D5",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0x84C3",
+                  "0x84C6",
+                  "0x84C8",
+                  "0x84CA",
+                  "0x84CC",
+                  "0x84CE",
+                  "0x84D1",
+                  "0x84D2",
+                  "0x84D5"
+                ]
+              },
+              {
+                "cut_point": "0xAF03",
+                "edge": "branch",
+                "from": "0xAF0E",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E",
+                  "0xAF03",
+                  "0xAF05",
+                  "0xAF08",
+                  "0xAF0B",
+                  "0xAF0C",
+                  "0xAF0E"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x0D",
+            "provenance": "synthesised",
+            "rounds": 2
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0x84DB",
+            "edge": "branch",
+            "from": "0x84D5",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xAF08",
+              "0xAF0B",
+              "0xAF0C",
+              "0xAF0E",
+              "0xAF03",
+              "0xAF05",
+              "0xAF08",
+              "0x84C3",
+              "0x84C6",
+              "0x84C8",
+              "0x84CA",
+              "0x84CC",
+              "0x84CE",
+              "0x84D1",
+              "0x84D2",
+              "0x84D5"
+            ]
+          },
+          "call_site": "0xAF08",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "DEC $012C,X",
+        "method": "index invariant not established",
+        "mnemonic": "DEC",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 78,
+            "page_write_bound": 26,
+            "pc_uniqueness": 23
+          },
+          "cross_check": "clean",
+          "distinct_queries": 82,
+          "distinct_rechecked": 82,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "9aff7969b0ed9b2ee77188c82ae90e77c9256f625ab979a1f89bf228dbbb330c",
+          "relied_on_unsat": 10,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 82
+            },
+            "cvc5": {
+              "agree": 82
+            }
+          },
+          "solver_queries": 127,
+          "z3_no_answer": 0,
+          "z3_sat": 117
+        },
+        "status": "abstract_counterexample"
+      },
+      "0x84FA": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0x84FA"
+            ],
+            "failures": [
+              {
+                "cut_point": "0x84FA",
+                "edge": "fallthrough",
+                "from": "0x84F8",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0x84DB",
+                  "0x84DE",
+                  "0x84E0",
+                  "0x84E2",
+                  "0x84E4",
+                  "0x84E6",
+                  "0x84E9",
+                  "0x84EB",
+                  "0x84ED",
+                  "0x84F0",
+                  "0x84F1",
+                  "0x84F2",
+                  "0x84F3",
+                  "0x84F4",
+                  "0x84F5",
+                  "0x84F8"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x05",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0x84FA",
+            "edge": "fallthrough",
+            "from": "0x84F8",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0x84DB",
+              "0x84DE",
+              "0x84E0",
+              "0x84E2",
+              "0x84E4",
+              "0x84E6",
+              "0x84E9",
+              "0x84EB",
+              "0x84ED",
+              "0x84F0",
+              "0x84F1",
+              "0x84F2",
+              "0x84F3",
+              "0x84F4",
+              "0x84F5",
+              "0x84F8"
+            ]
+          },
+          "kind": "rom_table",
+          "symbolic_rom_reads": [
+            "0x84ED",
+            "0x84F5"
+          ],
+          "why": "the index is read out of a table at an address the slice only knows symbolically, and the model leaves PRG unconstrained there (NESMemory.read adds no prg_axioms), so the bound is a gap in the tooling rather than in the program"
+        },
+        "instruction": "STA $0134,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 70,
+          "distinct_rechecked": 70,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "8c074f7c94dafed087e733d199c86684ac8bc1046d9fc4a21e7259e6d3fd22b8",
+          "relied_on_unsat": 8,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 70
+            },
+            "cvc5": {
+              "agree": 70
+            }
+          },
+          "solver_queries": 71,
+          "z3_no_answer": 0,
+          "z3_sat": 63
+        },
+        "status": "abstract_counterexample"
+      },
+      "0x8534": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0x8534"
+            ],
+            "failures": [
+              {
+                "cut_point": "0x8534",
+                "edge": "fallthrough",
+                "from": "0x8532",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0x8511",
+                  "0x8513",
+                  "0x8515",
+                  "0x8517",
+                  "0x8519",
+                  "0x851B",
+                  "0x851D",
+                  "0x851F",
+                  "0x8521",
+                  "0x8523",
+                  "0x8526",
+                  "0x8529",
+                  "0x852B",
+                  "0x852E",
+                  "0x8530",
+                  "0x8532"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x1B",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0x8534",
+            "edge": "fallthrough",
+            "from": "0x8532",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0x8511",
+              "0x8513",
+              "0x8515",
+              "0x8517",
+              "0x8519",
+              "0x851B",
+              "0x851D",
+              "0x851F",
+              "0x8521",
+              "0x8523",
+              "0x8526",
+              "0x8529",
+              "0x852B",
+              "0x852E",
+              "0x8530",
+              "0x8532"
+            ]
+          },
+          "kind": "depth",
+          "why": "the backward slice was still satisfiable at the depth limit, and no further cut point suggested itself"
+        },
+        "instruction": "STA $011E,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 70,
+          "distinct_rechecked": 70,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "909230ab128c501f68bab54529aa3f6a90a99d110937a9bff5d0ea3b2b76ba80",
+          "relied_on_unsat": 10,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 70
+            },
+            "cvc5": {
+              "agree": 70
+            }
+          },
+          "solver_queries": 71,
+          "z3_no_answer": 0,
+          "z3_sat": 61
+        },
+        "status": "abstract_counterexample"
+      },
+      "0x871C": {
+        "assumptions": [],
+        "attempts": [],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "pointer",
+          "why": "the write address comes from memory, so no bound on X or Y constrains it"
+        },
+        "instruction": "STA ($00),Y",
+        "method": "no register bound reaches the target offset: the write address is not determined by X or Y",
+        "mnemonic": "STA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 10
+          },
+          "cross_check": "clean",
+          "distinct_queries": 51,
+          "distinct_rechecked": 51,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "e2b6c73068e7cf74755c787170a3611f8a48cb096706b0c9ad2d74aa2e8bfcb3",
+          "relied_on_unsat": 5,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 51
+            },
+            "cvc5": {
+              "agree": 51
+            }
+          },
+          "solver_queries": 55,
+          "z3_no_answer": 0,
+          "z3_sat": 50
+        },
+        "status": "abstract_counterexample"
+      },
+      "0x8F80": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0x8F80"
+            ],
+            "invariant": "X <= 0x06",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": "0x0139",
+        "bound_offset": 57,
+        "cut_points": [
+          "0x8F80"
+        ],
+        "instruction": "STA $0133,X",
+        "invariant": "X <= 0x06",
+        "method": "program-point invariant, proved by induction over visits to the cut points",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "provenance": "synthesised",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 33,
+            "page_write_bound": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 58,
+          "distinct_rechecked": 58,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "8eef2dde64e8c01c2b4320dd3e04aa2a8dffab86d75e1416cda7bd2704dc37aa",
+          "relied_on_unsat": 10,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 58
+            },
+            "cvc5": {
+              "agree": 58
+            }
+          },
+          "solver_queries": 59,
+          "z3_no_answer": 0,
+          "z3_sat": 49
+        },
+        "status": "conditional"
+      },
+      "0x8F87": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0x8F75",
+              "0x8F87"
+            ],
+            "invariant": "X <= 0x06",
+            "provenance": "synthesised",
+            "rounds": 2
+          }
+        ],
+        "bound": "0x0139",
+        "bound_offset": 57,
+        "cut_points": [
+          "0x8F75",
+          "0x8F87"
+        ],
+        "instruction": "DEC $0133,X",
+        "invariant": "X <= 0x06",
+        "method": "program-point invariant, proved by induction over visits to the cut points",
+        "mnemonic": "DEC",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "provenance": "synthesised",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 86,
+            "page_write_bound": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 99,
+          "distinct_rechecked": 99,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "1785718b38e7bd909aa2bca6ff283335bb8cd1429172cfcaffca6353ecb8602f",
+          "relied_on_unsat": 15,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 99
+            },
+            "cvc5": {
+              "agree": 99
+            }
+          },
+          "solver_queries": 112,
+          "z3_no_answer": 0,
+          "z3_sat": 97
+        },
+        "status": "conditional"
+      },
+      "0x8F91": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0x8F75",
+              "0x8F91"
+            ],
+            "invariant": "X <= 0x06",
+            "provenance": "synthesised",
+            "rounds": 2
+          }
+        ],
+        "bound": "0x0139",
+        "bound_offset": 57,
+        "cut_points": [
+          "0x8F75",
+          "0x8F91"
+        ],
+        "instruction": "INC $0133,X",
+        "invariant": "X <= 0x06",
+        "method": "program-point invariant, proved by induction over visits to the cut points",
+        "mnemonic": "INC",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "provenance": "synthesised",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 89,
+            "page_write_bound": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 96,
+          "distinct_rechecked": 96,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "7ac598f8dce4630b35e697389551a02d73001c21347ac1168182a2529387df9c",
+          "relied_on_unsat": 16,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 96
+            },
+            "cvc5": {
+              "agree": 96
+            }
+          },
+          "solver_queries": 115,
+          "z3_no_answer": 0,
+          "z3_sat": 99
+        },
+        "status": "conditional"
+      },
+      "0x90DC": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "attempts": [
+          {
+            "bound": "0x015F",
+            "cut_points": [
+              "0x90D4"
+            ],
+            "invariant": "A = 0 and RAM[$06] = 0 and RAM[$07] = X and X <= 7",
+            "provenance": "hand-supplied candidate invariant, checked here",
+            "rounds": 1
+          }
+        ],
+        "bound": "0x015F",
+        "bound_offset": 95,
+        "cut_points": [
+          "0x90D4"
+        ],
+        "instruction": "STA ($06),Y",
+        "invariant": "A = 0 and RAM[$06] = 0 and RAM[$07] = X and X <= 7",
+        "method": "program-point invariant, proved by induction over visits to the cut points",
+        "mnemonic": "STA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "provenance": "hand-supplied candidate invariant, checked here",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 51,
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 56,
+          "distinct_rechecked": 56,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a4d0ca4749f605849ceb76176f20ba745dc87d90fd8fa7909d1b3217e3878f37",
+          "relied_on_unsat": 9,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 56
+            },
+            "cvc5": {
+              "agree": 56
+            }
+          },
+          "solver_queries": 59,
+          "z3_no_answer": 0,
+          "z3_sat": 50
+        },
+        "status": "conditional"
+      },
+      "0x94F7": {
+        "assumptions": [],
+        "attempts": [],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "pointer",
+          "why": "the write address comes from memory, so no bound on X or Y constrains it"
+        },
+        "instruction": "STA ($06),Y",
+        "method": "no register bound reaches the target offset: the write address is not determined by X or Y",
+        "mnemonic": "STA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 28,
+            "page_write_bound": 10
+          },
+          "cross_check": "clean",
+          "distinct_queries": 38,
+          "distinct_rechecked": 38,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "686eb5020f7a5efefd799abb399b34b3e81563604d080399ce0277f8c122c17d",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 38
+            },
+            "cvc5": {
+              "agree": 38
+            }
+          },
+          "solver_queries": 38,
+          "z3_no_answer": 0,
+          "z3_sat": 38
+        },
+        "status": "abstract_counterexample"
+      },
+      "0x99C6": {
+        "assumptions": [],
+        "bound": "0x010D",
+        "bound_offset": 13,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $010D",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x010D",
+        "query_artifact": null,
+        "query_sha256": "7069c6108bece4d3ae7a8ecc9e52227de264477dae02e10036bec4a6b392fa57",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "732f2baa9b57a1ae6e1ad4b64c5c2241fecf574f1f437b0dab58b22125fc787f",
+          "relied_on_unsat": 5,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 3
+        },
+        "status": "proved"
+      },
+      "0xB78F": {
+        "assumptions": [],
+        "bound": "0x0139",
+        "bound_offset": 57,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $0139",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x0139",
+        "query_artifact": null,
+        "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "1063aa0c988b94069da38cccb42120f748a436d14e99a83dcc899eb205309bb8",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
+        "status": "proved"
+      },
+      "0xB88B": {
+        "assumptions": [],
+        "bound": "0x010E",
+        "bound_offset": 14,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $010E",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x010E",
+        "query_artifact": null,
+        "query_sha256": "e841f4caf7990338f1f61e8e3094629969779e07708bbcf63f3659e4b88ae3c2",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "8d54166e41ef5ca2b92171f25c4abbeeb4dc931eabd444aac084b40c40b58222",
+          "relied_on_unsat": 5,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 3
+        },
+        "status": "proved"
+      },
+      "0xB893": {
+        "assumptions": [],
+        "bound": "0x010D",
+        "bound_offset": 13,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $010D",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x010D",
+        "query_artifact": null,
+        "query_sha256": "7069c6108bece4d3ae7a8ecc9e52227de264477dae02e10036bec4a6b392fa57",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "732f2baa9b57a1ae6e1ad4b64c5c2241fecf574f1f437b0dab58b22125fc787f",
+          "relied_on_unsat": 5,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 3
+        },
+        "status": "proved"
+      },
+      "0xB8A2": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xB8A2"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xB8A2",
+                "edge": "fallthrough",
+                "from": "0xB89F",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xB85D",
+                  "0xB85F",
+                  "0xB861",
+                  "0xB863",
+                  "0xB865",
+                  "0xB867",
+                  "0xB869",
+                  "0xB86B",
+                  "0xB86D",
+                  "0xB86F",
+                  "0xB871",
+                  "0xB873",
+                  "0xB875",
+                  "0xB899",
+                  "0xB89C",
+                  "0xB89F"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x05",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xB8A2",
+            "edge": "fallthrough",
+            "from": "0xB89F",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xB85D",
+              "0xB85F",
+              "0xB861",
+              "0xB863",
+              "0xB865",
+              "0xB867",
+              "0xB869",
+              "0xB86B",
+              "0xB86D",
+              "0xB86F",
+              "0xB871",
+              "0xB873",
+              "0xB875",
+              "0xB899",
+              "0xB89C",
+              "0xB89F"
+            ]
+          },
+          "kind": "rom_table",
+          "symbolic_rom_reads": [
+            "0xB89C",
+            "0xB89F"
+          ],
+          "why": "the index is read out of a table at an address the slice only knows symbolically, and the model leaves PRG unconstrained there (NESMemory.read adds no prg_axioms), so the bound is a gap in the tooling rather than in the program"
+        },
+        "instruction": "STA $0134,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 70,
+          "distinct_rechecked": 70,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "b5cd2aff31088abc28adca710a6df34a2e192898c778e5c56174fc87fe4f0d66",
+          "relied_on_unsat": 8,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 70
+            },
+            "cvc5": {
+              "agree": 70
+            }
+          },
+          "solver_queries": 71,
+          "z3_no_answer": 0,
+          "z3_sat": 63
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xB9B5": {
+        "assumptions": [],
+        "attempts": [],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "pointer",
+          "why": "the write address comes from memory, so no bound on X or Y constrains it"
+        },
+        "instruction": "STA ($06),Y",
+        "method": "no register bound reaches the target offset: the write address is not determined by X or Y",
+        "mnemonic": "STA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 28,
+            "page_write_bound": 10,
+            "pc_uniqueness": 22
+          },
+          "cross_check": "clean",
+          "distinct_queries": 48,
+          "distinct_rechecked": 48,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "bdbf9e794d88d3aebd3aad0a5889312409e28b97ad8e8fed84e53a9a2689fee1",
+          "relied_on_unsat": 22,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 48
+            },
+            "cvc5": {
+              "agree": 48
+            }
+          },
+          "solver_queries": 60,
+          "z3_no_answer": 0,
+          "z3_sat": 38
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xBAB5": {
+        "assumptions": [],
+        "bound": "0x0129",
+        "bound_offset": 41,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $002A,Y",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0129",
+        "query_artifact": null,
+        "query_sha256": "9a0a23ddb4ec6d7cf5b0bc56824ad0333d4fff1fb1fc0626fea0cd5439ecef0f",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "4867d5241832a44eb06b809fc473f7e1554191d38ec3cc2d4709194e2372cef6",
+          "relied_on_unsat": 5,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 3
+        },
+        "status": "proved"
+      },
+      "0xBAFC": {
+        "assumptions": [],
+        "bound": "0x011D",
+        "bound_offset": 29,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $001E,Y",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x011D",
+        "query_artifact": null,
+        "query_sha256": "995eea708868fd3efa324c07f67c8b48b889a011b390cdd4058271beca0b53a8",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "ac6bc6d5c8e61210e44d1ef6f145847f5ee27744baea1613a0893b5e0e924d46",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
+        "status": "proved"
+      },
+      "0xBB3D": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "instruction": "STA $007A,Y",
+        "method": "no execution writes page one",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0179",
+        "slice": {
+          "longest_suffix": 3,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 3,
+          "suffixes_proved": 1
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 16,
+            "page_write_bound": 8,
+            "pc_uniqueness": 67
+          },
+          "cross_check": "clean",
+          "distinct_queries": 75,
+          "distinct_rechecked": 75,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "5e430b8dd569e0f80e329e17e2cd2ed672fc74ac51584146f7eef121d1c89797",
+          "relied_on_unsat": 74,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 75
+            },
+            "cvc5": {
+              "agree": 75
+            }
+          },
+          "solver_queries": 91,
+          "z3_no_answer": 0,
+          "z3_sat": 17
+        },
+        "status": "conditional"
+      },
+      "0xBB44": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "instruction": "STA $0093,Y",
+        "method": "no execution writes page one",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0192",
+        "slice": {
+          "longest_suffix": 6,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 6,
+          "suffixes_proved": 1
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 19,
+            "page_write_bound": 8,
+            "pc_uniqueness": 24
+          },
+          "cross_check": "clean",
+          "distinct_queries": 43,
+          "distinct_rechecked": 43,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "e4d9743f2c54e1b3fd350bb3dffada7968ecb7f616cb0e5b10b9083aa813e32c",
+          "relied_on_unsat": 33,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 43
+            },
+            "cvc5": {
+              "agree": 43
+            }
+          },
+          "solver_queries": 51,
+          "z3_no_answer": 0,
+          "z3_sat": 18
+        },
+        "status": "conditional"
+      },
+      "0xBB4B": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "instruction": "STA $00DB,Y",
+        "method": "no execution writes page one",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x01DA",
+        "slice": {
+          "longest_suffix": 9,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 9,
+          "suffixes_proved": 1
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 22,
+            "page_write_bound": 8,
+            "pc_uniqueness": 12
+          },
+          "cross_check": "clean",
+          "distinct_queries": 38,
+          "distinct_rechecked": 38,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "50f321b566e3368362abbb8b3394694660a12633ec1d0bc1db53528df1e6f741",
+          "relied_on_unsat": 19,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 38
+            },
+            "cvc5": {
+              "agree": 38
+            }
+          },
+          "solver_queries": 42,
+          "z3_no_answer": 0,
+          "z3_sat": 23
+        },
+        "status": "conditional"
+      },
+      "0xBB57": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "instruction": "STA $007A,Y",
+        "method": "no execution writes page one",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0179",
+        "slice": {
+          "longest_suffix": 3,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 3,
+          "suffixes_proved": 1
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 16,
+            "page_write_bound": 8,
+            "pc_uniqueness": 136
+          },
+          "cross_check": "clean",
+          "distinct_queries": 104,
+          "distinct_rechecked": 104,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "eb878bae01a63eb22e162f7eeda18d1cedd39194c84608b0b720604254a24416",
+          "relied_on_unsat": 143,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 104
+            },
+            "cvc5": {
+              "agree": 104
+            }
+          },
+          "solver_queries": 160,
+          "z3_no_answer": 0,
+          "z3_sat": 17
+        },
+        "status": "conditional"
+      },
+      "0xBB62": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "instruction": "STA $0093,Y",
+        "method": "no execution writes page one",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0192",
+        "slice": {
+          "longest_suffix": 10,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 10,
+          "suffixes_proved": 1
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 23,
+            "page_write_bound": 8,
+            "pc_uniqueness": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 35,
+          "distinct_rechecked": 35,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "46dc757cb743271b383599d587ede902b0ad1150a5c24b3b000e1ccdcd27358f",
+          "relied_on_unsat": 17,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 35
+            },
+            "cvc5": {
+              "agree": 35
+            }
+          },
+          "solver_queries": 39,
+          "z3_no_answer": 0,
+          "z3_sat": 22
+        },
+        "status": "conditional"
+      },
+      "0xBB69": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": "0x0100",
+        "bound_offset": 0,
+        "instruction": "STA $00DB,Y",
+        "method": "bound from the backward slice alone",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x01DA",
+        "slice": {
+          "longest_suffix": 13,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 13,
+          "suffixes_proved": 1
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 124,
+            "page_write_bound": 8,
+            "pc_uniqueness": 28
+          },
+          "cross_check": "clean",
+          "distinct_queries": 136,
+          "distinct_rechecked": 136,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "ecc026f72f6b48d122988c71036dc024b8e19fe4f61c7d7d30edcc836930e9c9",
+          "relied_on_unsat": 59,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 136
+            },
+            "cvc5": {
+              "agree": 136
+            }
+          },
+          "solver_queries": 160,
+          "z3_no_answer": 0,
+          "z3_sat": 101
+        },
+        "status": "conditional"
+      },
+      "0xBB6E": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": "0x0100",
+        "bound_offset": 0,
+        "instruction": "STA $00AC,Y",
+        "method": "bound from the backward slice alone",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x01AB",
+        "slice": {
+          "longest_suffix": 15,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 25,
+          "suffixes_proved": 2
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 229,
+            "page_write_bound": 8,
+            "pc_uniqueness": 56
+          },
+          "cross_check": "clean",
+          "distinct_queries": 182,
+          "distinct_rechecked": 182,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a34ef75ebae9f3dbb9bca0a577de9fdd57a77b61d34515222328d765e2cea48c",
+          "relied_on_unsat": 115,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 182
+            },
+            "cvc5": {
+              "agree": 182
+            }
+          },
+          "solver_queries": 293,
+          "z3_no_answer": 0,
+          "z3_sat": 178
+        },
+        "status": "conditional"
+      },
+      "0xBB73": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xBB73"
+            ],
+            "invariant": "Y <= 0x77",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": "0x0139",
+        "bound_offset": 57,
+        "cut_points": [
+          "0xBB73"
+        ],
+        "instruction": "STA $00C2,Y",
+        "invariant": "Y <= 0x77",
+        "method": "program-point invariant, proved by induction over visits to the cut points",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x01C1",
+        "provenance": "synthesised",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 61,
+            "page_write_bound": 26,
+            "pc_uniqueness": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 85,
+          "distinct_rechecked": 85,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "cec0be994291ad2fd20b160ecc4a9fa665e4e686d8044bd8f5ee654cd1fe5503",
+          "relied_on_unsat": 33,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 85
+            },
+            "cvc5": {
+              "agree": 85
+            }
+          },
+          "solver_queries": 95,
+          "z3_no_answer": 0,
+          "z3_sat": 62
+        },
+        "status": "conditional"
+      },
+      "0xBB76": {
+        "assumptions": [],
+        "bound": "0x0129",
+        "bound_offset": 41,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $002A,Y",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0129",
+        "query_artifact": null,
+        "query_sha256": "55b480cdfcda760d27ab571fb6f973075349c85976abad39300708af6ea24e4a",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "4867d5241832a44eb06b809fc473f7e1554191d38ec3cc2d4709194e2372cef6",
+          "relied_on_unsat": 5,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 3
+        },
+        "status": "proved"
+      },
+      "0xBC00": {
+        "assumptions": [],
+        "bound": "0x0139",
+        "bound_offset": 57,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $0139",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x0139",
+        "query_artifact": null,
+        "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "1063aa0c988b94069da38cccb42120f748a436d14e99a83dcc899eb205309bb8",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
+        "status": "proved"
+      },
+      "0xBC24": {
+        "assumptions": [],
+        "bound": "0x0138",
+        "bound_offset": 56,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $0138",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x0138",
+        "query_artifact": null,
+        "query_sha256": "1d2b412bc42ecd8b7e8716da3e1243ccecd23e816afe6391e617ec0b084eb998",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "709c70dfe79337088685f9a50cd27debb6cb4541fb9e9f47e61d845b78c19507",
+          "relied_on_unsat": 5,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 3
+        },
+        "status": "proved"
+      },
+      "0xBD4B": {
+        "assumptions": [],
+        "attempts": [],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "pointer",
+          "why": "the write address comes from memory, so no bound on X or Y constrains it"
+        },
+        "instruction": "STA ($06),Y",
+        "method": "no register bound reaches the target offset: the write address is not determined by X or Y",
+        "mnemonic": "STA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 32,
+            "page_write_bound": 10,
+            "pc_uniqueness": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 47,
+          "distinct_rechecked": 47,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "4a0440223595cd08e7323b0821938ec5d79a3d057a2ebe3aee31a51a944577b2",
+          "relied_on_unsat": 26,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 47
+            },
+            "cvc5": {
+              "agree": 47
+            }
+          },
+          "solver_queries": 68,
+          "z3_no_answer": 0,
+          "z3_sat": 42
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xBE15": {
+        "assumptions": [],
+        "bound": "0x0139",
+        "bound_offset": 57,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $0139",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x0139",
+        "query_artifact": null,
+        "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "1063aa0c988b94069da38cccb42120f748a436d14e99a83dcc899eb205309bb8",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
+        "status": "proved"
+      },
+      "0xBE35": {
+        "assumptions": [],
+        "attempts": [],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "pointer",
+          "why": "the write address comes from memory, so no bound on X or Y constrains it"
+        },
+        "instruction": "STA ($06),Y",
+        "method": "no register bound reaches the target offset: the write address is not determined by X or Y",
+        "mnemonic": "STA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 28,
+            "page_write_bound": 10
+          },
+          "cross_check": "clean",
+          "distinct_queries": 38,
+          "distinct_rechecked": 38,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "b6ef3c82f988895bb5a7ce18a19bf755c610560badb7e250994130e1adcbb49c",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 38
+            },
+            "cvc5": {
+              "agree": 38
+            }
+          },
+          "solver_queries": 38,
+          "z3_no_answer": 0,
+          "z3_sat": 38
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xBEF4": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "instruction": "STA ($06),Y",
+        "method": "no execution writes page one",
+        "mnemonic": "STA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "slice": {
+          "longest_suffix": 7,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 7,
+          "suffixes_proved": 1
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 17,
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 25,
+          "distinct_rechecked": 25,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "f818bc407ce9dbb404787d4ead8f07e312aaf83e11648274f8073f42fdb99b3d",
+          "relied_on_unsat": 1,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 25
+            },
+            "cvc5": {
+              "agree": 25
+            }
+          },
+          "solver_queries": 25,
+          "z3_no_answer": 0,
+          "z3_sat": 24
+        },
+        "status": "conditional"
+      },
+      "0xC583": {
+        "assumptions": [],
+        "bound": "0x010E",
+        "bound_offset": 14,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $000F,Y",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x010E",
+        "query_artifact": null,
+        "query_sha256": "11ec42f324753061b83dec64f75202af6fce20e1f6061cb9d0d65e4b96f6bc83",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "7f8f8fb47cc6f3ee27104ad504122e8b387bdb5313f0ab6922f93238ec7213bc",
+          "relied_on_unsat": 5,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 3
+        },
+        "status": "proved"
+      },
+      "0xC588": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xC26C",
+              "0xC577",
+              "0xC588"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xC26C",
+                "edge": "call",
+                "from": "0xC22A",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC1BE",
+                  "0xC1CB",
+                  "0xC1CD",
+                  "0xC1CF",
+                  "0xC1D1",
+                  "0xC1D3",
+                  "0xC216",
+                  "0xC219",
+                  "0xC21B",
+                  "0xC21E",
+                  "0xC220",
+                  "0xC222",
+                  "0xC224",
+                  "0xC226",
+                  "0xC228",
+                  "0xC22A"
+                ]
+              },
+              {
+                "cut_point": "0xC26C",
+                "edge": "call",
+                "from": "0xC77C",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC75F",
+                  "0xC761",
+                  "0xC763",
+                  "0xC765",
+                  "0xC767",
+                  "0xC768",
+                  "0xC76A",
+                  "0xC76C",
+                  "0xC76E",
+                  "0xC770",
+                  "0xC772",
+                  "0xC774",
+                  "0xC776",
+                  "0xC778",
+                  "0xC77A",
+                  "0xC77C"
+                ]
+              },
+              {
+                "cut_point": "0xC577",
+                "edge": "fallthrough",
+                "from": "0xC575",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC778",
+                  "0xC77A",
+                  "0xC77C",
+                  "0xC26C",
+                  "0xC26E",
+                  "0xC270",
+                  "0xC272",
+                  "0xC273",
+                  "0xC275",
+                  "0xC277",
+                  "0xC279",
+                  "0xC27B",
+                  "0xC27E",
+                  "0xC27F",
+                  "0xC549",
+                  "0xC575"
+                ]
+              },
+              {
+                "cut_point": "0xC577",
+                "edge": "branch",
+                "from": "0xC57B",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B"
+                ]
+              }
+            ],
+            "invariant": "Y <= 0xCB",
+            "provenance": "synthesised",
+            "rounds": 3
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xC577",
+            "edge": "fallthrough",
+            "from": "0xC575",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xC778",
+              "0xC77A",
+              "0xC77C",
+              "0xC26C",
+              "0xC26E",
+              "0xC270",
+              "0xC272",
+              "0xC273",
+              "0xC275",
+              "0xC277",
+              "0xC279",
+              "0xC27B",
+              "0xC27E",
+              "0xC27F",
+              "0xC549",
+              "0xC575"
+            ]
+          },
+          "call_site": "0xC27F",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $006E,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x016D",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 188,
+            "page_write_bound": 26,
+            "pc_uniqueness": 11
+          },
+          "cross_check": "clean",
+          "distinct_queries": 153,
+          "distinct_rechecked": 153,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "9e7596dcd417ad1e9e6fd589c44c315e73bda9722b5ccadf0b81e172adf036f8",
+          "relied_on_unsat": 27,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 153
+            },
+            "cvc5": {
+              "agree": 153
+            }
+          },
+          "solver_queries": 225,
+          "z3_no_answer": 0,
+          "z3_sat": 198
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xC58D": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xC26C",
+              "0xC577",
+              "0xC58D"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xC26C",
+                "edge": "call",
+                "from": "0xC22A",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC1BE",
+                  "0xC1CB",
+                  "0xC1CD",
+                  "0xC1CF",
+                  "0xC1D1",
+                  "0xC1D3",
+                  "0xC216",
+                  "0xC219",
+                  "0xC21B",
+                  "0xC21E",
+                  "0xC220",
+                  "0xC222",
+                  "0xC224",
+                  "0xC226",
+                  "0xC228",
+                  "0xC22A"
+                ]
+              },
+              {
+                "cut_point": "0xC26C",
+                "edge": "call",
+                "from": "0xC77C",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC75F",
+                  "0xC761",
+                  "0xC763",
+                  "0xC765",
+                  "0xC767",
+                  "0xC768",
+                  "0xC76A",
+                  "0xC76C",
+                  "0xC76E",
+                  "0xC770",
+                  "0xC772",
+                  "0xC774",
+                  "0xC776",
+                  "0xC778",
+                  "0xC77A",
+                  "0xC77C"
+                ]
+              },
+              {
+                "cut_point": "0xC577",
+                "edge": "fallthrough",
+                "from": "0xC575",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC778",
+                  "0xC77A",
+                  "0xC77C",
+                  "0xC26C",
+                  "0xC26E",
+                  "0xC270",
+                  "0xC272",
+                  "0xC273",
+                  "0xC275",
+                  "0xC277",
+                  "0xC279",
+                  "0xC27B",
+                  "0xC27E",
+                  "0xC27F",
+                  "0xC549",
+                  "0xC575"
+                ]
+              },
+              {
+                "cut_point": "0xC577",
+                "edge": "branch",
+                "from": "0xC57B",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B"
+                ]
+              }
+            ],
+            "invariant": "Y <= 0xB2",
+            "provenance": "synthesised",
+            "rounds": 3
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xC577",
+            "edge": "fallthrough",
+            "from": "0xC575",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xC778",
+              "0xC77A",
+              "0xC77C",
+              "0xC26C",
+              "0xC26E",
+              "0xC270",
+              "0xC272",
+              "0xC273",
+              "0xC275",
+              "0xC277",
+              "0xC279",
+              "0xC27B",
+              "0xC27E",
+              "0xC27F",
+              "0xC549",
+              "0xC575"
+            ]
+          },
+          "call_site": "0xC27F",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $0087,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0186",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 188,
+            "page_write_bound": 26,
+            "pc_uniqueness": 11
+          },
+          "cross_check": "clean",
+          "distinct_queries": 150,
+          "distinct_rechecked": 150,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "d2850a2fccd38e6a6b663f56df4af9aa84c63f05d845d2f771eb9a4cfb8e2f6f",
+          "relied_on_unsat": 28,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 150
+            },
+            "cvc5": {
+              "agree": 150
+            }
+          },
+          "solver_queries": 225,
+          "z3_no_answer": 0,
+          "z3_sat": 197
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xC594": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xC26C",
+              "0xC577",
+              "0xC594"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xC26C",
+                "edge": "call",
+                "from": "0xC22A",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC1BE",
+                  "0xC1CB",
+                  "0xC1CD",
+                  "0xC1CF",
+                  "0xC1D1",
+                  "0xC1D3",
+                  "0xC216",
+                  "0xC219",
+                  "0xC21B",
+                  "0xC21E",
+                  "0xC220",
+                  "0xC222",
+                  "0xC224",
+                  "0xC226",
+                  "0xC228",
+                  "0xC22A"
+                ]
+              },
+              {
+                "cut_point": "0xC26C",
+                "edge": "call",
+                "from": "0xC77C",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC75F",
+                  "0xC761",
+                  "0xC763",
+                  "0xC765",
+                  "0xC767",
+                  "0xC768",
+                  "0xC76A",
+                  "0xC76C",
+                  "0xC76E",
+                  "0xC770",
+                  "0xC772",
+                  "0xC774",
+                  "0xC776",
+                  "0xC778",
+                  "0xC77A",
+                  "0xC77C"
+                ]
+              },
+              {
+                "cut_point": "0xC577",
+                "edge": "fallthrough",
+                "from": "0xC575",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC778",
+                  "0xC77A",
+                  "0xC77C",
+                  "0xC26C",
+                  "0xC26E",
+                  "0xC270",
+                  "0xC272",
+                  "0xC273",
+                  "0xC275",
+                  "0xC277",
+                  "0xC279",
+                  "0xC27B",
+                  "0xC27E",
+                  "0xC27F",
+                  "0xC549",
+                  "0xC575"
+                ]
+              },
+              {
+                "cut_point": "0xC577",
+                "edge": "branch",
+                "from": "0xC57B",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B"
+                ]
+              }
+            ],
+            "invariant": "Y <= 0x83",
+            "provenance": "synthesised",
+            "rounds": 3
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xC577",
+            "edge": "fallthrough",
+            "from": "0xC575",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xC778",
+              "0xC77A",
+              "0xC77C",
+              "0xC26C",
+              "0xC26E",
+              "0xC270",
+              "0xC272",
+              "0xC273",
+              "0xC275",
+              "0xC277",
+              "0xC279",
+              "0xC27B",
+              "0xC27E",
+              "0xC27F",
+              "0xC549",
+              "0xC575"
+            ]
+          },
+          "call_site": "0xC27F",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $00B6,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x01B5",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 188,
+            "page_write_bound": 26,
+            "pc_uniqueness": 11
+          },
+          "cross_check": "clean",
+          "distinct_queries": 144,
+          "distinct_rechecked": 144,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "9fe93ce5899cd9ab0d5553828c5bd088d0215d5a4aae16d465c9053904c996e3",
+          "relied_on_unsat": 25,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 144
+            },
+            "cvc5": {
+              "agree": 144
+            }
+          },
+          "solver_queries": 225,
+          "z3_no_answer": 0,
+          "z3_sat": 200
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xC599": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xC26C",
+              "0xC577",
+              "0xC599"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xC26C",
+                "edge": "call",
+                "from": "0xC22A",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC1BE",
+                  "0xC1CB",
+                  "0xC1CD",
+                  "0xC1CF",
+                  "0xC1D1",
+                  "0xC1D3",
+                  "0xC216",
+                  "0xC219",
+                  "0xC21B",
+                  "0xC21E",
+                  "0xC220",
+                  "0xC222",
+                  "0xC224",
+                  "0xC226",
+                  "0xC228",
+                  "0xC22A"
+                ]
+              },
+              {
+                "cut_point": "0xC26C",
+                "edge": "call",
+                "from": "0xC77C",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC75F",
+                  "0xC761",
+                  "0xC763",
+                  "0xC765",
+                  "0xC767",
+                  "0xC768",
+                  "0xC76A",
+                  "0xC76C",
+                  "0xC76E",
+                  "0xC770",
+                  "0xC772",
+                  "0xC774",
+                  "0xC776",
+                  "0xC778",
+                  "0xC77A",
+                  "0xC77C"
+                ]
+              },
+              {
+                "cut_point": "0xC577",
+                "edge": "fallthrough",
+                "from": "0xC575",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC778",
+                  "0xC77A",
+                  "0xC77C",
+                  "0xC26C",
+                  "0xC26E",
+                  "0xC270",
+                  "0xC272",
+                  "0xC273",
+                  "0xC275",
+                  "0xC277",
+                  "0xC279",
+                  "0xC27B",
+                  "0xC27E",
+                  "0xC27F",
+                  "0xC549",
+                  "0xC575"
+                ]
+              },
+              {
+                "cut_point": "0xC577",
+                "edge": "branch",
+                "from": "0xC57B",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B",
+                  "0xC577",
+                  "0xC578",
+                  "0xC57B"
+                ]
+              }
+            ],
+            "invariant": "Y <= 0x6A",
+            "provenance": "synthesised",
+            "rounds": 3
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xC577",
+            "edge": "fallthrough",
+            "from": "0xC575",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xC778",
+              "0xC77A",
+              "0xC77C",
+              "0xC26C",
+              "0xC26E",
+              "0xC270",
+              "0xC272",
+              "0xC273",
+              "0xC275",
+              "0xC277",
+              "0xC279",
+              "0xC27B",
+              "0xC27E",
+              "0xC27F",
+              "0xC549",
+              "0xC575"
+            ]
+          },
+          "call_site": "0xC27F",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $00CF,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x01CE",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 188,
+            "page_write_bound": 26,
+            "pc_uniqueness": 11
+          },
+          "cross_check": "clean",
+          "distinct_queries": 140,
+          "distinct_rechecked": 140,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "e9a071f474d428662fc3b2e96d8c45c34aef263a9f2702f0d106a451f2b02fd7",
+          "relied_on_unsat": 26,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 140
+            },
+            "cvc5": {
+              "agree": 140
+            }
+          },
+          "solver_queries": 225,
+          "z3_no_answer": 0,
+          "z3_sat": 199
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xC7C3": {
+        "assumptions": [],
+        "bound": "0x011D",
+        "bound_offset": 29,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $001E,Y",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x011D",
+        "query_artifact": null,
+        "query_sha256": "5a0c8c58afc64e05e7ab50c70ebc8a6eb457f2efb17253b8db6343ebe9bb8c3a",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "ac6bc6d5c8e61210e44d1ef6f145847f5ee27744baea1613a0893b5e0e924d46",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
+        "status": "proved"
+      },
+      "0xC9A0": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xB7A4",
+              "0xC998",
+              "0xC9A0"
+            ],
+            "failures": [
+              {
+                "cut_point": "",
+                "edge": "",
+                "from": "",
+                "part": "budget",
+                "reason": "time budget exhausted",
+                "suffix": []
+              }
+            ],
+            "invariant": "X <= 0x29",
+            "provenance": "synthesised",
+            "rounds": 3
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "budget",
+          "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
+        },
+        "instruction": "STA $0110,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 157,
+            "page_write_bound": 26,
+            "pc_uniqueness": 147
+          },
+          "cross_check": "clean",
+          "distinct_queries": 205,
+          "distinct_rechecked": 205,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "2fc02c5e7a1e415512f7e23c3248de4e954ca5dea0e46c8d91836e8b172c5b8e",
+          "relied_on_unsat": 97,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 205
+            },
+            "cvc5": {
+              "agree": 205
+            }
+          },
+          "solver_queries": 330,
+          "z3_no_answer": 0,
+          "z3_sat": 233
+        },
+        "status": "unknown"
+      },
+      "0xC9A6": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xB7A4",
+              "0xC998",
+              "0xC9A6"
+            ],
+            "failures": [
+              {
+                "cut_point": "",
+                "edge": "",
+                "from": "",
+                "part": "budget",
+                "reason": "time budget exhausted",
+                "suffix": []
+              }
+            ],
+            "invariant": "X <= 0x14",
+            "provenance": "synthesised",
+            "rounds": 3
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "budget",
+          "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
+        },
+        "instruction": "STA $0125,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 157,
+            "page_write_bound": 26,
+            "pc_uniqueness": 142
+          },
+          "cross_check": "clean",
+          "distinct_queries": 202,
+          "distinct_rechecked": 202,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "2b2019875dea5823cd4e2545a5c0e1a76e262eb92366a599aee9f7144df69443",
+          "relied_on_unsat": 91,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 202
+            },
+            "cvc5": {
+              "agree": 202
+            }
+          },
+          "solver_queries": 325,
+          "z3_no_answer": 0,
+          "z3_sat": 234
+        },
+        "status": "unknown"
+      },
+      "0xCF4A": {
+        "assumptions": [],
+        "bound": "0x0100",
+        "bound_offset": 0,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $0001,Y",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0100",
+        "query_artifact": null,
+        "query_sha256": "c9ea52011adcb2ebff57818f26a8b219ebda87aa99a7b7ed0af9633c0052eb27",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "426fb017391d1d7e244fa6e943367f935eeff1782ff0117e6c7eb88eeca1ed28",
+          "relied_on_unsat": 8,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 0
+        },
+        "status": "proved"
+      },
+      "0xD18E": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD18E"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xD18E",
+                "edge": "fallthrough",
+                "from": "0xD18B",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD16E",
+                  "0xD170",
+                  "0xD171",
+                  "0xD173",
+                  "0xD176",
+                  "0xD178",
+                  "0xD17B",
+                  "0xD17E",
+                  "0xD180",
+                  "0xD182",
+                  "0xD183",
+                  "0xD185",
+                  "0xD187",
+                  "0xD188",
+                  "0xD189",
+                  "0xD18B"
+                ]
+              }
+            ],
+            "invariant": "Y <= 0xB2",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xD18E",
+            "edge": "fallthrough",
+            "from": "0xD18B",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xD16E",
+              "0xD170",
+              "0xD171",
+              "0xD173",
+              "0xD176",
+              "0xD178",
+              "0xD17B",
+              "0xD17E",
+              "0xD180",
+              "0xD182",
+              "0xD183",
+              "0xD185",
+              "0xD187",
+              "0xD188",
+              "0xD189",
+              "0xD18B"
+            ]
+          },
+          "call_site": "0xD17B",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $0087,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0186",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26,
+            "pc_uniqueness": 60
+          },
+          "cross_check": "clean",
+          "distinct_queries": 91,
+          "distinct_rechecked": 91,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "6ee3c2b3626be97db181c5b28626fb30ec3497e385e6ff8d5295f244ffb7eb42",
+          "relied_on_unsat": 75,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 91
+            },
+            "cvc5": {
+              "agree": 91
+            }
+          },
+          "solver_queries": 131,
+          "z3_no_answer": 0,
+          "z3_sat": 56
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xD196": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD196"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xD196",
+                "edge": "fallthrough",
+                "from": "0xD194",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD176",
+                  "0xD178",
+                  "0xD17B",
+                  "0xD17E",
+                  "0xD180",
+                  "0xD182",
+                  "0xD183",
+                  "0xD185",
+                  "0xD187",
+                  "0xD188",
+                  "0xD189",
+                  "0xD18B",
+                  "0xD18E",
+                  "0xD191",
+                  "0xD193",
+                  "0xD194"
+                ]
+              }
+            ],
+            "invariant": "Y <= 0x6A",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xD196",
+            "edge": "fallthrough",
+            "from": "0xD194",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xD176",
+              "0xD178",
+              "0xD17B",
+              "0xD17E",
+              "0xD180",
+              "0xD182",
+              "0xD183",
+              "0xD185",
+              "0xD187",
+              "0xD188",
+              "0xD189",
+              "0xD18B",
+              "0xD18E",
+              "0xD191",
+              "0xD193",
+              "0xD194"
+            ]
+          },
+          "call_site": "0xD17B",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $00CF,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x01CE",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26,
+            "pc_uniqueness": 20
+          },
+          "cross_check": "clean",
+          "distinct_queries": 80,
+          "distinct_rechecked": 80,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a64a711cda82a9b3e26c176f564d9f3c18dac911902d4bbfceb632c3ade1c4ad",
+          "relied_on_unsat": 33,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 80
+            },
+            "cvc5": {
+              "agree": 80
+            }
+          },
+          "solver_queries": 91,
+          "z3_no_answer": 0,
+          "z3_sat": 58
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xD19B": {
+        "assumptions": [],
+        "bound": "0x011D",
+        "bound_offset": 29,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $001E,Y",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x011D",
+        "query_artifact": null,
+        "query_sha256": "015ca4e36c64f06cc58dfbfbaf205e83720ee6f44847b427e5727e95e80be3e0",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "ac6bc6d5c8e61210e44d1ef6f145847f5ee27744baea1613a0893b5e0e924d46",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
+        "status": "proved"
+      },
+      "0xD1A0": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD1A0"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xD1A0",
+                "edge": "fallthrough",
+                "from": "0xD19E",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD180",
+                  "0xD182",
+                  "0xD183",
+                  "0xD185",
+                  "0xD187",
+                  "0xD188",
+                  "0xD189",
+                  "0xD18B",
+                  "0xD18E",
+                  "0xD191",
+                  "0xD193",
+                  "0xD194",
+                  "0xD196",
+                  "0xD199",
+                  "0xD19B",
+                  "0xD19E"
+                ]
+              }
+            ],
+            "invariant": "Y <= 0xF3",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xD1A0",
+            "edge": "fallthrough",
+            "from": "0xD19E",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xD180",
+              "0xD182",
+              "0xD183",
+              "0xD185",
+              "0xD187",
+              "0xD188",
+              "0xD189",
+              "0xD18B",
+              "0xD18E",
+              "0xD191",
+              "0xD193",
+              "0xD194",
+              "0xD196",
+              "0xD199",
+              "0xD19B",
+              "0xD19E"
+            ]
+          },
+          "kind": "depth",
+          "why": "the backward slice was still satisfiable at the depth limit, and no further cut point suggested itself"
+        },
+        "instruction": "STA $0046,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x0145",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 70,
+          "distinct_rechecked": 70,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "cc67f97490c046b212a1dff150af202bda5f8993634722f2d27e4db2bfaa2843",
+          "relied_on_unsat": 17,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 70
+            },
+            "cvc5": {
+              "agree": 70
+            }
+          },
+          "solver_queries": 71,
+          "z3_no_answer": 0,
+          "z3_sat": 54
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xD2C7": {
+        "assumptions": [],
+        "bound": "0x0138",
+        "bound_offset": 56,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $0138",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x0138",
+        "query_artifact": null,
+        "query_sha256": "1d2b412bc42ecd8b7e8716da3e1243ccecd23e816afe6391e617ec0b084eb998",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "709c70dfe79337088685f9a50cd27debb6cb4541fb9e9f47e61d845b78c19507",
+          "relied_on_unsat": 5,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 3
+        },
+        "status": "proved"
+      },
+      "0xD32B": {
+        "assumptions": [],
+        "bound": "0x0139",
+        "bound_offset": 57,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $0139",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x0139",
+        "query_artifact": null,
+        "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "1063aa0c988b94069da38cccb42120f748a436d14e99a83dcc899eb205309bb8",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
+        "status": "proved"
+      },
+      "0xD333": {
+        "assumptions": [],
+        "bound": "0x0139",
+        "bound_offset": 57,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $0139",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x0139",
+        "query_artifact": null,
+        "query_sha256": "25f09d0d16fdb32bface1c82ca4b9e7291b719b98c146bad5ac8f74db1064f1b",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "1063aa0c988b94069da38cccb42120f748a436d14e99a83dcc899eb205309bb8",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
+        "status": "proved"
+      },
+      "0xD46E": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD46E"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xD46E",
+                "edge": "fallthrough",
+                "from": "0xD46C",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469",
+                  "0xD46B",
+                  "0xD46C"
+                ]
+              }
+            ],
+            "invariant": "Y <= 0x6A",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xD46E",
+            "edge": "fallthrough",
+            "from": "0xD46C",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xD43B",
+              "0xD43D",
+              "0xD440",
+              "0xD441",
+              "0xD444",
+              "0xD446",
+              "0xD448",
+              "0xD44D",
+              "0xD44F",
+              "0xD451",
+              "0xD462",
+              "0xD465",
+              "0xD467",
+              "0xD469",
+              "0xD46B",
+              "0xD46C"
+            ]
+          },
+          "kind": "depth",
+          "why": "the backward slice was still satisfiable at the depth limit, and no further cut point suggested itself"
+        },
+        "instruction": "STA $00CF,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x01CE",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 70,
+          "distinct_rechecked": 70,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "bea7029737d500a0dfd47f17be1ebb43d8098694218fcd5c30bd43a722ad7a83",
+          "relied_on_unsat": 13,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 70
+            },
+            "cvc5": {
+              "agree": 70
+            }
+          },
+          "solver_queries": 71,
+          "z3_no_answer": 0,
+          "z3_sat": 58
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xD4B1": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD4B1"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xD4B1",
+                "edge": "fallthrough",
+                "from": "0xD4AE",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD474",
+                  "0xD476",
+                  "0xD477",
+                  "0xD47A",
+                  "0xD494",
+                  "0xD496",
+                  "0xD4A4",
+                  "0xD4A7",
+                  "0xD4A9",
+                  "0xD4AA",
+                  "0xD4AB",
+                  "0xD4AD",
+                  "0xD4AE"
+                ]
+              }
+            ],
+            "invariant": "Y <= 0x6A",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xD4B1",
+            "edge": "fallthrough",
+            "from": "0xD4AE",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xD451",
+              "0xD462",
+              "0xD465",
+              "0xD474",
+              "0xD476",
+              "0xD477",
+              "0xD47A",
+              "0xD494",
+              "0xD496",
+              "0xD4A4",
+              "0xD4A7",
+              "0xD4A9",
+              "0xD4AA",
+              "0xD4AB",
+              "0xD4AD",
+              "0xD4AE"
+            ]
+          },
+          "call_site": "0xD4A4",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $00CF,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x01CE",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 51,
+            "page_write_bound": 26
+          },
+          "cross_check": "clean",
+          "distinct_queries": 70,
+          "distinct_rechecked": 70,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "356d6ddd347302706b6b2fc713db2644c833c1257943b0ee0a3ece3782f08e18",
+          "relied_on_unsat": 16,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 70
+            },
+            "cvc5": {
+              "agree": 70
+            }
+          },
+          "solver_queries": 77,
+          "z3_no_answer": 0,
+          "z3_sat": 61
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xD5A5": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD45F",
+              "0xD5A5"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD455",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC987",
+                  "0xD432",
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD453",
+                  "0xD455"
+                ]
+              },
+              {
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD469",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469"
+                ]
+              },
+              {
+                "cut_point": "0xD5A5",
+                "edge": "fallthrough",
+                "from": "0xD5A2",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469",
+                  "0xD45F",
+                  "0xD598",
+                  "0xD599",
+                  "0xD59A",
+                  "0xD59D",
+                  "0xD59F",
+                  "0xD5A2"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x22",
+            "provenance": "synthesised",
+            "rounds": 2
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xD45F",
+            "edge": "branch",
+            "from": "0xD455",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xC987",
+              "0xD432",
+              "0xD434",
+              "0xD436",
+              "0xD43B",
+              "0xD43D",
+              "0xD440",
+              "0xD441",
+              "0xD444",
+              "0xD446",
+              "0xD448",
+              "0xD44D",
+              "0xD44F",
+              "0xD451",
+              "0xD453",
+              "0xD455"
+            ]
+          },
+          "call_site": "0xC987",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $0117,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 93,
+            "page_write_bound": 26,
+            "pc_uniqueness": 238
+          },
+          "cross_check": "clean",
+          "distinct_queries": 111,
+          "distinct_rechecked": 111,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "5519b8f7ad604407441b84aa876b41957b923274bf025578f5949c54528d89a4",
+          "relied_on_unsat": 192,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 111
+            },
+            "cvc5": {
+              "agree": 111
+            }
+          },
+          "solver_queries": 357,
+          "z3_no_answer": 0,
+          "z3_sat": 165
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xD5AA": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD45F",
+              "0xD5AA"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD455",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC987",
+                  "0xD432",
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD453",
+                  "0xD455"
+                ]
+              },
+              {
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD469",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469"
+                ]
+              },
+              {
+                "cut_point": "0xD5AA",
+                "edge": "fallthrough",
+                "from": "0xD5A8",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469",
+                  "0xD45F",
+                  "0xD598",
+                  "0xD599",
+                  "0xD59A",
+                  "0xD59D",
+                  "0xD59F",
+                  "0xD5A2",
+                  "0xD5A5",
+                  "0xD5A8"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x1B",
+            "provenance": "synthesised",
+            "rounds": 2
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xD45F",
+            "edge": "branch",
+            "from": "0xD455",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xC987",
+              "0xD432",
+              "0xD434",
+              "0xD436",
+              "0xD43B",
+              "0xD43D",
+              "0xD440",
+              "0xD441",
+              "0xD444",
+              "0xD446",
+              "0xD448",
+              "0xD44D",
+              "0xD44F",
+              "0xD451",
+              "0xD453",
+              "0xD455"
+            ]
+          },
+          "call_site": "0xC987",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $011E,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 93,
+            "page_write_bound": 26,
+            "pc_uniqueness": 198
+          },
+          "cross_check": "clean",
+          "distinct_queries": 109,
+          "distinct_rechecked": 109,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "862e849007371df4e60b56e5da8f6f3959c44c1f4945152173412df80c2ab7ee",
+          "relied_on_unsat": 162,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 109
+            },
+            "cvc5": {
+              "agree": 109
+            }
+          },
+          "solver_queries": 317,
+          "z3_no_answer": 0,
+          "z3_sat": 155
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xD5B4": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD5B4"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xD5B4",
+                "edge": "return_point",
+                "from": "0xD5B1",
+                "part": "invariant",
+                "reason": "call-boundary edge: what the callee left in the registers is unknown, so the invariant would need a routine contract",
+                "suffix": []
+              }
+            ],
+            "invariant": "Y <= 0x99",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xD5B4",
+            "edge": "return_point",
+            "from": "0xD5B1",
+            "part": "invariant",
+            "reason": "call-boundary edge: what the callee left in the registers is unknown, so the invariant would need a routine contract",
+            "suffix": []
+          },
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $00A0,Y",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "aby",
+        "one_step_bound": "0x019F",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 29,
+            "page_write_bound": 26,
+            "pc_uniqueness": 70
+          },
+          "cross_check": "clean",
+          "distinct_queries": 63,
+          "distinct_rechecked": 63,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "f262ba73c88018be79b12d232d434a021bbf4bc4e7fb4346e6a992b0341cd9e0",
+          "relied_on_unsat": 70,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 63
+            },
+            "cvc5": {
+              "agree": 63
+            }
+          },
+          "solver_queries": 125,
+          "z3_no_answer": 0,
+          "z3_sat": 55
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xD83C": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD800",
+              "0xD83C"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xD800",
+                "edge": "jump",
+                "from": "0xD887",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD85D",
+                  "0xD860",
+                  "0xD862",
+                  "0xD864",
+                  "0xD866",
+                  "0xD868",
+                  "0xD86A",
+                  "0xD86C",
+                  "0xD86E",
+                  "0xD871",
+                  "0xD874",
+                  "0xD876",
+                  "0xD881",
+                  "0xD883",
+                  "0xD885",
+                  "0xD887"
+                ]
+              },
+              {
+                "cut_point": "0xD83C",
+                "edge": "fallthrough",
+                "from": "0xD83A",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD876",
+                  "0xD881",
+                  "0xD883",
+                  "0xD885",
+                  "0xD887",
+                  "0xD800",
+                  "0xD803",
+                  "0xD805",
+                  "0xD808",
+                  "0xD80A",
+                  "0xD80C",
+                  "0xD80E",
+                  "0xD810",
+                  "0xD812",
+                  "0xD814",
+                  "0xD83A"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x29",
+            "provenance": "synthesised",
+            "rounds": 2
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xD800",
+            "edge": "jump",
+            "from": "0xD887",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xD85D",
+              "0xD860",
+              "0xD862",
+              "0xD864",
+              "0xD866",
+              "0xD868",
+              "0xD86A",
+              "0xD86C",
+              "0xD86E",
+              "0xD871",
+              "0xD874",
+              "0xD876",
+              "0xD881",
+              "0xD883",
+              "0xD885",
+              "0xD887"
+            ]
+          },
+          "call_site": "0xD86E",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "STA $0110,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 77,
+            "page_write_bound": 26,
+            "pc_uniqueness": 543
+          },
+          "cross_check": "clean",
+          "distinct_queries": 185,
+          "distinct_rechecked": 185,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "203fa1c03bfefdbdd9b654aa82369ad9f791c29e3436a981f98f526fd85f3bba",
+          "relied_on_unsat": 508,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 185
+            },
+            "cvc5": {
+              "agree": 185
+            }
+          },
+          "solver_queries": 646,
+          "z3_no_answer": 0,
+          "z3_sat": 138
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xDA11": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD45F",
+              "0xDA11"
+            ],
+            "failures": [
+              {
+                "cut_point": "",
+                "edge": "",
+                "from": "",
+                "part": "budget",
+                "reason": "time budget exhausted",
+                "suffix": []
+              }
+            ],
+            "invariant": "X <= 0x29",
+            "provenance": "synthesised",
+            "rounds": 2
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "budget",
+          "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
+        },
+        "instruction": "STA $0110,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26,
+            "pc_uniqueness": 113
+          },
+          "cross_check": "clean",
+          "distinct_queries": 90,
+          "distinct_rechecked": 90,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "7b71438b4b057e3162798f8af4c5f12e4f0006d8ea8570bbdd8d13050011c8a7",
+          "relied_on_unsat": 122,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 90
+            },
+            "cvc5": {
+              "agree": 90
+            }
+          },
+          "solver_queries": 184,
+          "z3_no_answer": 0,
+          "z3_sat": 62
+        },
+        "status": "unknown"
+      },
+      "0xDA16": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD45F",
+              "0xDA11",
+              "0xDA16"
+            ],
+            "failures": [
+              {
+                "cut_point": "",
+                "edge": "",
+                "from": "",
+                "part": "budget",
+                "reason": "time budget exhausted",
+                "suffix": []
+              }
+            ],
+            "invariant": "X <= 0x0D",
+            "provenance": "synthesised",
+            "rounds": 3
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "budget",
+          "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
+        },
+        "instruction": "STA $012C,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 61,
+            "page_write_bound": 26,
+            "pc_uniqueness": 116
+          },
+          "cross_check": "clean",
+          "distinct_queries": 94,
+          "distinct_rechecked": 94,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "44f06eddc9076f3b1b88ec25dcb26b922b69c5c9d9715232de6b2d05be8ff737",
+          "relied_on_unsat": 125,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 94
+            },
+            "cvc5": {
+              "agree": 94
+            }
+          },
+          "solver_queries": 203,
+          "z3_no_answer": 0,
+          "z3_sat": 78
+        },
+        "status": "unknown"
+      },
+      "0xDA1B": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD45F",
+              "0xDA11",
+              "0xDA1B"
+            ],
+            "failures": [
+              {
+                "cut_point": "",
+                "edge": "",
+                "from": "",
+                "part": "budget",
+                "reason": "time budget exhausted",
+                "suffix": []
+              }
+            ],
+            "invariant": "X <= 0x1B",
+            "provenance": "synthesised",
+            "rounds": 3
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "budget",
+          "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
+        },
+        "instruction": "STA $011E,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 96,
+            "page_write_bound": 26,
+            "pc_uniqueness": 523
+          },
+          "cross_check": "clean",
+          "distinct_queries": 277,
+          "distinct_rechecked": 277,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "3082be0f20e1a4f858af0b2a4099d501ba15bd591aa7cbb1a380e2c7551a96de",
+          "relied_on_unsat": 520,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 277
+            },
+            "cvc5": {
+              "agree": 277
+            }
+          },
+          "solver_queries": 645,
+          "z3_no_answer": 0,
+          "z3_sat": 125
+        },
+        "status": "unknown"
+      },
+      "0xDA21": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xD45F",
+              "0xDA11",
+              "0xDA21"
+            ],
+            "failures": [
+              {
+                "cut_point": "",
+                "edge": "",
+                "from": "",
+                "part": "budget",
+                "reason": "time budget exhausted",
+                "suffix": []
+              }
+            ],
+            "invariant": "X <= 0x22",
+            "provenance": "synthesised",
+            "rounds": 3
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "budget",
+          "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
+        },
+        "instruction": "STA $0117,X",
+        "method": "index invariant not established",
+        "mnemonic": "STA",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 96,
+            "page_write_bound": 26,
+            "pc_uniqueness": 511
+          },
+          "cross_check": "clean",
+          "distinct_queries": 275,
+          "distinct_rechecked": 275,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "4a5b415f449e2aec6976a9fc4842454b5d11da9b7b640fc60157b4c80ac7f211",
+          "relied_on_unsat": 506,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 275
+            },
+            "cvc5": {
+              "agree": 275
+            }
+          },
+          "solver_queries": 633,
+          "z3_no_answer": 0,
+          "z3_sat": 127
+        },
+        "status": "unknown"
+      },
+      "0xDAED": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xDAED"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xDAED",
+                "edge": "fallthrough",
+                "from": "0xDAEB",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xDACC",
+                  "0xDACD",
+                  "0xDACF",
+                  "0xDAD1",
+                  "0xDAD4",
+                  "0xDAD7",
+                  "0xDAD9",
+                  "0xDADA",
+                  "0xDADB",
+                  "0xDADE",
+                  "0xDAE0",
+                  "0xDAE3",
+                  "0xDAE4",
+                  "0xDAE6",
+                  "0xDAE8",
+                  "0xDAEB"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x14",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xDAED",
+            "edge": "fallthrough",
+            "from": "0xDAEB",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xDACC",
+              "0xDACD",
+              "0xDACF",
+              "0xDAD1",
+              "0xDAD4",
+              "0xDAD7",
+              "0xDAD9",
+              "0xDADA",
+              "0xDADB",
+              "0xDADE",
+              "0xDAE0",
+              "0xDAE3",
+              "0xDAE4",
+              "0xDAE6",
+              "0xDAE8",
+              "0xDAEB"
+            ]
+          },
+          "call_site": "0xDAD1",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "INC $0125,X",
+        "method": "index invariant not established",
+        "mnemonic": "INC",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26,
+            "pc_uniqueness": 106
+          },
+          "cross_check": "clean",
+          "distinct_queries": 74,
+          "distinct_rechecked": 74,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "e5f19661440f3fe2d352c5ae8da0e61cb01c8d655459e470deddf8f8394b0f27",
+          "relied_on_unsat": 68,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 74
+            },
+            "cvc5": {
+              "agree": 74
+            }
+          },
+          "solver_queries": 177,
+          "z3_no_answer": 0,
+          "z3_sat": 109
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xDB11": {
+        "assumptions": [],
+        "attempts": [
+          {
+            "bound": "0x0139",
+            "cut_points": [
+              "0xDB11"
+            ],
+            "failures": [
+              {
+                "cut_point": "0xDB11",
+                "edge": "fallthrough",
+                "from": "0xDB0F",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xDABF",
+                  "0xDAC1",
+                  "0xDAF1",
+                  "0xDAF4",
+                  "0xDAF6",
+                  "0xDAF8",
+                  "0xDAFB",
+                  "0xDAFD",
+                  "0xDAFF",
+                  "0xDB02",
+                  "0xDB04",
+                  "0xDB07",
+                  "0xDB08",
+                  "0xDB0A",
+                  "0xDB0C",
+                  "0xDB0F"
+                ]
+              }
+            ],
+            "invariant": "X <= 0x14",
+            "provenance": "synthesised",
+            "rounds": 1
+          }
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "at": {
+            "cut_point": "0xDB11",
+            "edge": "fallthrough",
+            "from": "0xDB0F",
+            "part": "invariant",
+            "reason": "still satisfiable at depth 16",
+            "suffix": [
+              "0xDABF",
+              "0xDAC1",
+              "0xDAF1",
+              "0xDAF4",
+              "0xDAF6",
+              "0xDAF8",
+              "0xDAFB",
+              "0xDAFD",
+              "0xDAFF",
+              "0xDB02",
+              "0xDB04",
+              "0xDB07",
+              "0xDB08",
+              "0xDB0A",
+              "0xDB0C",
+              "0xDB0F"
+            ]
+          },
+          "call_site": "0xDAFF",
+          "kind": "call",
+          "why": "the index crosses a call boundary: the slice steps over a JSR or a dispatch, where it gives up every register whatever the callee does, so a deeper slice cannot help"
+        },
+        "instruction": "INC $0125,X",
+        "method": "index invariant not established",
+        "mnemonic": "INC",
+        "mode": "abx",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 45,
+            "page_write_bound": 26,
+            "pc_uniqueness": 81
+          },
+          "cross_check": "clean",
+          "distinct_queries": 72,
+          "distinct_rechecked": 72,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "3fa575cb5d394e75dbb28f85e8095963dd13e549565b1a073aff7a5c79b5e51e",
+          "relied_on_unsat": 50,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 72
+            },
+            "cvc5": {
+              "agree": 72
+            }
+          },
+          "solver_queries": 152,
+          "z3_no_answer": 0,
+          "z3_sat": 102
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xDE20": {
+        "assumptions": [],
+        "attempts": [],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "pointer",
+          "why": "the write address comes from memory, so no bound on X or Y constrains it"
+        },
+        "instruction": "STA ($06),Y",
+        "method": "no register bound reaches the target offset: the write address is not determined by X or Y",
+        "mnemonic": "STA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 28,
+            "page_write_bound": 10,
+            "pc_uniqueness": 2
+          },
+          "cross_check": "clean",
+          "distinct_queries": 40,
+          "distinct_rechecked": 40,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "744c3c8e00e6be66f53f48c9cfa2118c753141e0821d6b2340f8305fae53699f",
+          "relied_on_unsat": 2,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 40
+            },
+            "cvc5": {
+              "agree": 40
+            }
+          },
+          "solver_queries": 40,
+          "z3_no_answer": 0,
+          "z3_sat": 38
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xDE70": {
+        "assumptions": [],
+        "bound": "0x010F",
+        "bound_offset": 15,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STX $010F",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STX",
+        "mode": "abs",
+        "one_step_bound": "0x010F",
+        "query_artifact": null,
+        "query_sha256": "ecb383d67969ac46b96030ec7c7f68aa238203bd48d504606f64621a38459fc7",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "0fe7f5fe6191e82b2f4a082bbf4825b7534a3dee6bd012ac382b56be2099ad7f",
+          "relied_on_unsat": 4,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 4
+        },
+        "status": "proved"
+      },
+      "0xE007": {
+        "assumptions": [],
+        "attempts": [],
+        "bound": null,
+        "bound_offset": null,
+        "cause": {
+          "kind": "pointer",
+          "why": "the write address comes from memory, so no bound on X or Y constrains it"
+        },
+        "instruction": "STA ($06),Y",
+        "method": "no register bound reaches the target offset: the write address is not determined by X or Y",
+        "mnemonic": "STA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 28,
+            "page_write_bound": 10,
+            "pc_uniqueness": 116
+          },
+          "cross_check": "clean",
+          "distinct_queries": 44,
+          "distinct_rechecked": 44,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "b2db641080db684ddee1c2a419d66c99940952786dc0bbdbfd7485c48405cc90",
+          "relied_on_unsat": 116,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 44
+            },
+            "cvc5": {
+              "agree": 44
+            }
+          },
+          "solver_queries": 154,
+          "z3_no_answer": 0,
+          "z3_sat": 38
+        },
+        "status": "abstract_counterexample"
+      },
+      "0xE88D": {
+        "assumptions": [],
+        "bound": "0x0109",
+        "bound_offset": 9,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STA $0109",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STA",
+        "mode": "abs",
+        "one_step_bound": "0x0109",
+        "query_artifact": null,
+        "query_sha256": "22e78abbb1171bb27ac5086c2d2bff25b6f9a027799bbcad2eb9b65a77d51fd2",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "f612bd530ed19a2ff161f26aa714282c0e5af4f91931b576e986f75ff7c3eb95",
+          "relied_on_unsat": 6,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 2
+        },
+        "status": "proved"
+      },
+      "0xE8EF": {
+        "assumptions": [],
+        "bound": "0x0109",
+        "bound_offset": 9,
+        "independent_check": "cvc5: unsat",
+        "instruction": "INC $0109",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "INC",
+        "mode": "abs",
+        "one_step_bound": "0x0109",
+        "query_artifact": null,
+        "query_sha256": "22e78abbb1171bb27ac5086c2d2bff25b6f9a027799bbcad2eb9b65a77d51fd2",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "f612bd530ed19a2ff161f26aa714282c0e5af4f91931b576e986f75ff7c3eb95",
+          "relied_on_unsat": 6,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 2
+        },
+        "status": "proved"
+      },
+      "0xE946": {
+        "assumptions": [],
+        "bound": "0x0109",
+        "bound_offset": 9,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STX $0109",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STX",
+        "mode": "abs",
+        "one_step_bound": "0x0109",
+        "query_artifact": null,
+        "query_sha256": "22e78abbb1171bb27ac5086c2d2bff25b6f9a027799bbcad2eb9b65a77d51fd2",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "f612bd530ed19a2ff161f26aa714282c0e5af4f91931b576e986f75ff7c3eb95",
+          "relied_on_unsat": 6,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 2
+        },
+        "status": "proved"
+      },
+      "0xEA45": {
+        "assumptions": [],
+        "bound": "0x0109",
+        "bound_offset": 9,
+        "independent_check": "cvc5: unsat",
+        "instruction": "STY $0109",
+        "method": "one-step bound, from an unconstrained state",
+        "mnemonic": "STY",
+        "mode": "abs",
+        "one_step_bound": "0x0109",
+        "query_artifact": null,
+        "query_sha256": "22e78abbb1171bb27ac5086c2d2bff25b6f9a027799bbcad2eb9b65a77d51fd2",
+        "slice_queries": {
+          "by_kind": {
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 8,
+          "distinct_rechecked": 8,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "f612bd530ed19a2ff161f26aa714282c0e5af4f91931b576e986f75ff7c3eb95",
+          "relied_on_unsat": 6,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 8
+            },
+            "cvc5": {
+              "agree": 8
+            }
+          },
+          "solver_queries": 8,
+          "z3_no_answer": 0,
+          "z3_sat": 2
+        },
+        "status": "proved"
+      },
+      "0xF3B1": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "instruction": "SHA* $989B,Y",
+        "method": "the instruction is unreachable",
+        "mnemonic": "SHA",
+        "mode": "aby",
+        "one_step_bound": "0x01FF",
+        "slice": {
+          "longest_suffix": 3,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 3,
+          "suffixes_proved": 1
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 4,
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 12,
+          "distinct_rechecked": 12,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "a5f83b6551a1d48f6b5b9850a3b7d33904fb2d7695f2c5ad0b3fb3a3c797506a",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 12
+            },
+            "cvc5": {
+              "agree": 12
+            }
+          },
+          "solver_queries": 12,
+          "z3_no_answer": 0,
+          "z3_sat": 12
+        },
+        "status": "conditional"
+      },
+      "0xF3BD": {
+        "assumptions": [
+          "J-LOCATION: control reaches an instruction only from a predecessor recorded in the control-flow graph",
+          "J-ASYNC: no interrupt handler runs between the instructions of a slice"
+        ],
+        "bound": null,
+        "bound_offset": null,
+        "instruction": "SHA* ($92),Y",
+        "method": "the instruction is unreachable",
+        "mnemonic": "SHA",
+        "mode": "izy",
+        "one_step_bound": "0x01FF",
+        "slice": {
+          "longest_suffix": 9,
+          "method": "backward-deepening symbolic execution",
+          "scope": "statement about the machine model in formal/model",
+          "solver_calls": 9,
+          "suffixes_proved": 1
+        },
+        "slice_queries": {
+          "by_kind": {
+            "bad_condition": 16,
+            "page_write_bound": 8
+          },
+          "cross_check": "clean",
+          "distinct_queries": 24,
+          "distinct_rechecked": 24,
+          "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
+          "query_digest": "dfa197e3f1abccc508c0c33e10dbae41d763c8839a7378c40e7c8569e2c0e81f",
+          "relied_on_unsat": 0,
+          "second_solver": {
+            "bitwuzla": {
+              "agree": 24
+            },
+            "cvc5": {
+              "agree": 24
+            }
+          },
+          "solver_queries": 24,
+          "z3_no_answer": 0,
+          "z3_sat": 24
+        },
+        "status": "conditional"
+      }
+    }
+  },
+  "obligations": {
+    "SEP-CLEAR-LOOP-REACH": "proved",
+    "SEP-DATA": "unknown",
+    "SEP-DEAD-F3B1": "conditional",
+    "SEP-DEPTH": "conditional",
+    "SEP-PUSH-PARTITION": "proved",
+    "SEP-RECURSION": "refuted",
+    "SEP-RESET-DRIFT-RATE": "proved",
+    "SEP-RESET-NO-DRIFT": "refuted",
+    "SEP-RETURNS-BALANCED": "conditional",
+    "SEP-S-ASSIGNMENTS": "proved",
+    "SEP-SEPARATION": "unknown",
+    "SEP-TXS-8009": "conditional",
+    "SEP-W-84CE": "abstract_counterexample",
+    "SEP-W-84D7": "abstract_counterexample",
+    "SEP-W-84DB": "abstract_counterexample",
+    "SEP-W-84FA": "abstract_counterexample",
+    "SEP-W-8534": "abstract_counterexample",
+    "SEP-W-871C": "abstract_counterexample",
+    "SEP-W-8F80": "conditional",
+    "SEP-W-8F87": "conditional",
+    "SEP-W-8F91": "conditional",
+    "SEP-W-90DC": "conditional",
+    "SEP-W-94F7": "abstract_counterexample",
+    "SEP-W-99C6": "proved",
+    "SEP-W-B78F": "proved",
+    "SEP-W-B88B": "proved",
+    "SEP-W-B893": "proved",
+    "SEP-W-B8A2": "abstract_counterexample",
+    "SEP-W-B9B5": "abstract_counterexample",
+    "SEP-W-BAB5": "proved",
+    "SEP-W-BAFC": "proved",
+    "SEP-W-BB3D": "conditional",
+    "SEP-W-BB44": "conditional",
+    "SEP-W-BB4B": "conditional",
+    "SEP-W-BB57": "conditional",
+    "SEP-W-BB62": "conditional",
+    "SEP-W-BB69": "conditional",
+    "SEP-W-BB6E": "conditional",
+    "SEP-W-BB73": "conditional",
+    "SEP-W-BB76": "proved",
+    "SEP-W-BC00": "proved",
+    "SEP-W-BC24": "proved",
+    "SEP-W-BD4B": "abstract_counterexample",
+    "SEP-W-BE15": "proved",
+    "SEP-W-BE35": "abstract_counterexample",
+    "SEP-W-BEF4": "conditional",
+    "SEP-W-C583": "proved",
+    "SEP-W-C588": "abstract_counterexample",
+    "SEP-W-C58D": "abstract_counterexample",
+    "SEP-W-C594": "abstract_counterexample",
+    "SEP-W-C599": "abstract_counterexample",
+    "SEP-W-C7C3": "proved",
+    "SEP-W-C9A0": "unknown",
+    "SEP-W-C9A6": "unknown",
+    "SEP-W-CF4A": "proved",
+    "SEP-W-D18E": "abstract_counterexample",
+    "SEP-W-D196": "abstract_counterexample",
+    "SEP-W-D19B": "proved",
+    "SEP-W-D1A0": "abstract_counterexample",
+    "SEP-W-D2C7": "proved",
+    "SEP-W-D32B": "proved",
+    "SEP-W-D333": "proved",
+    "SEP-W-D46E": "abstract_counterexample",
+    "SEP-W-D4B1": "abstract_counterexample",
+    "SEP-W-D5A5": "abstract_counterexample",
+    "SEP-W-D5AA": "abstract_counterexample",
+    "SEP-W-D5B4": "abstract_counterexample",
+    "SEP-W-D83C": "abstract_counterexample",
+    "SEP-W-DA11": "unknown",
+    "SEP-W-DA16": "unknown",
+    "SEP-W-DA1B": "unknown",
+    "SEP-W-DA21": "unknown",
+    "SEP-W-DAED": "abstract_counterexample",
+    "SEP-W-DB11": "abstract_counterexample",
+    "SEP-W-DE20": "abstract_counterexample",
+    "SEP-W-DE70": "proved",
+    "SEP-W-E007": "abstract_counterexample",
+    "SEP-W-E88D": "proved",
+    "SEP-W-E8EF": "proved",
+    "SEP-W-E946": "proved",
+    "SEP-W-EA45": "proved",
+    "SEP-W-F3B1": "conditional",
+    "SEP-W-F3BD": "conditional"
+  },
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "stack_side": {
+    "depth": 160,
+    "depth_without_recursion": 35,
+    "limit": 70,
+    "lowest_pointer": 95,
+    "lowest_pointer_without_recursion": 220,
+    "margin_without_recursion": 125,
+    "profile": {
+      "1": 35,
+      "2": 35,
+      "4": 35,
+      "8": 36,
+      "16": 52,
+      "32": 84
+    },
+    "unbalanced": []
+  },
+  "statement": "every byte a non-push instruction writes into RAM page one lies strictly below every byte a push has written and not yet released",
+  "verdict": {
+    "highest_data_offset": 95,
+    "lowest_stack_offset": 95,
+    "lowest_stack_offset_without_recursion": 220,
+    "margin": 0,
+    "margin_without_recursion": 125,
+    "recursion_limit": 70,
+    "status": "unknown"
+  }
+}

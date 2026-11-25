@@ -149,6 +149,8 @@ def build():
     observed2 = load("reports", "dyn_observations_nespy.json")
     storm = load("reports", "dyn_nmi_storm.json")
     timing = load("reports", "interrupt_timing.json")
+    sep_path = os.path.join(RESULTS, "reports", "stack_separation.json")
+    sep = json.load(open(sep_path)) if os.path.exists(sep_path) else None
     init_path = os.path.join(RESULTS, "reports", "init_memory.json")
     init = json.load(open(init_path)) if os.path.exists(init_path) else None
     replication_path = os.path.join(RESULTS, "reports", "replication.json")
@@ -553,14 +555,50 @@ def build():
           "indexed shift on the IRQ path. A decrement at " + C("$92BF")
           + " keeps the cell in range only if it was in range before, which "
           "is exactly the kind of fact a local method cannot supply."))
-    sps = obligations.get("STACK-PAGE-STORES")
-    if sps is not None:
-        add(P("Return addresses are the other source of computed control. "
-              "The obligation that no ordinary store reaches the live part "
-              "of the stack page is recorded as <b>" + sps["status"]
-              + "</b>. Tracing (Section " + S("Observations") + ") shows why it is hard: the game "
-              "keeps data in " + C("$0109-$0139") + " and writes it with "
-              "indexed stores."))
+    add(P("<b>Return frames.</b> Return addresses are the other source of "
+          "computed control. The first formulation, that nothing but a "
+          "push writes the stack page, is false: the game keeps data "
+          "there. The statement that suffices is separation: "
+          "every byte an ordinary store writes into the page lies below "
+          "every byte a push has written and not yet released."))
+    if sep is not None:
+        sd, sk, vd = sep["data_side"], sep["stack_side"], sep["verdict"]
+        writers = sd["writers"]
+        total_w = len(writers)
+        open_w = len(sd["open"])
+        add(P("<i>Stack side.</i> Stack-pointer changes per instruction "
+              "are taken from the model and propagated over the call "
+              f"graph. Without recursion the depth is at most "
+              f"{sk['depth_without_recursion']} bytes, so the pointer "
+              "stays at or above "
+              + C(f"${sk['lowest_pointer_without_recursion']:02X}")
+              + ", conditional on at most one live NMI frame, the reset "
+              "prologue completing before anything pushes, and frame "
+              "integrity itself. Two would-be lemmas are refuted. The call "
+              "graph is not acyclic: one routine can re-enter itself "
+              "through its own dispatch table, so depth is a function of a "
+              "recursion count nothing here bounds. And repeated warm "
+              "resets lower the pointer three bytes at a time without "
+              "writing, which is why the reset premise is needed."))
+        add(P("<i>Data side.</i> The model identifies "
+              f"{total_w} instructions that can write the page other than "
+              "at a fixed displacement from the stack pointer. For "
+              f"{total_w - open_w} of them an upper bound on the written "
+              "offset is settled, the highest being "
+              + C(f"$01{sd['worst_offset']:02X}")
+              + " from a RAM-clearing loop whose own guard is proved to "
+              f"stop there. The other {open_w} are open: most lose their "
+              "index register across a call, because the program reloads "
+              "it from a zero-page cell afterwards, and seven store "
+              "through a RAM pointer."))
+        add(P("<i>Combined.</i> Status <b>" + vd["status"] + "</b>. If "
+              "the open writers closed at the offsets seen in traces, the "
+              f"two sides would be {vd['margin_without_recursion']} bytes "
+              "apart, enough to absorb recursion to depth "
+              f"{vd['recursion_limit']}. That is a conditional about "
+              "unproved things, not a result. The two halves also depend "
+              "on each other and have not been discharged as one "
+              "induction."))
 
     # ------------------------------------------------------------------
     H("The invariant is false without interrupt timing")
