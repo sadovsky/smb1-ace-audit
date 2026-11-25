@@ -46,6 +46,16 @@ test, and the superseded outputs are preserved in `results/baseline/`.
 | Undocumented opcodes stop a trace ("hit data") | All 256 NMOS encodings do something; 105 are undocumented and most are two or three bytes, so stopping mis-aligns the stream. Six families write memory and twelve encodings jam the CPU. | `analysis/decoder.py` |
 | IRQs dismissed because "NROM has no mapper IRQ" | The 2A03 has its own two IRQ sources, and SMB1's IRQ vector points at `$FFF0`, which is **table data**. The real reason no IRQ fires is stronger: `SEI` at reset and **no reachable `CLI` or `PLP`**, so `RTI` can only restore a status byte that already had I set. | `results/interrupts.json` |
 
+One empirical point sharpens the `$92C8` correction. Over 120,000 frames of
+mixed menu, structured and random controller input, `RAM[$071F]` is observed
+taking every value from 0 to **8** inclusive (`results/observed_indices.json`).
+Eight is exactly the largest value the 8-entry table tolerates: it maps to
+index 7. So normal play drives the variable to the precise edge of the safe
+range, and the invariant the site depends on has no slack at all — one more
+than the observed maximum dispatches to `$26EE`. That is an observation over
+reached states, not a bound, and frame sampling cannot see a value that exists
+only between two instructions.
+
 Two further method errors, with no single headline claim attached:
 
 - The recursive tracer guarded its walk with `if pc in code: return`, where

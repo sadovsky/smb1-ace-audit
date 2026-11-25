@@ -1,0 +1,223 @@
+{
+  "assisted": false,
+  "enemy_identifiers_seen": [
+    0,
+    6
+  ],
+  "experiment": "frame-sampled dispatch index observation",
+  "illegal_enemy_identifiers_seen": [],
+  "limitations": [
+    "frame sampling cannot see a value that exists only between instructions, so no bound here is site-specific",
+    "the $9664 index is $00 + $07 and is not observable this way",
+    "coverage is of states this input sequence reached, nothing more"
+  ],
+  "manifest": {
+    "dropped_steps": 0,
+    "emulator": "nes-py (local checkout)",
+    "emulator_commit": "7dae40fb336bc9c436ccbb41648fbb7fb2c0e506",
+    "frames_executed": 120000,
+    "frames_requested": 120000,
+    "initial_state_sha1": "605db3fdbaff4ba13729371ad0c4fbab3889378e",
+    "input_model": "single controller; menu advance, structured play and fully random bytes including simultaneous opposing directions (TAS-feasible, not necessarily physically feasible)",
+    "repository_commit": "39947d90972e2296676593998f1d4cdc617b598a",
+    "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+    "sampling": "RAM read once per frame, after the step",
+    "seed": 20261125,
+    "wall_seconds": 148.7
+  },
+  "observed": [
+    {
+      "address": "0x000E",
+      "distinct_values": 7,
+      "exceeds_every_table": false,
+      "exceeds_smallest_table": false,
+      "index_formation": "raw",
+      "label": "$000E",
+      "max": 11,
+      "max_index": 11,
+      "min": 0,
+      "sites": {
+        "0xB04C": 13
+      },
+      "values": [
+        0,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "address": "0x001D",
+      "distinct_values": 3,
+      "exceeds_every_table": false,
+      "exceeds_smallest_table": false,
+      "index_formation": "raw; the CMP #$03 does not clamp",
+      "label": "$001D",
+      "max": 2,
+      "max_index": 2,
+      "min": 0,
+      "sites": {
+        "0xB34E": 4
+      },
+      "values": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "address": "0x071F",
+      "distinct_values": 9,
+      "exceeds_every_table": false,
+      "exceeds_smallest_table": false,
+      "index_formation": "zero substituted by 8, then DEY",
+      "label": "$071F",
+      "max": 8,
+      "max_index": 7,
+      "min": 0,
+      "sites": {
+        "0x92C8": 8
+      },
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "address": "0x0733",
+      "distinct_values": 1,
+      "exceeds_every_table": false,
+      "exceeds_smallest_table": false,
+      "index_formation": "raw",
+      "label": "$0733",
+      "max": 0,
+      "max_index": 0,
+      "min": 0,
+      "sites": {
+        "0x9743": 3
+      },
+      "values": [
+        0
+      ]
+    },
+    {
+      "address": "0x073C",
+      "distinct_values": 15,
+      "exceeds_every_table": false,
+      "exceeds_smallest_table": false,
+      "index_formation": "raw",
+      "label": "$073C",
+      "max": 14,
+      "max_index": 14,
+      "min": 0,
+      "sites": {
+        "0x856A": 15
+      },
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "address": "0x0746",
+      "distinct_values": 1,
+      "exceeds_every_table": false,
+      "exceeds_smallest_table": false,
+      "index_formation": "clamped at the dispatch by CMP #$05/BCS",
+      "label": "$0746",
+      "max": 0,
+      "max_index": 0,
+      "min": 0,
+      "sites": {
+        "0xD2E5": 5
+      },
+      "values": [
+        0
+      ]
+    },
+    {
+      "address": "0x0770",
+      "distinct_values": 3,
+      "exceeds_every_table": false,
+      "exceeds_smallest_table": false,
+      "index_formation": "raw",
+      "label": "$0770",
+      "max": 3,
+      "max_index": 3,
+      "min": 0,
+      "sites": {
+        "0x8215": 4
+      },
+      "values": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "address": "0x0772",
+      "distinct_values": 4,
+      "exceeds_every_table": false,
+      "exceeds_smallest_table": true,
+      "index_formation": "raw",
+      "label": "$0772",
+      "max": 3,
+      "max_index": 3,
+      "min": 0,
+      "sites": {
+        "0x8234": 4,
+        "0x83A3": 5,
+        "0x921B": 3,
+        "0xAEDF": 4
+      },
+      "values": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "out_of_range_observations": [
+    {
+      "address": "0x0772",
+      "attribution": "undecidable from frame sampling: in range at some of the sites this variable feeds, so which dispatch was running when this value held cannot be told apart",
+      "exceeds_tables_at": [
+        "0x921B"
+      ],
+      "frame": 31,
+      "in_range_at": [
+        "0x8234",
+        "0x83A3",
+        "0xAEDF"
+      ],
+      "index": 3,
+      "label": "$0772",
+      "out_of_range_at_every_site_it_feeds": false,
+      "value": 3
+    }
+  ]
+}

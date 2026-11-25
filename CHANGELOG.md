@@ -93,6 +93,26 @@ run. Pre-correction outputs preserved in `results/baseline/`.
 - Table boundaries now rest on independent evidence; 17 of 18 have at least
   one source beyond the heuristic (`$8234` does not).
 
+### Observed
+
+`experiments/observe_indices.py` samples the index variables once per frame
+over 120,000 frames of mixed input (manifest in
+`results/observed_indices.json`: ROM hash, both repository commits, seed,
+initial-state hash, frames executed, dropped steps, input model).
+
+- `RAM[$071F]` takes every value 0..8. Eight maps to index 7, the last entry
+  of the 8-entry table, so play reaches the exact edge of the range the
+  `$92C8` invariant must hold — it has no slack.
+- `RAM[$0733]` was never observed non-zero, so the `$9743` overrun was not
+  reproduced. This does not settle it: `$0733` is written at `$9CA3` and read
+  at `$9740` within one frame, which frame sampling can miss entirely.
+- No value was observed out of range at every site it feeds.
+- `$0772` reaching 3 exceeds `$921B`'s 3-entry table while staying in range at
+  the other three sites it indexes. The first version of this experiment
+  reported that as a finding, which is precisely the error the plan warns
+  about; it is now reported as undecidable from frame sampling, and
+  `tests/test_observation.py` keeps it that way.
+
 ### Added
 
 `analysis/` (decoder, CFG, value-set interpreter, index derivation, dispatch

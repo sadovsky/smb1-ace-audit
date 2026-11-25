@@ -20,5 +20,13 @@ run python3 trace.py                       > results/revised/trace_legacy.out
 run python3 reach.py                       > results/revised/reach_legacy.out
 run python3 controlflow.py                 > results/revised/controlflow_legacy.out
 run python3 -m unittest discover          2> results/revised/unittest.out
+# The observation experiment needs the emulator checkout on PYTHONPATH; it is
+# optional, and a missing emulator must not fail the static reproduction.
+if python3 -c "import nes_py" >/dev/null 2>&1; then
+  run python3 experiments/observe_indices.py --frames "${OBSERVE_FRAMES:-120000}" \
+      > results/revised/observe_indices.out
+else
+  echo "--- skipping experiments/observe_indices.py (nes-py not importable)"
+fi
 run python3 paper/build_paper.py           > results/revised/paper.out
 echo "all artifacts regenerated under results/revised/"
