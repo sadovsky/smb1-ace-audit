@@ -354,56 +354,46 @@ def build():
 
     # ------------------------------------------------------------------
     H("Formal setting")
-    add(P("Write " + C("B") + " for bytes and " + C("W") + " for 16-bit "
-          "words. A machine state at an instruction boundary is a tuple of "
-          "four byte registers " + C("(a, x, y, sp)") + ", six status flags, "
-          "a program counter, the RAM contents, and one ghost bit "
-          + C("e") + " recording whether NMI is enabled:"))
-    EQ(r"\Sigma \;=\; \mathbb{B}^4 \times \{0,1\}^6 \times \mathbb{W} "
-       r"\times \left(\{0,1\}^{11} \rightarrow \mathbb{B}\right) \times \{0,1\}")
-    add(P("The image is a constant " + C("R : [8000, FFFF] &rarr; B")
-          + " and is not part of the state. The state space has "))
-    EQ(r"|\Sigma| \;=\; 2^{\,32+6+16+8\cdot 2048+1} \;=\; 2^{16439}")
-    add(P("elements, so P1 is not decidable by enumeration and the "
-          "question is one of finding an invariant. Controller input is "
-          "not a component of the state either: every read of a device "
-          "address returns a fresh unconstrained byte, so the set of "
-          "behaviours is closed under all input sequences by construction. "
-          "The transition relation is a union of four parts,"))
-    EQ(r"T \;=\; T_{\mathrm{step}} \,\cup\, T_{\mathrm{nmi}} \,\cup\, "
-       r"T_{\mathrm{irq}} \,\cup\, T_{\mathrm{reset}}")
-    add(P("where " + C("T_step") + " executes the instruction at "
-          + C("pc") + ", " + C("T_nmi") + " is enabled when " + C("e = 1")
-          + ", " + C("T_irq") + " when the I flag is clear, and "
-          + C("T_reset") + " always. With " + C("I") + " the cold-boot "
-          "predicate (" + C("pc") + " at the reset vector, I set, "
-          + C("e = 0") + ", everything else free), the reachable states "
-          "are the least fixed point"))
-    EQ(r"\mathrm{Reach}(I,T) \;=\; \mu X.\;\, I \,\cup\, "
-       r"\{\, s' \mid \exists s \in X.\; T(s,s') \,\}")
-    add(P("and the property is"))
-    EQ(r"\mathrm{P1}(I,T):\quad \forall s \in \mathrm{Reach}(I,T).\;\; "
+    add(P("A machine state at an instruction boundary consists of four "
+          "byte registers, six status flags, the program counter, the "
+          "2,048 bytes of RAM, and one ghost bit recording whether NMI is "
+          "enabled: 16,439 bits in all. The image is a constant and is not "
+          "part of the state. With about 2<super>16439</super> states, P1 "
+          "cannot be settled by enumeration; the question is whether an "
+          "invariant can be found."))
+    add(P("Controller input is not a component of the state either. Every "
+          "read of a device address returns a fresh unconstrained byte, so "
+          "the model's behaviours already include every input sequence. "
+          "From a state the machine may execute the instruction at the "
+          "program counter, take an NMI if the ghost bit is set, take an "
+          "IRQ if the I flag is clear, or be reset. Call that relation "
+          + C("T") + ", and let " + C("I") + " be the cold-boot states: "
+          "program counter at the reset vector, I set, NMI disabled, "
+          "everything else free. Writing Reach for the states reachable "
+          "from " + C("I") + " by " + C("T") + ", the property is"))
+    EQ(r"\mathrm{P1}:\quad \forall s \in \mathrm{Reach}(I,T).\;\; "
        r"\mathtt{8000}_{16} \,\leq\, pc(s) \,\leq\, \mathtt{FFFF}_{16}")
-    add(P("We work with the stronger " + C("pc(s) &isin; N") + ", where "
-          + C("N") + " is the set of "
+    add(P("We work with the stronger requirement that the program counter "
+          "is in " + C("N") + ", the set of "
           f"{n(manifest['instruction_starts_N'])} instruction starts "
-          "recovered by recursive descent from the three vectors; it "
+          "recovered by recursive descent from the three vectors. It "
           "implies P1 because " + C("N") + " lies in ROM, and it also "
           "excludes execution of misaligned bytes inside ROM. A proof "
-          "exhibits a predicate " + C("J") + " with"))
+          "consists of a predicate " + C("J") + " on states satisfying "
+          "three conditions, each of which is a validity query for a "
+          "solver:"))
     EQ(r"I \Rightarrow J, \qquad J(s) \wedge T(s,s') \Rightarrow J(s'), "
        r"\qquad J(s) \Rightarrow pc(s) \in N", 9.5)
-    add(P("Each conjunct is a validity query for a solver. Two "
-          "consequences of monotonicity organise the report. If "
-          + C("T' &sube; T") + " and " + C("I' &sube; I") + " then"))
-    EQ(r"\mathrm{Reach}(I',T') \subseteq \mathrm{Reach}(I,T) "
-       r"\quad\mathrm{so}\quad \mathrm{P1}(I,T) \Rightarrow \mathrm{P1}(I',T')")
-    add(P("Hence a proof for an over-approximate model transfers to any "
-          "refinement of it, including hardware if the model "
-          "over-approximates hardware; a counterexample does not transfer. "
-          "Every assumption named MA-* below shrinks " + C("T") + " or "
-          + C("I") + ", and a result that uses one is a statement about the "
-          "smaller system only."))
+    add(P("The whole difficulty is the middle condition: " + C("J")
+          + " must be strong enough to survive every instruction, "
+          "interrupt and reset. One consequence of this setting organises "
+          "the report. Removing transitions or initial states can only "
+          "shrink the reachable set, so a proof for an over-approximate "
+          "model carries over to any refinement of it, including hardware "
+          "if the model over-approximates hardware; a counterexample does "
+          "not carry over. Every assumption named MA-* below removes "
+          "transitions or initial states, and a result that uses one is a "
+          "statement about the smaller system only."))
 
     # ------------------------------------------------------------------
     H("Machine model")
@@ -606,11 +596,9 @@ def build():
           "documentation states that interrupt lines are sampled before the "
           "final cycle; the consequence is our inference, it is known to be "
           "inexact for taken branches, and we apply it only to "
-          + C("STA $2000") + " followed by " + C("RTI") + ". Writing "
-          + C("T_V2") + " for " + C("T") + " restricted by both, the "
-          "position is"))
-    EQ(r"T_{V2} \subset T, \qquad \neg\,\mathrm{P1}(I,T)\;\;"
-       r"\mathrm{(witnessed)}, \qquad \mathrm{P1}(I,T_{V2})\;\;\mathrm{open}", 9.5)
+          + C("STA $2000") + " followed by " + C("RTI") + ". So the "
+          "invariant is refuted for the unrestricted model and open for "
+          "the model restricted by these two assumptions."))
     FIG(figures.handler_timeline(),
         "The NMI handler and the two windows in which the assumptions "
         "exclude a further NMI (schematic; addresses from the image).")
@@ -628,18 +616,14 @@ def build():
           "Verification conditions cover single steps, the modifies clause, "
           "calls and returns through the frame rule, the dispatcher, NMI "
           "entry, resumption and exit, reset, cold boot, forbidden "
-          "instructions and coverage. For a routine " + C("q")
-          + " entered with stack pointer " + C("s0") + ", the contract "
-          "asserts that every write " + C("w") + " it performs, directly "
-          "or through callees, satisfies"))
-    EQ(r"w \in \mathrm{Mod}[q] \;\cup\; "
-       r"\{\mathtt{0100}_{16} + j \mid s_0 - \mathrm{use}[q] < j \leq s_0\} "
-       r"\;\cup\; [\mathtt{2000}_{16}, \mathtt{FFFF}_{16}]", 9)
-    add(P("so that a caller may keep (the frame rule) everything it knew "
-          "about cells outside that set, in particular its own return "
-          "address at " + C("s0 + 1, s0 + 2") + " relative to its entry. "
-          "A return is then safe when it executes at depth zero with the "
-          "entry frame asserted intact."))
+          "instructions and coverage. A routine's contract says that "
+          "everything it writes, directly or through callees, is a cell in "
+          "its declared set, a stack byte within its declared depth below "
+          "its entry stack pointer, or a device address. A caller may "
+          "therefore keep everything it knew about other cells (the frame "
+          "rule), in particular its own return address, and a return is "
+          "safe when it executes at depth zero with the entry frame "
+          "asserted intact."))
     add(P("The proposer is an abstract interpreter and is untrusted. The "
           "checker shares no code with it, treats any context the "
           "certificate omits as unreachable, and turns each condition into "
