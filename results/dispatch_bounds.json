@@ -818,18 +818,18 @@
         "addresses": [
           "0x0733"
         ],
-        "description": "state counter",
+        "description": "state counter, as asserted by the earlier revision; the table holds only 3 entries",
         "limit": 4,
         "provenance": "observed",
         "x_range": []
       },
       "conditional": {
         "assumed_invariants": {
-          "0x0733": "<= 4 (state counter; observed)"
+          "0x0733": "<= 4 (state counter, as asserted by the earlier revision; the table holds only 3 entries; observed)"
         },
         "bound": {
           "assumptions": [
-            "RAM[$0733] <= 4 (state counter; observed)"
+            "RAM[$0733] <= 4 (state counter, as asserted by the earlier revision; the table holds only 3 entries; observed)"
           ],
           "maximum": 4,
           "mechanism": "derived by value-set analysis under the stated RAM invariants",
@@ -882,7 +882,7 @@
           "$9740 LDA $0733"
         ],
         "local_entry": null,
-        "overruns_table": false,
+        "overruns_table": true,
         "preconditions": [],
         "slice_entries": [
           "0x92BB",
@@ -893,7 +893,7 @@
           "0x9740"
         ],
         "table": "0x9746",
-        "table_entries": 5,
+        "table_entries": 3,
         "truncated": false
       },
       "unconditional": {
@@ -962,7 +962,7 @@
           "0x9740"
         ],
         "table": "0x9746",
-        "table_entries": 5,
+        "table_entries": 3,
         "truncated": false
       }
     },
@@ -1433,28 +1433,6 @@
         "derived_index_min": 0,
         "dispatch": "0xBDBD",
         "index_sources": [
-          "$959F LDA ($E7),Y",
-          "$95BB LDA #$00",
-          "$95BF LDA #$2E",
-          "$95C7 LDA #$22",
-          "$95CC LDA ($E7),Y",
-          "$95D2 LDA ($E7),Y",
-          "$95E7 LDA ($E7),Y",
-          "$95ED LDA #$16",
-          "$95F1 LDA ($E7),Y",
-          "$95FE LDA ($E7),Y",
-          "$9604 LDA #$00",
-          "$9608 LDA $00",
-          "$960E LDA ($E7),Y",
-          "$9618 LDA $0730,X",
-          "$961D LDA $072A",
-          "$9628 LDA ($E7),Y",
-          "$9630 LDA $0728",
-          "$9636 LDA $0728",
-          "$9649 LDA ($E7),Y",
-          "$9656 LDA $072C",
-          "$965F LDA $00",
-          "$9740 LDA $0733",
           "$BD19 TYA",
           "$BD39 LDA $079D",
           "$BD40 TYA",
@@ -1474,12 +1452,9 @@
         "overruns_table": false,
         "preconditions": [],
         "slice_entries": [
-          "0x9598",
-          "0x9740",
           "0xBD14",
           "0xBD26",
-          "0xBD39",
-          "0xBD9B"
+          "0xBD39"
         ],
         "table": "0xBDC0",
         "table_entries": 9,
@@ -1499,28 +1474,6 @@
         "derived_index_min": 0,
         "dispatch": "0xBDBD",
         "index_sources": [
-          "$959F LDA ($E7),Y",
-          "$95BB LDA #$00",
-          "$95BF LDA #$2E",
-          "$95C7 LDA #$22",
-          "$95CC LDA ($E7),Y",
-          "$95D2 LDA ($E7),Y",
-          "$95E7 LDA ($E7),Y",
-          "$95ED LDA #$16",
-          "$95F1 LDA ($E7),Y",
-          "$95FE LDA ($E7),Y",
-          "$9604 LDA #$00",
-          "$9608 LDA $00",
-          "$960E LDA ($E7),Y",
-          "$9618 LDA $0730,X",
-          "$961D LDA $072A",
-          "$9628 LDA ($E7),Y",
-          "$9630 LDA $0728",
-          "$9636 LDA $0728",
-          "$9649 LDA ($E7),Y",
-          "$9656 LDA $072C",
-          "$965F LDA $00",
-          "$9740 LDA $0733",
           "$BD19 TYA",
           "$BD39 LDA $079D",
           "$BD40 TYA",
@@ -1540,12 +1493,9 @@
         "overruns_table": false,
         "preconditions": [],
         "slice_entries": [
-          "0x9598",
-          "0x9740",
           "0xBD14",
           "0xBD26",
-          "0xBD39",
-          "0xBD9B"
+          "0xBD39"
         ],
         "table": "0xBDC0",
         "table_entries": 9,
@@ -1788,7 +1738,7 @@
           "0xC7A0"
         ],
         "table": "0xC7AB",
-        "table_entries": 8,
+        "table_entries": 6,
         "truncated": false
       },
       "unconditional": {
@@ -1891,7 +1841,7 @@
           "0xC7A0"
         ],
         "table": "0xC7AB",
-        "table_entries": 8,
+        "table_entries": 6,
         "truncated": false
       }
     },

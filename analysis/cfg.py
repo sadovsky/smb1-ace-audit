@@ -274,8 +274,38 @@ class CFG:
         }
 
 
-def build_from_vectors(read_byte: Callable[[int], int], **kwargs) -> CFG:
-    """Build a CFG from the three hardware vectors plus the JumpEngine."""
+def established_table_reader(read_byte: Callable[[int], int]
+                             ) -> Callable[[int], tuple[int, ...]]:
+    """Read a table only as far as independent boundary evidence supports.
+
+    The heuristic reader walks words until one falls outside PRG, which
+    over-reads a table whose following code bytes happen to form a ROM-range
+    word.  At $C7AB that produced two phantom entries and a phantom dispatch
+    edge to $A060, from which the tracer decoded data as `JAM`.
+    """
+    from .dispatch_tables import rom_only_entries
+
+    def read_table(table: int) -> tuple[int, ...]:
+        count = rom_only_entries(read_byte, table)
+        return tuple(
+            read_byte((table + 2 * i) & 0xFFFF)
+            | read_byte((table + 2 * i + 1) & 0xFFFF) << 8
+            for i in range(count)
+        )
+
+    return read_table
+
+
+def build_from_vectors(read_byte: Callable[[int], int], *,
+                       established_boundaries: bool = True, **kwargs) -> CFG:
+    """Build a CFG from the three hardware vectors plus the JumpEngine.
+
+    `established_boundaries` reads each dispatch table only as far as the
+    boundary evidence supports.  Pass False to reproduce the original
+    heuristic-only behaviour for comparison.
+    """
+    if established_boundaries and "table_reader" not in kwargs:
+        kwargs["table_reader"] = established_table_reader(read_byte)
     graph = CFG(read_byte, **kwargs)
     for name, vector in (("nmi", 0xFFFA), ("reset", 0xFFFC), ("irq", 0xFFFE)):
         entry = read_byte(vector) | read_byte(vector + 1) << 8

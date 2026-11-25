@@ -1,0 +1,255 @@
+{
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "tables": [
+    {
+      "agreement": "all sources agree",
+      "candidates": {
+        "control_flow": 4,
+        "external_code": 4,
+        "heuristic": 4
+      },
+      "dispatch": "0x8215",
+      "entries": 4,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0x8218"
+    },
+    {
+      "agreement": "sources disagree; smallest bound taken",
+      "candidates": {
+        "control_flow": 7,
+        "external_code": 8,
+        "heuristic": 4,
+        "self_reference": 7
+      },
+      "dispatch": "0x8234",
+      "entries": 4,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 0,
+      "table": "0x8237"
+    },
+    {
+      "agreement": "smallest bound 5 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 5,
+        "external_code": 6,
+        "heuristic": 5,
+        "self_reference": 5
+      },
+      "dispatch": "0x83A3",
+      "entries": 5,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0x83A6"
+    },
+    {
+      "agreement": "smallest bound 15 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 15,
+        "external_code": 16,
+        "heuristic": 15,
+        "self_reference": 15
+      },
+      "dispatch": "0x856A",
+      "entries": 15,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0x856D"
+    },
+    {
+      "agreement": "smallest bound 3 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 3,
+        "external_code": 4,
+        "heuristic": 3,
+        "self_reference": 3
+      },
+      "dispatch": "0x921B",
+      "entries": 3,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0x921E"
+    },
+    {
+      "agreement": "smallest bound 8 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 8,
+        "external_code": 9,
+        "heuristic": 8,
+        "self_reference": 8
+      },
+      "dispatch": "0x92C8",
+      "entries": 8,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0x92CB"
+    },
+    {
+      "agreement": "smallest bound 47 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 47,
+        "external_code": 48,
+        "heuristic": 47,
+        "self_reference": 47
+      },
+      "dispatch": "0x9664",
+      "entries": 47,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0x9667"
+    },
+    {
+      "agreement": "smallest bound 3 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 3,
+        "external_code": 4,
+        "heuristic": 5,
+        "self_reference": 3
+      },
+      "dispatch": "0x9743",
+      "entries": 3,
+      "heuristic_differs": true,
+      "independent_sources_confirming": 2,
+      "table": "0x9746"
+    },
+    {
+      "agreement": "all sources agree",
+      "candidates": {
+        "control_flow": 4,
+        "external_code": 4,
+        "heuristic": 4,
+        "self_reference": 4
+      },
+      "dispatch": "0xAEDF",
+      "entries": 4,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 3,
+      "table": "0xAEE2"
+    },
+    {
+      "agreement": "smallest bound 13 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 13,
+        "external_code": 14,
+        "heuristic": 13,
+        "self_reference": 13
+      },
+      "dispatch": "0xB04C",
+      "entries": 13,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0xB04F"
+    },
+    {
+      "agreement": "all sources agree",
+      "candidates": {
+        "control_flow": 4,
+        "external_code": 4,
+        "heuristic": 4,
+        "self_reference": 4
+      },
+      "dispatch": "0xB34E",
+      "entries": 4,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 3,
+      "table": "0xB351"
+    },
+    {
+      "agreement": "smallest bound 9 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 9,
+        "external_code": 10,
+        "heuristic": 9,
+        "self_reference": 9
+      },
+      "dispatch": "0xBDBD",
+      "entries": 9,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0xBDC0"
+    },
+    {
+      "agreement": "smallest bound 55 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 55,
+        "external_code": 57,
+        "heuristic": 55,
+        "self_reference": 55
+      },
+      "dispatch": "0xC27F",
+      "entries": 55,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0xC282"
+    },
+    {
+      "agreement": "smallest bound 6 confirmed by 3 independent source(s)",
+      "candidates": {
+        "control_flow": 6,
+        "external_code": 6,
+        "heuristic": 8,
+        "self_reference": 6
+      },
+      "dispatch": "0xC7A8",
+      "entries": 6,
+      "heuristic_differs": true,
+      "independent_sources_confirming": 3,
+      "table": "0xC7AB"
+    },
+    {
+      "agreement": "all sources agree",
+      "candidates": {
+        "control_flow": 34,
+        "external_code": 34,
+        "heuristic": 34,
+        "self_reference": 34
+      },
+      "dispatch": "0xC88F",
+      "entries": 34,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 3,
+      "table": "0xC892"
+    },
+    {
+      "agreement": "all sources agree",
+      "candidates": {
+        "control_flow": 21,
+        "external_code": 21,
+        "heuristic": 21,
+        "self_reference": 21
+      },
+      "dispatch": "0xC907",
+      "entries": 21,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 3,
+      "table": "0xC90A"
+    },
+    {
+      "agreement": "all sources agree",
+      "candidates": {
+        "control_flow": 7,
+        "external_code": 7,
+        "heuristic": 7
+      },
+      "dispatch": "0xC987",
+      "entries": 7,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0xC98A"
+    },
+    {
+      "agreement": "smallest bound 5 confirmed by 2 independent source(s)",
+      "candidates": {
+        "control_flow": 5,
+        "external_code": 6,
+        "heuristic": 5,
+        "self_reference": 5
+      },
+      "dispatch": "0xD2E5",
+      "entries": 5,
+      "heuristic_differs": false,
+      "independent_sources_confirming": 2,
+      "table": "0xD2E8"
+    }
+  ]
+}

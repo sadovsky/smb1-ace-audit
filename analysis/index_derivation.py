@@ -261,7 +261,18 @@ CANDIDATE_INVARIANTS: dict[int, Assumption] = {
                        "index is $00 + $07, formed at $965F-$9662; the "
                        "documented $0E source is not the index source",
                        BoundProvenance.UNPROVED),
-    0x9743: Assumption((0x0733,), 4, "state counter"),
+    # The earlier bound of 4 was consistent with a 5-entry table, but the
+    # table at $9746 has 3 entries: its own entry 0 points at $974C, which
+    # holds `JSR $9BBB`.  The heuristic reader swallowed that instruction's
+    # bytes as entries 3 and 4.  So indices 3 and 4 -- which the earlier
+    # revision explicitly permitted -- dispatch outside the table, to $BB20
+    # and $BD9B.  $0733's only exact writer ($9CA3) stores 0 on one path and
+    # a ROL-computed value on the other, and over-approximate analysis of that
+    # value does not bound it below 3, so the bound stays as the earlier
+    # revision stated it and the overrun is reported rather than assumed away.
+    0x9743: Assumption((0x0733,), 4,
+                       "state counter, as asserted by the earlier revision; "
+                       "the table holds only 3 entries"),
     0xAEDF: Assumption((0x0772,), 3, "OperMode_Task counter"),
     0xB04C: Assumption((0x000E,), 12, "player state"),
     0xB34E: Assumption((0x001D,), 3, "player state; the CMP #$03 at $B345 "
