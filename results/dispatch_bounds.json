@@ -47,7 +47,9 @@
           "$816F LDA $0776",
           "$8212 LDA $0770"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x80D5"
         ],
@@ -86,7 +88,9 @@
           "$816F LDA $0776",
           "$8212 LDA $0770"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x80D5"
         ],
@@ -141,7 +145,9 @@
           "$8212 LDA $0770",
           "$8231 LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x80DB",
           "0x8231"
@@ -182,7 +188,9 @@
           "$8212 LDA $0770",
           "$8231 LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x80DB",
           "0x8231"
@@ -238,7 +246,9 @@
           "$8212 LDA $0770",
           "$83A0 LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x80DE",
           "0x838B"
@@ -279,7 +289,9 @@
           "$8212 LDA $0770",
           "$83A0 LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x80DE",
           "0x838B"
@@ -337,7 +349,9 @@
           "$9218 LDA $0772",
           "$AEDC LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x80E1",
           "0x8231",
@@ -383,7 +397,9 @@
           "$9218 LDA $0772",
           "$AEDC LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x80E1",
           "0x8231",
@@ -442,7 +458,9 @@
           "$8212 LDA $0770",
           "$9218 LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x80DB",
           "0x9218"
@@ -483,7 +501,9 @@
           "$8212 LDA $0770",
           "$9218 LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x80DB",
           "0x9218"
@@ -557,7 +577,9 @@
           "$AF82 LDA $073D",
           "$AF8A LDA #$00"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x811B",
           "0x8231",
@@ -623,7 +645,9 @@
           "$AF82 LDA $073D",
           "$AF8A LDA #$00"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x811B",
           "0x8231",
@@ -642,26 +666,20 @@
     },
     {
       "assumption": {
-        "addresses": [
-          "0x000E"
-        ],
-        "description": "GameEngine state",
-        "limit": 46,
-        "provenance": "observed",
+        "addresses": [],
+        "description": "index is $00 + $07, formed at $965F-$9662; the documented $0E source is not the index source",
+        "limit": 0,
+        "provenance": "unproved",
         "x_range": []
       },
       "conditional": {
-        "assumed_invariants": {
-          "0x000E": "<= 46 (GameEngine state; observed)"
-        },
+        "assumed_invariants": {},
         "bound": {
-          "assumptions": [
-            "RAM[$000E] <= 46 (GameEngine state; observed)"
-          ],
+          "assumptions": [],
           "maximum": 255,
-          "mechanism": "derived by value-set analysis under the stated RAM invariants",
-          "provenance": "structural_conditional",
-          "unconditional": false
+          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
+          "provenance": "proven",
+          "unconditional": true
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -709,7 +727,9 @@
           "$9656 LDA $072C",
           "$965F LDA $00"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x92B3",
           "0x92B7",
@@ -777,7 +797,9 @@
           "$9656 LDA $072C",
           "$965F LDA $00"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x92B3",
           "0x92B7",
@@ -859,7 +881,9 @@
           "$965F LDA $00",
           "$9740 LDA $0733"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x92BB",
           "0x93FC",
@@ -926,7 +950,9 @@
           "$965F LDA $00",
           "$9740 LDA $0733"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x92BB",
           "0x93FC",
@@ -986,7 +1012,9 @@
           "$8212 LDA $0770",
           "$AEDC LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x80DB",
           "0xAEDC"
@@ -1027,7 +1055,9 @@
           "$8212 LDA $0770",
           "$AEDC LDA $0772"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x80DB",
           "0xAEDC"
@@ -1091,7 +1121,9 @@
           "$AEED LDA $06FC,X",
           "$B04A LDA $0E"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x80ED",
           "0x80F9",
@@ -1145,7 +1177,9 @@
           "$AEED LDA $06FC,X",
           "$B04A LDA $0E"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x80ED",
           "0x80F9",
@@ -1250,7 +1284,9 @@
           "$B33E LDA $070B",
           "$B343 LDA $1D"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x8134",
           "0x8153",
@@ -1349,7 +1385,9 @@
           "$B33E LDA $070B",
           "$B343 LDA $1D"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x8134",
           "0x8153",
@@ -1432,7 +1470,9 @@
           "$BDAF LDA $05",
           "$BDB6 TYA"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x9598",
           "0x9740",
@@ -1496,7 +1536,9 @@
           "$BDAF LDA $05",
           "$BDB6 TYA"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x9598",
           "0x9740",
@@ -1519,7 +1561,7 @@
           "0x0019",
           "0x001A"
         ],
-        "description": "enemy identifier domain $00..$36 from the $C27F routing table",
+        "description": "$16,x holds an identifier routed to $C27F (55 of 55)",
         "limit": 54,
         "provenance": "derived_conditional",
         "x_range": [
@@ -1532,19 +1574,19 @@
       },
       "conditional": {
         "assumed_invariants": {
-          "0x0016": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0017": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0018": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0019": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x001A": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)"
+          "0x0016": "in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)",
+          "0x0017": "in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)",
+          "0x0018": "in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)",
+          "0x0019": "in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)",
+          "0x001A": "in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)"
         },
         "bound": {
           "assumptions": [
-            "RAM[$0016] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0017] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0018] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0019] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$001A] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)"
+            "RAM[$0016] in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)",
+            "RAM[$0017] in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)",
+            "RAM[$0018] in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)",
+            "RAM[$0019] in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)",
+            "RAM[$001A] in a set of 55 values ($16,x holds an identifier routed to $C27F (55 of 55); derived_conditional)"
           ],
           "maximum": 54,
           "mechanism": "derived by value-set analysis under the stated RAM invariants",
@@ -1556,95 +1598,19 @@
         "derived_index_min": 0,
         "dispatch": "0xC27F",
         "index_sources": [
-          "$816F LDA $0776",
-          "$8212 LDA $0770",
-          "$838E LDA $0772",
-          "$AEED LDA $06FC,X",
-          "$AEF6 LDA $0772",
-          "$C047 LDA $0F,X",
-          "$C04D PLA",
-          "$C053 LDA $071F",
-          "$C0CC LDA $0745",
-          "$C0D1 LDA $0726",
-          "$C0DB LDA $075F",
-          "$C0E3 LDA $0725",
-          "$C0EB LDA $CE",
-          "$C0F2 LDA $1D",
-          "$C0F8 LDA $075F",
-          "$C105 LDA $06DA",
-          "$C10C LDA $06D9",
-          "$C115 LDA $075F",
-          "$C122 LDA #$00",
-          "$C12A LDA #$00",
-          "$C12F LDA $06CD",
-          "$C136 LDA #$01",
-          "$C13A LDA #$00",
-          "$C147 LDA ($E9),Y",
-          "$C16E LDA $071B",
-          "$C179 LDA ($E9),Y",
-          "$C17E LDA $073B",
-          "$C18A LDA ($E9),Y",
-          "$C192 LDA $073B",
-          "$C198 LDA ($E9),Y",
-          "$C1AB LDA $073A",
-          "$C1B0 LDA ($E9),Y",
-          "$C1B9 LDA $6E,X",
-          "$C1CB LDA $07",
-          "$C1CF LDA $06",
-          "$C1D5 LDA #$01",
-          "$C1D9 LDA ($E9),Y",
-          "$C1E6 LDA ($E9),Y",
-          "$C1EC LDA $06CC",
-          "$C1F1 LDA ($E9),Y",
-          "$C206 LDA #$02",
-          "$C20A LDA #$01",
-          "$C216 LDA $06CB",
-          "$C21B LDA $0398",
-          "$C222 LDA #$2F",
-          "$C226 LDA #$00",
-          "$C26C LDA $16,X",
-          "$C273 LDA $CF,X",
-          "$C279 LDA #$01",
-          "$C27E TYA",
-          "$C69C LDA $078F",
-          "$C6A1 LDA $074E",
-          "$C6AC LDA $07A7,X",
-          "$C6B4 LDA $075F",
-          "$C6BC TYA",
-          "$C6C0 LDA $C69A,Y",
-          "$C6C5 LDA $06DD",
-          "$C6CC LDA #$00",
-          "$C6D1 LDA $07A7,X",
-          "$C6D7 LDA $C68A,Y",
-          "$C6E0 TYA",
-          "$C6EC LDA $C692,Y",
-          "$C6F5 LDA #$20",
-          "$C704 LDA $000F,Y",
-          "$C709 LDA $0016,Y",
-          "$C711 LDA $FE",
-          "$C717 LDA #$08",
-          "$C73C LDA $071B",
-          "$C741 LDA $071D",
-          "$C748 PLA",
-          "$C757 LDA $0F,X",
-          "$C75B LDA $01",
-          "$C75F LDA $02",
-          "$C763 LDA $03",
-          "$C76C LDA $02",
-          "$C772 LDA $00",
-          "$C776 LDA #$01",
-          "$C7A0 LDA $16,X"
+          "$C26C LDA $16,X"
         ],
+        "local_entry": "0xC26C",
         "overruns_table": false,
+        "preconditions": [
+          "control reaches $C26C",
+          "X in {0..4} at the load (the enemy slot index set by the caller's loop)",
+          "identifiers reaching $C27F are exactly those the routing tables send there (55 of 55)",
+          "the $16,x slot still holds that identifier when $C27F runs (preservation is not established; an interrupt or an intervening store could change it)",
+          "the identifier domain is $00..$36, which rests on the $C27F table boundary"
+        ],
         "slice_entries": [
-          "0x816F",
-          "0x82C0",
-          "0x838B",
-          "0xAEEA",
-          "0xC167",
-          "0xC69C",
-          "0xC732",
-          "0xC7A0"
+          "0xC26C"
         ],
         "table": "0xC282",
         "table_entries": 55,
@@ -1743,7 +1709,9 @@
           "$C776 LDA #$01",
           "$C7A0 LDA $16,X"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x816F",
           "0x82C0",
@@ -1768,8 +1736,8 @@
           "0x0019",
           "0x001A"
         ],
-        "description": "enemy identifier domain $00..$36 from the $C27F routing table",
-        "limit": 54,
+        "description": "$16,x holds an identifier routed to $C7A8 (5 of 55)",
+        "limit": 23,
         "provenance": "derived_conditional",
         "x_range": [
           0,
@@ -1781,425 +1749,335 @@
       },
       "conditional": {
         "assumed_invariants": {
-          "0x0016": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0017": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0018": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0019": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x001A": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)"
+          "0x0016": "in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)",
+          "0x0017": "in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)",
+          "0x0018": "in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)",
+          "0x0019": "in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)",
+          "0x001A": "in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)"
         },
         "bound": {
           "assumptions": [
-            "RAM[$0016] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0017] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0018] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0019] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$001A] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)"
+            "RAM[$0016] in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)",
+            "RAM[$0017] in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)",
+            "RAM[$0018] in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)",
+            "RAM[$0019] in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)",
+            "RAM[$001A] in a set of 5 values ($16,x holds an identifier routed to $C7A8 (5 of 55); derived_conditional)"
           ],
-          "maximum": 255,
+          "maximum": 5,
           "mechanism": "derived by value-set analysis under the stated RAM invariants",
           "provenance": "structural_conditional",
           "unconditional": false
         },
-        "derived_index_count": 55,
-        "derived_index_max": 255,
+        "derived_index_count": 5,
+        "derived_index_max": 5,
         "derived_index_min": 0,
         "dispatch": "0xC7A8",
         "index_sources": [
-          "$838E LDA $0772",
-          "$AEF6 LDA $0772",
-          "$C047 LDA $0F,X",
-          "$C04D PLA",
-          "$C053 LDA $071F",
-          "$C0CC LDA $0745",
-          "$C0D1 LDA $0726",
-          "$C0DB LDA $075F",
-          "$C0E3 LDA $0725",
-          "$C0EB LDA $CE",
-          "$C0F2 LDA $1D",
-          "$C0F8 LDA $075F",
-          "$C105 LDA $06DA",
-          "$C10C LDA $06D9",
-          "$C115 LDA $075F",
-          "$C122 LDA #$00",
-          "$C12A LDA #$00",
-          "$C12F LDA $06CD",
-          "$C136 LDA #$01",
-          "$C13A LDA #$00",
-          "$C147 LDA ($E9),Y",
-          "$C179 LDA ($E9),Y",
-          "$C17E LDA $073B",
-          "$C18A LDA ($E9),Y",
-          "$C192 LDA $073B",
-          "$C198 LDA ($E9),Y",
-          "$C1AB LDA $073A",
-          "$C1B0 LDA ($E9),Y",
-          "$C1B9 LDA $6E,X",
-          "$C1CB LDA $07",
-          "$C1CF LDA $06",
-          "$C1D5 LDA #$01",
-          "$C1D9 LDA ($E9),Y",
-          "$C1E6 LDA ($E9),Y",
-          "$C1EC LDA $06CC",
-          "$C1F1 LDA ($E9),Y",
-          "$C206 LDA #$02",
-          "$C20A LDA #$01",
-          "$C216 LDA $06CB",
-          "$C21B LDA $0398",
-          "$C222 LDA #$2F",
-          "$C226 LDA #$00",
-          "$C26C LDA $16,X",
-          "$C273 LDA $CF,X",
-          "$C279 LDA #$01",
-          "$C27E TYA",
-          "$C69C LDA $078F",
-          "$C6A1 LDA $074E",
-          "$C6AC LDA $07A7,X",
-          "$C6B4 LDA $075F",
-          "$C6BC TYA",
-          "$C6C0 LDA $C69A,Y",
-          "$C6C5 LDA $06DD",
-          "$C6CC LDA #$00",
-          "$C6D1 LDA $07A7,X",
-          "$C6D7 LDA $C68A,Y",
-          "$C6E0 TYA",
-          "$C6EC LDA $C692,Y",
-          "$C6F5 LDA #$20",
-          "$C704 LDA $000F,Y",
-          "$C709 LDA $0016,Y",
-          "$C711 LDA $FE",
-          "$C717 LDA #$08",
-          "$C741 LDA $071D",
-          "$C748 PLA",
-          "$C757 LDA $0F,X",
-          "$C75B LDA $01",
-          "$C75F LDA $02",
-          "$C763 LDA $03",
-          "$C76C LDA $02",
-          "$C772 LDA $00",
-          "$C776 LDA #$01",
           "$C7A0 LDA $16,X"
         ],
-        "overruns_table": true,
-        "slice_entries": [
-          "0x838B",
-          "0xAEF6",
-          "0xC171",
-          "0xC69C",
-          "0xC73F",
-          "0xC7A0"
-        ],
-        "table": "0xC7AB",
-        "table_entries": 8,
-        "truncated": false
-      },
-      "unconditional": {
-        "assumed_invariants": {},
-        "bound": {
-          "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
-        },
-        "derived_index_count": 256,
-        "derived_index_max": 255,
-        "derived_index_min": 0,
-        "dispatch": "0xC7A8",
-        "index_sources": [
-          "$838E LDA $0772",
-          "$AEF6 LDA $0772",
-          "$C047 LDA $0F,X",
-          "$C04D PLA",
-          "$C053 LDA $071F",
-          "$C0CC LDA $0745",
-          "$C0D1 LDA $0726",
-          "$C0DB LDA $075F",
-          "$C0E3 LDA $0725",
-          "$C0EB LDA $CE",
-          "$C0F2 LDA $1D",
-          "$C0F8 LDA $075F",
-          "$C105 LDA $06DA",
-          "$C10C LDA $06D9",
-          "$C115 LDA $075F",
-          "$C122 LDA #$00",
-          "$C12A LDA #$00",
-          "$C12F LDA $06CD",
-          "$C136 LDA #$01",
-          "$C13A LDA #$00",
-          "$C147 LDA ($E9),Y",
-          "$C179 LDA ($E9),Y",
-          "$C17E LDA $073B",
-          "$C18A LDA ($E9),Y",
-          "$C192 LDA $073B",
-          "$C198 LDA ($E9),Y",
-          "$C1AB LDA $073A",
-          "$C1B0 LDA ($E9),Y",
-          "$C1B9 LDA $6E,X",
-          "$C1CB LDA $07",
-          "$C1CF LDA $06",
-          "$C1D5 LDA #$01",
-          "$C1D9 LDA ($E9),Y",
-          "$C1E6 LDA ($E9),Y",
-          "$C1EC LDA $06CC",
-          "$C1F1 LDA ($E9),Y",
-          "$C206 LDA #$02",
-          "$C20A LDA #$01",
-          "$C216 LDA $06CB",
-          "$C21B LDA $0398",
-          "$C222 LDA #$2F",
-          "$C226 LDA #$00",
-          "$C26C LDA $16,X",
-          "$C273 LDA $CF,X",
-          "$C279 LDA #$01",
-          "$C27E TYA",
-          "$C69C LDA $078F",
-          "$C6A1 LDA $074E",
-          "$C6AC LDA $07A7,X",
-          "$C6B4 LDA $075F",
-          "$C6BC TYA",
-          "$C6C0 LDA $C69A,Y",
-          "$C6C5 LDA $06DD",
-          "$C6CC LDA #$00",
-          "$C6D1 LDA $07A7,X",
-          "$C6D7 LDA $C68A,Y",
-          "$C6E0 TYA",
-          "$C6EC LDA $C692,Y",
-          "$C6F5 LDA #$20",
-          "$C704 LDA $000F,Y",
-          "$C709 LDA $0016,Y",
-          "$C711 LDA $FE",
-          "$C717 LDA #$08",
-          "$C741 LDA $071D",
-          "$C748 PLA",
-          "$C757 LDA $0F,X",
-          "$C75B LDA $01",
-          "$C75F LDA $02",
-          "$C763 LDA $03",
-          "$C76C LDA $02",
-          "$C772 LDA $00",
-          "$C776 LDA #$01",
-          "$C7A0 LDA $16,X"
-        ],
-        "overruns_table": true,
-        "slice_entries": [
-          "0x838B",
-          "0xAEF6",
-          "0xC171",
-          "0xC69C",
-          "0xC73F",
-          "0xC7A0"
-        ],
-        "table": "0xC7AB",
-        "table_entries": 8,
-        "truncated": false
-      }
-    },
-    {
-      "assumption": {
-        "addresses": [
-          "0x0016",
-          "0x0017",
-          "0x0018",
-          "0x0019",
-          "0x001A"
-        ],
-        "description": "enemy identifier domain $00..$36 from the $C27F routing table",
-        "limit": 54,
-        "provenance": "derived_conditional",
-        "x_range": [
-          0,
-          1,
-          2,
-          3,
-          4
-        ]
-      },
-      "conditional": {
-        "assumed_invariants": {
-          "0x0016": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0017": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0018": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0019": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x001A": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)"
-        },
-        "bound": {
-          "assumptions": [
-            "RAM[$0016] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0017] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0018] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0019] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$001A] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)"
-          ],
-          "maximum": 235,
-          "mechanism": "derived by value-set analysis under the stated RAM invariants",
-          "provenance": "structural_conditional",
-          "unconditional": false
-        },
-        "derived_index_count": 236,
-        "derived_index_max": 235,
-        "derived_index_min": 0,
-        "dispatch": "0xC88F",
-        "index_sources": [
-          "$8138 LDA $0722",
-          "$8144 LDA $0776",
-          "$8150 LDA $2002",
-          "$815C LDA $073F",
-          "$8162 LDA $0740",
-          "$8168 LDA $0778",
-          "$816F LDA $0776",
-          "$8212 LDA $0770",
-          "$8247 LDA $06FC",
-          "$8276 LDA $07A2",
-          "$827B LDA #$18",
-          "$8280 LDA $0780",
-          "$8285 LDA #$10",
-          "$828E LDA $077A",
-          "$82A0 TXA",
-          "$82A9 LDA $823F,X",
-          "$82BB LDA #$00",
-          "$838E LDA $0772",
-          "$AEDC LDA $0772",
-          "$AEED LDA $06FC,X",
-          "$AEF6 LDA $0772",
-          "$C047 LDA $0F,X",
-          "$C04D PLA",
-          "$C884 LDA #$00",
-          "$C88C TYA"
-        ],
-        "overruns_table": true,
-        "slice_entries": [
-          "0x812B",
-          "0x8144",
-          "0x8245",
-          "0x838B",
-          "0xAEDC",
-          "0xAEEA"
-        ],
-        "table": "0xC892",
-        "table_entries": 34,
-        "truncated": false
-      },
-      "unconditional": {
-        "assumed_invariants": {},
-        "bound": {
-          "assumptions": [],
-          "maximum": 235,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
-        },
-        "derived_index_count": 236,
-        "derived_index_max": 235,
-        "derived_index_min": 0,
-        "dispatch": "0xC88F",
-        "index_sources": [
-          "$8138 LDA $0722",
-          "$8144 LDA $0776",
-          "$8150 LDA $2002",
-          "$815C LDA $073F",
-          "$8162 LDA $0740",
-          "$8168 LDA $0778",
-          "$816F LDA $0776",
-          "$8212 LDA $0770",
-          "$8247 LDA $06FC",
-          "$8276 LDA $07A2",
-          "$827B LDA #$18",
-          "$8280 LDA $0780",
-          "$8285 LDA #$10",
-          "$828E LDA $077A",
-          "$82A0 TXA",
-          "$82A9 LDA $823F,X",
-          "$82BB LDA #$00",
-          "$838E LDA $0772",
-          "$AEDC LDA $0772",
-          "$AEED LDA $06FC,X",
-          "$AEF6 LDA $0772",
-          "$C047 LDA $0F,X",
-          "$C04D PLA",
-          "$C884 LDA #$00",
-          "$C88C TYA"
-        ],
-        "overruns_table": true,
-        "slice_entries": [
-          "0x812B",
-          "0x8144",
-          "0x8245",
-          "0x838B",
-          "0xAEDC",
-          "0xAEEA"
-        ],
-        "table": "0xC892",
-        "table_entries": 34,
-        "truncated": false
-      }
-    },
-    {
-      "assumption": {
-        "addresses": [
-          "0x0016",
-          "0x0017",
-          "0x0018",
-          "0x0019",
-          "0x001A"
-        ],
-        "description": "enemy identifier domain $00..$36 from the $C27F routing table",
-        "limit": 54,
-        "provenance": "derived_conditional",
-        "x_range": [
-          0,
-          1,
-          2,
-          3,
-          4
-        ]
-      },
-      "conditional": {
-        "assumed_invariants": {
-          "0x0016": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0017": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0018": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0019": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x001A": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)"
-        },
-        "bound": {
-          "assumptions": [],
-          "maximum": null,
-          "mechanism": "exploration truncated before fixpoint",
-          "provenance": "unproved",
-          "unconditional": false
-        },
-        "derived_index_count": 0,
-        "derived_index_max": null,
-        "derived_index_min": null,
-        "dispatch": "0xC907",
-        "index_sources": [
-          "$816F LDA $0776",
-          "$8212 LDA $0770",
-          "$82BB LDA #$00",
-          "$838E LDA $0772",
-          "$AEDC LDA $0772",
-          "$AEED LDA $06FC,X",
-          "$AEF6 LDA $0772",
-          "$C047 LDA $0F,X",
-          "$C04D PLA",
-          "$C884 LDA #$00",
-          "$C88C TYA",
-          "$C8E0 LDA #$00",
-          "$C905 LDA $16,X"
-        ],
+        "local_entry": "0xC7A0",
         "overruns_table": false,
+        "preconditions": [
+          "control reaches $C7A0",
+          "X in {0..4} at the load (the enemy slot index set by the caller's loop)",
+          "identifiers reaching $C7A8 are exactly those the routing tables send there (5 of 55)",
+          "the $16,x slot still holds that identifier when $C7A8 runs (preservation is not established; an interrupt or an intervening store could change it)",
+          "the identifier domain is $00..$36, which rests on the $C27F table boundary"
+        ],
         "slice_entries": [
-          "0x816B",
-          "0x8267",
-          "0x82BB",
+          "0xC7A0"
+        ],
+        "table": "0xC7AB",
+        "table_entries": 8,
+        "truncated": false
+      },
+      "unconditional": {
+        "assumed_invariants": {},
+        "bound": {
+          "assumptions": [],
+          "maximum": 255,
+          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
+          "provenance": "proven",
+          "unconditional": true
+        },
+        "derived_index_count": 256,
+        "derived_index_max": 255,
+        "derived_index_min": 0,
+        "dispatch": "0xC7A8",
+        "index_sources": [
+          "$838E LDA $0772",
+          "$AEF6 LDA $0772",
+          "$C047 LDA $0F,X",
+          "$C04D PLA",
+          "$C053 LDA $071F",
+          "$C0CC LDA $0745",
+          "$C0D1 LDA $0726",
+          "$C0DB LDA $075F",
+          "$C0E3 LDA $0725",
+          "$C0EB LDA $CE",
+          "$C0F2 LDA $1D",
+          "$C0F8 LDA $075F",
+          "$C105 LDA $06DA",
+          "$C10C LDA $06D9",
+          "$C115 LDA $075F",
+          "$C122 LDA #$00",
+          "$C12A LDA #$00",
+          "$C12F LDA $06CD",
+          "$C136 LDA #$01",
+          "$C13A LDA #$00",
+          "$C147 LDA ($E9),Y",
+          "$C179 LDA ($E9),Y",
+          "$C17E LDA $073B",
+          "$C18A LDA ($E9),Y",
+          "$C192 LDA $073B",
+          "$C198 LDA ($E9),Y",
+          "$C1AB LDA $073A",
+          "$C1B0 LDA ($E9),Y",
+          "$C1B9 LDA $6E,X",
+          "$C1CB LDA $07",
+          "$C1CF LDA $06",
+          "$C1D5 LDA #$01",
+          "$C1D9 LDA ($E9),Y",
+          "$C1E6 LDA ($E9),Y",
+          "$C1EC LDA $06CC",
+          "$C1F1 LDA ($E9),Y",
+          "$C206 LDA #$02",
+          "$C20A LDA #$01",
+          "$C216 LDA $06CB",
+          "$C21B LDA $0398",
+          "$C222 LDA #$2F",
+          "$C226 LDA #$00",
+          "$C26C LDA $16,X",
+          "$C273 LDA $CF,X",
+          "$C279 LDA #$01",
+          "$C27E TYA",
+          "$C69C LDA $078F",
+          "$C6A1 LDA $074E",
+          "$C6AC LDA $07A7,X",
+          "$C6B4 LDA $075F",
+          "$C6BC TYA",
+          "$C6C0 LDA $C69A,Y",
+          "$C6C5 LDA $06DD",
+          "$C6CC LDA #$00",
+          "$C6D1 LDA $07A7,X",
+          "$C6D7 LDA $C68A,Y",
+          "$C6E0 TYA",
+          "$C6EC LDA $C692,Y",
+          "$C6F5 LDA #$20",
+          "$C704 LDA $000F,Y",
+          "$C709 LDA $0016,Y",
+          "$C711 LDA $FE",
+          "$C717 LDA #$08",
+          "$C741 LDA $071D",
+          "$C748 PLA",
+          "$C757 LDA $0F,X",
+          "$C75B LDA $01",
+          "$C75F LDA $02",
+          "$C763 LDA $03",
+          "$C76C LDA $02",
+          "$C772 LDA $00",
+          "$C776 LDA #$01",
+          "$C7A0 LDA $16,X"
+        ],
+        "local_entry": null,
+        "overruns_table": true,
+        "preconditions": [],
+        "slice_entries": [
+          "0x838B",
+          "0xAEF6",
+          "0xC171",
+          "0xC69C",
+          "0xC73F",
+          "0xC7A0"
+        ],
+        "table": "0xC7AB",
+        "table_entries": 8,
+        "truncated": false
+      }
+    },
+    {
+      "assumption": {
+        "addresses": [
+          "0x0016",
+          "0x0017",
+          "0x0018",
+          "0x0019",
+          "0x001A"
+        ],
+        "description": "$16,x holds an identifier routed to $C88F (55 of 55)",
+        "limit": 54,
+        "provenance": "derived_conditional",
+        "x_range": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "conditional": {
+        "assumed_invariants": {
+          "0x0016": "in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
+          "0x0017": "in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
+          "0x0018": "in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
+          "0x0019": "in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
+          "0x001A": "in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)"
+        },
+        "bound": {
+          "assumptions": [
+            "RAM[$0016] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
+            "RAM[$0017] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
+            "RAM[$0018] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
+            "RAM[$0019] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
+            "RAM[$001A] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)"
+          ],
+          "maximum": 34,
+          "mechanism": "derived by value-set analysis under the stated RAM invariants",
+          "provenance": "structural_conditional",
+          "unconditional": false
+        },
+        "derived_index_count": 35,
+        "derived_index_max": 34,
+        "derived_index_min": 0,
+        "dispatch": "0xC88F",
+        "index_sources": [
+          "$C884 LDA #$00"
+        ],
+        "local_entry": "0xC884",
+        "overruns_table": true,
+        "preconditions": [
+          "control reaches $C884",
+          "X in {0..4} at the load (the enemy slot index set by the caller's loop)",
+          "identifiers reaching $C88F are exactly those the routing tables send there (55 of 55)",
+          "the $16,x slot still holds that identifier when $C88F runs (preservation is not established; an interrupt or an intervening store could change it)",
+          "the identifier domain is $00..$36, which rests on the $C27F table boundary"
+        ],
+        "slice_entries": [
+          "0xC884"
+        ],
+        "table": "0xC892",
+        "table_entries": 34,
+        "truncated": false
+      },
+      "unconditional": {
+        "assumed_invariants": {},
+        "bound": {
+          "assumptions": [],
+          "maximum": 235,
+          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
+          "provenance": "proven",
+          "unconditional": true
+        },
+        "derived_index_count": 236,
+        "derived_index_max": 235,
+        "derived_index_min": 0,
+        "dispatch": "0xC88F",
+        "index_sources": [
+          "$8138 LDA $0722",
+          "$8144 LDA $0776",
+          "$8150 LDA $2002",
+          "$815C LDA $073F",
+          "$8162 LDA $0740",
+          "$8168 LDA $0778",
+          "$816F LDA $0776",
+          "$8212 LDA $0770",
+          "$8247 LDA $06FC",
+          "$8276 LDA $07A2",
+          "$827B LDA #$18",
+          "$8280 LDA $0780",
+          "$8285 LDA #$10",
+          "$828E LDA $077A",
+          "$82A0 TXA",
+          "$82A9 LDA $823F,X",
+          "$82BB LDA #$00",
+          "$838E LDA $0772",
+          "$AEDC LDA $0772",
+          "$AEED LDA $06FC,X",
+          "$AEF6 LDA $0772",
+          "$C047 LDA $0F,X",
+          "$C04D PLA",
+          "$C884 LDA #$00",
+          "$C88C TYA"
+        ],
+        "local_entry": null,
+        "overruns_table": true,
+        "preconditions": [],
+        "slice_entries": [
+          "0x812B",
+          "0x8144",
+          "0x8245",
           "0x838B",
           "0xAEDC",
-          "0xAEEA",
-          "0xC8E0"
+          "0xAEEA"
+        ],
+        "table": "0xC892",
+        "table_entries": 34,
+        "truncated": false
+      }
+    },
+    {
+      "assumption": {
+        "addresses": [
+          "0x0016",
+          "0x0017",
+          "0x0018",
+          "0x0019",
+          "0x001A"
+        ],
+        "description": "$16,x holds an identifier routed to $C907 (21 of 55)",
+        "limit": 20,
+        "provenance": "derived_conditional",
+        "x_range": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "conditional": {
+        "assumed_invariants": {
+          "0x0016": "in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)",
+          "0x0017": "in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)",
+          "0x0018": "in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)",
+          "0x0019": "in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)",
+          "0x001A": "in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)"
+        },
+        "bound": {
+          "assumptions": [
+            "RAM[$0016] in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)",
+            "RAM[$0017] in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)",
+            "RAM[$0018] in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)",
+            "RAM[$0019] in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)",
+            "RAM[$001A] in a set of 21 values ($16,x holds an identifier routed to $C907 (21 of 55); derived_conditional)"
+          ],
+          "maximum": 20,
+          "mechanism": "derived by value-set analysis under the stated RAM invariants",
+          "provenance": "structural_conditional",
+          "unconditional": false
+        },
+        "derived_index_count": 21,
+        "derived_index_max": 20,
+        "derived_index_min": 0,
+        "dispatch": "0xC907",
+        "index_sources": [
+          "$C905 LDA $16,X"
+        ],
+        "local_entry": "0xC905",
+        "overruns_table": false,
+        "preconditions": [
+          "control reaches $C905",
+          "X in {0..4} at the load (the enemy slot index set by the caller's loop)",
+          "identifiers reaching $C907 are exactly those the routing tables send there (21 of 55)",
+          "the $16,x slot still holds that identifier when $C907 runs (preservation is not established; an interrupt or an intervening store could change it)",
+          "the identifier domain is $00..$36, which rests on the $C27F table boundary"
+        ],
+        "slice_entries": [
+          "0xC905"
         ],
         "table": "0xC90A",
         "table_entries": 21,
-        "truncated": true
+        "truncated": false
       },
       "unconditional": {
         "assumed_invariants": {},
@@ -2229,7 +2107,9 @@
           "$C8E0 LDA #$00",
           "$C905 LDA $16,X"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x816B",
           "0x8267",
@@ -2253,8 +2133,8 @@
           "0x0019",
           "0x001A"
         ],
-        "description": "enemy identifier domain $00..$36 from the $C27F routing table",
-        "limit": 54,
+        "description": "$16,x holds an identifier routed to $C987 (7 of 55)",
+        "limit": 42,
         "provenance": "derived_conditional",
         "x_range": [
           0,
@@ -2266,58 +2146,43 @@
       },
       "conditional": {
         "assumed_invariants": {
-          "0x0016": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0017": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0018": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x0019": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-          "0x001A": "<= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)"
+          "0x0016": "in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)",
+          "0x0017": "in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)",
+          "0x0018": "in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)",
+          "0x0019": "in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)",
+          "0x001A": "in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)"
         },
         "bound": {
           "assumptions": [
-            "RAM[$0016] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0017] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0018] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$0019] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)",
-            "RAM[$001A] <= 54 (enemy identifier domain $00..$36 from the $C27F routing table; derived_conditional)"
+            "RAM[$0016] in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)",
+            "RAM[$0017] in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)",
+            "RAM[$0018] in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)",
+            "RAM[$0019] in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)",
+            "RAM[$001A] in a set of 7 values ($16,x holds an identifier routed to $C987 (7 of 55); derived_conditional)"
           ],
-          "maximum": 255,
+          "maximum": 6,
           "mechanism": "derived by value-set analysis under the stated RAM invariants",
           "provenance": "structural_conditional",
           "unconditional": false
         },
-        "derived_index_count": 55,
-        "derived_index_max": 255,
+        "derived_index_count": 7,
+        "derived_index_max": 6,
         "derived_index_min": 0,
         "dispatch": "0xC987",
         "index_sources": [
-          "$8162 LDA $0740",
-          "$8168 LDA $0778",
-          "$816F LDA $0776",
-          "$8212 LDA $0770",
-          "$8280 LDA $0780",
-          "$82BB LDA #$00",
-          "$838E LDA $0772",
-          "$AEDC LDA $0772",
-          "$AEED LDA $06FC,X",
-          "$AEF6 LDA $0772",
-          "$C047 LDA $0F,X",
-          "$C04D PLA",
-          "$C884 LDA #$00",
-          "$C88C TYA",
-          "$C971 LDA $0747",
           "$C982 LDA $16,X"
         ],
-        "overruns_table": true,
+        "local_entry": "0xC982",
+        "overruns_table": false,
+        "preconditions": [
+          "control reaches $C982",
+          "X in {0..4} at the load (the enemy slot index set by the caller's loop)",
+          "identifiers reaching $C987 are exactly those the routing tables send there (7 of 55)",
+          "the $16,x slot still holds that identifier when $C987 runs (preservation is not established; an interrupt or an intervening store could change it)",
+          "the identifier domain is $00..$36, which rests on the $C27F table boundary"
+        ],
         "slice_entries": [
-          "0x8162",
-          "0x825F",
-          "0x827D",
-          "0x8293",
-          "0x82B4",
-          "0x838B",
-          "0xAEDC",
-          "0xAEEA",
-          "0xC965"
+          "0xC982"
         ],
         "table": "0xC98A",
         "table_entries": 7,
@@ -2354,7 +2219,9 @@
           "$C971 LDA $0747",
           "$C982 LDA $16,X"
         ],
+        "local_entry": null,
         "overruns_table": true,
+        "preconditions": [],
         "slice_entries": [
           "0x8162",
           "0x825F",
@@ -2416,7 +2283,9 @@
           "$D2D9 LDA #$00",
           "$D2DE LDA $0746"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x8136",
           "0x8157",
@@ -2469,7 +2338,9 @@
           "$D2D9 LDA #$00",
           "$D2DE LDA $0746"
         ],
+        "local_entry": null,
         "overruns_table": false,
+        "preconditions": [],
         "slice_entries": [
           "0x8136",
           "0x8157",

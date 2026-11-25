@@ -59,6 +59,10 @@ class SiteDerivation:
     slice_entries: tuple[int, ...]
     sources: tuple[str, ...]
     assumed_invariants: dict[int, str] = field(default_factory=dict)
+    #: set when the derivation started from a stated local entry rather than
+    #: from backward slices, together with the preconditions assumed there
+    local_entry: int | None = None
+    preconditions: tuple[str, ...] = ()
 
     @property
     def indices(self) -> list[int]:
@@ -110,6 +114,9 @@ class SiteDerivation:
             "index_sources": list(self.sources),
             "assumed_invariants": {f"0x{a:04X}": t for a, t
                                    in sorted(self.assumed_invariants.items())},
+            "local_entry": (f"0x{self.local_entry:04X}"
+                            if self.local_entry is not None else None),
+            "preconditions": list(self.preconditions),
             "bound": self.bound().to_json(),
         }
 
@@ -191,13 +198,29 @@ class Assumption:
     description: str
     provenance: BoundProvenance = BoundProvenance.OBSERVED
     x_range: tuple[int, ...] | None = None      # register precondition
+    #: explicit permitted values; when absent, 0..limit is used
+    allowed: tuple[int, ...] | None = None
+    extra_assumptions: tuple[str, ...] = ()
+    #: Derive from this address instead of searching backward slices.  Used
+    #: where the index is formed by a short prologue whose preconditions are
+    #: stated rather than derived -- the enemy-ID sites, where the slot index
+    #: X is set by the caller's loop.  The resulting claim is explicitly local:
+    #: "given control arrives here with these preconditions".
+    local_entry: int | None = None
+
+    def permitted(self) -> tuple[int, ...]:
+        return (self.allowed if self.allowed is not None
+                else tuple(range(self.limit + 1)))
 
     def memory(self) -> dict[int, int]:
-        allowed = vs.from_values(range(self.limit + 1))
+        allowed = vs.from_values(self.permitted())
         return {address: allowed for address in self.addresses}
 
     def notes(self) -> dict[int, str]:
-        return {address: f"<= {self.limit} ({self.description}; "
+        permitted = self.permitted()
+        shape = (f"<= {self.limit}" if self.allowed is None
+                 else f"in a set of {len(permitted)} values")
+        return {address: f"{shape} ({self.description}; "
                          f"{self.provenance.value})"
                 for address in self.addresses}
 
@@ -207,6 +230,16 @@ class Assumption:
 #: limits are the ones the earlier revisions asserted, now recorded as
 #: assumptions with their provenance instead of as structural facts.
 ENEMY_SLOTS = (0x0016, 0x0017, 0x0018, 0x0019, 0x001A)
+ENEMY_SITES = frozenset({0xC27F, 0xC7A8, 0xC88F, 0xC907, 0xC987})
+
+#: The instruction that fetches the identifier for each enemy dispatch.
+ENEMY_PROLOGUE = {
+    0xC27F: 0xC26C,     # LDA $16,X / CMP #$15 / BCS $C27F / ... / TYA
+    0xC7A8: 0xC7A0,     # LDA $16,X / STA $06CB / SEC / SBC #$12
+    0xC88F: 0xC884,     # LDA #$00 / LDY $16,X / CPY #$15 / BCC / TYA / SBC #$14
+    0xC907: 0xC905,     # LDA $16,X
+    0xC987: 0xC982,     # LDA $16,X / SEC / SBC #$24
+}
 ENEMY_IDS = "enemy identifier domain $00..$36 from the $C27F routing table"
 
 CANDIDATE_INVARIANTS: dict[int, Assumption] = {
@@ -218,7 +251,16 @@ CANDIDATE_INVARIANTS: dict[int, Assumption] = {
     0x92C8: Assumption((0x071F,), 8,
                        "written only by $92B7 (STY #$08) and $92BF (DEC)",
                        BoundProvenance.STRUCTURAL_CONDITIONAL),
-    0x9664: Assumption((0x000E,), 46, "GameEngine state"),
+    # The old table recorded this site as "GameEngine ($0E), bound 46".  The
+    # ROM forms its index at $965F-$9662 as `LDA $00 / CLC / ADC $07`: a sum of
+    # two zero-page scratch bytes, neither of which is $0E, and which between
+    # them have dozens of writers (including $8E14, inside the JumpEngine).
+    # Bounding it needs a *relational* invariant over $00 and $07, so no
+    # single-variable assumption is offered and the site stays unproved.
+    0x9664: Assumption((), 0,
+                       "index is $00 + $07, formed at $965F-$9662; the "
+                       "documented $0E source is not the index source",
+                       BoundProvenance.UNPROVED),
     0x9743: Assumption((0x0733,), 4, "state counter"),
     0xAEDF: Assumption((0x0772,), 3, "OperMode_Task counter"),
     0xB04C: Assumption((0x000E,), 12, "player state"),
@@ -320,13 +362,85 @@ def derive_all(read_byte: Callable[[int], int], graph: CFG, **kwargs
             for dispatch in sorted(graph.dispatches)}
 
 
+def enemy_assumptions(graph: CFG) -> dict[int, Assumption]:
+    """Assumptions for the five enemy-ID sites, from the routing derivation.
+
+    The identifier set is the *routed* one for that dispatch, not the whole
+    legal domain: `$C7A8` subtracts $12, so assuming only "ID <= $36" leaves
+    the subtraction able to wrap and tells us nothing.  What bounds the site is
+    the narrower claim that the routing tables send only $12..$19 there.
+    """
+    from .enemy_routing import derive as derive_routing
+
+    out: dict[int, Assumption] = {}
+    for dispatch, route in derive_routing(graph).items():
+        out[dispatch] = Assumption(
+            addresses=ENEMY_SLOTS,
+            limit=max(route.arriving) if route.arriving else 0,
+            description=(f"$16,x holds an identifier routed to "
+                         f"${dispatch:04X} ({len(route.arriving)} of 55)"),
+            provenance=route.provenance,
+            x_range=tuple(range(5)),
+            allowed=tuple(sorted(route.arriving)),
+            extra_assumptions=route.assumptions(),
+            local_entry=ENEMY_PROLOGUE[dispatch],
+        )
+    return out
+
+
+def derive_local(read_byte: Callable[[int], int], graph: CFG, dispatch: int,
+                 assumption: Assumption, *, max_states: int = 200000,
+                 call_depth: int = 5) -> SiteDerivation:
+    """Derive a site from a stated local entry with stated preconditions.
+
+    Used where the index is formed by a short prologue and the surrounding
+    context is an assumption rather than a derivation.  The claim this returns
+    is local by construction, and `preconditions` records exactly what was
+    assumed, so it cannot be read as a whole-program bound.
+    """
+    site = graph.dispatches[dispatch]
+    entry = assumption.local_entry
+    assert entry is not None
+    memory = Memory(read_byte, invariants=assumption.memory())
+    initial = (State(x=vs.from_values(assumption.x_range))
+               if assumption.x_range else State())
+    stops = (frozenset(graph.dispatches) - {entry}) | {dispatch}
+    exploration = explore(read_byte, entry, initial, memory, stop_at=stops,
+                          max_states=max_states, call_depth=call_depth)
+    index_set = exploration.register_at(dispatch, "A")
+    reached = bool(exploration.at(dispatch))
+    preconditions = (
+        f"control reaches ${entry:04X}",
+        *( (f"X in {{{min(assumption.x_range)}..{max(assumption.x_range)}}} "
+            "at the load (the enemy slot index set by the caller's loop)",)
+           if assumption.x_range else ()),
+        *assumption.extra_assumptions,
+    )
+    return SiteDerivation(
+        dispatch=dispatch,
+        table=site.table,
+        entries=len(site.entries),
+        index_set=index_set,
+        truncated=exploration.capped or not reached,
+        slice_entries=(entry,),
+        sources=tuple(accumulator_sources(read_byte, {entry})),
+        assumed_invariants=dict(assumption.notes()),
+        local_entry=entry,
+        preconditions=preconditions,
+    )
+
+
 def derive_conditional(read_byte: Callable[[int], int], graph: CFG,
                        dispatch: int, assumption: Assumption | None = None,
                        **kwargs) -> SiteDerivation:
     """Derive one site under its candidate invariant, recording it as such."""
+    if assumption is None and dispatch in ENEMY_SITES:
+        assumption = enemy_assumptions(graph).get(dispatch)
     assumption = assumption or CANDIDATE_INVARIANTS.get(dispatch)
     if assumption is None or not assumption.addresses:
         return derive_site(read_byte, graph, dispatch, **kwargs)
+    if assumption.local_entry is not None:
+        return derive_local(read_byte, graph, dispatch, assumption)
     initial = (State(x=vs.from_values(assumption.x_range))
                if assumption.x_range else None)
     return derive_site(read_byte, graph, dispatch,
@@ -355,7 +469,9 @@ def main() -> None:  # pragma: no cover - CLI
 
     for dispatch in sorted(graph.dispatches):
         plain = derive_site(b, graph, dispatch)
-        assumption = CANDIDATE_INVARIANTS.get(dispatch)
+        assumption = (enemy_assumptions(graph).get(dispatch)
+                      if dispatch in ENEMY_SITES
+                      else CANDIDATE_INVARIANTS.get(dispatch))
         conditional = derive_conditional(b, graph, dispatch, assumption)
         bound = conditional.bound()
 
@@ -368,9 +484,9 @@ def main() -> None:  # pragma: no cover - CLI
             return f"{min(indices)}..{max(indices)} ({len(indices)})"
 
         in_range = not conditional.overruns_table and not conditional.truncated
-        note = (f"{assumption.description} [{assumption.provenance.value}]"
-                if assumption and assumption.addresses else
-                "none required [proven]")
+        note = ("none required [proven]" if assumption is None
+                else f"{assumption.description} "
+                     f"[{assumption.provenance.value}]")
         rows.append((dispatch, plain, conditional, assumption))
         print(f"${dispatch:04X} {conditional.entries:3}  "
               f"{describe(plain):18} {describe(conditional):13} "
