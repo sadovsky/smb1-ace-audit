@@ -363,3 +363,190 @@ class NegativeTwins(unittest.TestCase):
         entry = [row for row in doctored["dispatch_sites"]
                  if row["site"] == "0x9743"][0]
         self.assertEqual(entry["index_max"], 2)
+
+
+class PlanStyles(unittest.TestCase):
+    """The decisions in `formal.dyn.search_play`'s candidate plans."""
+
+    def test_hold_is_the_same_byte_every_frame(self):
+        from .search_play import plan_style
+        self.assertEqual(plan_style(("hold", 0x82), 4), [0x82] * 4)
+
+    def test_a_jump_presses_a_for_exactly_its_length(self):
+        from .inputs import A
+        from .search_play import plan_style
+        plan = plan_style(("jump", 0x82, 2, 3), 8)
+        self.assertEqual([bool(byte & A) for byte in plan],
+                         [False, False, True, True, True,
+                          False, False, False])
+
+    def test_a_pulse_presses_a_on_its_duty_cycle(self):
+        from .inputs import A
+        from .search_play import plan_style
+        plan = plan_style(("pulse", 0x82, 4, 2, 0), 8)
+        self.assertEqual([bool(byte & A) for byte in plan],
+                         [True, True, False, False] * 2)
+
+    def test_a_retreat_goes_left_first_then_right_and_jumps(self):
+        from .inputs import A, LEFT, RIGHT
+        from .search_play import plan_style
+        plan = plan_style(("retreat", 3, 1, 2), 8)
+        self.assertTrue(all(byte & LEFT for byte in plan[:3]))
+        self.assertTrue(all(byte & RIGHT for byte in plan[3:]))
+        self.assertEqual([bool(byte & A) for byte in plan[3:]],
+                         [False, True, True, False, False])
+
+    def test_every_random_style_expands_to_the_right_length(self):
+        import random
+
+        from .search_play import plan_style, random_style
+        rng = random.Random(1)
+        for _ in range(200):
+            self.assertEqual(len(plan_style(random_style(rng), 37)), 37)
+
+    def test_fixed_styles_all_expand(self):
+        from .search_play import FIXED_STYLES, NEAR_STYLES, plan_style
+        for style in FIXED_STYLES + NEAR_STYLES:
+            self.assertEqual(len(plan_style(style, 11)), 11)
+
+
+class SurvivalScore(unittest.TestCase):
+    """`progress_key` grades how long a plan survived, and that is load-bearing.
+
+    A binary alive/dead score makes standing still the best answer at any
+    obstacle nothing survives, which is how the earlier search spent whole
+    levels motionless until the game timer ran out.
+    """
+
+    @staticmethod
+    def key(scenario, bad_at, horizon=64, **end):
+        from .search_play import Searcher
+        state = dict(world=0, level=0, area=0, x=100, y=176, yhigh=1,
+                     area_type=1, lives=2, oper=1, engine=8, area_style=0)
+        state.update(end)
+        worst = {"died": bad_at < horizon, "game_over": False,
+                 "fallen": False, "bad_at": bad_at}
+        return Searcher.progress_key.__get__(
+            _FakeSearcher(scenario))(state, state, worst, horizon)
+
+    def test_surviving_the_whole_horizon_scores_one(self):
+        self.assertEqual(self.key("main", 64)[0], 1.0)
+
+    def test_dying_late_beats_dying_early(self):
+        self.assertGreater(self.key("main", 48)[0], self.key("main", 8)[0])
+
+    def test_a_game_over_costs_a_whole_point_more_than_a_death(self):
+        from .search_play import Searcher
+        state = dict(world=0, level=0, area=0, x=100, y=176, yhigh=1,
+                     area_type=1)
+        over = {"died": True, "game_over": True, "fallen": False,
+                "bad_at": 32}
+        key = Searcher.progress_key.__get__(_FakeSearcher("main"))(
+            state, state, over, 64)
+        # a game over at half the horizon ranks below a death at frame zero,
+        # because it costs the whole world, not one life
+        self.assertLess(key[0], self.key("main", 0)[0])
+        self.assertAlmostEqual(key[0], self.key("main", 32)[0] - 1)
+
+    def test_the_gameover_scenario_inverts_the_sign(self):
+        self.assertGreater(self.key("gameover", 8)[0],
+                           self.key("gameover", 48)[0])
+
+    def test_height_is_scored_only_in_the_underground_of_the_ceiling_run(self):
+        high = dict(y=40, x=2000, area_type=2)
+        self.assertGreater(self.key("ceiling", 64, **high)[4],
+                           self.key("main", 64, **high)[4])
+        self.assertEqual(self.key("ceiling", 64, y=40, x=100,
+                                  area_type=2)[4], 0)
+        self.assertEqual(self.key("ceiling", 64, y=40, x=2000,
+                                  area_type=1)[4], 0)
+
+
+class _FakeSearcher:
+    """Just enough of a `Searcher` for `progress_key`, which reads `scenario`."""
+
+    def __init__(self, scenario):
+        self.scenario = scenario
+
+
+class CoverageGapReasons(unittest.TestCase):
+    """`coverage_gaps` must not invent reachability it has not measured."""
+
+    def test_ranges_round_trip(self):
+        from .coverage_gaps import expand
+        from .observe import ranges
+        values = [1, 2, 3, 9, 20, 21, 50]
+        self.assertEqual(sorted(expand(ranges(values))), values)
+
+    def test_entry_edges_do_not_include_intra_routine_edges(self):
+        from .coverage_gaps import BODY_EDGES, ENTRY_EDGES
+        self.assertFalse(BODY_EDGES & ENTRY_EDGES)
+        self.assertIn("call", ENTRY_EDGES)
+        self.assertIn("fallthrough", BODY_EDGES)
+
+
+class Fm2Conversion(unittest.TestCase):
+    """The button mapping is the one decision in replaying a published movie."""
+
+    def write(self, lines):
+        import tempfile
+        handle = tempfile.NamedTemporaryFile("w", suffix=".fm2",
+                                             delete=False)
+        handle.write("version 3\npalFlag 0\nport0 1\n" + "\n".join(lines)
+                     + "\n")
+        handle.close()
+        return handle.name
+
+    def test_the_button_order_is_rlduTSba(self):
+        from .fm2 import parse
+        from .inputs import A, B, DOWN, LEFT, RIGHT, SELECT, START, UP
+        path = self.write(["|0|R.......|||", "|0|.L......|||",
+                           "|0|..D.....|||", "|0|...U....|||",
+                           "|0|....T...|||", "|0|.....S..|||",
+                           "|0|......B.|||", "|0|.......A|||"])
+        _, actions, _ = parse(path)
+        self.assertEqual(actions,
+                         [RIGHT, LEFT, DOWN, UP, START, SELECT, B, A])
+        os.unlink(path)
+
+    def test_a_combination_is_the_or_of_its_buttons(self):
+        from .fm2 import parse
+        from .inputs import A, B, RIGHT
+        path = self.write(["|0|R.....BA|||"])
+        _, actions, _ = parse(path)
+        self.assertEqual(actions, [RIGHT | B | A])
+        os.unlink(path)
+
+    def test_the_power_cycle_command_is_reported_not_silently_dropped(self):
+        from .fm2 import parse
+        path = self.write(["|2|........|||", "|0|........|||"])
+        _, _, commands = parse(path)
+        self.assertEqual(commands, [2, 0])
+        os.unlink(path)
+
+    def test_a_non_standard_port_is_refused(self):
+        from .fm2 import parse
+        import tempfile
+        handle = tempfile.NamedTemporaryFile("w", suffix=".fm2", delete=False)
+        handle.write("version 3\nport0 2\n|0|........|||\n")
+        handle.close()
+        with self.assertRaises(ValueError):
+            parse(handle.name)
+        os.unlink(handle.name)
+
+    def test_a_pal_movie_is_refused(self):
+        from .fm2 import parse
+        import tempfile
+        handle = tempfile.NamedTemporaryFile("w", suffix=".fm2", delete=False)
+        handle.write("version 3\npalFlag 1\nport0 1\n|0|........|||\n")
+        handle.close()
+        with self.assertRaises(ValueError):
+            parse(handle.name)
+        os.unlink(handle.name)
+
+    def test_shift_lines_the_movie_up_without_changing_its_body(self):
+        from .fm2 import shift
+        actions, commands = shift([1, 2, 3, 4], [2, 0, 0, 0], -2)
+        self.assertEqual((actions, commands), ([3, 4], [0, 0]))
+        actions, commands = shift([1, 2], [0, 0], 1)
+        self.assertEqual((actions, commands), ([0, 1, 2], [0, 0, 0]))

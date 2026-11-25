@@ -330,11 +330,11 @@ def coverage(tracer: dict, native: dict, total: int):
                 edgecolor="black", linewidth=0.4)
         ax.text(executed / 2, row, f"{executed:,} executed", ha="center",
                 va="center", fontsize=5.5, color="white")
-        ax.text(executed + (total - executed) / 2, row,
-                f"{total - executed:,} never executed", ha="center",
-                va="center", fontsize=5.5)
+        ax.text(total * 1.015, row, f"{total - executed:,} never executed",
+                ha="left", va="center", fontsize=5.5)
     ax.set_yticks([0, 1])
     ax.set_yticklabels([r[0] for r in rows])
-    ax.set_xlim(0, total)
-    ax.set_xlabel(f"instruction starts in the recovered graph (|N| = {total:,})")
+    ax.set_xlim(0, total * 1.36)
+    ax.set_xticks([0, 2500, 5000, 7500, total])
+    ax.set_xlabel(f"instruction starts in the program ({total:,} in all)")
     return _save(fig, "coverage")

@@ -1,0 +1,974 @@
+{
+  "dispatch_landings": {
+    "checked": 2361744,
+    "index_past_the_end_of_the_table": [],
+    "landed_elsewhere": [],
+    "landed_where_the_table_says": 2361744,
+    "note": "each fetch of a dispatch site arms a check: the first fetch after the JumpEngine's JMP ($0006) must be the table entry that (A and $7F) selects.  This is the dynamic counterpart of the D-xxxx-CONTRACT lemmas and is only recorded by the tracer engine."
+  },
+  "dispatch_out_of_range": [],
+  "dispatch_sites": [
+    {
+      "a_values": [
+        [
+          0,
+          3
+        ]
+      ],
+      "distinct_a": 4,
+      "fetches": 329976,
+      "index_max": 3,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 329976,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0x8215",
+      "table_entries": 4,
+      "table_entries_heuristic_reader": 4
+    },
+    {
+      "a_values": [
+        [
+          0,
+          3
+        ]
+      ],
+      "distinct_a": 4,
+      "fetches": 31300,
+      "index_max": 3,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 31300,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0x8234",
+      "table_entries": 4,
+      "table_entries_heuristic_reader": 4
+    },
+    {
+      "a_values": [
+        [
+          0,
+          4
+        ]
+      ],
+      "distinct_a": 5,
+      "fetches": 5811,
+      "index_max": 4,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 5811,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0x83A3",
+      "table_entries": 5,
+      "table_entries_heuristic_reader": 5
+    },
+    {
+      "a_values": [
+        [
+          0,
+          14
+        ]
+      ],
+      "distinct_a": 15,
+      "fetches": 25345,
+      "index_max": 14,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 25345,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0x856A",
+      "table_entries": 15,
+      "table_entries_heuristic_reader": 15
+    },
+    {
+      "a_values": [
+        [
+          0,
+          2
+        ]
+      ],
+      "distinct_a": 3,
+      "fetches": 1458,
+      "index_max": 2,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 1458,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0x921B",
+      "table_entries": 3,
+      "table_entries_heuristic_reader": 3
+    },
+    {
+      "a_values": [
+        [
+          0,
+          7
+        ]
+      ],
+      "distinct_a": 8,
+      "fetches": 75440,
+      "index_max": 7,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 75440,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0x92C8",
+      "table_entries": 8,
+      "table_entries_heuristic_reader": 8
+    },
+    {
+      "a_values": [
+        [
+          0,
+          20
+        ],
+        [
+          22,
+          39
+        ],
+        [
+          41,
+          46
+        ]
+      ],
+      "distinct_a": 45,
+      "fetches": 9637,
+      "index_max": 46,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 9637,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0x9664",
+      "table_entries": 47,
+      "table_entries_heuristic_reader": 47
+    },
+    {
+      "a_values": [
+        [
+          0,
+          2
+        ]
+      ],
+      "distinct_a": 3,
+      "fetches": 813,
+      "index_max": 2,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 813,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0x9743",
+      "table_entries": 3,
+      "table_entries_heuristic_reader": 5
+    },
+    {
+      "a_values": [
+        [
+          0,
+          3
+        ]
+      ],
+      "distinct_a": 4,
+      "fetches": 291407,
+      "index_max": 3,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 291407,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xAEDF",
+      "table_entries": 4,
+      "table_entries_heuristic_reader": 4
+    },
+    {
+      "a_values": [
+        [
+          0,
+          11
+        ]
+      ],
+      "distinct_a": 12,
+      "fetches": 297333,
+      "index_max": 11,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 297333,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xB04C",
+      "table_entries": 13,
+      "table_entries_heuristic_reader": 13
+    },
+    {
+      "a_values": [
+        [
+          0,
+          3
+        ]
+      ],
+      "distinct_a": 4,
+      "fetches": 293304,
+      "index_max": 3,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 293304,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xB34E",
+      "table_entries": 4,
+      "table_entries_heuristic_reader": 4
+    },
+    {
+      "a_values": [
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "distinct_a": 7,
+      "fetches": 136,
+      "index_max": 7,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 136,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xBDBD",
+      "table_entries": 9,
+      "table_entries_heuristic_reader": 9
+    },
+    {
+      "a_values": [
+        0,
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          14,
+          18
+        ],
+        [
+          20,
+          24
+        ],
+        [
+          27,
+          29
+        ],
+        31,
+        [
+          36,
+          41
+        ],
+        [
+          43,
+          45
+        ],
+        47,
+        [
+          52,
+          53
+        ]
+      ],
+      "distinct_a": 36,
+      "fetches": 35794,
+      "index_max": 53,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 35794,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xC27F",
+      "table_entries": 55,
+      "table_entries_heuristic_reader": 55
+    },
+    {
+      "a_values": [
+        0,
+        [
+          2,
+          5
+        ]
+      ],
+      "distinct_a": 5,
+      "fetches": 34028,
+      "index_max": 5,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 34028,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xC7A8",
+      "table_entries": 6,
+      "table_entries_heuristic_reader": 8
+    },
+    {
+      "a_values": [
+        [
+          0,
+          3
+        ],
+        [
+          7,
+          9
+        ],
+        11,
+        [
+          16,
+          21
+        ],
+        [
+          23,
+          33
+        ]
+      ],
+      "distinct_a": 25,
+      "fetches": 509576,
+      "index_max": 33,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 509576,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xC88F",
+      "table_entries": 34,
+      "table_entries_heuristic_reader": 34
+    },
+    {
+      "a_values": [
+        [
+          0,
+          3
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          10,
+          18
+        ],
+        20
+      ],
+      "distinct_a": 18,
+      "fetches": 370700,
+      "index_max": 20,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 370700,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xC907",
+      "table_entries": 21,
+      "table_entries_heuristic_reader": 21
+    },
+    {
+      "a_values": [
+        [
+          0,
+          5
+        ]
+      ],
+      "distinct_a": 6,
+      "fetches": 20604,
+      "index_max": 5,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 20604,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xC987",
+      "table_entries": 7,
+      "table_entries_heuristic_reader": 7
+    },
+    {
+      "a_values": [
+        [
+          0,
+          4
+        ]
+      ],
+      "distinct_a": 5,
+      "fetches": 29082,
+      "index_max": 4,
+      "index_min": 0,
+      "landings_confirmed_against_the_table": 29082,
+      "out_of_range_against_the_smaller_count": [],
+      "out_of_range_indices": [],
+      "site": "0xD2E5",
+      "table_entries": 5,
+      "table_entries_heuristic_reader": 5
+    }
+  ],
+  "experiment": "formal.dyn.observe",
+  "fetched_program_counters": {
+    "distinct": 10122,
+    "distinct_in_prg": 10122,
+    "executed_instructions_that_overlap": [
+      [
+        "0x8222",
+        "0x8223"
+      ],
+      [
+        "0x996A",
+        "0x996B"
+      ],
+      [
+        "0x997B",
+        "0x997C"
+      ],
+      [
+        "0x997E",
+        "0x997F"
+      ],
+      [
+        "0xBDD4",
+        "0xBDD5"
+      ],
+      [
+        "0xBFB6",
+        "0xBFB7"
+      ],
+      [
+        "0xDC20",
+        "0xDC21"
+      ],
+      [
+        "0xE3EB",
+        "0xE3EC"
+      ]
+    ],
+    "executed_instructions_that_overlap_count": 8,
+    "fetched_but_not_an_instruction_start": [],
+    "fetched_but_not_an_instruction_start_count": 0,
+    "graph_coverage": 0.945275,
+    "graph_instruction_starts": 10708,
+    "graph_nodes_executed": 10122,
+    "outside_prg": [],
+    "overlap_check_note": "computed by decoding the executed addresses directly: for each executed program counter, is any interior byte of its instruction also an executed program counter?  The image has ten such pairs of its own, each a `BIT $nnnn` whose operand byte is the entry point of an immediate load, and analysis.cfg records all ten.  A pair outside that set would mean the stream ran misaligned, and this check does not use the graph's edges to say so.",
+    "overlapping_pairs_the_graph_does_not_already_record": []
+  },
+  "findings": [],
+  "findings_count": 0,
+  "halt_on_finding": true,
+  "input_model_reach": {
+    "0x000E player state": [
+      [
+        0,
+        11
+      ]
+    ],
+    "0x0733 area style, the $9743 dispatch index": [
+      [
+        0,
+        2
+      ]
+    ],
+    "0x074E area type (0 water, 1 ground, 2 underground, 3 castle)": [
+      [
+        0,
+        3
+      ]
+    ],
+    "0x0757 warp zone control": [
+      [
+        0,
+        2
+      ]
+    ],
+    "0x075A lives": [
+      [
+        0,
+        4
+      ],
+      255
+    ],
+    "0x075F world number": [
+      [
+        0,
+        7
+      ]
+    ],
+    "0x0760 level number": [
+      [
+        0,
+        4
+      ]
+    ],
+    "0x0770 operating mode (0 title, 1 game, 2 game over, 3 demo)": [
+      [
+        0,
+        3
+      ]
+    ],
+    "0x0772 game-engine sub-routine selector": [
+      [
+        0,
+        4
+      ]
+    ],
+    "0x077A number of players (0 one player, 1 two players)": [
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "jams": {},
+  "limitations": [
+    "observed over the inputs that were run; no bound follows",
+    "the device stub is not a PPU or APU (formal.dyn.tracer lists what it does not model)",
+    "the nespy engine sees registers at a fetch only, so it cannot record cell domains, the single-cell questions, or write attribution"
+  ],
+  "manifest": {
+    "cross_validation": "see formal/results/reports/dyn_crossvalidation.json; the tracer engine is the one validated there",
+    "engine": "tracer",
+    "frames_per_run": {
+      "explore": 12000,
+      "menu": 12000,
+      "mixed": 12000,
+      "play:ceiling:19": 72000,
+      "play:gameover:5": 20600,
+      "play:main:31": 31664,
+      "play:main:7": 36336,
+      "play:movie:any2": 30483,
+      "play:movie:short": 20305,
+      "play:movie:warpless": 70596,
+      "play:twoplayer:13": 7714,
+      "play:twoplayer:3": 11874,
+      "random": 12000,
+      "title": 12000
+    },
+    "frames_per_worker": 12000,
+    "frames_total": 361572,
+    "input_models": {
+      "explore": "run, plus random DOWN/UP/LEFT/START/SELECT at a few per cent",
+      "menu": "START for three frames out of every 64",
+      "mixed": "600-frame blocks cycling the advance policy, explore, random and menu",
+      "play:ceiling:19": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_ceiling_19.json (77160 frames, scenario ceiling, 3 areas of the game entered, 7 deaths, 2 game overs, furthest world-level [1, 2]), then the closed-loop advance policy",
+      "play:gameover:5": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_gameover_5.json (20000 frames, scenario gameover, 1 areas of the game entered, 34 deaths, 11 game overs, furthest world-level [1, 1]), then the closed-loop advance policy",
+      "play:main:31": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_main_31.json (31064 frames, scenario main, 4 areas of the game entered, 6 deaths, 2 game overs, furthest world-level [1, 3]), then the closed-loop advance policy",
+      "play:main:7": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_main_7.json (35736 frames, scenario main, 4 areas of the game entered, 4 deaths, 3 game overs, furthest world-level [1, 3]), then the closed-loop advance policy",
+      "play:movie:any2": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_any2.json (29883 frames, scenario movie, 11 areas of the game entered, 1 deaths, None game overs, furthest world-level [8, 4]), then the closed-loop advance policy",
+      "play:movie:short": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_short.json (19705 frames, scenario movie, 9 areas of the game entered, 0 deaths, None game overs, furthest world-level [8, 3]), then the closed-loop advance policy",
+      "play:movie:warpless": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_warpless.json (69996 frames, scenario movie, 33 areas of the game entered, 9 deaths, None game overs, furthest world-level [8, 1]), then the closed-loop advance policy",
+      "play:twoplayer:13": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_twoplayer_13.json (7114 frames, scenario twoplayer, 1 areas of the game entered, 0 deaths, 0 game overs, furthest world-level [1, 1]), then the closed-loop advance policy",
+      "play:twoplayer:3": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_twoplayer_3.json (11274 frames, scenario twoplayer, 3 areas of the game entered, 0 deaths, 0 game overs, furthest world-level [1, 2]), then the closed-loop advance policy",
+      "random": "uniformly random bytes, including LEFT+RIGHT and UP+DOWN together, which a standard pad cannot produce",
+      "title": "no button is ever pressed (title screen and attract demo)"
+    },
+    "instructions_total": 3484872307,
+    "nes_py_commit": "7dae40fb336bc9c436ccbb41648fbb7fb2c0e506",
+    "repository_commit": "35d814d8775eeb6a94d21af6fa743a8e15a65534",
+    "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+    "runs": [
+      {
+        "engine": "tracer",
+        "frames": 72000,
+        "model": "play:ceiling:19",
+        "seed": 20261125
+      },
+      {
+        "engine": "tracer",
+        "frames": 70596,
+        "model": "play:movie:warpless",
+        "seed": 20261131
+      },
+      {
+        "engine": "tracer",
+        "frames": 36336,
+        "model": "play:main:7",
+        "seed": 20261128
+      },
+      {
+        "engine": "tracer",
+        "frames": 31664,
+        "model": "play:main:31",
+        "seed": 20261127
+      },
+      {
+        "engine": "tracer",
+        "frames": 30483,
+        "model": "play:movie:any2",
+        "seed": 20261129
+      },
+      {
+        "engine": "tracer",
+        "frames": 20600,
+        "model": "play:gameover:5",
+        "seed": 20261126
+      },
+      {
+        "engine": "tracer",
+        "frames": 20305,
+        "model": "play:movie:short",
+        "seed": 20261130
+      },
+      {
+        "engine": "tracer",
+        "frames": 12000,
+        "model": "mixed",
+        "seed": 20261134
+      },
+      {
+        "engine": "tracer",
+        "frames": 12000,
+        "model": "explore",
+        "seed": 20261135
+      },
+      {
+        "engine": "tracer",
+        "frames": 12000,
+        "model": "random",
+        "seed": 20261136
+      },
+      {
+        "engine": "tracer",
+        "frames": 12000,
+        "model": "title",
+        "seed": 20261137
+      },
+      {
+        "engine": "tracer",
+        "frames": 12000,
+        "model": "menu",
+        "seed": 20261138
+      },
+      {
+        "engine": "tracer",
+        "frames": 11874,
+        "model": "play:twoplayer:3",
+        "seed": 20261133
+      },
+      {
+        "engine": "tracer",
+        "frames": 7714,
+        "model": "play:twoplayer:13",
+        "seed": 20261132
+      }
+    ],
+    "runs_launched": 14,
+    "wall_seconds": 4157.7,
+    "workers": 4
+  },
+  "nmi": {
+    "delivered_by_a_0_to_1_enable_write_during_vblank": 0,
+    "delivered_while_handler_running": 0,
+    "entries": 361248
+  },
+  "ppu_data_reader_fetches": 16695,
+  "single_cell_questions": {
+    "0x8168": {
+      "bit7_clear_seen": true,
+      "bit7_set_seen": false,
+      "cell": "0x0778",
+      "distinct": 4,
+      "max": 21,
+      "question": "RAM[$0778] at the fetch of $8168",
+      "values": [
+        [
+          16,
+          17
+        ],
+        [
+          20,
+          21
+        ]
+      ]
+    },
+    "0x92B0": {
+      "bit7_clear_seen": true,
+      "bit7_set_seen": false,
+      "cell": "0x071F",
+      "distinct": 8,
+      "max": 7,
+      "question": "RAM[$071F] at the fetch of $92B0",
+      "values": [
+        [
+          0,
+          7
+        ]
+      ]
+    },
+    "0x9740": {
+      "bit7_clear_seen": true,
+      "bit7_set_seen": false,
+      "cell": "0x0733",
+      "distinct": 3,
+      "max": 2,
+      "question": "RAM[$0733] at the fetch of $9740",
+      "values": [
+        [
+          0,
+          2
+        ]
+      ]
+    }
+  },
+  "stack_page_writes": {
+    "distinct_pc_address_pairs": 2124,
+    "non_push_pairs": 186,
+    "non_push_writers": {
+      "0x84D7 STA": [
+        "0x0110",
+        "0x0111",
+        "0x0112",
+        "0x0113",
+        "0x0114",
+        "0x0115"
+      ],
+      "0x84DB DEC": [
+        "0x012C",
+        "0x012D",
+        "0x012E",
+        "0x012F",
+        "0x0130",
+        "0x0131"
+      ],
+      "0x84FA STA": [
+        "0x0137",
+        "0x0138"
+      ],
+      "0x8534 STA": [
+        "0x011E",
+        "0x011F",
+        "0x0120",
+        "0x0121",
+        "0x0122",
+        "0x0123"
+      ],
+      "0x8F80 STA": [
+        "0x0133",
+        "0x0134",
+        "0x0135",
+        "0x0136",
+        "0x0137",
+        "0x0138",
+        "0x0139"
+      ],
+      "0x8F87 DEC": [
+        "0x0137",
+        "0x0138"
+      ],
+      "0x8F91 INC": [
+        "0x0135",
+        "0x0136",
+        "0x0137",
+        "0x0138"
+      ],
+      "0x90DC STA": [
+        "0x0100",
+        "0x0101",
+        "0x0102",
+        "0x0103",
+        "0x0104",
+        "0x0105",
+        "0x0106",
+        "0x0107",
+        "0x0108",
+        "0x0109",
+        "0x010A",
+        "0x010B",
+        "0x010C",
+        "0x010D",
+        "0x010E",
+        "0x010F",
+        "0x0110",
+        "0x0111",
+        "0x0112",
+        "0x0113",
+        "0x0114",
+        "0x0115",
+        "0x0116",
+        "0x0117",
+        "0x0118",
+        "0x0119",
+        "0x011A",
+        "0x011B",
+        "0x011C",
+        "0x011D",
+        "0x011E",
+        "0x011F",
+        "0x0120",
+        "0x0121",
+        "0x0122",
+        "0x0123",
+        "0x0124",
+        "0x0125",
+        "0x0126",
+        "0x0127",
+        "0x0128",
+        "0x0129",
+        "0x012A",
+        "0x012B",
+        "0x012C",
+        "0x012D",
+        "0x012E",
+        "0x012F",
+        "0x0130",
+        "0x0131",
+        "0x0132",
+        "0x0133",
+        "0x0134",
+        "0x0135",
+        "0x0136",
+        "0x0137",
+        "0x0138",
+        "0x0139",
+        "0x013A",
+        "0x013B",
+        "0x013C",
+        "0x013D",
+        "0x013E",
+        "0x013F",
+        "0x0140",
+        "0x0141",
+        "0x0142",
+        "0x0143",
+        "0x0144",
+        "0x0145",
+        "0x0146",
+        "0x0147",
+        "0x0148",
+        "0x0149",
+        "0x014A",
+        "0x014B",
+        "0x014C",
+        "0x014D",
+        "0x014E",
+        "0x014F",
+        "0x0150",
+        "0x0151",
+        "0x0152",
+        "0x0153",
+        "0x0154",
+        "0x0155",
+        "0x0156",
+        "0x0157",
+        "0x0158",
+        "0x0159",
+        "0x015A",
+        "0x015B",
+        "0x015C",
+        "0x015D",
+        "0x015E",
+        "0x015F"
+      ],
+      "0x99C6 STA": [
+        "0x010D"
+      ],
+      "0xB78F STA": [
+        "0x0139"
+      ],
+      "0xB88B STA": [
+        "0x010E"
+      ],
+      "0xB893 STA": [
+        "0x010D"
+      ],
+      "0xB8A2 STA": [
+        "0x0137",
+        "0x0138"
+      ],
+      "0xBC00 STA": [
+        "0x0139"
+      ],
+      "0xBC24 STA": [
+        "0x0138"
+      ],
+      "0xBE15 STA": [
+        "0x0139"
+      ],
+      "0xC9A0 STA": [
+        "0x0110",
+        "0x0111",
+        "0x0112",
+        "0x0113",
+        "0x0114",
+        "0x0115"
+      ],
+      "0xC9A6 STA": [
+        "0x0125",
+        "0x0126",
+        "0x0127",
+        "0x0128",
+        "0x0129",
+        "0x012A"
+      ],
+      "0xD2C7 STA": [
+        "0x0138"
+      ],
+      "0xD32B STA": [
+        "0x0139"
+      ],
+      "0xD333 STA": [
+        "0x0139"
+      ],
+      "0xDA11 STA": [
+        "0x0110",
+        "0x0111",
+        "0x0112",
+        "0x0113",
+        "0x0114",
+        "0x0115"
+      ],
+      "0xDA16 STA": [
+        "0x012C",
+        "0x012D",
+        "0x012E",
+        "0x012F",
+        "0x0130",
+        "0x0131"
+      ],
+      "0xDA1B STA": [
+        "0x011E",
+        "0x011F",
+        "0x0120",
+        "0x0121",
+        "0x0122",
+        "0x0123"
+      ],
+      "0xDA21 STA": [
+        "0x0117",
+        "0x0118",
+        "0x0119",
+        "0x011A",
+        "0x011B",
+        "0x011C"
+      ],
+      "0xDAED INC": [
+        "0x0126",
+        "0x0127"
+      ],
+      "0xDB11 INC": [
+        "0x0125",
+        "0x0126",
+        "0x0127"
+      ],
+      "0xDE70 STX": [
+        "0x010F"
+      ],
+      "0xE88D STA": [
+        "0x0109"
+      ],
+      "0xE8EF INC": [
+        "0x0109"
+      ],
+      "0xEA45 STY": [
+        "0x0109"
+      ]
+    },
+    "push_pairs": 1938
+  },
+  "stack_pointer": {
+    "depth_max_from_0xFF": 25,
+    "max_at_any_fetch": 255,
+    "max_at_nmi_entry": 255,
+    "min_at_any_fetch": 230,
+    "min_at_nmi_entry": 255
+  },
+  "status": "observed"
+}

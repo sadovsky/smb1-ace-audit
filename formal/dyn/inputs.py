@@ -190,6 +190,40 @@ class Replay:
         return self.fallback(rng, frame, ram)
 
 
+class PlayReplay(Replay):
+    """Replays a sequence recorded by `formal.dyn.search_play`.
+
+    The file name is `play_<scenario>_<seed>.json` -- where `<seed>` is the
+    search seed, or the name a movie was converted under by `formal.dyn.fm2`
+    -- and the manifest inside it
+    records which areas of the game the sequence entered, which is what the
+    observation manifest quotes.  Everything `Replay` says applies: these are
+    controller bytes from power-on on the unmodified image, they are evidence
+    that the states along them are reachable in the emulator that was
+    searched, and they are no evidence at all about states not reached.
+    """
+
+    def __init__(self, scenario: str = "main", seed: str = "1",
+                 directory: str | None = None):
+        import json
+        import os
+        directory = directory or os.path.expanduser(
+            "~/big/smb1-formal/replays")
+        self.path = os.path.join(directory, f"play_{scenario}_{seed}.json")
+        self.fallback = Advance()
+        self.actions = []
+        self.note = f"replay {self.path}"
+        try:
+            with open(self.path) as handle:
+                payload = json.load(handle)
+            self.actions = payload["actions"]
+            self.manifest = payload.get("manifest", {})
+        except (OSError, ValueError, KeyError):
+            self.manifest = {}
+            self.note = (f"{self.path} is missing; the closed-loop policy ran "
+                         "alone")
+
+
 MODELS = {
     "title": lambda: title,
     "menu": lambda: menu,
@@ -218,8 +252,17 @@ DESCRIPTIONS = {
 def model(name: str):
     """A fresh callable for `name`; a stateful model starts clean.
 
-    `replay` or `replay:N` replays the Nth recorded sequence (default 1).
+    `replay` or `replay:N` replays the Nth sequence recorded by
+    `formal.dyn.search_inputs`; `play:<scenario>:<seed>` replays one recorded
+    by `formal.dyn.search_play`.
     """
+    pieces = name.split(":")
+    if pieces[0] == "play":
+        # the third field is a seed for a searched replay and a name for a
+        # replayed movie (`play:movie:warpless`), so it stays a string
+        scenario = pieces[1] if len(pieces) > 1 else "main"
+        name = pieces[2] if len(pieces) > 2 else "1"
+        return PlayReplay(scenario, name)
     if name.split(":")[0] == "replay":
         _, _, which = name.partition(":")
         return Replay(int(which) if which else 1)
@@ -231,6 +274,19 @@ def model(name: str):
 
 
 def describe(name: str) -> str:
+    if name.split(":")[0] == "play":
+        instance = model(name)
+        manifest = instance.manifest
+        if not instance.actions:
+            return instance.note
+        return (f"replayed controller bytes from {instance.path} "
+                f"({len(instance.actions)} frames, scenario "
+                f"{manifest.get('scenario')}, "
+                f"{manifest.get('areas_entered')} areas of the game entered, "
+                f"{manifest.get('deaths')} deaths, "
+                f"{manifest.get('game_overs')} game overs, furthest world-"
+                f"level {manifest.get('furthest_world_level')}), then the "
+                "closed-loop advance policy")
     if name.split(":")[0] == "replay":
         instance = model(name)
         return ("replayed controller bytes from "

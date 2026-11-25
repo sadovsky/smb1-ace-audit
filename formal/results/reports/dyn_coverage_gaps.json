@@ -1,0 +1,1677 @@
+{
+  "coverage": {
+    "baseline_for_comparison": {
+      "graph_coverage": 0.5904,
+      "graph_nodes_executed": 6322
+    },
+    "graph_coverage": 0.980202,
+    "graph_instruction_starts": 10708,
+    "graph_nodes_executed": 10496,
+    "graph_nodes_not_executed": 212,
+    "routine_entries": 460,
+    "routine_entries_executed": 454
+  },
+  "dispatch_sites": {
+    "sites": [
+      {
+        "distinct_entry_addresses": 4,
+        "entry_addresses_executed": 4,
+        "entry_addresses_never_executed": [],
+        "site": "0x8215",
+        "site_fetched": true,
+        "table_entries": 4
+      },
+      {
+        "distinct_entry_addresses": 4,
+        "entry_addresses_executed": 4,
+        "entry_addresses_never_executed": [],
+        "site": "0x8234",
+        "site_fetched": true,
+        "table_entries": 4
+      },
+      {
+        "distinct_entry_addresses": 5,
+        "entry_addresses_executed": 5,
+        "entry_addresses_never_executed": [],
+        "site": "0x83A3",
+        "site_fetched": true,
+        "table_entries": 5
+      },
+      {
+        "distinct_entry_addresses": 14,
+        "entry_addresses_executed": 14,
+        "entry_addresses_never_executed": [],
+        "site": "0x856A",
+        "site_fetched": true,
+        "table_entries": 15
+      },
+      {
+        "distinct_entry_addresses": 3,
+        "entry_addresses_executed": 3,
+        "entry_addresses_never_executed": [],
+        "site": "0x921B",
+        "site_fetched": true,
+        "table_entries": 3
+      },
+      {
+        "distinct_entry_addresses": 3,
+        "entry_addresses_executed": 3,
+        "entry_addresses_never_executed": [],
+        "site": "0x92C8",
+        "site_fetched": true,
+        "table_entries": 8
+      },
+      {
+        "distinct_entry_addresses": 38,
+        "entry_addresses_executed": 37,
+        "entry_addresses_never_executed": [
+          "0x9994"
+        ],
+        "site": "0x9664",
+        "site_fetched": true,
+        "table_entries": 47
+      },
+      {
+        "distinct_entry_addresses": 3,
+        "entry_addresses_executed": 3,
+        "entry_addresses_never_executed": [],
+        "site": "0x9743",
+        "site_fetched": true,
+        "table_entries": 3
+      },
+      {
+        "distinct_entry_addresses": 4,
+        "entry_addresses_executed": 4,
+        "entry_addresses_never_executed": [],
+        "site": "0xAEDF",
+        "site_fetched": true,
+        "table_entries": 4
+      },
+      {
+        "distinct_entry_addresses": 13,
+        "entry_addresses_executed": 13,
+        "entry_addresses_never_executed": [],
+        "site": "0xB04C",
+        "site_fetched": true,
+        "table_entries": 13
+      },
+      {
+        "distinct_entry_addresses": 4,
+        "entry_addresses_executed": 4,
+        "entry_addresses_never_executed": [],
+        "site": "0xB34E",
+        "site_fetched": true,
+        "table_entries": 4
+      },
+      {
+        "distinct_entry_addresses": 5,
+        "entry_addresses_executed": 5,
+        "entry_addresses_never_executed": [],
+        "site": "0xBDBD",
+        "site_fetched": true,
+        "table_entries": 9
+      },
+      {
+        "distinct_entry_addresses": 31,
+        "entry_addresses_executed": 30,
+        "entry_addresses_never_executed": [
+          "0xC881"
+        ],
+        "site": "0xC27F",
+        "site_fetched": true,
+        "table_entries": 55
+      },
+      {
+        "distinct_entry_addresses": 6,
+        "entry_addresses_executed": 5,
+        "entry_addresses_never_executed": [
+          "0xC7B7"
+        ],
+        "site": "0xC7A8",
+        "site_fetched": true,
+        "table_entries": 6
+      },
+      {
+        "distinct_entry_addresses": 14,
+        "entry_addresses_executed": 14,
+        "entry_addresses_never_executed": [],
+        "site": "0xC88F",
+        "site_fetched": true,
+        "table_entries": 34
+      },
+      {
+        "distinct_entry_addresses": 13,
+        "entry_addresses_executed": 12,
+        "entry_addresses_never_executed": [
+          "0xC934"
+        ],
+        "site": "0xC907",
+        "site_fetched": true,
+        "table_entries": 21
+      },
+      {
+        "distinct_entry_addresses": 6,
+        "entry_addresses_executed": 5,
+        "entry_addresses_never_executed": [
+          "0xD63D"
+        ],
+        "site": "0xC987",
+        "site_fetched": true,
+        "table_entries": 7
+      },
+      {
+        "distinct_entry_addresses": 5,
+        "entry_addresses_executed": 5,
+        "entry_addresses_never_executed": [],
+        "site": "0xD2E5",
+        "site_fetched": true,
+        "table_entries": 5
+      }
+    ],
+    "sites_fetched": 18,
+    "sites_never_fetched": []
+  },
+  "experiment": "formal.dyn.coverage_gaps",
+  "limitations": [
+    "observed over the inputs that were run; no bound follows from any of it, and a node that was not executed is unobserved, not unreachable",
+    "every value of reason_interpretation is this module's reading of the graph and the coverage set, not a measurement",
+    "routine attribution is a nearest-entry breadth-first search over intra-routine edges; a routine with several entry points is reported as several routines"
+  ],
+  "manifest": {
+    "coverage_inputs": {
+      "dyn_coverage_extended.json": {
+        "engine": "tracer",
+        "executed_not_an_instruction_start": [],
+        "frames_total": 361572,
+        "graph_nodes_executed": 10122,
+        "input_models": {
+          "explore": "run, plus random DOWN/UP/LEFT/START/SELECT at a few per cent",
+          "menu": "START for three frames out of every 64",
+          "mixed": "600-frame blocks cycling the advance policy, explore, random and menu",
+          "play:ceiling:19": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_ceiling_19.json (77160 frames, scenario ceiling, 3 areas of the game entered, 7 deaths, 2 game overs, furthest world-level [1, 2]), then the closed-loop advance policy",
+          "play:gameover:5": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_gameover_5.json (20000 frames, scenario gameover, 1 areas of the game entered, 34 deaths, 11 game overs, furthest world-level [1, 1]), then the closed-loop advance policy",
+          "play:main:31": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_main_31.json (31064 frames, scenario main, 4 areas of the game entered, 6 deaths, 2 game overs, furthest world-level [1, 3]), then the closed-loop advance policy",
+          "play:main:7": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_main_7.json (35736 frames, scenario main, 4 areas of the game entered, 4 deaths, 3 game overs, furthest world-level [1, 3]), then the closed-loop advance policy",
+          "play:movie:any2": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_any2.json (29883 frames, scenario movie, 11 areas of the game entered, 1 deaths, None game overs, furthest world-level [8, 4]), then the closed-loop advance policy",
+          "play:movie:short": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_short.json (19705 frames, scenario movie, 9 areas of the game entered, 0 deaths, None game overs, furthest world-level [8, 3]), then the closed-loop advance policy",
+          "play:movie:warpless": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_warpless.json (69996 frames, scenario movie, 33 areas of the game entered, 9 deaths, None game overs, furthest world-level [8, 1]), then the closed-loop advance policy",
+          "play:twoplayer:13": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_twoplayer_13.json (7114 frames, scenario twoplayer, 1 areas of the game entered, 0 deaths, 0 game overs, furthest world-level [1, 1]), then the closed-loop advance policy",
+          "play:twoplayer:3": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_twoplayer_3.json (11274 frames, scenario twoplayer, 3 areas of the game entered, 0 deaths, 0 game overs, furthest world-level [1, 2]), then the closed-loop advance policy",
+          "random": "uniformly random bytes, including LEFT+RIGHT and UP+DOWN together, which a standard pad cannot produce",
+          "title": "no button is ever pressed (title screen and attract demo)"
+        },
+        "instructions_total": 3484872307
+      },
+      "dyn_coverage_extended_nespy.json": {
+        "engine": "nespy",
+        "executed_not_an_instruction_start": [],
+        "frames_total": 708010,
+        "graph_nodes_executed": 10496,
+        "input_models": {
+          "advance": "closed-loop: holds RIGHT+B, jumps when the player's x position has not advanced for eight frames, crouches at random to find pipes; reads $0770, $006D and $0086",
+          "explore": "run, plus random DOWN/UP/LEFT/START/SELECT at a few per cent",
+          "menu": "START for three frames out of every 64",
+          "mixed": "600-frame blocks cycling the advance policy, explore, random and menu",
+          "play:ceiling:19": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_ceiling_19.json (77160 frames, scenario ceiling, 3 areas of the game entered, 7 deaths, 2 game overs, furthest world-level [1, 2]), then the closed-loop advance policy",
+          "play:ceiling:9": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_ceiling_9.json (60016 frames, scenario ceiling, 3 areas of the game entered, 2 deaths, 0 game overs, furthest world-level [1, 2]), then the closed-loop advance policy",
+          "play:gameover:5": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_gameover_5.json (20000 frames, scenario gameover, 1 areas of the game entered, 34 deaths, 11 game overs, furthest world-level [1, 1]), then the closed-loop advance policy",
+          "play:main:23": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_main_23.json (25504 frames, scenario main, 4 areas of the game entered, 6 deaths, 3 game overs, furthest world-level [1, 3]), then the closed-loop advance policy",
+          "play:main:31": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_main_31.json (31064 frames, scenario main, 4 areas of the game entered, 6 deaths, 2 game overs, furthest world-level [1, 3]), then the closed-loop advance policy",
+          "play:main:37": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_main_37.json (39008 frames, scenario main, 4 areas of the game entered, 6 deaths, 2 game overs, furthest world-level [1, 3]), then the closed-loop advance policy",
+          "play:main:7": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_main_7.json (35736 frames, scenario main, 4 areas of the game entered, 4 deaths, 3 game overs, furthest world-level [1, 3]), then the closed-loop advance policy",
+          "play:movie:any": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_any.json (20902 frames, scenario movie, 10 areas of the game entered, 0 deaths, None game overs, furthest world-level [8, 4]), then the closed-loop advance policy",
+          "play:movie:any2": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_any2.json (29883 frames, scenario movie, 11 areas of the game entered, 1 deaths, None game overs, furthest world-level [8, 4]), then the closed-loop advance policy",
+          "play:movie:short": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_short.json (19705 frames, scenario movie, 9 areas of the game entered, 0 deaths, None game overs, furthest world-level [8, 3]), then the closed-loop advance policy",
+          "play:movie:warpless": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_warpless.json (69996 frames, scenario movie, 33 areas of the game entered, 9 deaths, None game overs, furthest world-level [8, 1]), then the closed-loop advance policy",
+          "play:movie:warpless2": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_movie_warpless2.json (72248 frames, scenario movie, 27 areas of the game entered, 12 deaths, None game overs, furthest world-level [6, 4]), then the closed-loop advance policy",
+          "play:twoplayer:13": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_twoplayer_13.json (7114 frames, scenario twoplayer, 1 areas of the game entered, 0 deaths, 0 game overs, furthest world-level [1, 1]), then the closed-loop advance policy",
+          "play:twoplayer:3": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/play_twoplayer_3.json (11274 frames, scenario twoplayer, 3 areas of the game entered, 0 deaths, 0 game overs, furthest world-level [1, 2]), then the closed-loop advance policy",
+          "random": "uniformly random bytes, including LEFT+RIGHT and UP+DOWN together, which a standard pad cannot produce",
+          "replay:4": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/replay_4.json (16012 frames, 9 deaths, best world 1-3), then the closed-loop advance policy",
+          "replay:5": "replayed controller bytes from /home/sadovsky/big/smb1-formal/replays/replay_5.json (16020 frames, 4 deaths, best world 1-1), then the closed-loop advance policy",
+          "run": "START until frame 90, then RIGHT+B with A for 7 frames in 23",
+          "title": "no button is ever pressed (title screen and attract demo)"
+        },
+        "instructions_total": 6805868475
+      }
+    },
+    "replays": [
+      {
+        "area_styles_seen": [
+          0
+        ],
+        "area_types_seen": [
+          1,
+          2
+        ],
+        "areas_entered": 3,
+        "attempts_per_escalation": 39,
+        "best_world_level": [
+          1,
+          2
+        ],
+        "block": 24,
+        "continues_taken": 2,
+        "deaths": 7,
+        "emulated_frames": 1250128,
+        "escalations": 257,
+        "fast_path_blocks": 2644,
+        "file": "play_ceiling_19.json",
+        "frames": 77160,
+        "furthest_world_level": [
+          1,
+          2
+        ],
+        "game_overs": 2,
+        "graph_nodes_executed_during_search": 5467,
+        "horizon": 64,
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          3
+        ],
+        "scenario": "ceiling",
+        "search_overhead": 16.2,
+        "seed": 19,
+        "trace_events_dropped_by_the_capacity_cap": 0,
+        "wall_seconds": 3600.1,
+        "warp_zone_control_values_seen": [
+          0
+        ],
+        "wide_escalations": 177,
+        "wide_horizon": 120
+      },
+      {
+        "area_styles_seen": [
+          0
+        ],
+        "area_types_seen": [
+          1,
+          2
+        ],
+        "areas_entered": 3,
+        "attempts_per_escalation": 41,
+        "best_world_level": [
+          1,
+          2
+        ],
+        "block": 24,
+        "continues_taken": 0,
+        "deaths": 2,
+        "emulated_frames": 1341744,
+        "escalations": 186,
+        "fast_path_blocks": 2045,
+        "file": "play_ceiling_9.json",
+        "frames": 60016,
+        "furthest_world_level": [
+          1,
+          2
+        ],
+        "game_overs": 0,
+        "graph_nodes_executed_during_search": 5677,
+        "horizon": 64,
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          3
+        ],
+        "scenario": "ceiling",
+        "search_overhead": 22.36,
+        "seed": 9,
+        "trace_events_dropped_by_the_capacity_cap": 0,
+        "wall_seconds": 4321.1,
+        "warp_zone_control_values_seen": [
+          0
+        ],
+        "wide_escalations": 156,
+        "wide_horizon": 144
+      },
+      {
+        "area_styles_seen": [
+          0
+        ],
+        "area_types_seen": [
+          1
+        ],
+        "areas_entered": 1,
+        "attempts_per_escalation": 41,
+        "best_world_level": [
+          1,
+          1
+        ],
+        "block": 24,
+        "continues_taken": 11,
+        "deaths": 34,
+        "emulated_frames": 20000,
+        "escalations": 0,
+        "fast_path_blocks": 0,
+        "file": "play_gameover_5.json",
+        "frames": 20000,
+        "furthest_world_level": [
+          1,
+          1
+        ],
+        "game_overs": 11,
+        "graph_nodes_executed_during_search": 0,
+        "horizon": 64,
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          3
+        ],
+        "scenario": "gameover",
+        "search_overhead": 1.0,
+        "seed": 5,
+        "trace_events_dropped_by_the_capacity_cap": 0,
+        "wall_seconds": 95.3,
+        "warp_zone_control_values_seen": [
+          0
+        ],
+        "wide_escalations": 0,
+        "wide_horizon": 144
+      },
+      {
+        "area_styles_seen": [
+          0
+        ],
+        "area_types_seen": [
+          1,
+          2
+        ],
+        "areas_entered": 4,
+        "attempts_per_escalation": 41,
+        "best_world_level": [
+          1,
+          2
+        ],
+        "block": 24,
+        "continues_taken": 3,
+        "deaths": 6,
+        "emulated_frames": 1785248,
+        "escalations": 272,
+        "fast_path_blocks": 487,
+        "file": "play_main_23.json",
+        "frames": 25504,
+        "furthest_world_level": [
+          1,
+          3
+        ],
+        "game_overs": 3,
+        "graph_nodes_executed_during_search": 5892,
+        "horizon": 64,
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          3
+        ],
+        "scenario": "main",
+        "search_overhead": 70.0,
+        "seed": 23,
+        "wall_seconds": 6000.0,
+        "warp_zone_control_values_seen": [
+          0
+        ],
+        "wide_escalations": 240,
+        "wide_horizon": 144
+      },
+      {
+        "area_styles_seen": [
+          0
+        ],
+        "area_types_seen": [
+          1,
+          2
+        ],
+        "areas_entered": 4,
+        "attempts_per_escalation": 39,
+        "best_world_level": [
+          1,
+          2
+        ],
+        "block": 24,
+        "continues_taken": 2,
+        "deaths": 6,
+        "emulated_frames": 1342280,
+        "escalations": 346,
+        "fast_path_blocks": 675,
+        "file": "play_main_31.json",
+        "frames": 31064,
+        "furthest_world_level": [
+          1,
+          3
+        ],
+        "game_overs": 2,
+        "graph_nodes_executed_during_search": 5917,
+        "horizon": 64,
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          3
+        ],
+        "scenario": "main",
+        "search_overhead": 43.21,
+        "seed": 31,
+        "trace_events_dropped_by_the_capacity_cap": 0,
+        "wall_seconds": 3610.5,
+        "warp_zone_control_values_seen": [
+          0
+        ],
+        "wide_escalations": 242,
+        "wide_horizon": 120
+      },
+      {
+        "area_styles_seen": [
+          0
+        ],
+        "area_types_seen": [
+          1,
+          2
+        ],
+        "areas_entered": 4,
+        "attempts_per_escalation": 39,
+        "best_world_level": [
+          1,
+          2
+        ],
+        "block": 24,
+        "continues_taken": 2,
+        "deaths": 6,
+        "emulated_frames": 1343152,
+        "escalations": 343,
+        "fast_path_blocks": 989,
+        "file": "play_main_37.json",
+        "frames": 39008,
+        "furthest_world_level": [
+          1,
+          3
+        ],
+        "game_overs": 2,
+        "graph_nodes_executed_during_search": 5970,
+        "horizon": 64,
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          3
+        ],
+        "scenario": "main",
+        "search_overhead": 34.43,
+        "seed": 37,
+        "trace_events_dropped_by_the_capacity_cap": 0,
+        "wall_seconds": 3609.4,
+        "warp_zone_control_values_seen": [
+          0
+        ],
+        "wide_escalations": 234,
+        "wide_horizon": 120
+      },
+      {
+        "area_styles_seen": [
+          0
+        ],
+        "area_types_seen": [
+          1,
+          2
+        ],
+        "areas_entered": 4,
+        "attempts_per_escalation": 41,
+        "best_world_level": [
+          1,
+          2
+        ],
+        "block": 24,
+        "continues_taken": 3,
+        "deaths": 4,
+        "emulated_frames": 1844472,
+        "escalations": 263,
+        "fast_path_blocks": 933,
+        "file": "play_main_7.json",
+        "frames": 35736,
+        "furthest_world_level": [
+          1,
+          3
+        ],
+        "game_overs": 3,
+        "graph_nodes_executed_during_search": 6231,
+        "horizon": 64,
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          3
+        ],
+        "scenario": "main",
+        "search_overhead": 51.61,
+        "seed": 7,
+        "wall_seconds": 6016.6,
+        "warp_zone_control_values_seen": [
+          0
+        ],
+        "wide_escalations": 242,
+        "wide_horizon": 144
+      },
+      {
+        "area_styles_seen": [
+          0,
+          1,
+          2
+        ],
+        "area_types_seen": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "areas_entered": 10,
+        "deaths": 0,
+        "file": "play_movie_any.json",
+        "frames": 20902,
+        "furthest_world_level": [
+          8,
+          4
+        ],
+        "mid_run_reset_commands_ignored": 0,
+        "movie": {
+          "emulator_version": "20606",
+          "file": "g_638957196073149696.out",
+          "rerecord_count": "5746",
+          "rom_checksum_matches_the_image_under_test": true,
+          "rom_filename_in_movie": "Super Mario Bros (JU) (PRG 0)",
+          "start_offset_frames": -2
+        },
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1
+        ],
+        "scenario": "movie",
+        "seed": 0,
+        "source": "a published .fm2 input movie, replayed as controller bytes; see formal.dyn.fm2"
+      },
+      {
+        "area_styles_seen": [
+          0,
+          1,
+          2
+        ],
+        "area_types_seen": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "areas_entered": 11,
+        "deaths": 1,
+        "file": "play_movie_any2.json",
+        "frames": 29883,
+        "furthest_world_level": [
+          8,
+          4
+        ],
+        "hard_mode_cell_values_seen": [
+          0,
+          1
+        ],
+        "mid_run_reset_commands_ignored": 0,
+        "movie": {
+          "emulator_version": "20606",
+          "file": "h_638793576281100478.out",
+          "frames_appended_after_the_movie": 12000,
+          "rerecord_count": "3676",
+          "rom_checksum_matches_the_image_under_test": true,
+          "rom_filename_in_movie": "SMB1J",
+          "start_offset_frames": -2
+        },
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          2
+        ],
+        "scenario": "movie",
+        "seed": 0,
+        "source": "a published .fm2 input movie, replayed as controller bytes; see formal.dyn.fm2"
+      },
+      {
+        "area_styles_seen": [
+          0,
+          1,
+          2
+        ],
+        "area_types_seen": [
+          1,
+          2
+        ],
+        "areas_entered": 9,
+        "deaths": 0,
+        "file": "play_movie_short.json",
+        "frames": 19705,
+        "furthest_world_level": [
+          8,
+          3
+        ],
+        "mid_run_reset_commands_ignored": 0,
+        "movie": {
+          "emulator_version": "20605",
+          "file": "movie.out",
+          "rerecord_count": "2890",
+          "rom_checksum_matches_the_image_under_test": true,
+          "rom_filename_in_movie": "Super Mario Bros. (World)",
+          "start_offset_frames": -2
+        },
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1
+        ],
+        "scenario": "movie",
+        "seed": 0,
+        "source": "a published .fm2 input movie, replayed as controller bytes; see formal.dyn.fm2"
+      },
+      {
+        "area_styles_seen": [
+          0,
+          1,
+          2
+        ],
+        "area_types_seen": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "areas_entered": 33,
+        "deaths": 9,
+        "file": "play_movie_warpless.json",
+        "frames": 69996,
+        "furthest_world_level": [
+          8,
+          1
+        ],
+        "mid_run_reset_commands_ignored": 0,
+        "movie": {
+          "emulator_version": "20602",
+          "file": "movie.out",
+          "rerecord_count": "14",
+          "rom_checksum_matches_the_image_under_test": true,
+          "rom_filename_in_movie": "Super Mario Bros (JU) (PRG 0)",
+          "start_offset_frames": -2
+        },
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "scenario": "movie",
+        "seed": 0,
+        "source": "a published .fm2 input movie, replayed as controller bytes; see formal.dyn.fm2"
+      },
+      {
+        "area_styles_seen": [
+          0,
+          1,
+          2
+        ],
+        "area_types_seen": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "areas_entered": 27,
+        "deaths": 12,
+        "file": "play_movie_warpless2.json",
+        "frames": 72248,
+        "furthest_world_level": [
+          6,
+          4
+        ],
+        "mid_run_reset_commands_ignored": 0,
+        "movie": {
+          "emulator_version": "20604",
+          "file": "g_639108214894327665.out",
+          "rerecord_count": "30155",
+          "rom_checksum_matches_the_image_under_test": true,
+          "rom_filename_in_movie": "Super Mario Bros. (World)",
+          "start_offset_frames": -2
+        },
+        "number_of_players_cell_values_seen": [
+          0
+        ],
+        "oper_modes_seen": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "scenario": "movie",
+        "seed": 0,
+        "source": "a published .fm2 input movie, replayed as controller bytes; see formal.dyn.fm2"
+      },
+      {
+        "area_styles_seen": [
+          0
+        ],
+        "area_types_seen": [
+          1
+        ],
+        "areas_entered": 1,
+        "attempts_per_escalation": 39,
+        "best_world_level": [
+          1,
+          1
+        ],
+        "block": 24,
+        "continues_taken": 0,
+        "deaths": 0,
+        "emulated_frames": 1265906,
+        "escalations": 229,
+        "fast_path_blocks": 52,
+        "file": "play_twoplayer_13.json",
+        "frames": 7114,
+        "furthest_world_level": [
+          1,
+          1
+        ],
+        "game_overs": 0,
+        "graph_nodes_executed_during_search": 4473,
+        "horizon": 64,
+        "number_of_players_cell_values_seen": [
+          1
+        ],
+        "oper_modes_seen": [
+          1
+        ],
+        "scenario": "twoplayer",
+        "search_overhead": 177.95,
+        "seed": 13,
+        "trace_events_dropped_by_the_capacity_cap": 0,
+        "wall_seconds": 3602.4,
+        "warp_zone_control_values_seen": [
+          0
+        ],
+        "wide_escalations": 225,
+        "wide_horizon": 120
+      },
+      {
+        "area_styles_seen": [
+          0
+        ],
+        "area_types_seen": [
+          1,
+          2
+        ],
+        "areas_entered": 3,
+        "attempts_per_escalation": 41,
+        "best_world_level": [
+          1,
+          1
+        ],
+        "block": 24,
+        "continues_taken": 0,
+        "deaths": 0,
+        "emulated_frames": 1868090,
+        "escalations": 280,
+        "fast_path_blocks": 125,
+        "file": "play_twoplayer_3.json",
+        "frames": 11274,
+        "furthest_world_level": [
+          1,
+          2
+        ],
+        "game_overs": 0,
+        "graph_nodes_executed_during_search": 5431,
+        "horizon": 64,
+        "number_of_players_cell_values_seen": [
+          1
+        ],
+        "oper_modes_seen": [
+          1
+        ],
+        "scenario": "twoplayer",
+        "search_overhead": 165.7,
+        "seed": 3,
+        "wall_seconds": 6000.5,
+        "warp_zone_control_values_seen": [
+          0
+        ],
+        "wide_escalations": 255,
+        "wide_horizon": 144
+      }
+    ],
+    "repository_commit": "35d814d8775eeb6a94d21af6fa743a8e15a65534",
+    "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922"
+  },
+  "routines_with_unexecuted_nodes": [
+    {
+      "callers": [
+        "0xC7A8"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 47,
+      "nodes_executed": 24,
+      "nodes_not_executed": 23,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xC5A3"
+    },
+    {
+      "callers": [
+        "0xC88F"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 148,
+      "nodes_executed": 125,
+      "nodes_not_executed": 23,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xD065"
+    },
+    {
+      "callers": [
+        "0xCD89",
+        "0xCE06"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call",
+        "fallthrough"
+      ],
+      "entry_executed": true,
+      "nodes": 72,
+      "nodes_executed": 60,
+      "nodes_not_executed": 12,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xCE08"
+    },
+    {
+      "callers": [
+        "0xBB28"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 30,
+      "nodes_executed": 18,
+      "nodes_not_executed": 12,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xD7C4"
+    },
+    {
+      "callers": [
+        "0xC7A8"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 82,
+      "nodes_executed": 72,
+      "nodes_not_executed": 10,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xC4A8"
+    },
+    {
+      "callers": [
+        "0xC987"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 145,
+      "nodes_executed": 135,
+      "nodes_not_executed": 10,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xD432"
+    },
+    {
+      "callers": [
+        "0xC987"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": false,
+      "nodes": 8,
+      "nodes_executed": 0,
+      "nodes_not_executed": 8,
+      "reason_interpretation": "entry-not-executed",
+      "routine_entry": "0xD63D"
+    },
+    {
+      "callers": [
+        "0xF3AB",
+        "0xF83E"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call",
+        "fallthrough"
+      ],
+      "entry_executed": true,
+      "nodes": 16,
+      "nodes_executed": 8,
+      "nodes_not_executed": 8,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xF3AD"
+    },
+    {
+      "callers": [
+        "0xB04C",
+        "0xB0E6",
+        "0xB250",
+        "0xB270"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch",
+        "fallthrough",
+        "jump"
+      ],
+      "entry_executed": true,
+      "nodes": 102,
+      "nodes_executed": 95,
+      "nodes_not_executed": 7,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xB0E9"
+    },
+    {
+      "callers": [
+        "0xB6CD",
+        "0xB848",
+        "0xBAE8",
+        "0xBBDB",
+        "0xBFB1",
+        "0xBFD1"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call",
+        "jump"
+      ],
+      "entry_executed": true,
+      "nodes": 55,
+      "nodes_executed": 48,
+      "nodes_not_executed": 7,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xBFD7"
+    },
+    {
+      "callers": [
+        "0xB905",
+        "0xBA82",
+        "0xC8DD",
+        "0xC8EB"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call",
+        "jump"
+      ],
+      "entry_executed": true,
+      "nodes": 345,
+      "nodes_executed": 338,
+      "nodes_not_executed": 7,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xE87D"
+    },
+    {
+      "callers": [
+        "0x92C8"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 134,
+      "nodes_executed": 128,
+      "nodes_not_executed": 6,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0x93FC"
+    },
+    {
+      "callers": [
+        "0xFFFC"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "interrupt"
+      ],
+      "entry_executed": false,
+      "nodes": 6,
+      "nodes_executed": 0,
+      "nodes_not_executed": 6,
+      "reason_interpretation": "brk-only",
+      "routine_entry": "0xFFF0"
+    },
+    {
+      "callers": [
+        "0xC907"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 29,
+      "nodes_executed": 24,
+      "nodes_not_executed": 5,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xCAFF"
+    },
+    {
+      "callers": [
+        "0x8654",
+        "0x86C7",
+        "0x86DA",
+        "0x9705"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 77,
+      "nodes_executed": 73,
+      "nodes_not_executed": 4,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0x8808"
+    },
+    {
+      "callers": [
+        "0x9664"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": false,
+      "nodes": 4,
+      "nodes_executed": 0,
+      "nodes_not_executed": 4,
+      "reason_interpretation": "entry-not-executed",
+      "routine_entry": "0x9994"
+    },
+    {
+      "callers": [
+        "0xDA9B"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 49,
+      "nodes_executed": 45,
+      "nodes_not_executed": 4,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xDAB4"
+    },
+    {
+      "callers": [
+        "0xDD4D"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 46,
+      "nodes_executed": 42,
+      "nodes_not_executed": 4,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xDEE8"
+    },
+    {
+      "callers": [
+        "0xE0CA",
+        "0xE0EA",
+        "0xE11A"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "branch",
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 38,
+      "nodes_executed": 34,
+      "nodes_not_executed": 4,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xE124"
+    },
+    {
+      "callers": [
+        "0xC7A8"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 85,
+      "nodes_executed": 82,
+      "nodes_not_executed": 3,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xC3A4"
+    },
+    {
+      "callers": [
+        "0xC935"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 84,
+      "nodes_executed": 81,
+      "nodes_not_executed": 3,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xD1EB"
+    },
+    {
+      "callers": [
+        "0xD4D3",
+        "0xD506"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 52,
+      "nodes_executed": 49,
+      "nodes_not_executed": 3,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xD541"
+    },
+    {
+      "callers": [
+        "0xBEBE"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 52,
+      "nodes_executed": 49,
+      "nodes_not_executed": 3,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xEBD1"
+    },
+    {
+      "callers": [
+        "0x83A3"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 51,
+      "nodes_executed": 49,
+      "nodes_not_executed": 2,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0x83F6"
+    },
+    {
+      "callers": [
+        "0x902F"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 78,
+      "nodes_executed": 76,
+      "nodes_not_executed": 2,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0x9C22"
+    },
+    {
+      "callers": [
+        "0xB04C"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 14,
+      "nodes_executed": 12,
+      "nodes_not_executed": 2,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xB2A4"
+    },
+    {
+      "callers": [
+        "0xB34E"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 43,
+      "nodes_executed": 41,
+      "nodes_not_executed": 2,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xB3CF"
+    },
+    {
+      "callers": [
+        "0x8397",
+        "0xAF05"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 210,
+      "nodes_executed": 208,
+      "nodes_not_executed": 2,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xC047"
+    },
+    {
+      "callers": [
+        "0xC907"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 58,
+      "nodes_executed": 56,
+      "nodes_not_executed": 2,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xC9D8"
+    },
+    {
+      "callers": [
+        "0xBCAA",
+        "0xC907",
+        "0xCA75"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call",
+        "dispatch",
+        "fallthrough"
+      ],
+      "entry_executed": true,
+      "nodes": 65,
+      "nodes_executed": 63,
+      "nodes_not_executed": 2,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xCA77"
+    },
+    {
+      "callers": [
+        "0xB15A"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 272,
+      "nodes_executed": 270,
+      "nodes_not_executed": 2,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xDC64"
+    },
+    {
+      "callers": [
+        "0xF34E"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 126,
+      "nodes_executed": 124,
+      "nodes_not_executed": 2,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xF57C"
+    },
+    {
+      "callers": [],
+      "callers_truncated": false,
+      "entered_by": [],
+      "entry_executed": true,
+      "nodes": 38,
+      "nodes_executed": 37,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0x8000"
+    },
+    {
+      "callers": [
+        "0x9097",
+        "0xAF4F"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 18,
+      "nodes_executed": 17,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0x90ED"
+    },
+    {
+      "callers": [
+        "0x9664"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 6,
+      "nodes_executed": 5,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0x9A2E"
+    },
+    {
+      "callers": [
+        "0x9664"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 29,
+      "nodes_executed": 28,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0x9B41"
+    },
+    {
+      "callers": [
+        "0xBB38",
+        "0xBB51"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 9,
+      "nodes_executed": 8,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xBB84"
+    },
+    {
+      "callers": [
+        "0xDCE4"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 68,
+      "nodes_executed": 67,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xBCED"
+    },
+    {
+      "callers": [
+        "0xD498",
+        "0xD5F5"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 18,
+      "nodes_executed": 17,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xBFB7"
+    },
+    {
+      "callers": [
+        "0xC27F",
+        "0xC348"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch",
+        "fallthrough"
+      ],
+      "entry_executed": true,
+      "nodes": 8,
+      "nodes_executed": 7,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xC34A"
+    },
+    {
+      "callers": [
+        "0xC7A8"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 119,
+      "nodes_executed": 118,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xC69C"
+    },
+    {
+      "callers": [
+        "0xC7A8"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": false,
+      "nodes": 1,
+      "nodes_executed": 0,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "entry-not-executed",
+      "routine_entry": "0xC7B7"
+    },
+    {
+      "callers": [
+        "0xC27F"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": false,
+      "nodes": 1,
+      "nodes_executed": 0,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "entry-not-executed",
+      "routine_entry": "0xC881"
+    },
+    {
+      "callers": [
+        "0xC907"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": false,
+      "nodes": 1,
+      "nodes_executed": 0,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "entry-not-executed",
+      "routine_entry": "0xC934"
+    },
+    {
+      "callers": [
+        "0xD2E5"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "dispatch"
+      ],
+      "entry_executed": true,
+      "nodes": 28,
+      "nodes_executed": 27,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xD312"
+    },
+    {
+      "callers": [
+        "0xBA7F",
+        "0xBCE4",
+        "0xC8F7",
+        "0xC941",
+        "0xD1CE"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call",
+        "jump"
+      ],
+      "entry_executed": true,
+      "nodes": 203,
+      "nodes_executed": 202,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xD853"
+    },
+    {
+      "callers": [
+        "0xB79D",
+        "0xD92F"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call",
+        "fallthrough"
+      ],
+      "entry_executed": true,
+      "nodes": 18,
+      "nodes_executed": 17,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xD931"
+    },
+    {
+      "callers": [
+        "0xBCAD",
+        "0xC8F1"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 134,
+      "nodes_executed": 133,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xDFC1"
+    },
+    {
+      "callers": [
+        "0xC97C"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 72,
+      "nodes_executed": 71,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xE5C8"
+    },
+    {
+      "callers": [
+        "0xF354"
+      ],
+      "callers_truncated": false,
+      "entered_by": [
+        "call"
+      ],
+      "entry_executed": true,
+      "nodes": 242,
+      "nodes_executed": 241,
+      "nodes_not_executed": 1,
+      "reason_interpretation": "partially-executed",
+      "routine_entry": "0xF694"
+    }
+  ],
+  "status": "observed",
+  "unattributed_nodes": [],
+  "unexecuted_nodes_by_reason_interpretation": {
+    "brk-only": 6,
+    "entry-not-executed": 15,
+    "partially-executed": 191
+  },
+  "unexecuted_overlapping_starts_count": 1,
+  "unexecuted_overlapping_starts_inside_executed_instructions": [
+    "0xF34A"
+  ]
+}

@@ -59,7 +59,9 @@ import numpy as np
 
 from .inputs import A, B, DOWN, LEFT, RIGHT, SELECT, START, UP
 
-_EMPTY = np.zeros(0, dtype=np.uint16)
+#: the sentinel `run_plan` returns in place of a program-counter mask when the
+#: plan was not traced
+_UNTRACED = None
 
 DEFAULT_DIRECTORY = os.path.expanduser("~/big/smb1-formal/replays")
 
@@ -79,6 +81,7 @@ PLAYER_Y_HIGH = 0x00B5      # 1 on screen, >= 2 fallen below it
 AREA_TYPE = 0x074E          # 0 water, 1 ground, 2 underground, 3 castle
 AREA_STYLE = 0x0733         # the $9743 dispatch index
 WARP_ZONE = 0x06D9
+PLAYERS = 0x077A            # 0 one player, 1 two players
 
 CONTROLLABLE = 8            # ENGINE_SUB value for PlayerCtrlRoutine
 
@@ -102,6 +105,22 @@ def plan_style(style: tuple, length: int) -> list[int]:
     if kind == "turn":                       # one hold, then another
         first, second, at = style[1:]
         return [first if index < at else second for index in range(length)]
+    if kind == "retreat":
+        # back up, then run right and jump.  This is the one manoeuvre a
+        # search greedy in x cannot find for itself, because its first frames
+        # make the score worse, and it is what clears the wide pits: a jump
+        # from a standstill at the near edge does not reach the far one.
+        back, jump_at, jump_len = style[1:]
+        actions = []
+        for index in range(length):
+            if index < back:
+                actions.append(LEFT | B)
+            else:
+                offset = index - back
+                actions.append((RIGHT | B)
+                               | (A if jump_at <= offset < jump_at + jump_len
+                                  else 0))
+        return actions
     raise ValueError(style)
 
 
@@ -126,6 +145,30 @@ FIXED_STYLES = (
     ("jump", RIGHT, 0, 30),
     ("turn", RIGHT | B, LEFT | B, 24),
     ("turn", 0, RIGHT | B | A, 8),
+    ("retreat", 12, 20, 28),
+    ("retreat", 12, 30, 32),
+    ("retreat", 20, 24, 24),
+    ("retreat", 20, 32, 32),
+    ("retreat", 20, 40, 32),
+    ("retreat", 30, 30, 26),
+    ("retreat", 30, 40, 32),
+    ("retreat", 30, 48, 32),
+    ("retreat", 40, 44, 32),
+    ("retreat", 40, 56, 32),
+)
+
+
+#: the subset stage one of an escalation tries: what clears a pipe, a pit, a
+#: staircase or a stretch of water.  Stage two adds the rest and a random draw.
+NEAR_STYLES = (
+    ("hold", RIGHT | B),
+    ("jump", RIGHT | B, 0, 20),
+    ("jump", RIGHT | B, 0, 32),
+    ("jump", RIGHT | B, 6, 28),
+    ("jump", RIGHT | B, 14, 24),
+    ("pulse", RIGHT | B, 12, 3, 0),
+    ("hold", RIGHT),
+    ("hold", 0),
 )
 
 
@@ -139,10 +182,13 @@ def random_style(rng: random.Random) -> tuple:
     if roll < 0.7:
         return ("pulse", hold, rng.choice([8, 10, 12, 16, 20, 28]),
                 rng.choice([2, 3, 4, 6, 10, 14]), rng.randrange(0, 8))
-    if roll < 0.85:
+    if roll < 0.8:
         return ("turn", hold, rng.choice([RIGHT | B, LEFT | B, DOWN, 0,
                                           RIGHT | B | A]),
                 rng.randrange(4, 48))
+    if roll < 0.95:
+        return ("retreat", rng.choice([8, 12, 16, 20, 26, 32, 40, 50]),
+                rng.randrange(16, 60), rng.choice([20, 26, 32, 38]))
     return ("hold", hold)
 
 
@@ -153,9 +199,10 @@ class Searcher:
     """One worker: an emulator, a committed action list and a coverage mask."""
 
     def __init__(self, seed: int, *, scenario: str = "main",
-                 block: int = 24, horizon: int = 72, attempts: int = 24,
-                 stagnation: int = 22, trace: bool = True,
-                 capacity: int = 1 << 20):
+                 block: int = 24, horizon: int = 64, attempts: int = 12,
+                 stagnation: int = 12, trace: bool = True,
+                 wide_horizon: int = 120,
+                 capacity: int = 1 << 21):
         from rom import image
 
         from .nespy import TracedNESEnv
@@ -163,6 +210,7 @@ class Searcher:
         self.seed = seed
         self.scenario = scenario
         self.block = block
+        self.wide_horizon = wide_horizon
         self.horizon = horizon
         self.attempts = attempts
         self.stagnation_limit = stagnation
@@ -177,9 +225,11 @@ class Searcher:
         #: instruction starts of the recovered graph, and which were executed
         self.starts = self._graph_starts()
         self.covered = np.zeros(0x10000, dtype=bool)
+        self.scratch = np.zeros(0x10000, dtype=bool)
         self.style = ("hold", RIGHT | B)
         self.stagnation = 0
         self.best_key = None
+        self.stage_key = None
         self.deaths = 0
         self.game_overs = 0
         self.escalations = 0
@@ -191,9 +241,14 @@ class Searcher:
         self.area_types: set[int] = set()
         self.warp_values: set[int] = set()
         self.oper_modes: set[int] = set()
+        self.players: set[int] = set()
         self.in_game_over = False
+        self.last_lives = None
         self.continue_wanted = False
         self.continues = 0
+        self.wide = 0
+        self.dropped = 0
+        self.debug = False
 
     # -- helpers -----------------------------------------------------------
 
@@ -229,6 +284,22 @@ class Searcher:
         """Record what the committed stream has reached."""
         ram = self.ram
         self.oper_modes.add(int(ram[OPER_MODE]))
+        self.players.add(int(ram[PLAYERS]))
+        # a game over and the death that caused it both happen while the pad
+        # is ignored, i.e. on the non-interactive path, so they are counted
+        # here rather than in `register_progress`
+        lives = int(ram[LIVES])
+        if self.last_lives is not None and 0 <= lives < self.last_lives:
+            self.deaths += 1
+        self.last_lives = lives
+        over = lives == 255 or int(ram[OPER_MODE]) == 3
+        if over and not self.in_game_over:
+            self.game_overs += 1
+            self.continue_wanted = True
+            self.events.append({"frame": len(self.actions),
+                                "what": "game over",
+                                "world": int(ram[WORLD]) + 1})
+        self.in_game_over = over
         self.warp_values.add(int(ram[WARP_ZONE]))
         if int(ram[OPER_MODE]) == 1:
             self.area_styles.add(int(ram[AREA_STYLE]))
@@ -246,24 +317,35 @@ class Searcher:
 
     # -- scoring -----------------------------------------------------------
 
-    def progress_key(self, start: dict, end: dict, worst: dict) -> tuple:
-        """Lexicographic: survival, then stage, then position."""
-        alive = 0
+    def progress_key(self, start: dict, end: dict, worst: dict,
+                     horizon: int) -> tuple:
+        """Lexicographic: how long it survived, then stage, then position.
+
+        Survival is graded rather than binary.  A plan is scored by the
+        fraction of its horizon that passed before the first death, fall or
+        game over, in tenths, so that when nothing gets past an obstacle the
+        plan that gets furthest before dying is still preferred to one that
+        dies at once -- and only the first `block` frames of it are committed,
+        which are the safe ones.  A plan that survives the whole horizon
+        scores 1.0, and so does standing still, which is why `step_interactive`
+        drops the plans that do not move once progress has stalled.
+        """
+        alive = round(min(worst["bad_at"], horizon) / horizon, 1)
         if worst["game_over"]:
-            alive = -2
-        elif worst["died"]:
-            alive = -1
-        elif worst["fallen"]:
-            alive = -1
+            alive -= 1
         if self.scenario == "gameover":
             # the point of this scenario is the game-over and continue paths,
             # so losing a life is the objective rather than the hazard
             alive = -alive
         height = 0
-        if self.scenario == "ceiling":
-            # the warp zone above the exit pipe of 1-2 is reached by staying
-            # high, so height is scored before x there and nowhere else
-            height = (255 - end["y"]) // 16 if end["yhigh"] <= 1 else 0
+        if (self.scenario == "ceiling" and end["area_type"] == 2
+                and end["x"] > 1500 and end["yhigh"] <= 1):
+            # the warp zone of world 1-2 sits above the pipe that exits the
+            # underground area: a player who arrives at the end of that area
+            # along the ceiling walks into it, and one who arrives along the
+            # floor takes the pipe.  Height is scored ahead of x there and
+            # nowhere else, so the rest of the game is played as in `main`.
+            height = min((255 - end["y"]) // 16, 12)
         return (alive, end["world"], end["level"], end["area"], height,
                 end["x"] // 16)
 
@@ -275,37 +357,53 @@ class Searcher:
         Returns `(end, worst, new, pcs)`: the state afterwards, the worst thing
         that happened anywhere inside the plan, how many graph nodes the plan
         executed that the committed stream never has, and the distinct program
-        counters it fetched (empty when `record` is false).
+        counters it fetched as a 64 Ki-entry mask, or `_UNTRACED`.
+
+        The mask is the searcher's one scratch buffer, so a caller that wants
+        to keep it has to `absorb` it before the next `run_plan`.
         """
         start_lives = int(self.ram[LIVES])
-        worst = {"died": False, "game_over": False, "fallen": False}
+        horizon = max(1, len(actions))
+        worst = {"died": False, "game_over": False, "fallen": False,
+                 "bad_at": horizon}
         if record:
             self.lib.TraceClear(self.handle)
             self.lib.EnableTrace(self.handle, 1)
         ram = self.ram
-        for action in actions:
+        for index, action in enumerate(actions):
             self.advance(action)
+            bad = False
             if int(ram[OPER_MODE]) == 3 or int(ram[LIVES]) == 255:
-                worst["game_over"] = True
+                worst["game_over"] = bad = True
             if int(ram[LIVES]) < start_lives or int(ram[ENGINE_SUB]) in (6, 11):
-                worst["died"] = True
+                worst["died"] = bad = True
             if int(ram[PLAYER_Y_HIGH]) >= 2:
-                worst["fallen"] = True
+                worst["fallen"] = bad = True
+            if bad and worst["bad_at"] == horizon:
+                worst["bad_at"] = index
         new = 0
-        pcs = _EMPTY
+        pcs = _UNTRACED
         if record:
-            self.lib.EnableTrace(self.handle, 0)
+            # the drain has to happen before the disable: disabling the native
+            # tracer clears its buffer (`EnableTrace` in lib_nes_env.cpp)
             events = self.traced.drain()
+            self.lib.EnableTrace(self.handle, 0)
             if len(events):
-                pcs = np.unique(events["pc"])
-                new = int(np.count_nonzero(self.starts[pcs]
-                                           & ~self.covered[pcs]))
+                # a scatter into a 64 KiB mask, not np.unique: a 72-frame plan
+                # is about 700,000 events and sorting them costs more than the
+                # emulation did
+                if self.traced.dropped:
+                    self.dropped += int(self.traced.dropped)
+                self.scratch[:] = False
+                self.scratch[events["pc"]] = True
+                pcs = self.scratch
+                new = int(np.count_nonzero(pcs & self.starts & ~self.covered))
         return self.state(), worst, new, pcs
 
     def absorb(self, pcs) -> None:
         """Fold a committed plan's program counters into the coverage mask."""
-        if len(pcs):
-            self.covered[pcs] = True
+        if pcs is not _UNTRACED:
+            self.covered |= pcs
 
     def commit(self, actions: list[int]) -> None:
         self.actions.extend(actions)
@@ -361,6 +459,16 @@ class Searcher:
                         break
                 self.note()
                 continue
+            if self.scenario == "gameover":
+                # no search: walking right without jumping meets the first
+                # enemy of world 1-1, which is the cheapest way to spend a
+                # life.  Three of them reach the game-over mode, and the
+                # title screen afterwards takes the continue path.
+                for _ in range(8):
+                    self.advance(RIGHT)
+                    self.actions.append(RIGHT)
+                self.note()
+                continue
             self.step_interactive()
             if progress_every and len(self.actions) - last_report >= progress_every:
                 last_report = len(self.actions)
@@ -373,80 +481,131 @@ class Searcher:
                       f"esc {self.escalations} fast {self.fast_blocks}",
                       flush=True)
 
-    def step_interactive(self) -> None:
-        start = self.state()
-        self.env._backup()
-        # the fast path: keep running the style that is working.  One emulated
-        # frame per committed frame, plus the tracer, which is what makes a
-        # whole-game run affordable.
-        actions = plan_style(self.style, self.block)
-        end, worst, _, pcs = self.run_plan(actions, record=self.trace)
-        if (not worst["died"] and not worst["game_over"]
-                and not worst["fallen"]
-                and (end["world"], end["level"], end["area"],
-                     end["x"]) >= (start["world"], start["level"],
-                                   start["area"], start["x"] + 8)):
-            self.fast_blocks += 1
-            self.absorb(pcs)
-            self.commit(actions)
-            self.register_progress(start, end)
-            return
+    @staticmethod
+    def key_of(state: dict) -> tuple:
+        return (1.0, state["world"], state["level"], state["area"], 0,
+                state["x"] // 16)
 
-        # escalate: evaluate plans over the whole horizon from the checkpoint,
-        # so a fall, a death or a game over is scored before anything is kept
-        self.escalations += 1
-        styles = list(FIXED_STYLES) + [random_style(self.rng)
-                                       for _ in range(self.attempts)]
+    def order(self, scored: list, stuck: bool) -> list:
+        jitter = {id(row): self.rng.random() for row in scored}
+        if stuck:
+            # coverage first: this is what leaves a corridor, a staircase or a
+            # maze that the progress key on its own cannot leave, and it is
+            # the sense in which the search is coverage-guided
+            scored.sort(key=lambda row: (row[0][0], row[1], row[0][1:],
+                                         jitter[id(row)]), reverse=True)
+        else:
+            scored.sort(key=lambda row: (row[0], row[1], jitter[id(row)]),
+                        reverse=True)
+        return scored
+
+    def evaluate(self, start: dict, styles: list,
+                 horizon: int | None = None) -> list:
         scored = []
         for style in styles:
             self.env._restore()
-            plan = plan_style(style, self.horizon)
-            end, worst, new, _ = self.run_plan(plan, record=self.trace)
-            scored.append((self.progress_key(start, end, worst), new, style))
-        stuck = self.stagnation >= self.stagnation_limit
-        if stuck:
-            # coverage first: this is what leaves a corridor, a staircase or a
-            # maze the progress key cannot leave, and it is the sense in which
-            # the search is coverage-guided
-            scored.sort(key=lambda row: (row[0][0], row[1], row[0][1:]),
-                        reverse=True)
-            if self.rng.random() < 0.3:
-                head = scored[:4]
-                self.rng.shuffle(head)
-                scored = head + scored[4:]
+            plan = plan_style(style, horizon or self.horizon)
+            end, worst, new, _ = self.run_plan(
+                plan, record=self.trace and self.stuck())
+            scored.append((self.progress_key(start, end, worst, len(plan)),
+                           new, style, end))
+        return self.order(scored, self.stuck())
+
+    def step_interactive(self) -> None:
+        """Evaluate over the horizon, commit only `block` frames of it.
+
+        Three stages.  Stage zero is one plan, the style that is already
+        working, and it is what runs along an open stretch of a level: the
+        horizon is still evaluated, so a pit, a death or a game over anywhere
+        inside it is seen before any of it is kept, and only the first `block`
+        frames are committed, which leaves the next checkpoint far enough from
+        the hazard to do something about it.  Stage one is the handful of
+        styles that clear an ordinary obstacle.  Stage two is the wide draw.
+        """
+        start = self.state()
+        self.env._backup()
+        scored = self.evaluate(start, [self.style])
+        if scored[0][0] > self.key_of(start):
+            self.fast_blocks += 1
         else:
-            scored.sort(key=lambda row: (row[0], row[1]), reverse=True)
+            self.escalations += 1
+            scored = self.order(scored + self.evaluate(start,
+                                                       list(NEAR_STYLES)),
+                                self.stuck())
+            if self.stuck() or scored[0][0][0] < 0 \
+                    or scored[0][0] <= self.key_of(start):
+                self.wide += 1
+                scored = self.order(scored + self.evaluate(start, [
+                    style for style in FIXED_STYLES
+                    if style not in NEAR_STYLES
+                ] + [random_style(self.rng)
+                     for _ in range(self.attempts
+                                    * (2 if self.stuck() else 1))],
+                    horizon=self.wide_horizon), self.stuck())
+        if self.stuck():
+            # standing still scores as well as surviving, and a pit with an
+            # enemy on the far side is a place where nothing survives, so a
+            # stalled search would stand there until the game timer ran out.
+            # Once stalled, only plans that actually move are considered.
+            moving = [row for row in scored
+                      if abs(row[3]["x"] - start["x"]) >= 16
+                      or (row[3]["world"], row[3]["level"], row[3]["area"])
+                      != (start["world"], start["level"], start["area"])]
+            if moving:
+                scored = moving
         style = scored[0][2]
+        if self.stuck() and self.rng.random() < 0.3:
+            style = self.rng.choice(scored[:4])[2]
         self.env._restore()
         plan = plan_style(style, self.block)
         _, _, _, pcs = self.run_plan(plan, record=self.trace)
         self.absorb(pcs)
-        self.style = style
+        hold = style[1] if style[0] in ("hold", "pulse", "jump") else style[2]
+        self.style = style if hold & RIGHT else ("hold", RIGHT | B)
         self.commit(plan)
         self.register_progress(start, self.state())
+        if self.debug:
+            after = self.state()
+            print(f"    f{len(self.actions)} {start['x']}->{after['x']} "
+                  f"w{after['world']}-{after['level']}/{after['area']} "
+                  f"eng{after['engine']} lives{after['lives']} "
+                  f"stag{self.stagnation} esc{self.escalations} "
+                  f"wide{self.wide} cov{int(self.covered[self.starts].sum())} "
+                  f"{style}", flush=True)
+
+    def stuck(self) -> bool:
+        return self.stagnation >= self.stagnation_limit
 
     def register_progress(self, start: dict, end: dict) -> None:
-        key = (end["world"], end["level"], end["area"], end["x"])
-        if self.best_key is None or key > self.best_key:
-            self.best_key = key
+        """Count blocks since the furthest point *of the current attempt*.
+
+        Not since the furthest point of the run.  Measuring against the whole
+        run's best makes `stuck()` true for ever after the first death, level
+        change or game over, because the attempt that follows starts behind
+        it; the search then takes the wide draw on every block and spends two
+        orders of magnitude more emulation than it needs to.  The attempt is
+        reset when the area changes and when the player is suddenly a long way
+        behind, which is what a death or a restart looks like from here.
+        """
+        stage = (end["world"], end["level"], end["area"])
+        restarted = (self.best_key is not None
+                     and end["x"] + 160 < self.best_key)
+        if stage != self.stage_key or restarted:
+            self.stage_key = stage
+            self.best_key = end["x"]
+            self.stagnation = 0
+            return
+        if self.best_key is None or end["x"] > self.best_key:
+            self.best_key = end["x"]
             self.stagnation = 0
         else:
             self.stagnation += 1
-        over = int(self.ram[LIVES]) == 255 or int(self.ram[OPER_MODE]) == 3
-        if over and not self.in_game_over:
-            self.game_overs += 1
-            self.continue_wanted = True
-            self.events.append({"frame": len(self.actions),
-                                "what": "game over",
-                                "world": int(self.ram[WORLD]) + 1})
-        self.in_game_over = over
-        if end["lives"] < start["lives"]:
-            self.deaths += 1
 
     # -- output ------------------------------------------------------------
 
     def manifest(self, wall: float) -> dict:
         state = self.state()
+        furthest = max((stage[:2] for stage in self.stages), default=None)
         return {
             "scenario": self.scenario,
             "seed": self.seed,
@@ -455,17 +614,20 @@ class Searcher:
             "search_overhead": round(self.emulated / max(1, len(self.actions)), 2),
             "block": self.block,
             "horizon": self.horizon,
+            "wide_horizon": self.wide_horizon,
             "attempts_per_escalation": self.attempts + len(FIXED_STYLES),
             "fast_path_blocks": self.fast_blocks,
             "escalations": self.escalations,
+            "wide_escalations": self.wide,
+            "trace_events_dropped_by_the_capacity_cap": self.dropped,
             "areas_entered": len(self.stages),
             "stages": sorted([list(stage) + [frame]
                               for stage, frame in self.stages.items()]),
             "best_world_level": [state["world"] + 1, state["level"] + 1],
-            "furthest_world_level": [max(w for w, _, _ in self.stages) + 1,
-                                     max(l for _, l, _ in self.stages) + 1]
-            if self.stages else None,
+            "furthest_world_level": ([furthest[0] + 1, furthest[1] + 1]
+                                     if furthest else None),
             "oper_modes_seen": sorted(self.oper_modes),
+            "number_of_players_cell_values_seen": sorted(self.players),
             "area_types_seen": sorted(self.area_types),
             "area_styles_seen": sorted(self.area_styles),
             "warp_zone_control_values_seen": sorted(self.warp_values),
@@ -526,10 +688,12 @@ def verify(path: str) -> dict:
 
 def _job(spec):
     (seed, scenario, frames, block, horizon, attempts, stagnation, directory,
-     budget, verbose) = spec
+     budget, verbose, debug, wide_horizon) = spec
     started = time.time()
     searcher = Searcher(seed, scenario=scenario, block=block, horizon=horizon,
-                        attempts=attempts, stagnation=stagnation)
+                        attempts=attempts, stagnation=stagnation,
+                        wide_horizon=wide_horizon)
+    searcher.debug = debug
     try:
         searcher.play(frames,
                       deadline=started + budget if budget else None,
@@ -546,9 +710,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--seeds", default="1")
     parser.add_argument("--frames", type=int, default=120000)
     parser.add_argument("--block", type=int, default=24)
-    parser.add_argument("--horizon", type=int, default=72)
-    parser.add_argument("--attempts", type=int, default=24)
-    parser.add_argument("--stagnation", type=int, default=22)
+    parser.add_argument("--horizon", type=int, default=64)
+    parser.add_argument("--attempts", type=int, default=12)
+    parser.add_argument("--wide-horizon", type=int, default=120)
+    parser.add_argument("--stagnation", type=int, default=12)
     parser.add_argument("--budget", type=float, default=0.0,
                         help="wall-clock seconds per worker, 0 for no limit")
     parser.add_argument("--workers", type=int, default=1)
@@ -556,6 +721,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--verify", default=None,
                         help="replay a recorded file instead of searching")
     parser.add_argument("--quiet", action="store_true")
+    parser.add_argument("--debug", action="store_true",
+                        help="print every escalation")
     args = parser.parse_args(argv)
 
     if args.verify:
@@ -565,7 +732,8 @@ def main(argv: list[str] | None = None) -> int:
     seeds = [int(piece) for piece in args.seeds.split(",")]
     specs = [(seed, args.scenario, args.frames, args.block, args.horizon,
               args.attempts, args.stagnation, args.directory, args.budget,
-              not args.quiet) for seed in seeds]
+              not args.quiet, args.debug, args.wide_horizon)
+             for seed in seeds]
     if len(specs) == 1:
         results = [_job(specs[0])]
     else:

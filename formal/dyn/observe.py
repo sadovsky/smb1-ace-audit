@@ -115,6 +115,11 @@ class Observation:
         self.dispatch_mismatches: list = []
         #: (site, A) observed with (A and $7F) past the end of the table
         self.dispatch_oob: list = []
+        #: positive findings, with the frame they fired on.  The three checks
+        #: are a fetch that is not a recorded instruction start, a fetch
+        #: outside $8000-$FFFF, and a dispatch index at or past the end of its
+        #: table.  `--halt-on-finding` stops the run at the first one.
+        self.findings: list = []
 
     def merge(self, other: "Observation") -> "Observation":
         for index, value in enumerate(other.pc_seen):
@@ -166,6 +171,7 @@ class Observation:
         self.dispatch_confirmed.update(other.dispatch_confirmed)
         self.dispatch_mismatches.extend(other.dispatch_mismatches)
         self.dispatch_oob.extend(other.dispatch_oob)
+        self.findings.extend(other.findings)
         return self
 
 
@@ -178,14 +184,21 @@ PROGRESS_CELLS = {
     0x0772: "game-engine sub-routine selector",
     0x0E: "player state",
     0x0757: "warp zone control",
+    0x077A: "number of players (0 one player, 1 two players)",
+    0x074E: "area type (0 water, 1 ground, 2 underground, 3 castle)",
+    0x0733: "area style, the $9743 dispatch index",
 }
 
 
-def run_tracer(frames: int, model_name: str, seed: int) -> Observation:
+def run_tracer(frames: int, model_name: str, seed: int,
+               halt_on_finding: bool = False) -> Observation:
     """Record everything with the py65-based tracer."""
     cfg = graph()
     cfg_sites = dispatch_tables(cfg)
     entries = {site: info.entries for site, info in cfg.dispatches.items()}
+    start_flags = bytearray(0x10000)
+    for address in cfg.instruction_starts:
+        start_flags[address] = 1
     state = Observation(cfg_sites)
     state.engines["tracer"] = 1
     state.seeds.append({"engine": "tracer", "model": model_name,
@@ -222,8 +235,15 @@ def run_tracer(frames: int, model_name: str, seed: int) -> Observation:
     armed = [False, 0, 0]
 
     def on_fetch(pc, _pc_seen=pc_seen, _special=special, _mpu=mpu,
-                 _c=counters, _armed=armed):
+                 _c=counters, _armed=armed, _starts=start_flags):
         _pc_seen[pc] = 1
+        if not _starts[pc]:
+            state.findings.append({
+                "check": ("fetch outside $8000-$FFFF" if pc < 0x8000 else
+                          "fetch at an address that is not an instruction "
+                          "start of the recovered graph"),
+                "frame": tracer.frame, "pc": f"0x{pc:04X}",
+                "a": _mpu.a, "x": _mpu.x, "y": _mpu.y, "sp": _mpu.sp})
         sp = _mpu.sp
         if sp < _c["sp_min"]:
             _c["sp_min"] = sp
@@ -240,6 +260,11 @@ def run_tracer(frames: int, model_name: str, seed: int) -> Observation:
             if index >= len(table):
                 state.dispatch_oob.append(
                     (site, accumulator, pc, len(table)))
+                state.findings.append({
+                    "check": "dispatch index at or past the end of its table",
+                    "frame": tracer.frame, "site": f"0x{site:04X}",
+                    "a": accumulator, "index": index,
+                    "table_entries": len(table), "landed": f"0x{pc:04X}"})
             elif pc != table[index]:
                 state.dispatch_mismatches.append(
                     (site, accumulator, pc, table[index]))
@@ -274,6 +299,8 @@ def run_tracer(frames: int, model_name: str, seed: int) -> Observation:
         if tracer.jammed:
             state.jams[f"0x{tracer.jammed[0]:04X}"] += 1
             break
+        if halt_on_finding and state.findings:
+            break
         for cell in progress:
             progress[cell][ram[cell & 0x7FF]] = 1
 
@@ -296,13 +323,17 @@ def run_tracer(frames: int, model_name: str, seed: int) -> Observation:
     return state
 
 
-def run_nespy(frames: int, model_name: str, seed: int) -> Observation:
+def run_nespy(frames: int, model_name: str, seed: int,
+              halt_on_finding: bool = False) -> Observation:
     """Record observations 1, 2 and 3 with nes-py's native tracer."""
     from rom import image
 
     from .nespy import TracedNESEnv
 
-    cfg_sites = dispatch_tables(graph())
+    cfg = graph()
+    cfg_sites = dispatch_tables(cfg)
+    starts_mask = np.zeros(0x10000, dtype=bool)
+    starts_mask[list(cfg.instruction_starts)] = True
     state = Observation(cfg_sites)
     state.engines["nespy"] = 1
     state.seeds.append({"engine": "nespy", "model": model_name,
@@ -324,6 +355,17 @@ def run_nespy(frames: int, model_name: str, seed: int) -> Observation:
         instructions += len(events)
         pcs = events["pc"]
         seen[pcs] = 1
+        off = ~starts_mask[pcs]
+        if off.any():
+            for pc in np.unique(pcs[off]):
+                state.findings.append({
+                    "check": ("fetch outside $8000-$FFFF" if pc < 0x8000 else
+                              "fetch at an address that is not an instruction "
+                              "start of the recovered graph"),
+                    "frame": frame, "pc": f"0x{int(pc):04X}"})
+            if halt_on_finding:
+                state.frames = frame + 1
+                break
         stacks = events["sp"]
         sp_min = min(sp_min, int(stacks.min()))
         sp_max = max(sp_max, int(stacks.max()))
@@ -355,11 +397,11 @@ def run_nespy(frames: int, model_name: str, seed: int) -> Observation:
 
 
 def _job(spec):
-    engine, frames, model_name, seed = spec
+    engine, frames, model_name, seed, halt = spec
     sys.path.insert(0, os.getcwd())
     if engine == "tracer":
-        return run_tracer(frames, model_name, seed)
-    return run_nespy(frames, model_name, seed)
+        return run_tracer(frames, model_name, seed, halt)
+    return run_nespy(frames, model_name, seed, halt)
 
 
 def ranges(values: list[int]) -> list:
@@ -580,24 +622,57 @@ def main(argv: list[str] | None = None) -> int:
                         choices=("tracer", "nespy"))
     parser.add_argument("--frames", type=int, default=6000,
                         help="frames per worker")
-    parser.add_argument("--workers", type=int, default=4)
-    parser.add_argument("--models", default="mixed,run,explore,random")
+    parser.add_argument("--workers", type=int, default=4,
+                        help="processes to run at once")
+    parser.add_argument("--runs", type=int, default=None,
+                        help="runs in total, one input model each in turn; "
+                             "defaults to --workers, which is what the "
+                             "earlier reports were produced with.  Set it "
+                             "higher than --workers to cover more input "
+                             "models than there are cores to spare")
+    parser.add_argument("--models", default="mixed,run,explore,random",
+                        help="comma-separated input models.  A model may "
+                             "carry its own frame count as `name@frames`, "
+                             "which is what lets a 70,000-frame replay and a "
+                             "12,000-frame open-loop model share one run "
+                             "without the short one costing the long one's "
+                             "time")
     parser.add_argument("--seed", type=int, default=20261125)
     parser.add_argument("--out", default=None)
     parser.add_argument("--domains-out", default=None)
+    parser.add_argument("--coverage-out", default=None,
+                        help="write the executed instruction starts, so that "
+                             "formal.dyn.coverage_gaps can break down what "
+                             "was not executed")
+    parser.add_argument("--halt-on-finding", action="store_true",
+                        help="stop a run at the first fetch that is not a "
+                             "recorded instruction start, the first fetch "
+                             "outside $8000-$FFFF, or the first dispatch "
+                             "index at or past the end of its table")
     args = parser.parse_args(argv)
 
     from rom import image
 
     models = args.models.split(",")
-    specs = [(args.engine, args.frames, models[index % len(models)],
-              args.seed + index) for index in range(args.workers)]
+    runs = args.runs or args.workers
+    parsed = []
+    for name in models:
+        model_name, _, count = name.partition("@")
+        parsed.append((model_name, int(count) if count else args.frames))
+    models = [name for name, _ in parsed]
+    specs = [(args.engine, parsed[index % len(parsed)][1],
+              parsed[index % len(parsed)][0],
+              args.seed + index, args.halt_on_finding)
+             for index in range(runs)]
+    # longest first, so a 70,000-frame replay is not the last thing a pool of
+    # four workers starts
+    specs.sort(key=lambda spec: -spec[1])
     started = time.time()
-    if args.workers == 1:
+    if len(specs) == 1:
         results = [_job(specs[0])]
     else:
-        with Pool(args.workers) as pool:
-            results = pool.map(_job, specs)
+        with Pool(min(args.workers, len(specs))) as pool:
+            results = pool.map(_job, specs, chunksize=1)
     merged = results[0]
     for other in results[1:]:
         merged.merge(other)
@@ -613,7 +688,9 @@ def main(argv: list[str] | None = None) -> int:
             "nes_py_commit": git_commit("/home/sadovsky/code/nes-py"),
             "engine": args.engine,
             "workers": args.workers,
+            "runs_launched": len(specs),
             "frames_per_worker": args.frames,
+            "frames_per_run": {name: count for name, count in parsed},
             "frames_total": merged.frames,
             "instructions_total": merged.instructions,
             "runs": merged.seeds,
@@ -624,6 +701,9 @@ def main(argv: list[str] | None = None) -> int:
                 "see formal/results/reports/dyn_crossvalidation.json; the "
                 "tracer engine is the one validated there"),
         },
+        "findings": merged.findings,
+        "findings_count": len(merged.findings),
+        "halt_on_finding": args.halt_on_finding,
         "limitations": [
             "observed over the inputs that were run; no bound follows",
             "the device stub is not a PPU or APU (formal.dyn.tracer lists what "
@@ -644,6 +724,28 @@ def main(argv: list[str] | None = None) -> int:
         with open(args.out, "w") as handle:
             json.dump(report, handle, indent=2, sort_keys=True)
         print(f"wrote {args.out}")
+    if args.coverage_out:
+        executed = sorted(pc for pc, flag in enumerate(merged.pc_seen) if flag)
+        starts = cfg.instruction_starts
+        payload = {
+            "status": "observed",
+            "manifest": report["manifest"],
+            "graph_instruction_starts": len(starts),
+            "executed_instruction_starts": ranges(
+                [pc for pc in executed if pc in starts]),
+            "executed_not_an_instruction_start": [
+                f"0x{pc:04X}" for pc in executed if pc not in starts],
+            "reading": ("executed_instruction_starts is the set of graph "
+                        "instruction starts fetched at least once, as "
+                        "integers and [lo, hi] runs.  Status: observed."),
+        }
+        os.makedirs(os.path.dirname(args.coverage_out), exist_ok=True)
+        with open(args.coverage_out, "w") as handle:
+            json.dump(payload, handle, indent=2, sort_keys=True)
+        print(f"wrote {args.coverage_out}")
+    if merged.findings:
+        print("POSITIVE FINDINGS:")
+        print(json.dumps(merged.findings[:20], indent=2))
     if args.domains_out and args.engine == "tracer":
         domains = cell_domains(merged)
         domains["manifest"] = report["manifest"]

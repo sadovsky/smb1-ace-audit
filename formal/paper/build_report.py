@@ -157,8 +157,9 @@ def build():
     full = load("reports", "model_validation_full.json")["totals"]
     exh = load("reports", "model_exhaustive_equivalence.json")["totals"]
     cross = load("reports", "dyn_crossvalidation.json")
-    observed = load("reports", "dyn_observations.json")
-    observed2 = load("reports", "dyn_observations_nespy.json")
+    observed = load("reports", "dyn_observations_extended.json")
+    observed2 = load("reports", "dyn_observations_extended_nespy.json")
+    gaps = load("reports", "dyn_coverage_gaps.json")
     storm = load("reports", "dyn_nmi_storm.json")
     timing = load("reports", "interrupt_timing.json")
     init = load("reports", "init_memory.json")
@@ -322,8 +323,9 @@ def build():
         "ignores interrupt timing, which tells us what any proof must "
         "assume. What remains open is whether the table indices and return "
         "addresses stay valid during play. "
-        f"In {n(traced)} traced instructions of ordinary play nothing went "
-        "wrong, which is encouraging and proves nothing.", ABSTRACT))
+        f"In {n(traced)} traced instructions covering every level of the "
+        "game nothing went wrong, which is encouraging and proves "
+        "nothing.", ABSTRACT))
     add(Spacer(1, 4))
     add(NextPageTemplate("two"))
     add(FrameBreak())
@@ -758,7 +760,8 @@ def build():
     add(P(f"&bull; {n(landings['checked'])} uses of the dispatcher all "
           "landed where the list said, and no number was out of range at "
           f"the {sum(1 for s in observed['dispatch_sites'] if s['fetches'])} "
-          "of 18 sites that were reached (Figure 7)."))
+          "of 18 sites that were reached (Figure 7). At 16 sites every "
+          "entry of the list was seen in use."))
     add(P("&bull; The stack stayed between positions "
           + C(f"${sp['min_at_any_fetch']:02X}") + " and "
           + C(f"${sp['max_at_any_fetch']:02X}") + ", well clear of the "
@@ -769,12 +772,24 @@ def build():
         "How much of the program the test runs actually executed.")
     FIG(figures.dispatch_sites(observed),
         "Largest list number seen at each dispatcher site, against the "
-        "list's length. Three sites were never reached.")
-    add(P("<b>The limits are severe.</b> Our automated player only gets "
-          f"through the first world. About {1 - fetched['graph_coverage']:.0%} "
-          "of the program was never executed, including three of the 18 "
-          "dispatcher sites. Rare glitches are precisely what such runs "
-          "miss."))
+        "list's length.")
+    unexec = N - max(fetched["graph_nodes_executed"],
+                     fetched2["graph_nodes_executed"])
+    add(P("<b>How much was exercised.</b> The runs include two published "
+          "full play-throughs replayed from power-on with controller input "
+          "only, which between them visit all 32 levels, both warp zones, "
+          "the ending, game-over and two-player modes. The better-covered "
+          f"engine executed {fetched2['graph_coverage']:.1%} of the "
+          f"program's instructions, leaving {n(unexec)} never run. Most "
+          "of those are branches not taken inside routines that did run; "
+          "a few belong to objects and enemies no level played happens to "
+          "contain; and six are reachable only through an instruction the "
+          "game never executes in play."))
+    add(P("<b>What this is worth.</b> It is good evidence that ordinary "
+          "play, even of the whole game, does not stray. It is weak "
+          "evidence about deliberate glitch play, which is exactly the "
+          "kind of input these runs do not contain, and it bounds "
+          "nothing."))
 
     # ------------------------------------------------------------------ 9
     H("What a reader is trusting")

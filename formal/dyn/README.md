@@ -283,3 +283,149 @@ the inputs get into the game, and scripted inputs are bad at Super Mario Bros.
 `experiments/observe_indices.py`, dies in world 1-1; the replays it records get
 further. Everything not covered is simply unobserved: no conclusion of any kind
 follows from a dispatch site that was never fetched.
+
+## Raising the coverage: whole-game inputs
+
+`search_inputs.py` searched greedily on the player's x position with a
+one-block horizon. That objective walks into every pit -- a block that leaves
+the player in mid-air over a hole scores higher than one that stops at its
+edge, because the fall has not killed anybody yet -- so its twelve seeds spent
+most of 16,000 frames dying in world 1-1 and reached 1-3 at best. Three
+dispatch sites were never fetched and 41% of the graph was never executed.
+
+`search_play.py` is the replacement. It keeps the checkpoint idea and changes
+four things:
+
+| | |
+|---|---|
+| **receding horizon** | plans are evaluated over `--horizon` frames and only the first `--block` of the winner are committed, so a fall, a death or a game over inside the horizon is scored before anything is kept, and the next checkpoint is far enough from the hazard to do something about it |
+| **graded survival** | a plan is scored by the fraction of its horizon that passed before the first death, fall or game over, so where nothing survives -- a pit with an enemy on the far side -- the plan that gets furthest before dying still beats one that dies at once |
+| **three stages** | stage zero is the one style that is already working, which is what runs along an open stretch; stage one is the handful that clear a pipe, a pit, a staircase or a stretch of water; stage two is the wide draw, and includes **retreat** plans, which back up before running and jumping. Backing up is the one manoeuvre a search greedy in x cannot find for itself, because its first frames make the score worse, and it is what clears the wide pits |
+| **coverage guidance** | candidate plans are run with nes-py's instruction tracer on and scored by how many graph nodes they execute that the search has never executed. Once progress has stalled for `--stagnation` blocks that becomes the primary objective and plans that do not move are dropped, which is what leaves a corridor, a staircase or a maze the progress key cannot leave |
+
+Scenarios: `main` plays from power-on, `twoplayer` picks 2 PLAYER GAME off the
+title screen first, `gameover` spends its lives on purpose and takes the
+A-held-with-START continue path, and `ceiling` scores height ahead of x at the
+end of the underground area of world 1-2, where the warp zone sits above the
+pipe that exits it.
+
+A replay is still only a sequence of controller bytes from power-on on the
+unmodified image: nothing is written into RAM and no save state from elsewhere
+is loaded. `_backup`/`_restore` re-run candidate plans from the current
+checkpoint, and `--verify` replays the committed bytes from power-on and
+checks that they reach the same areas.
+
+    python3 -m formal.dyn.search_play --scenario main --seeds 7 \
+        --frames 200000 --budget 6000
+    python3 -m formal.dyn.search_play --verify ~/big/smb1-formal/replays/play_main_7.json
+
+`formal.dyn.inputs` replays one as the input model `play:<scenario>:<seed>`.
+
+## What was not executed
+
+`coverage_gaps.py` attributes every instruction start of the graph to a
+routine -- an entry with an incoming `call`, `dispatch` or `interrupt` edge,
+plus the three vectors and the JumpEngine -- by a nearest-entry breadth-first
+search over the edges that stay inside a routine, and reports the routines
+with unexecuted nodes together with a *reason*. Every reason is an
+interpretation of the graph and the coverage set, not a measurement, and the
+JSON says so in each row's key name.
+
+    python3 -m formal.dyn.observe --engine nespy ... \
+        --coverage-out formal/results/reports/dyn_coverage_extended_nespy.json
+    python3 -m formal.dyn.coverage_gaps \
+        --coverage formal/results/reports/dyn_coverage_extended*.json \
+        --baseline formal/results/reports/dyn_observations.json \
+        --out formal/results/reports/dyn_coverage_gaps.json
+
+`observe.py --halt-on-finding` stops a run at the first fetch that is not a
+recorded instruction start, the first fetch outside `$8000-$FFFF` and the
+first dispatch index at or past the end of its table, and records the frame it
+fired on under `findings`.
+
+## Replaying a published input movie
+
+`fm2.py` converts an FCEUX `.fm2` movie to controller bytes and replays it.
+An `.fm2` is plain text, one line per frame, `|commands|port0|port1|port2|`
+with each port eight characters in the order **R L D U T S B A** -- the same
+high-to-low order as the byte `NESEnv.step` takes -- so the conversion is one
+shift per character and there is no save state, no memory patch and no
+emulator-specific state in what is used. The movie file itself is not
+redistributed; only the controller bytes are written, under
+`~/big/smb1-formal/replays`.
+
+A tool-assisted movie is frame-perfect against the timing of the emulator it
+was recorded on, so a desync is the expected outcome. Two things make it work
+here anyway:
+
+* the image is the one the movies were recorded against. FCEUX's
+  `romChecksum` is the MD5 of the image **without** its iNES header, and it
+  matches `$SMB1_ROM` byte for byte.
+* frame zero of these movies carries a power-cycle command, and
+  `NESEnv.reset()` has already powered on, so the movie is two frames ahead.
+  `--scan` tries offsets and `--offset -2` lines them up. At any other
+  offset the same movies die in world 1-1 within a few hundred frames.
+
+`--verify` is the replay itself: it reports which areas of the game the bytes
+actually entered, read out of `$075F`/`$075C`/`$0760`, and how many lives were
+lost, and a movie that never leaves world 1 is refused rather than counted.
+`--tail` appends frames after the movie's last input -- B on one cadence,
+START on another -- because the screen after world 8 waits for B, and that is
+what lets the end-of-game sequence run out and the second quest begin.
+
+Of five movies tried, two replay: a warpless run that plays **1-1 through 7-4
+and 8-1** with 9 deaths, and an any% run that takes the warp zones of 1-2 and
+4-2, plays **8-1 to 8-4 with no deaths**, finishes the game (`$0770` reaches
+2, the victory mode, and its five tasks all run) and starts the second quest
+(the hard-mode cell goes 0 to 1). Their union is every level in the game.
+Three others desync and are not counted.
+
+## Coverage, before and after
+
+Status of every number: **observed**. No bound follows from any of it: a node
+that was not executed is unobserved, not unreachable.
+
+| | before | after |
+|---|---|---|
+| graph nodes executed, tracer engine | 6,322 of 10,708 (59.0%) | **10,122 (94.5%)** |
+| graph nodes executed, nes-py engine | 6,430 (60.0%) | **10,496 (98.0%)** |
+| frames, tracer / nes-py | 140,000 / 400,000 | 361,572 / 708,010 |
+| instructions, tracer / nes-py | 1.35 G / 3.86 G | 3.48 G / 6.81 G |
+| dispatch sites fetched | 15 of 18 | **18 of 18** |
+| worlds reached | 1 | **1-8, and the second quest** |
+| area types reached | ground, underground | **all four** (water, ground, underground, castle) |
+| area styles (`$0733`, the `$9743` index) | 0 only | **0, 1, 2** |
+| players (`$077A`) | one | **one and two** |
+| fetches that are not an instruction start | 0 | **0** |
+| fetches outside `$8000-$FFFF` | 0 | **0** |
+| dispatch indices at or past the end of a table | 0 | **0** |
+| dispatch landings checked against their table | 633,547 | **2,361,744** |
+| executed instructions that overlap | 5 pairs | 9 pairs, all 9 already recorded by the graph |
+
+`RAM[$0733]` at the fetch of `$9740` was previously unobservable, because
+`$9740` was never fetched. It is now `{0, 1, 2}` and nothing else: exactly the
+three entries the corrected table at `$9746` has, never the 3 or 4 that the
+heuristic reader's phantom entries would have allowed. The other two
+single-cell questions are unchanged: `RAM[$0778]` at `$8168` is
+`{$10, $11, $14, $15}` with bit 7 never set, and `RAM[$071F]` at `$92B0` is
+`0..7`.
+
+Of the 18 dispatch sites, 16 were observed taking **every** index their table
+has. The two exceptions are `$C27F` (55 entries, indices 0-53: the enemy
+identifier `$36` never spawned) and `$C987` (7 entries, indices 0-5).
+
+Writes into the stack page by instructions that are not pushes: 31 program
+counters, covering `$0100-$015F` and nothing above it, while the stack pointer
+never went below `$E6`. The stack and the image's page-one data are therefore
+separated by 134 unused bytes in these runs -- measured, not bounded, and
+still the hazard `LOC-RETURN` is open about.
+
+**What is still unexecuted**: 212 of 10,708 nodes.
+`dyn_coverage_gaps.json` attributes them. 191 are untaken branches inside
+routines that did run; 15 are in six routines whose entry never ran, of which
+five are single dispatch-table entries never selected (`$9994` at `$9664`,
+`$C881` at `$C27F`, `$C7B7` at `$C7A8`, `$C934` at `$C907`, `$D63D` at
+`$C987`) and one is `$FFF0`, which only the IRQ/BRK vector reaches and the
+image executes no `BRK` in ordinary play; one, `$F34A`, is an interior byte of
+an instruction that did execute, i.e. the graph's data-as-code decoding rather
+than something the processor can enter.
