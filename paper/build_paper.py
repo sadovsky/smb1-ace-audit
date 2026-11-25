@@ -354,6 +354,20 @@ def build():
                "out-of-range index.", BODY))
 
     # ---- method / repro ----
+    e.append(P("<b>Instruction-level validation.</b> The frame-sampled fuzz cannot observe transient "
+               "state. We therefore added an optional instruction tracer to the emulator and repeated "
+               "the experiment per instruction. Two filters are armed: a watch on "
+               "<font face='Courier'>$8E04</font>, where the accumulator still holds the dispatch "
+               "index, and a derailment detector that records any instruction executed below "
+               "<font face='Courier'>$8000</font>. On NROM all code is in ROM, so an instruction "
+               "running outside <font face='Courier'>$8000-$FFFF</font> means the program counter has "
+               "entered RAM or I/O, which is the precondition for ACE observed directly rather than "
+               "inferred. Across six controller-only episodes of 4000 frames we recorded 67,675 "
+               "dispatch invocations spanning 17 distinct indices, with a maximum index of 23 against "
+               "a largest table of 55 entries, no dropped events, and <b>zero instructions executed "
+               "outside PRG ROM</b>. This is a per-instruction observation rather than a sample, "
+               "though it remains a search over the states these inputs reached.", BODY))
+
     e.append(P("8&nbsp;&nbsp;Reproducibility", H1))
     e.append(P("The analysis is a few short Python scripts over the ROM: a 6502 linear disassembler, a "
                "recursive-descent tracer that emits the reached code set and the 18 dispatch tables, "

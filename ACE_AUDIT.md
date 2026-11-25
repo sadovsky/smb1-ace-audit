@@ -276,6 +276,38 @@ opcodes execute as NOPs and the run would continue into whatever follows.)
 
 ---
 
+### 6b. Instruction-level validation (native tracer)
+
+The fuzz above samples RAM once per frame, which cannot see transient state.
+That gap is now closed: the emulator carries an optional instruction tracer
+(`rommage/nes-py-fork/nes-py-tracer.patch`), and `native_dispatch.py` uses it to
+observe **every** instruction rather than a per-frame snapshot.
+
+Two filters are armed. The first watches `$8E04`, where the accumulator still
+holds the dispatch index, giving a census of every index the game actually
+takes. The second is the **derailment detector**: it records any instruction
+executed below `$8000`. On NROM all code is in ROM, so an instruction running
+outside `$8000-$FFFF` means the program counter has entered RAM or I/O — the
+precondition for ACE, observed directly instead of inferred.
+
+Six controller-only episodes of 4000 frames:
+
+| measure | value |
+|---|---|
+| dispatch invocations | 67,675 |
+| distinct indices taken | 17 |
+| **max index observed** | **23** (largest table has 55 entries) |
+| events dropped | 0 |
+| **instructions executed outside PRG ROM** | **0** |
+
+The program counter never left PRG ROM, and no dispatch index came close to
+overrunning its table. This is a stronger statement than the frame-granular
+result: it is a per-instruction observation, not a sample.
+
+It remains a *search*, not a proof — it covers the states these inputs reached.
+
+---
+
 ## 7. Reproducing this
 
 Tooling lives in `../gamegenie/`:

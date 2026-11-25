@@ -52,13 +52,14 @@ python3 d65.py 8E04 8E19    # disassemble a CPU address range
 | `audit.py` | the ACE analysis over `trace.json`: index source, bound, and `JMP ($0006)` target per dispatch |
 | `trace_jsonl.py` | writes native CPU instruction events as reproducible JSONL records |
 | `test_audit.py` | regression tests: ROM validation, 6502/JumpEngine semantics, memory mirroring, derived bounds |
+| `native_dispatch.py` | instruction-level dispatch census + derailment detector (needs the tracer-patched `nes-py`) |
 | `fuzz.py` | emulator search: controller-input fuzz watching the index variables and enemy-ID slots (needs the patched `nes-py`) |
 | `inject.py` | focused probe: inject out-of-range enemy IDs into a live slot and watch for derailment (needs the patched `nes-py`) |
 | `ACE_AUDIT.md` | the writeup (incl. the emulator-search results, section 6) |
 | `paper/` | academic-paper-style PDF of the writeup |
 
 `fuzz.py` and `inject.py` need a Game-Genie-patched `nes-py` exposing
-`CheatNESEnv` (point at it with `$CHEAT_ENV_DIR`); the static analysis
+`CheatNESEnv` / `TraceNESEnv` (point at it with `$CHEAT_ENV_DIR`); the static analysis
 (`trace.py`, `audit.py`) needs only the ROM.
 
 The companion patch now exposes optional native instruction tracing. Set
