@@ -288,11 +288,9 @@
         "0xC4A8",
         "0xC5A3",
         "0xC63D",
-        "0xC69C",
-        "0xA060",
-        "0xB905"
+        "0xC69C"
       ],
-      "entry_count": 8,
+      "entry_count": 6,
       "table": "0xC7AB"
     },
     {
@@ -354,11 +352,9 @@
       "entries": [
         "0x974C",
         "0x9778",
-        "0x9A69",
-        "0xBB20",
-        "0xBD9B"
+        "0x9A69"
       ],
-      "entry_count": 5,
+      "entry_count": 3,
       "table": "0x9746"
     },
     {
@@ -413,15 +409,14 @@
   "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
   "summary": {
     "dispatch_sites": 18,
-    "halt_instructions": 3,
-    "instruction_starts": 10710,
-    "occupied_bytes": 22809,
+    "halt_instructions": 2,
+    "instruction_starts": 10708,
+    "occupied_bytes": 22806,
     "overlapping_starts": 10,
-    "undocumented_instructions": 9,
-    "unresolved_transfers": 341
+    "undocumented_instructions": 8,
+    "unresolved_transfers": 340
   },
   "undocumented": [
-    "0xA062",
     "0xD965",
     "0xF34A",
     "0xF3B1",
@@ -1343,11 +1338,6 @@
       "kind": "rts"
     },
     {
-      "address": "0xA062",
-      "detail": "JAM: the processor stops fetching",
-      "kind": "halt"
-    },
-    {
       "address": "0xE14E",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
@@ -1663,11 +1653,6 @@
       "kind": "rts"
     },
     {
-      "address": "0xBE40",
-      "detail": "destination depends on the stack frame",
-      "kind": "rts"
-    },
-    {
       "address": "0x9956",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
@@ -1763,11 +1748,6 @@
       "kind": "rts"
     },
     {
-      "address": "0xD7FF",
-      "detail": "destination depends on the stack frame",
-      "kind": "rts"
-    },
-    {
       "address": "0xD957",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
@@ -1833,17 +1813,17 @@
       "kind": "rts"
     },
     {
-      "address": "0xBDE7",
-      "detail": "destination depends on the stack frame",
-      "kind": "rts"
-    },
-    {
       "address": "0x9BDC",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
     },
     {
       "address": "0x9BF5",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xD7FF",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
     },
@@ -1859,11 +1839,6 @@
     },
     {
       "address": "0xE0A4",
-      "detail": "destination depends on the stack frame",
-      "kind": "rts"
-    },
-    {
-      "address": "0xBE01",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
     },
@@ -1948,11 +1923,6 @@
       "kind": "rts"
     },
     {
-      "address": "0xBB95",
-      "detail": "destination depends on the stack frame",
-      "kind": "rts"
-    },
-    {
       "address": "0xEC52",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
@@ -1968,11 +1938,6 @@
       "kind": "rts"
     },
     {
-      "address": "0x8A60",
-      "detail": "destination depends on the stack frame",
-      "kind": "rts"
-    },
-    {
       "address": "0xDFA0",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
@@ -1984,6 +1949,11 @@
     },
     {
       "address": "0xEDE0",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0x8A60",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
     },
@@ -2048,11 +2018,6 @@
       "kind": "rts"
     },
     {
-      "address": "0xBB83",
-      "detail": "destination depends on the stack frame",
-      "kind": "rts"
-    },
-    {
       "address": "0xDEDC",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
@@ -2074,6 +2039,11 @@
     },
     {
       "address": "0x9868",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBE01",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
     },
@@ -2128,12 +2098,32 @@
       "kind": "rts"
     },
     {
+      "address": "0xBE40",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
       "address": "0xBE1E",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
     },
     {
+      "address": "0xBDE7",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBB95",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
       "address": "0xBE6F",
+      "detail": "destination depends on the stack frame",
+      "kind": "rts"
+    },
+    {
+      "address": "0xBB83",
       "detail": "destination depends on the stack frame",
       "kind": "rts"
     }

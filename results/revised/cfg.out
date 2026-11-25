@@ -1,0 +1,30 @@
+--- python3 -m analysis.cfg
+{
+  "instruction_starts": 10708,
+  "occupied_bytes": 22806,
+  "overlapping_starts": 10,
+  "dispatch_sites": 18,
+  "unresolved_transfers": 340,
+  "halt_instructions": 2,
+  "undocumented_instructions": 8
+}
+
+overlapping instruction starts: 10
+  $8223 lies inside $8222
+  $996B lies inside $996A
+  $997C lies inside $997B
+  $997F lies inside $997E
+  $BDD5 lies inside $BDD4
+  $BDD8 lies inside $BDD7
+  $BFB7 lies inside $BFB6
+  $DC21 lies inside $DC20
+  $E3EC lies inside $E3EB
+  $F34A lies inside $F349
+
+unresolved transfers: 340
+  halt           2
+  indirect_jump  1
+  rti            1
+  rts            336
+
+wrote results/cfg.json

@@ -1,0 +1,11 @@
+........./home/sadovsky/code/smb1-ace-audit/controlflow.py:42: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/sadovsky/code/smb1-ace-audit/trace.json' mode='r' encoding='UTF-8'>
+  return json.load(open(TRACE))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..../home/sadovsky/code/smb1-ace-audit/reach.py:55: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/sadovsky/code/smb1-ace-audit/trace.json' mode='r' encoding='UTF-8'>
+  return {pc: (tbl, n) for pc, tbl, n in json.load(open(TRACE))["jt"]}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+....................................................................................................................................
+----------------------------------------------------------------------
+Ran 145 tests in 88.648s
+
+OK

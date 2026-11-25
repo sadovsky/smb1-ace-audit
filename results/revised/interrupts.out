@@ -1,0 +1,24 @@
+--- python3 -m analysis.interrupts
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+
+hardware vectors
+name   vector  target  region    also in normal flow  decodes as
+----------------------------------------------------------------------------
+nmi    $FFFA   $8082   prg_rom                    no  LDA $0778
+reset  $FFFC   $8000   prg_rom                    no  SEI
+irq    $FFFE   $FFF0   prg_rom                    no  ORA $1A19,Y
+
+(NMI and reset are entry points, so 'no' is expected there.)
+The IRQ vector points at $FFF0, which is table data rather than code: an IRQ would execute data bytes.
+
+interrupt masking
+  SEI at: 0x8000
+  CLI at: none
+  PLP at: none
+  RTI at: 0x8181
+
+  => a maskable IRQ can never be serviced: I is set by SEI at reset and no reachable CLI or PLP exists; RTI can only restore a status byte that already had I set
+  caveat: 101 bytes in PRG hold $58 (CLI); the induction covers reachable instruction starts only, so already-derailed control flow could clear I. That is a consequence of derailment, not a mechanism for causing it.
+  caveat: the NMI runs every frame regardless of the I flag; it is the interrupt that actually occurs, and it is in the reachable set.
+
+wrote results/interrupts.json

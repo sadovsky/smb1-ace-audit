@@ -1,0 +1,62 @@
+--- python3 audit.py
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+instruction starts reached: 10708 (22806 bytes, 69% of PRG)
+overlapping instruction decodings preserved: 10
+
+computed transfers:
+  direct indirect jumps : 1  $8E16
+  stack-derived returns : 337  (each RTS/RTI takes its destination from memory)
+  the 'exactly one computed jump' claim counts only the first kind.
+
+dispatch sites: 18
+
+site   table  entries  idx(no assumption)  idx(under invariant)  in range  provenance
+----------------------------------------------------------------------------------------------
+$8215 $8218        4                 255                     3       yes  structural_conditional
+$8234 $8237        4                 255                     3       yes  structural_conditional
+$83A3 $83A6        5                 255                     4       yes  structural_conditional
+$856A $856D       15                 255                    14       yes  structural_conditional
+$921B $921E        3                 255                     2       yes  structural_conditional
+$92C8 $92CB        8                 254                     7       yes  structural_conditional
+$9664 $9667       47                 255                   255        NO  unproved
+$9743 $9746        3                 255                     4        NO  unproved
+$AEDF $AEE2        4                 255                     3       yes  structural_conditional
+$B04C $B04F       13                 255                    12       yes  structural_conditional
+$B34E $B351        4                 255                     3       yes  structural_conditional
+$BDBD $BDC0        9                   8                     8       yes  proven
+$C27F $C282       55                 255                    54       yes  structural_conditional
+$C7A8 $C7AB        6                 255                     5       yes  structural_conditional
+$C88F $C892       34                 235                    34        NO  unproved
+$C907 $C90A       21                 255                    20       yes  structural_conditional
+$C987 $C98A        7                 255                     6       yes  structural_conditional
+$D2E5 $D2E8        5                   4                     4       yes  proven
+
+--- table boundaries where the old heuristic was wrong ---
+  $9743 ($9746): heuristic read 5 entries, independent evidence gives 3
+  $C7A8 ($C7AB): heuristic read 8 entries, independent evidence gives 6
+
+--- sites whose index is not kept inside the table ---
+  $9664: 209 index/indices past the 47-entry table (max 255)
+      index  47 -> $2DBC [ppu_registers] not_rom
+      index  48 -> $C807 [prg_rom] operand_byte_of_another_instruction
+      index  49 -> $E7B1 [prg_rom] not_reached_by_the_cfg
+      index  55 -> $0727 [internal_ram] not_rom
+      index  60 -> $0742 [internal_ram] not_rom
+      index  62 -> $0729 [internal_ram] not_rom
+  $9743: 2 index/indices past the 3-entry table (max 4)
+      index   3 -> $BB20 [prg_rom] instruction_start
+      index   4 -> $BD9B [prg_rom] instruction_start
+  $C88F: 1 index/indices past the 34-entry table (max 34)
+      index  34 -> $2060 [ppu_registers] not_rom
+
+--- destinations in controllable RAM, over all 18x256 resolutions: 1198 ---
+These are the only resolutions that could execute player-influenced bytes.
+Whether any is reachable is the open question; see classify.py.
+
+--- interrupt entry ---
+  nmi   vector -> $8082 [prg_rom] decodes as LDA $0778
+  reset vector -> $8000 [prg_rom] decodes as SEI
+  irq   vector -> $FFF0 [prg_rom] decodes as ORA $1A19,Y
+  a maskable IRQ can never be serviced: I is set by SEI at reset and no reachable CLI or PLP exists; RTI can only restore a status byte that already had I set
+
+wrote results/audit_summary.json

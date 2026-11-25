@@ -1,0 +1,20 @@
+--- python3 reach.py
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+Derived enemy-ID -> dispatch bounds (exact JumpEngine semantics, NES mirroring)
+
+site   role               N  arriving IDs               idx      verdict
+--------------------------------------------------------------------------------------------------
+$C27F behavior master   55  $00,$01,$02,$03,$04...     0..54    SAFE (max 54 <= N-1=54)
+$C88F collision         34  $00,$01,$02,$03,$04...     0..34    OOB: ID $36->idx 34->$2060[ppu_registers]
+$C907 graphics          21  $00,$01,$02,$03,$04...     0..20    SAFE (max 20 <= N-1=20)
+$C987 sub $24            7  $24,$25,$26,$27,$28...     0..6     SAFE (max 6 <= N-1=6)
+$C7A8 sub $12            8  $12,$14,$15,$16,$17        0..5     SAFE (max 5 <= N-1=7)
+
+Out-of-bounds dispatches, and whether they are ACE-capable:
+  $C88F ID $36 -> index 34 -> $2060 [ppu_registers]  =>  not ACE: ppu_registers holds no executable controllable bytes
+
+Candidates that the corrected memory map surfaces but routing excludes:
+  ID $1A at $C7A8: idx 8 (N=8) -> $0016 [internal_ram]  arrives=False
+  ID $2B at $C987: idx 7 (N=7) -> $00A9 [internal_ram]  arrives=False
+  ID $34 at $C907: idx 52 (N=21) -> $0747 [internal_ram]  arrives=False
+  ID $35 at $C907: idx 53 (N=21) -> $03D0 [internal_ram]  arrives=False

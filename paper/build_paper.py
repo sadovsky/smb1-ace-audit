@@ -81,33 +81,38 @@ def build():
     # ---- title block (full width) ----
     e.append(P("A Static Audit of Controller-Only Arbitrary Code Execution in <i>Super Mario Bros.</i> (NES)", TITLE))
     e.append(P("Alexander Sadovsky, ChatGPT (OpenAI), and Claude (Anthropic)", AUTH))
-    e.append(P("<font size=8>ChatGPT (OpenAI) contributed the methodological review, exact 6502 semantics and ROM validation; "
-               "Claude (Anthropic) contributed the control-flow audit, emulator experiments and the derived dispatch bounds.</font>", AUTH))
-    e.append(P("November 2026", AUTH))
+    e.append(P("<font size=8>ChatGPT (OpenAI) contributed the methodological review, exact 6502 semantics and ROM validation, "
+               "and the remediation review of the first revision that identified the "
+               "<font face='Courier'>$92C8</font> error and the conflation of observed bounds with "
+               "proven exclusions; Claude (Anthropic) contributed the control-flow audit, emulator "
+               "experiments, the derived dispatch bounds, and this revision's decoder, control-flow "
+               "graph, value-set derivation, table-boundary analysis and corrections.</font>", AUTH))
+    e.append(P("Revised November 2026 (second revision)", AUTH))
     e.append(Spacer(1, 6))
     e.append(P("<b>Abstract.</b> We ask whether the NES game <i>Super Mario Bros.</i> (NTSC/World, "
                "NROM) admits arbitrary code execution (ACE) driven solely by controller input on an "
                "unmodified cartridge. By recursive-descent disassembly from the CPU reset, NMI and IRQ "
                "vectors we establish that the entire 32 KiB program contains exactly one computed "
-               "control transfer: the indirect <font face='Courier'>JMP ($0006)</font> inside the "
-               "shared jump engine at <font face='Courier'>$8E04</font>. Its destination is always "
-               "fetched from a fixed table in read-only program ROM, indexed by the calling routine. "
-               "Because no executable code resides in writable memory, ACE is possible only by forcing "
-               "some dispatch's index past its table onto ROM bytes that encode a pointer into "
-               "controllable RAM. We enumerate all 18 dispatch sites, their index sources, and their "
-               "bounds. Seventeen keep the program counter in ROM by explicit range checks, exact table "
-               "sizing, or state-counter invariants. The eighteenth, the enemy-graphics dispatch at "
-               "<font face='Courier'>$C907</font>, indexes a 21-entry table by a raw object identifier "
-               "with no local bound and is the unique site whose out-of-range targets reach writable "
-               "memory; we show the two offending identifiers are routed by the behavior dispatch to "
-               "inert stubs and never reach it, consistent with the game not crashing on high-numbered "
-               "enemies. A controller-input fuzz of 144k frames and an identifier-injection probe "
-               "corroborate the analysis: no index leaves its table, the two RAM-reaching identifiers "
-               "never arise, and the dispatch chain absorbs them when injected. We therefore report no "
-               "controller-only ACE vector, give the structural reason "
-               "none is known, and reduce the open problem to three precise, falsifiable conditions. We "
-               "are explicit that this is strong structural evidence, not a machine-checked proof of "
-               "impossibility.", ABSTRACT))
+               "control transfer of the <i>direct</i> kind: the indirect "
+               "<font face='Courier'>JMP ($0006)</font> inside the shared jump engine at "
+               "<font face='Courier'>$8E04</font>. Its destination is always fetched from a fixed "
+               "table in read-only program ROM, indexed by the calling routine. Three hundred and "
+               "thirty-six <font face='Courier'>RTS</font> instructions and one "
+               "<font face='Courier'>RTI</font> also take their destinations from memory, and we do "
+               "not establish return-frame integrity. Because no executable code resides in writable "
+               "memory, ACE requires forcing some dispatch's index past its table onto ROM bytes that "
+               "encode a pointer into controllable RAM. We enumerate all 18 dispatch sites and derive "
+               "each index set from the ROM by value-set analysis rather than asserting it. Two sites "
+               "are bounded by instructions at the dispatch with no assumption about writable memory; "
+               "fourteen are bounded only under an invariant that is observed or derived from routing "
+               "tables rather than proved; and two are not bounded by the invariant we previously "
+               "asserted for them. Two dispatch-table boundaries had been over-read by a heuristic, "
+               "one of which is what made a site appear safe. A controller-input fuzz of 144k frames "
+               "and an identifier-injection probe found no index leaving its table. We therefore "
+               "report no demonstrated controller-only ACE vector, give the structural reasons the "
+               "search space is narrow, and state the remaining proof obligations. This revision "
+               "withdraws our earlier claim that every dispatch index is provably in range; it is "
+               "evidence, not a machine-checked proof of impossibility.", ABSTRACT))
     e.append(Spacer(1, 4))
     e.append(NextPageTemplate("two"))
     e.append(FrameBreak())
@@ -167,15 +172,27 @@ def build():
                "(reset <font face='Courier'>$8000</font>, NMI <font face='Courier'>$8082</font>, IRQ "
                "<font face='Courier'>$FFF0</font>), following every <font face='Courier'>JSR</font>, "
                "<font face='Courier'>JMP</font> and branch, and reading each RTS-dispatch jump table to "
-               "enqueue its targets. The IRQ vector points into data but is never taken: NROM has no "
-               "mapper IRQ and the game runs with the APU frame interrupt disabled. The descent marks "
-               "22,762 of 32,768 program bytes (69%) as reachable code.", BODY))
-    e.append(P("In all reachable code there is exactly one computed or indirect control transfer: the "
+               "enqueue its targets. The IRQ vector points into data &mdash; "
+               "<font face='Courier'>$FFF0</font>, inside a byte table &mdash; and is never taken, "
+               "but not for the reason we gave before. The 2A03 has two IRQ sources of its own, "
+               "independent of the cartridge, so the absence of a mapper IRQ settles nothing. What "
+               "settles it is that <font face='Courier'>SEI</font> executes at reset and no reachable "
+               "instruction is <font face='Courier'>CLI</font> or <font face='Courier'>PLP</font>; the "
+               "only reachable <font face='Courier'>RTI</font> can therefore restore only a status "
+               "byte that already had the I flag set. By induction no maskable interrupt is ever "
+               "serviced, whatever the APU configuration. The descent marks 22,806 of 32,768 program "
+               "bytes (69%) as reachable code.", BODY))
+    e.append(P("In all reachable code there is exactly one <i>direct</i> computed control transfer: the "
                "<font face='Courier'>JMP ($0006)</font> at <font face='Courier'>$8E16</font>, the last "
                "instruction of the shared jump engine. There are no indirect jumps through a RAM "
                "pointer elsewhere, and the NMOS 6502 has no indexed-indirect jump instruction. Every "
-               "dynamic branch in the game &mdash; 18 call sites &mdash; funnels through this one "
-               "engine, listed in Figure&nbsp;1.", BODY))
+               "table-driven branch in the game &mdash; 18 call sites &mdash; funnels through this one "
+               "engine, listed in Figure&nbsp;1. We stress a qualification absent from our earlier "
+               "statement of this result: each of the 336 reachable <font face='Courier'>RTS</font> "
+               "instructions and the one <font face='Courier'>RTI</font> also loads its destination "
+               "from memory, so they are computed transfers too. The jump engine itself exploits this, "
+               "consuming its caller's return address as a table pointer. Whether every other return "
+               "consumes a valid frame is an open obligation, not a result.", BODY))
     e.append(Preformatted(
         "8E04  JumpEngine:\n"
         "8E04  0A        ASL A        ; 8-bit; bit 7 lost\n"
@@ -221,7 +238,7 @@ def build():
         ("$83A3", "$83A6", "5", "$0772", "task counter"),
         ("$856A", "$856D", "15", "$073C scr-task", "screen counter"),
         ("$921B", "$921E", "3", "$0772", "task counter"),
-        ("$92C8", "$92CB", "8", "$071F -> 0..7", "structural"),
+        ("$92C8", "$92CB", "8", "$071F, 8-for-0", "conditional"),
         ("$9664", "$9667", "47", "GameEngine $0E", "engine state"),
         ("$9743", "$9746", "5", "$0733", "state counter"),
         ("$AEDF", "$AEE2", "4", "$0772", "task counter"),
@@ -230,7 +247,7 @@ def build():
         ("$BDBD", "$BDC0", "9", "$05 via $BDF6", "CMP #9/BCC"),
         ("$C27F", "$C282", "55", "$16,x enemy ID", "table = ID space"),
         ("$C7A8", "$C7AB", "8", "$16,x - $12", "routed $12-$19"),
-        ("$C88F", "$C892", "34", "$16,x -$14", "worst: I/O crash"),
+        ("$C88F", "$C892", "34", "$16,x -$14", "idx 34 -> $2060, I/O"),
         ("$C907", "$C90A", "21", "$16,x RAW", "no local bound *"),
         ("$C987", "$C98A", "7", "$16,x - $24", "routed $24-$2A"),
         ("$D2E5", "$D2E8", "5", "$0746 (CMP #5)", "explicit clamp"),
@@ -258,14 +275,29 @@ def build():
                "length. (*) <font face='Courier'>$C907</font> is the only site without a local bound; "
                "Section&nbsp;5 treats it.", CAP))
 
-    e.append(P("Three sites are bounded at the dispatch itself: "
-               "<font face='Courier'>$D2E5</font> (<font face='Courier'>CMP #$05 / BCS</font>), "
-               "<font face='Courier'>$BDBD</font> (<font face='Courier'>CMP #$09 / BCC</font>), and "
-               "<font face='Courier'>$92C8</font>, whose index is forced into "
-               "<font face='Courier'>0..7</font> for an eight-entry table. The remainder are indexed "
-               "by operation-mode, task, or engine-state counters the game only sets to small in-range "
-               "values; that these never exceed their tables is also why the game does not crash at "
-               "these dispatches during normal play.", BODY))
+    e.append(P("Two sites, not three, are bounded at the dispatch itself with no assumption about "
+               "writable memory. <font face='Courier'>$D2E5</font> is bounded by a real clamp, "
+               "<font face='Courier'>CMP #$05 / BCS</font>, which skips the dispatch entirely. "
+               "<font face='Courier'>$BDBD</font> is bounded to <font face='Courier'>0..8</font> over "
+               "nine entries, but by the subroutine <font face='Courier'>$BDF6</font> returning "
+               "<font face='Courier'>Y &le; 13</font>, not by the "
+               "<font face='Courier'>CMP #$09 / BCC</font> we previously cited: the other path falls "
+               "through <font face='Courier'>SBC #$05</font> and is bounded only because the incoming "
+               "value cannot exceed 13. Our third claimed site, "
+               "<font face='Courier'>$92C8</font>, does not belong here at all. Its sequence "
+               "<font face='Courier'>LDY $071F / BNE / LDY #$08 / STY $071F / DEY / TYA</font> "
+               "substitutes eight for zero and never clamps the upper end, so the index is "
+               "<font face='Courier'>((v or 8) - 1) &amp; $FF</font>, which value-set analysis derives "
+               "as <font face='Courier'>{0..254}</font> over an eight-entry table. "
+               "<font face='Courier'>RAM[$071F] = 9</font> would dispatch to "
+               "<font face='Courier'>$26EE</font>. The site is in range only while "
+               "<font face='Courier'>RAM[$071F] &le; 8</font>, an upstream invariant we can support "
+               "but not prove: its only two exact writers are "
+               "<font face='Courier'>$92B7</font> and <font face='Courier'>$92BF</font>, but 31 "
+               "indexed and nine indirect stores could also reach it. The remaining sites are indexed "
+               "by operation-mode, task, engine-state or enemy-identifier values that the game is only "
+               "<i>observed</i> to keep small, which is why it does not crash in practice but is not "
+               "the same as a bound.", BODY))
 
     # ---- 4 ----
     e.append(P("6.1&nbsp;&nbsp;The enemy master dispatch is sized to the identifier space", H2))
@@ -402,31 +434,74 @@ def build():
                "though it remains a search over the states these inputs reached.", BODY))
 
     e.append(P("10&nbsp;&nbsp;Candidate exploitability", H1))
-    e.append(P("We classify every (dispatch site, index) pair whose destination is not program ROM, "
-               "recording the entry point, trigger, index source, destination, memory region, what "
-               "the controller can influence, reachability, exploitability and evidence, together "
-               "with a provenance label on the bound that excludes it. Provenance is the substance "
-               "of the result: a bound enforced by an instruction, or derived from the routing "
-               "tables, is a different claim from one merely consistent with observed play. Of the "
-               "eighteen sites, four are bounded structurally, five are derived, and nine are only "
-               "observed.", BODY))
-    e.append(P("Across all 256 indices at all eighteen sites there are 2182 non-ROM destinations. "
-               "2181 are excluded by a bound. Exactly one is live: index 34 at "
-               "<font face='Courier'>$C88F</font>, reached by enemy identifier "
-               "<font face='Courier'>$36</font>, resolving to <font face='Courier'>$2060</font> in "
-               "PPU register space. It is classified not-ACE, because that destination holds no "
-               "controllable executable bytes; it can hang the machine, which is a different "
-               "outcome. No candidate is classified unknown, and none is demonstrated.", BODY))
+    e.append(P("We classify every (dispatch site, index) pair whose destination is not an expected "
+               "table entry, recording the entry point, index source, destination, memory region, "
+               "what the controller can influence, reachability, exploitability and evidence. "
+               "Provenance is kept as a separate dimension from the verdict, and only a bound that "
+               "needs no assumption about writable memory may exclude an index outright. Our earlier "
+               "classifier did not make that distinction: it excluded a candidate whenever the index "
+               "exceeded a bound, whatever the bound rested on, and it discarded every program-ROM "
+               "destination before classifying. Both choices inflated the result. Of the eighteen "
+               "sites, two are bounded with no assumption, one structurally but conditional on an "
+               "upstream invariant, four derived from routing tables, nine observed only, and two "
+               "carry no bound that keeps the index inside the table.", BODY))
+    e.append(P("Across all 256 indices at all eighteen sites there are 4608 resolutions, of which 4114 "
+               "are not expected table entries. Classified with provenance separated: 505 are "
+               "excluded unconditionally, 1252 only under a stated assumption, 1633 are not "
+               "ACE-capable because the destination holds no player-influenced bytes, and 724 are "
+               "destinations in controllable RAM that no proven bound excludes. None is demonstrated: "
+               "no input sequence is known for any of them. Our previous figures, 2182 non-ROM "
+               "destinations with 2181 excluded and none unknown, followed from the two choices "
+               "described above. The single candidate we then reported, index 34 at "
+               "<font face='Courier'>$C88F</font> from enemy identifier "
+               "<font face='Courier'>$36</font>, resolving to <font face='Courier'>$2060</font>, "
+               "stands on its merits and remains classified not-ACE, though we now record that "
+               "destination as hardware-dependent rather than as a crash: an instruction fetch from a "
+               "register region is a bus transaction, and we have not verified the outcome on "
+               "hardware.", BODY))
+    e.append(P("A further 1932 resolutions reach program ROM at an address that is not a table entry. "
+               "We previously set these aside on the grounds that they resolve to ROM. That is not "
+               "sound: 390 of them land on an operand byte of another instruction and 874 on bytes "
+               "our control-flow graph never reaches, so execution would resume mid-instruction or in "
+               "data, either of which can corrupt control flow further downstream. Two properties of "
+               "the engine bound how far such an overrun can read. "
+               "<font face='Courier'>ASL A</font> discards bit 7, so indices "
+               "<font face='Courier'>i</font> and <font face='Courier'>i+128</font> share a "
+               "destination and only 128 of the 256 indices are distinct; an overrun can therefore "
+               "never read beyond 256 bytes past the <font face='Courier'>JSR</font>. And at "
+               "effective index 127 the <font face='Courier'>INY</font> wraps, so the pointer's high "
+               "byte is fetched from the return address itself.", BODY))
 
     e.append(P("11&nbsp;&nbsp;Results", H1))
-    e.append(P("We found no controller-only ACE vector. The structural reason is uniform: a single "
-               "jump engine, fed from fixed ROM tables, with every index held in range by explicit "
-               "checks, exact table sizing, or state-counter invariants. This is consistent with the "
-               "TAS community's standing result that NTSC <i>Super Mario Bros.</i> has no known "
+    e.append(P("We demonstrate no controller-only ACE vector. The architectural reason the search "
+               "space is narrow is uniform: a single jump engine, fed from fixed ROM tables in "
+               "read-only memory, reached through 18 call sites. This is consistent with the TAS "
+               "community's standing result that NTSC <i>Super Mario Bros.</i> has no known "
                "controller-only ACE while related titles do.", BODY))
-    e.append(P("We are explicit that this is structural evidence, not a machine-checked proof of "
-               "impossibility. The problem reduces to three precise, falsifiable conditions; exhibiting "
-               "any one yields ACE, and refuting all three would close the question:", BODY))
+    e.append(P("We withdraw the stronger claim of our earlier revision, that every index is held in "
+               "range by explicit checks, exact table sizing or state-counter invariants. Derived "
+               "from the ROM rather than asserted, two of the eighteen indices are bounded with no "
+               "assumption about writable memory, fourteen are bounded only under an observed or "
+               "derived invariant, and two are not bounded by the invariant we asserted. One of "
+               "those two, <font face='Courier'>$9743</font>, we had recorded as bounded by "
+               "<font face='Courier'>RAM[$0733] &le; 4</font> against a five-entry table; the table "
+               "has three entries, because its own entry 0 points at "
+               "<font face='Courier'>$974C</font>, which holds "
+               "<font face='Courier'>JSR $9BBB</font>, and our boundary heuristic had read that "
+               "instruction's bytes as entries 3 and 4. Under the bound we ourselves asserted, "
+               "indices 3 and 4 dispatch outside the table. The other, "
+               "<font face='Courier'>$9664</font>, we had attributed to "
+               "<font face='Courier'>$0E</font>; its index is in fact "
+               "<font face='Courier'>$00 + $07</font>, formed at "
+               "<font face='Courier'>$965F-$9662</font>, over the game's largest table.", BODY))
+    e.append(P("This is evidence, not a machine-checked proof of impossibility, and six proof "
+               "obligations remain open or only partially established: control-flow completeness, "
+               "jump-engine target legality, state invariants, return-frame integrity, the hardware "
+               "and input model, and input controllability of unintended execution. In particular no "
+               "variable that feeds a dispatch has a fully resolved writer set, because each is "
+               "reachable in principle by an indirect store we have not constrained, so no state "
+               "invariant is established inductively. The problem reduces to the following "
+               "falsifiable conditions; exhibiting any one yields ACE:", BODY))
     e.append(P("<b>(C1) Out-of-range index injection.</b> Can a glitch drive any of the 18 index "
                "variables outside its table under a corrupted state the static bounds do not model? "
                "The mode and task counters were not exhaustively bounded against corrupted state.", BODY))

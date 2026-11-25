@@ -1,0 +1,32 @@
+--- python3 -m analysis.index_derivation
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+
+Index sets derived from the ROM by value-set analysis.
+'unconditional' assumes nothing about RAM; 'conditional' assumes the invariant named in the last column.
+
+site    N  unconditional      conditional   in range  assumption (provenance)
+-----------------------------------------------------------------------------
+$8215   4  0..255 (256)       0..3 (4)           yes  OperMode counter [observed]
+$8234   4  0..255 (256)       0..3 (4)           yes  OperMode_Task counter [observed]
+$83A3   5  0..255 (256)       0..4 (5)           yes  OperMode_Task counter [observed]
+$856A  15  0..255 (256)       0..14 (15)         yes  screen-routine counter [observed]
+$921B   3  0..255 (256)       0..2 (3)           yes  demo/title task counter [observed]
+$92C8   8  0..254 (255)       0..7 (8)           yes  written only by $92B7 (STY #$08) and $92BF (DEC) [structural_conditional]
+$9664  47  0..255 (256)       0..255 (256)        NO  index is $00 + $07, formed at $965F-$9662; the documented $0E source is not the index source [unproved]
+$9743   3  0..255 (256)       0..4 (5)            NO  state counter, as asserted by the earlier revision; the table holds only 3 entries [observed]
+$AEDF   4  0..255 (256)       0..3 (4)           yes  OperMode_Task counter [observed]
+$B04C  13  0..255 (256)       0..12 (13)         yes  player state [observed]
+$B34E   4  0..255 (256)       0..3 (4)           yes  player state; the CMP #$03 at $B345 only selects whether STY $0789 runs [observed]
+$BDBD   9  0..8 (9)           0..8 (9)           yes  none needed [proven]
+$C27F  55  0..255 (256)       0..54 (55)         yes  $16,x holds an identifier routed to $C27F (55 of 55) [derived_conditional]
+$C7A8   6  0..255 (256)       0..5 (5)           yes  $16,x holds an identifier routed to $C7A8 (5 of 55) [derived_conditional]
+$C88F  34  0..235 (236)       0..34 (35)          NO  $16,x holds an identifier routed to $C88F (55 of 55) [derived_conditional]
+$C907  21  0..255 (256)       0..20 (21)         yes  $16,x holds an identifier routed to $C907 (21 of 55) [derived_conditional]
+$C987   7  0..255 (256)       0..6 (7)           yes  $16,x holds an identifier routed to $C987 (7 of 55) [derived_conditional]
+$D2E5   5  0..4 (5)           0..4 (5)           yes  none needed [proven]
+
+bounded with no RAM assumption : 2 $BDBD, $D2E5
+bounded only under an invariant: 13 $8215, $8234, $83A3, $856A, $921B, $92C8, $AEDF, $B04C, $B34E, $C27F, $C7A8, $C907, $C987
+overrun even under the invariant: 3 $9664, $9743, $C88F
+
+wrote results/dispatch_bounds.json

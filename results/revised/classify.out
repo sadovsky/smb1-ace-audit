@@ -1,0 +1,60 @@
+--- python3 classify.py --json
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+non-expected destinations classified: 4114
+
+  unknown                 : 724
+  not_ace                 : 1633
+  excluded_conditionally  : 1252
+  excluded                : 505
+
+How the exclusions are supported:
+  unconditional:   505  the index is outside the set derived while assuming nothing about RAM
+  conditional  :  1252  excluded only under an assumption, by the provenance of that assumption:
+      structural_conditional  : 1085
+      unproved                : 167
+
+  1252 of the 1757 exclusions rest on an assumption that is not proved here, and 724 destinations in
+  controllable RAM are not excluded at all.  The earlier revision reported 2,181
+  unconditional exclusions and no unknowns, having skipped every ROM destination
+  and treated observed bounds as proofs.
+
+Destinations in controllable RAM that no proven bound excludes:
+  0x8215 idx   4 -> 0x00A0 [internal_ram] not_observed
+  0x8215 idx   8 -> 0x0200 [internal_ram] not_observed
+  0x8215 idx  13 -> 0x0772 [internal_ram] not_observed
+  0x8215 idx  14 -> 0x0420 [internal_ram] not_observed
+  0x8215 idx  19 -> 0x0482 [internal_ram] not_observed
+  0x8215 idx  21 -> 0x0001 [internal_ram] not_observed
+  0x8215 idx  24 -> 0x06FC [internal_ram] not_observed
+  0x8215 idx  33 -> 0x1AF0 [internal_ram_mirror] not_observed
+  0x8215 idx  37 -> 0x0780 [internal_ram] not_observed
+  0x8215 idx  51 -> 0x07A2 [internal_ram] not_observed
+  0x8215 idx  56 -> 0x0780 [internal_ram] not_observed
+  0x8215 idx  57 -> 0x01C0 [internal_ram] not_observed
+  0x8215 idx  58 -> 0x0EF0 [internal_ram_mirror] not_observed
+  0x8215 idx  62 -> 0x077A [internal_ram] not_observed
+  ... 710 more (see the JSON report)
+
+Per-site bound provenance, derived not asserted:
+site   entries  derived max  under invariant  in range  provenance
+--------------------------------------------------------------------------
+$8215        4          255                3       yes  structural_conditional (conditional)
+$8234        4          255                3       yes  structural_conditional (conditional)
+$83A3        5          255                4       yes  structural_conditional (conditional)
+$856A       15          255               14       yes  structural_conditional (conditional)
+$921B        3          255                2       yes  structural_conditional (conditional)
+$92C8        8          254                7       yes  structural_conditional (conditional)
+$9664       47          255              255        NO  unproved (conditional)
+$9743        3          255                4        NO  unproved (conditional)
+$AEDF        4          255                3       yes  structural_conditional (conditional)
+$B04C       13          255               12       yes  structural_conditional (conditional)
+$B34E        4          255                3       yes  structural_conditional (conditional)
+$BDBD        9            8                8       yes  proven
+$C27F       55          255               54       yes  structural_conditional (conditional)
+$C7A8        6          255                5       yes  structural_conditional (conditional)
+$C88F       34          235               34        NO  unproved (conditional)
+$C907       21          255               20       yes  structural_conditional (conditional)
+$C987        7          255                6       yes  structural_conditional (conditional)
+$D2E5        5            4                4       yes  proven
+
+wrote /home/sadovsky/code/smb1-ace-audit/exploitability_classification.json (4114 records)

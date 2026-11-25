@@ -1,0 +1,33 @@
+--- python3 -m analysis.dispatch_tables
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+
+Dispatch-table boundaries from independent sources.
+
+site   table   heur  self  cflow  next  extern  final  agreement
+----------------------------------------------------------------
+$8215 $8218     4     -      4     -       4      4  all sources agree
+$8234 $8237     4     7      7     -       8      4  sources disagree; smallest bound taken
+$83A3 $83A6     5     5      5     -       6      5  smallest bound 5 confirmed by 2 independent source(s)
+$856A $856D    15    15     15     -      16     15  smallest bound 15 confirmed by 2 independent source(s)
+$921B $921E     3     3      3     -       4      3  smallest bound 3 confirmed by 2 independent source(s)
+$92C8 $92CB     8     8      8     -       9      8  smallest bound 8 confirmed by 2 independent source(s)
+$9664 $9667    47    47     47     -      48     47  smallest bound 47 confirmed by 2 independent source(s)
+$9743 $9746     5     3      3     -       4      3  smallest bound 3 confirmed by 2 independent source(s)
+$AEDF $AEE2     4     4      4     -       4      4  all sources agree
+$B04C $B04F    13    13     13     -      14     13  smallest bound 13 confirmed by 2 independent source(s)
+$B34E $B351     4     4      4     -       4      4  all sources agree
+$BDBD $BDC0     9     9      9     -      10      9  smallest bound 9 confirmed by 2 independent source(s)
+$C27F $C282    55    55     55     -      57     55  smallest bound 55 confirmed by 2 independent source(s)
+$C7A8 $C7AB     8     6      6     -       6      6  smallest bound 6 confirmed by 3 independent source(s)
+$C88F $C892    34    34     34     -      34     34  all sources agree
+$C907 $C90A    21    21     21     -      21     21  all sources agree
+$C987 $C98A     7     -      7     -       7      7  all sources agree
+$D2E5 $D2E8     5     5      5     -       6      5  smallest bound 5 confirmed by 2 independent source(s)
+
+tables where the heuristic differs from the final boundary: 2
+  $9743: heuristic 5, established 3
+  $C7A8: heuristic 8, established 6
+tables with no independent confirmation: 1
+  $8234 ($8237): only the heuristic supports 4 entries
+
+wrote data/dispatch_tables.json

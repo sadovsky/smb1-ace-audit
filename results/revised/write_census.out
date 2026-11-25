@@ -1,0 +1,34 @@
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+memory writers decoded: 5474 linearly, 2038 at traced instruction starts
+
+Counts are given for both scopes. 'traced' decodes only the instruction starts the
+CFG reaches; 'linear' decodes every byte offset as a candidate start, which is a much
+coarser over-approximation and is the honest answer to 'could anything reach this?'.
+
+address  traced: exact/idx/unres   linear: exact/idx/unres  resolved?  role
+---------------------------------------------------------------------------
+$0000      108/313/9              119/871/130               NO  $9664 index, summed with $07
+$0007       31/314/9               66/873/130               NO  $9664 index, summed with $00 (also JumpEngine pointer high byte)
+$000E       12/314/9               15/873/130               NO  $B04C index
+$0016        0/315/9                2/874/130               NO  enemy slot 0 identifier
+$0017        0/315/9                3/874/130               NO  enemy slot 1 identifier
+$0018        0/315/9               17/874/130               NO  enemy slot 2 identifier
+$0019        0/315/9                1/873/130               NO  enemy slot 3 identifier
+$001A        0/315/9                2/873/130               NO  enemy slot 4 identifier
+$001D       10/315/9               11/873/130               NO  $B34E index
+$071F        2/ 31/9                2/ 33/130               NO  $92C8 index
+$0733        1/ 35/9                1/ 40/130               NO  $9743 index
+$073C        7/ 36/9                7/ 41/130               NO  $856A index
+$0746        3/ 36/9                3/ 42/130               NO  $D2E5 index (clamped at the dispatch)
+$0770        8/ 39/9                8/ 45/130               NO  $8215 index
+$0772       14/ 39/9               14/ 45/130               NO  $8234 / $83A3 / $AEDF index
+
+variables whose writer set is fully resolved: 0 of 15
+Every unresolved entry is an indirect store whose pointer this analysis does not constrain.
+No inductive state invariant can be established while any remains, so obligation C stays open.
+
+$071F, the $92C8 index, has 2 exact writer(s) among reached instructions: 0x92B7 STY, 0x92BF DEC
+Both are in the dispatch's own routine, which is why RAM[$071F] <= 8 is supportable
+but not proved: the indexed and indirect stores above are not ruled out.
+
+wrote results/write_census.json

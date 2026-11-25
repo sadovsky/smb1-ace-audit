@@ -1,0 +1,29 @@
+--- python3 -m tools.proof_obligations
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+
+id  status                   obligation
+------------------------------------------------------------------------------
+A   partially established    All reachable instruction starts and transfers
+      - 336 RTS and 1 RTI destinations are not resolved; obligation D covers them
+      - coverage is of the CFG built from the three vectors and the JumpEngine, not of all s
+B   partially established    JumpEngine consumes the expected return addres
+      - table boundaries at ['0x8234'] rest on the heuristic alone
+      - the engine's consumption of the return address is modelled, not proved against a sta
+C   open                     Variables influencing dynamic control flow sat
+      - no critical variable has a fully resolved writer set: every one is reachable in prin
+      - $9664's index is $00 + $07 and needs a relational invariant that is not attempted
+D   open                     RTS/RTI consume valid frames except for explic
+      - the replacement for the RTS pattern scan (plan section 8, analysis with abstract sta
+E   partially established    The hardware and input model covers all releva
+      - open-bus fetch values are not modelled, only flagged
+      - no emulator fidelity comparison has been run in this revision (plan section 14)
+F   open                     Unintended execution is independently evaluate
+      - no input sequence has been demonstrated for any out-of-range index; reachability und
+      - assisted experiments (inject.py) do not establish controller-only reachability
+
+open obligations: A, B, C, D, E, F
+impossibility claim permitted: False
+
+No controller-only arbitrary code execution has been demonstrated. Impossibility is not claimed: obligations A, B, C, D, E, F are unresolved.
+
+wrote /home/sadovsky/code/smb1-ace-audit/results/proof_obligations.json

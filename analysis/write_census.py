@@ -182,3 +182,88 @@ def manifest(address: int, writers: Sequence[Writer], *,
                    else "contains writers whose target is not constrained"),
         "writers": {k: [w.to_json() for w in v] for k, v in buckets.items()},
     }
+
+
+#: Variables that feed a dynamic control transfer, so whose invariants the
+#: dispatch bounds depend on.  Keys are CPU addresses; values describe the role.
+CRITICAL_VARIABLES = {
+    0x0000: "$9664 index, summed with $07",
+    0x0007: "$9664 index, summed with $00 (also JumpEngine pointer high byte)",
+    0x000E: "$B04C index",
+    0x0016: "enemy slot 0 identifier",
+    0x0017: "enemy slot 1 identifier",
+    0x0018: "enemy slot 2 identifier",
+    0x0019: "enemy slot 3 identifier",
+    0x001A: "enemy slot 4 identifier",
+    0x001D: "$B34E index",
+    0x071F: "$92C8 index",
+    0x0733: "$9743 index",
+    0x073C: "$856A index",
+    0x0746: "$D2E5 index (clamped at the dispatch)",
+    0x0770: "$8215 index",
+    0x0772: "$8234 / $83A3 / $AEDF index",
+}
+
+
+def main() -> None:  # pragma: no cover - CLI
+    import json
+
+    from rom import b, image
+
+    writers = census(b, scope="linear")
+    traced = census(b, scope="traced")
+    print(f"ROM sha1 {image().sha1}")
+    print(f"memory writers decoded: {len(writers)} linearly, "
+          f"{len(traced)} at traced instruction starts\n")
+    print("Counts are given for both scopes. 'traced' decodes only the "
+          "instruction starts the")
+    print("CFG reaches; 'linear' decodes every byte offset as a candidate "
+          "start, which is a much")
+    print("coarser over-approximation and is the honest answer to 'could "
+          "anything reach this?'.\n")
+    header = ("address  traced: exact/idx/unres   linear: exact/idx/unres  "
+              "resolved?  role")
+    print(header)
+    print("-" * len(header))
+    manifests = {}
+    for address, role in sorted(CRITICAL_VARIABLES.items()):
+        record = manifest(address, writers, name=role)
+        traced_record = manifest(address, traced, name=role)
+        record["traced_counts"] = traced_record["counts"]
+        record["traced_exact_writers"] = traced_record["writers"]["exact"]
+        manifests[f"0x{address:04X}"] = record
+        counts, tcounts = record["counts"], traced_record["counts"]
+        print(f"${address:04X}  "
+              f"{tcounts['exact']:7}/{tcounts['indexed']:3}/"
+              f"{tcounts['unresolved']:<10} "
+              f"{counts['exact']:7}/{counts['indexed']:3}/"
+              f"{counts['unresolved']:<10} "
+              f"{'yes' if record['fully_resolved'] else 'NO':>9}  {role}")
+
+    resolved = [k for k, v in manifests.items() if v["fully_resolved"]]
+    print(f"\nvariables whose writer set is fully resolved: "
+          f"{len(resolved)} of {len(manifests)}")
+    print("Every unresolved entry is an indirect store whose pointer this "
+          "analysis does not constrain.")
+    print("No inductive state invariant can be established while any remains, "
+          "so obligation C stays open.")
+
+    exact = manifests["0x071F"]["traced_exact_writers"]
+    print(f"\n$071F, the $92C8 index, has {len(exact)} exact writer(s) among "
+          "reached instructions: "
+          + ", ".join(w["address"] + " " + w["mnemonic"] for w in exact))
+    print("Both are in the dispatch's own routine, which is why RAM[$071F] "
+          "<= 8 is supportable")
+    print("but not proved: the indexed and indirect stores above are not "
+          "ruled out.")
+
+    with open("results/write_census.json", "w") as handle:
+        json.dump({"rom_sha1": image().sha1,
+                   "writers_decoded_linear": len(writers),
+                   "writers_decoded_traced": len(traced),
+                   "manifests": manifests}, handle, indent=2, sort_keys=True)
+    print("\nwrote results/write_census.json")
+
+
+if __name__ == "__main__":  # pragma: no cover
+    main()

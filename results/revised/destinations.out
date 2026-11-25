@@ -1,0 +1,48 @@
+--- python3 -m analysis.destinations
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+
+resolutions: 4608 (18 sites x 256 raw indices)
+distinct (site, effective index) pairs: 2304  -- ASL aliasing halves 256 raw indices to 128 effective ones
+
+execution outcomes for every resolution:
+  unexpected_rom          1932
+  internal_ram            1198
+  open_bus_dependent       608
+  expected_rom             494
+  io_dependent             376
+
+unexpected ROM destinations by how the CFG uses that byte:
+  not_reached_by_the_cfg                     874
+  instruction_start                          668
+  operand_byte_of_another_instruction        390
+  (these were previously dropped as 'resolves to ROM, therefore safe')
+
+per site: non-ROM destinations among the 128 effective indices
+site   expected  unexpected_rom  internal_ram  io  open_bus
+----------------------------------------------------------------
+$8215         4              67            33   4        20
+$8234         4              50            47  12        15
+$83A3         5              62            35  10        16
+$856A        15              46            34  10        23
+$921B         3              53            43   9        20
+$92C8         8              33            73   3        11
+$9664        47              38            22  11        10
+$9743         3              57            25   8        35
+$AEDF         4              62            29  13        20
+$B04C        13              46            49   9        11
+$B34E         4              56            45  16         7
+$BDBD         9              60            25  15        19
+$C27F        55              39            16   5        13
+$C7A8         6              62            26   8        26
+$C88F        34              54             4  20        16
+$C907        21              55            23  15        14
+$C987         7              60            40  12         9
+$D2E5         5              66            30   8        19
+
+resolutions whose high pointer byte wrapped (effective index 127): 36
+  $8215 raw 127: low from $8316, high from $8217 -> $8E8E
+  $8215 raw 255: low from $8316, high from $8217 -> $8E8E
+  $8234 raw 127: low from $8335, high from $8236 -> $8EA9
+  $8234 raw 255: low from $8335, high from $8236 -> $8EA9
+
+wrote results/destination_matrix.json

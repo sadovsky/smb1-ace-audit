@@ -1,0 +1,21 @@
+--- python3 -m analysis.enemy_routing
+ROM sha1 ea343f4e445a9050d4b4fbac2c77d0693b1d0922
+Enemy-ID routing derived from the CFG's dispatch tables.
+
+site   role                N  IDs    indices  verdict
+------------------------------------------------------------------------
+$C27F behaviour master   55   55      0..54  in range (max 54 <= 54)
+$C7A8 sub $12             6    5       0..5  in range (max 5 <= 5)
+$C88F collision          34   55      0..34  OUT OF RANGE: ID $36->idx 34
+$C907 graphics           21   21      0..20  in range (max 20 <= 20)
+$C987 sub $24             7    7       0..6  in range (max 6 <= 6)
+
+Out-of-range dispatches and their destinations:
+  $C88F ID $36 -> index 34 -> $2060 [ppu_registers]
+
+Every bound above is conditional.  Assumptions:
+  - identifiers reaching $C907 are exactly those the routing tables send there (21 of 55)
+  - the $16,x slot still holds that identifier when $C907 runs (preservation is not established; an interrupt or an intervening store could change it)
+  - the identifier domain is $00..$36, which rests on the $C27F table boundary
+
+wrote results/enemy_routing.json

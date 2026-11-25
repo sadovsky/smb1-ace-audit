@@ -61,10 +61,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 4-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -160,10 +160,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 4-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -261,10 +261,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 5-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -367,10 +367,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 15-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -473,10 +473,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 3-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -599,10 +599,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 254,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 254 exceeds the 8-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 255,
         "derived_index_max": 254,
@@ -676,10 +676,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 47-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -746,10 +746,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 47-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -828,12 +828,10 @@
           "0x0733": "<= 4 (state counter, as asserted by the earlier revision; the table holds only 3 entries; observed)"
         },
         "bound": {
-          "assumptions": [
-            "RAM[$0733] <= 4 (state counter, as asserted by the earlier revision; the table holds only 3 entries; observed)"
-          ],
-          "maximum": 4,
-          "mechanism": "derived by value-set analysis under the stated RAM invariants",
-          "provenance": "structural_conditional",
+          "assumptions": [],
+          "maximum": null,
+          "mechanism": "derived maximum index 4 exceeds the 3-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
           "unconditional": false
         },
         "derived_index_count": 5,
@@ -900,10 +898,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 3-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -1027,10 +1025,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 4-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -1141,10 +1139,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 13-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -1313,10 +1311,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 4-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -1570,10 +1568,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 55-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -1745,10 +1743,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 6-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -1874,16 +1872,10 @@
           "0x001A": "in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)"
         },
         "bound": {
-          "assumptions": [
-            "RAM[$0016] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
-            "RAM[$0017] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
-            "RAM[$0018] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
-            "RAM[$0019] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)",
-            "RAM[$001A] in a set of 55 values ($16,x holds an identifier routed to $C88F (55 of 55); derived_conditional)"
-          ],
-          "maximum": 34,
-          "mechanism": "derived by value-set analysis under the stated RAM invariants",
-          "provenance": "structural_conditional",
+          "assumptions": [],
+          "maximum": null,
+          "mechanism": "derived maximum index 34 exceeds the 34-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
           "unconditional": false
         },
         "derived_index_count": 35,
@@ -1913,10 +1905,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 235,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 235 exceeds the 34-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 236,
         "derived_index_max": 235,
@@ -2033,10 +2025,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 21-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
@@ -2142,10 +2134,10 @@
         "assumed_invariants": {},
         "bound": {
           "assumptions": [],
-          "maximum": 255,
-          "mechanism": "derived by value-set analysis from unknown registers, no RAM assumption",
-          "provenance": "proven",
-          "unconditional": true
+          "maximum": null,
+          "mechanism": "derived maximum index 255 exceeds the 7-entry table, so no bound keeping the index in range is established",
+          "provenance": "unproved",
+          "unconditional": false
         },
         "derived_index_count": 256,
         "derived_index_max": 255,
