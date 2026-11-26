@@ -751,8 +751,14 @@ def build():
           "to, and we report none. A first trial certificate is also far "
           "too weak: it does not yet capture that the interrupt is "
           "enabled only while the game idles, so most tests about "
-          "resuming after an interrupt cannot pass. Strengthening it is "
-          "the main work remaining."))
+          "resuming after an interrupt cannot pass. The cause is "
+          "specific: nine instructions store through an address held in "
+          "RAM, the trial certificate cannot show that address avoids the "
+          "interrupt-control register, and so it must allow any of them "
+          "to switch the interrupt on. Bounding those nine addresses is "
+          "the first thing a stronger certificate needs, and the same "
+          "nine stores are what the timing analysis below leaves "
+          "open."))
     SUB("Interrupt timing")
     tc = timing["status_counts"]
     add(P("The two timing assumptions from Section "

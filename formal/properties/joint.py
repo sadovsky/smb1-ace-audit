@@ -51,8 +51,8 @@ ASSUMPTIONS = (
 
 KINDS = ("VC-STEP", "VC-MOD", "VC-CALL", "VC-RET", "VC-DISPATCH",
          "VC-NMI-ENTRY", "VC-NMI-RESUME", "VC-NMI-EXIT", "VC-RESET",
-         "VC-COLD", "VC-FORBIDDEN", "VC-IRQ", "VC-SAFETY", "VC-COVERAGE",
-         "VC-NODE")
+         "VC-COLD", "VC-FORBIDDEN", "VC-IRQ", "VC-CAPACITY", "VC-SAFETY",
+         "VC-COVERAGE", "VC-NODE")
 
 #: how many times the proposer re-runs with the contracts it derived.  The
 #: contracts and the invariants depend on each other, so this is a fixpoint
@@ -148,6 +148,13 @@ def run(ledger: Ledger, ctx: Context) -> None:
                                          _ordered(verdicts)[400:8000]]},
                   handle, indent=1, sort_keys=True)
 
+    missing = sorted(set(summary) - set(KINDS))
+    if missing:
+        # A kind the ledger does not know about would be a verification
+        # condition whose verdict is silently discarded, and `P1-JOINT` could
+        # then be `conditional` while it fails.
+        raise AssertionError(f"verdict kinds not recorded in the ledger: "
+                             f"{missing}")
     ids = []
     for kind in KINDS:
         entry = summary.get(kind)

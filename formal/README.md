@@ -160,7 +160,7 @@ proves nothing.
 | M3 first program-point invariant | not established; obligations explicit (`P6-071F-PP`, `INIT-071F`, `W-071F-*`) |
 | M4 routine contracts | in progress. `verify/certificate.py` checks contracts and now implements the corrections from `lean/FINDINGS.md` (window derivation, interrupts charged to callers, post-`RTI` postcondition, vacuity guard, depth sign and capacity); not every correction has its own negative test, and the code has not been reviewed against the Lean statements line by line |
 | M5 dispatch and return | dispatch contracts proved; returns open |
-| M6 joint invariant | soundness argument mechanised for an abstract machine (`lean/`). A proposer (`analysis/`) produces a trial certificate that is far from passing; no verdicts are recorded in the manifest and the route stays opt-in (`SMB1_JOINT=1`) |
+| M6 joint invariant | soundness argument mechanised for an abstract machine (`lean/`). A proposer (`analysis/`) produces a trial certificate that is not inductive: in one trial run 69,427 of 83,886 conditions held, which is not a degree of proof, since one failure breaks the argument. The dominant failure is that the proposer cannot bound nine stores through a RAM pointer away from PPU control, so 'NMI enabled' spreads to about 12,000 contexts. No certificate verdict is in the manifest; the route is opt-in (`SMB1_JOINT=1`) because the checker has not been reviewed against the Lean statements and a check takes about two hours |
 | M7 global theorem | `unknown`, with its dependency list |
 | M8 replication, M9 report | replicated from a fresh clone (`results/reports/replication.json`): all statuses match, three slice query digests do not; report in `paper/`; literature review in `results/reports/literature.md` |
 
