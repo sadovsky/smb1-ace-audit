@@ -1114,10 +1114,17 @@ class Proposer:
             "nmi_windows": [f"{pc:04X}" for pc in sorted(self.window_pcs)],
             "reset_clears_enable": True,
             "reset_clears_enable_assumption":
-                "MA-PPU-RESET: the reset line clears PPU control, so the "
-                "ghost NMI-enable bit is 0 at the reset entry.  "
-                "transitions.py carries it across a warm reset unchanged, so "
-                "this removes behaviours and is an assumption, not a result.",
+                "MA-PPU-RESET: the reset line clears PPU control, so the ghost "
+                "NMI-enable bit is 0 at the reset entry. CONSOLE-DEPENDENT: "
+                "NESdev (PPU power up state) documents this for the "
+                "front-loading NES-001, whose Reset button resets both CPU and "
+                "PPU, and documents the Famicom and the top-loading NES-101 as "
+                "resetting only the CPU, where it is FALSE. transitions.py "
+                "carries the bit across a warm reset unchanged, which is the "
+                "Famicom/NES-101 behaviour, so this assumption removes "
+                "behaviours and is an assumption, not a result; the scenario "
+                "it removes is recorded as the open obligation "
+                "OPEN-WARM-RESET-NMI in verify/JOINT_INVARIANT.md section 7.4.",
             "i_frame": i_frame,
             "routines": routines,
             "contexts": contexts,

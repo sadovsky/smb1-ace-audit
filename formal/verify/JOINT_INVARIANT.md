@@ -345,12 +345,26 @@ which NESdev documents as true of the front-loading NES (NES-001), whose
 reset button resets both CPU and PPU, and as **false** of the Famicom and the
 top-loading NES-101, where only the CPU is reset.  It is the same kind of
 assumption as `MA-PPU-POWERON`, but unlike that one it is known not to hold on
-some consoles; on those, the warm-reset scenario above is not excluded by
-anything proved here and is an open obligation.  It *removes* behaviours, so it is an assumption and not a
+some consoles.  It *removes* behaviours, so it is an assumption and not a
 result: the checker records it as a `VC-RESET` verdict naming it, and
 `properties/joint.py` lists it among the assumptions of `P1-JOINT`.  The
 underlying model is unchanged, so this does not make anything else in the
 repository conditional.
+
+**The warm-reset scenario is recorded, not assumed away.**  For the model as
+`transitions.py` actually has it -- the ghost enable bit carried across a warm
+reset unchanged, which is the Famicom and NES-101 behaviour -- this is an
+unresolved obligation of the track, not a discharged one:
+
+> **OPEN-WARM-RESET-NMI**: a warm reset taken while NMI is enabled leaves it
+> enabled across `$8000-$8002`.  An NMI taken at the boundary before `$8004`
+> returns with `A = RAM[$0778] | $80`, so the `STA $2000` at `$8004`
+> re-enables NMI instead of disabling it, and the rest of the
+> initialisation -- including the RAM-clearing loop at `$90CC` -- runs with
+> NMI enabled and RAM partly cleared.  Nothing in this certificate addresses
+> it: with MA-PPU-RESET dropped, every cell domain the clearing loop
+> establishes would have to be re-derived under interference from the
+> handler.  No attempt was made.
 
 ### 7.5 Hints
 
