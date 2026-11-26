@@ -1,3 +1,3 @@
-(declare-fun h61848_S () (_ BitVec 8))
-(assert (not (= (bvadd #xfd h61848_S) h61848_S)))
+(declare-fun v!0 () (_ BitVec 8))
+(assert (not (= (bvadd #xfd v!0) v!0)))
 (check-sat)

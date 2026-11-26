@@ -33,21 +33,15 @@ SAVE_QUERIES = False
 def smtlib(assertions) -> str:
     """Deterministic SMT-LIB 2 text for a list of assertions.
 
-    `Solver.to_smt2` names shared subterms after internal AST ids, which vary
-    from process to process, so its output cannot be hashed reproducibly.
+    `Solver.to_smt2` names shared subterms after internal AST ids, and fresh
+    symbols carry a process-wide counter (`h61848_S`), so neither the solver's
+    own rendering nor the raw names can be hashed reproducibly: the first
+    replication run found the same query hashing differently in two runs for
+    exactly that reason.  Constants are therefore renamed in order of first
+    appearance, as for the slice queries.
     """
-    seen, constants, pending = set(), {}, list(assertions)
-    while pending:
-        term = pending.pop()
-        if term.get_id() in seen:
-            continue
-        seen.add(term.get_id())
-        if z3.is_const(term) and term.decl().kind() == z3.Z3_OP_UNINTERPRETED:
-            constants[term.decl().name()] = term.decl()
-        pending.extend(term.children())
-    lines = [d.sexpr() for _, d in sorted(constants.items())]
-    lines += [f"(assert {a.sexpr()})" for a in assertions]
-    return "\n".join(lines + ["(check-sat)"]) + "\n"
+    from .crosscheck import canonical_smtlib
+    return canonical_smtlib(list(assertions))
 
 
 @dataclass

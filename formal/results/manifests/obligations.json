@@ -94,7 +94,7 @@
       "id": "L-92C8-ARITH",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/L-92C8-ARITH.smt2",
-      "query_sha256": "38285b649e5287e54d64fc68bb37cfc94cc790ac922a5da04273cb651a219f76",
+      "query_sha256": "9ddf8e8e702634ba84f721b5ece16e7b16ccb2e342886c45fd1eea74271cdfd5",
       "result_artifact": null,
       "scope": "local arithmetic lemma (no program bytes involved)",
       "solver": "z3",
@@ -114,7 +114,7 @@
       "id": "L-92C8-ARITH-NEG",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/L-92C8-ARITH-NEG.smt2",
-      "query_sha256": "9c392ef10020504b4a3715ec1b80e1ff706cd89032a17c99553ca02e56ab762c",
+      "query_sha256": "d5cf0bc7d999c745c1c756fca9248110a85c7c01a29fb475cc198987fc4e2956",
       "result_artifact": null,
       "scope": "negative regression test: the lemma without its precondition",
       "solver": "z3",
@@ -134,7 +134,7 @@
       "id": "L-92C8-ROM-EXACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/L-92C8-ROM-EXACT.smt2",
-      "query_sha256": "fb8eed2b40d78772684f06d65e5380b686e02a8df5ccab08022e7b74524b3b75",
+      "query_sha256": "e54394f76edb1c72f8463d4190508d675f11be0fa504e5a79618772b17253732",
       "result_artifact": null,
       "scope": "local lemma over program bytes",
       "solver": "z3",
@@ -154,7 +154,7 @@
       "id": "L-92C8-ROM",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/L-92C8-ROM.smt2",
-      "query_sha256": "886361a63b863ecc33f2d2c3f30521723e0e62a11fc362d09774aa34801e6c8d",
+      "query_sha256": "a07069ae36c27737463c60a2c46282e132e05484b1c20f04e78835c7a6974408",
       "result_artifact": null,
       "scope": "local lemma over program bytes",
       "solver": "z3",
@@ -171,7 +171,7 @@
       "id": "L-92C8-ROM-NEG",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/L-92C8-ROM-NEG.smt2",
-      "query_sha256": "25c457e97f9f7fc2b9ab53dfd400f38e5c174e75af7d4edb655506e38c876995",
+      "query_sha256": "ec439a1944ed93370a9aa6f991410899613e0d1d07beb4c972bbd13f3e46b78e",
       "result_artifact": null,
       "scope": "negative regression test over program bytes",
       "solver": "z3",
@@ -191,7 +191,7 @@
       "id": "D-8215-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-8215-CONTRACT.rom.smt2",
-      "query_sha256": "2650161ac0163d447ff3ee9e65928747c94cc40e5fcc4a54aa058ff4fdb0b49c",
+      "query_sha256": "7887f3b93712e493c247b66edd534732151f91648ea6beff361ca8531f3771e4",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -211,7 +211,7 @@
       "id": "D-8234-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-8234-CONTRACT.rom.smt2",
-      "query_sha256": "31ba2ef26a09bae678f5637caca6c2cd811dc29f0ef78140aa618a3671e1435c",
+      "query_sha256": "4d4bf60c4cd5b05108e162f5412644702db023fde4a702e42a71d153ece5bab7",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -231,7 +231,7 @@
       "id": "D-83A3-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-83A3-CONTRACT.rom.smt2",
-      "query_sha256": "4391ab752cfd7ff43fbf27c7e3672e0d7b8225b420c2dd59e2c9ad6a18684b1a",
+      "query_sha256": "cd5c3f08943b24304ef8eb6faec4c12a1268fcf9c71fb50a953cfa228202aa5f",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -251,7 +251,7 @@
       "id": "D-856A-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-856A-CONTRACT.rom.smt2",
-      "query_sha256": "c298a904a301c90e04be90df2b8bf6c1f2f30a898a45540aa8b9e3b3f4816767",
+      "query_sha256": "65c417b4d046bfdc5a3c49cf23f3b16add652a07cf3c523170388f999aba6153",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -271,7 +271,7 @@
       "id": "D-921B-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-921B-CONTRACT.rom.smt2",
-      "query_sha256": "9ba6951293e9870969106042128cac3cc1040e98602e9fcd5cd4e196df440213",
+      "query_sha256": "d9b2c264723fde844391e44baf75f0fb3e52940a47473963c5f15391a03820f2",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -291,7 +291,7 @@
       "id": "D-92C8-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-92C8-CONTRACT.rom.smt2",
-      "query_sha256": "30639a7dc404badae3c5a7790306c5c3e57e117a31a215c35c70cddedefd8e2f",
+      "query_sha256": "83a605b31887b3b5de2262043dd4df9d998484749d81a63befcea4882c97bb5e",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -314,7 +314,7 @@
       "id": "D-92C8-CONTRACT-NEG",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/D-92C8-CONTRACT-NEG.rom.smt2",
-      "query_sha256": "38684fd3eb598cffe89224d67387160aa2a26127ccb3e40d72cf6e30ccbc520d",
+      "query_sha256": "58fa49fdd168085a0641528e1b7a6c8e2b4b581af210e252681c23f36260a5b8",
       "result_artifact": null,
       "scope": "negative regression test: one index past the table",
       "solver": "z3",
@@ -334,7 +334,7 @@
       "id": "D-9664-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-9664-CONTRACT.rom.smt2",
-      "query_sha256": "ecaab2e700e5caf659bd2890f6bd33832ded172f2906d5a9d8c41b912b411687",
+      "query_sha256": "1b13f511c990f5d53bee47b2c9103e3733014aba4b6ce801083497253e1d0bb1",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -354,7 +354,7 @@
       "id": "D-9743-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-9743-CONTRACT.rom.smt2",
-      "query_sha256": "e6b5257ee2dbcca3058e65b01caf033004239c076e0d5aa640d7360763fe27b3",
+      "query_sha256": "0c0ec88efc08dce1e3129e37ef8c1065f2089b09c3e5b8eb60559b3b2e98c13c",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -374,7 +374,7 @@
       "id": "D-AEDF-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-AEDF-CONTRACT.rom.smt2",
-      "query_sha256": "6f5c7a1b460c38a6157b95baddf48f0b33ab5d1390ad969104fb4820b8c18811",
+      "query_sha256": "743b2c9eff417578fad60591ca2ba41a83f685981369bf0d01260f680edd23b8",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -394,7 +394,7 @@
       "id": "D-B04C-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-B04C-CONTRACT.rom.smt2",
-      "query_sha256": "ff802310f4438ca71643ab28bc18dc49af6f22bbc2fa7552cc982261d8a93627",
+      "query_sha256": "fb9e3682e1bab7c3858f892e849f5efff5c778486f8c39c044f252bc5c10be0a",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -414,7 +414,7 @@
       "id": "D-B34E-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-B34E-CONTRACT.rom.smt2",
-      "query_sha256": "357e2ddafbc112ca074f2f6ef513a1f49193ee6f1c1d527b5c795a387e6c48e6",
+      "query_sha256": "dfc57d960f2185aa12d68d077a323ea1b30d82c1ddfebe195a5f2f6c215dabf2",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -434,7 +434,7 @@
       "id": "D-BDBD-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-BDBD-CONTRACT.rom.smt2",
-      "query_sha256": "dc8563b0ea85a58a979de620fdfd965a3e0b64a9855b3b742cf4eb3a4786b32d",
+      "query_sha256": "5e5d63052f8a2c2df72edde9e9996326dbed32a40a1ce3331380342bad1125d6",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -454,7 +454,7 @@
       "id": "D-C27F-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C27F-CONTRACT.rom.smt2",
-      "query_sha256": "cc4375acababad8821fa01556dec8282310847e86cf857eadc1b7fd79baf5a08",
+      "query_sha256": "2c96e0b75339289383ce9bd6555be679a42ed4507f4c55ab1138d77d6c6d0e8c",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -474,7 +474,7 @@
       "id": "D-C7A8-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C7A8-CONTRACT.rom.smt2",
-      "query_sha256": "beeac481f23bd7ca320ec10320a49a84e919ba2a222c881b02518ac08b97c0fc",
+      "query_sha256": "23cbb83332f404dec6980b9321909d83f11a0d7b6f1adf761f737b301ed86e97",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -494,7 +494,7 @@
       "id": "D-C88F-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C88F-CONTRACT.rom.smt2",
-      "query_sha256": "670547da3a89ff38a7b796e0b38b048faaa4edc726e847d38a27b2c6ea2b65ab",
+      "query_sha256": "fd3f4b7df0add036bb67ea8bbec95173f910055ed3ab73bed8c5e3042ac433b6",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -514,7 +514,7 @@
       "id": "D-C907-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C907-CONTRACT.rom.smt2",
-      "query_sha256": "9128b9da84d1fecad181565840fadcaa2056bd8d93a1f5c3ea2203088655d12a",
+      "query_sha256": "bf2cab3d9350edc1c7dda3602e1e4a64d1a25cb28593510a22dea084c1d65ab8",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -534,7 +534,7 @@
       "id": "D-C987-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-C987-CONTRACT.rom.smt2",
-      "query_sha256": "08ca8a90ba7dc8c3bd7a91b1768d5aa1ab2a44c07d4b6b1176a168d55ec3c559",
+      "query_sha256": "82face280c5283c961903e12ffa1816166640fe56aae25a7629b6fb9a5b50ae5",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -554,7 +554,7 @@
       "id": "D-D2E5-CONTRACT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/D-D2E5-CONTRACT.rom.smt2",
-      "query_sha256": "481522507b75b1f4cbf1ce3f2bc7d0294bcdc67929904c3ae9f7d70d59cb39ff",
+      "query_sha256": "01e3b69db69c019a1b4a3c5b90a2b8a94929f2df00b247a18334bd50c5cff7f1",
       "result_artifact": null,
       "scope": "dispatch contract (P2, P3) for one site",
       "solver": "z3",
@@ -4445,7 +4445,7 @@
       "id": "INIT-MEM-VBLANK-800A",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-VBLANK-800A.rom.smt2",
-      "query_sha256": "d27435d4ab7e1f6c1b6204b6bbf73cad89c3b0fdbd0a87351891fd2d4b301608",
+      "query_sha256": "10c88f0757ccf5770c5367299dedc8accfa2f1cd5f6b9aae3bde84b07c01be4c",
       "result_artifact": null,
       "scope": "loop invariant for one unbounded loop",
       "solver": "z3",
@@ -4474,7 +4474,7 @@
       "id": "INIT-MEM-VBLANK-800F",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-VBLANK-800F.rom.smt2",
-      "query_sha256": "4d4e3c6c4586c9191f3a26ccb7dbc442d2382ae3f0f27d4a3920504ca780f0ed",
+      "query_sha256": "10c88f0757ccf5770c5367299dedc8accfa2f1cd5f6b9aae3bde84b07c01be4c",
       "result_artifact": null,
       "scope": "loop invariant for one unbounded loop",
       "solver": "z3",
@@ -4493,7 +4493,7 @@
       "id": "INIT-MEM-PATHS-TOTAL",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-PATHS-TOTAL.rom.smt2",
-      "query_sha256": "d06bebe7486fa0c80bd59b1df5bbbe712b7daafe1a977fa9af159a76ee199de5",
+      "query_sha256": "a8b65d1d028f52d38ae17724d271b8573754d13226d611d4c7f4669d796d2f88",
       "result_artifact": null,
       "scope": "exhaustiveness of the warm-boot case split",
       "solver": "z3",
@@ -4511,7 +4511,7 @@
       "id": "INIT-MEM-PATHS-DISJOINT",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-PATHS-DISJOINT.rom.smt2",
-      "query_sha256": "b7ffa655dc0e789495608538b5db48457037f65ce50de0f66cd82289d46b1f79",
+      "query_sha256": "2993cda70b1d969ca3b54c485b568e05946bc4bafd408131b646d99814787c15",
       "result_artifact": null,
       "scope": "disjointness of the warm-boot case split",
       "solver": "z3",
@@ -4537,7 +4537,7 @@
       "id": "INIT-MEM-WARM-COND",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-WARM-COND.rom.smt2",
-      "query_sha256": "1ca035acb43aed9bb02e4a2377d1868acb43ab9ba9e8ce592f468ca2db7900c2",
+      "query_sha256": "7f3c6260401eb937c2ebb578b869a79fe1e7ab489468a054c08c72a5b0312dab",
       "result_artifact": null,
       "scope": "the warm-boot condition, as a formula over cold-boot RAM",
       "solver": "z3",
@@ -4554,7 +4554,7 @@
       "id": "INIT-MEM-WARM-COND-NEG",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/INIT-MEM-WARM-COND-NEG.rom.smt2",
-      "query_sha256": "562b71585e28a3f64475f3da124d9f6b17c213d05d45b4f8bc3afe6b5e4d4e4f",
+      "query_sha256": "fe1d26716488302587bf5fcf6bf1fddf7fef4c14bffbbfc1ea33dbc93a530546",
       "result_artifact": null,
       "scope": "negative regression test: phi is not vacuous",
       "solver": "z3",
@@ -4748,7 +4748,7 @@
       "id": "INIT-MEM-DETERMINED-COLD",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-DETERMINED-COLD.rom.smt2",
-      "query_sha256": "9590075492f5fa689b19eaa67b2bd02830c6378e8667fa8c143c65c22a481e3a",
+      "query_sha256": "8cfda5c0497e8c8e4cd0748834ee3d00ef3412e27a96f35e97ad9da0d58681d6",
       "result_artifact": null,
       "scope": "determined cells at the end of the initialisation window",
       "solver": "z3",
@@ -4770,7 +4770,7 @@
       "id": "INIT-MEM-PRESERVED-COLD",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-PRESERVED-COLD.rom.smt2",
-      "query_sha256": "a06c0c4d9eb12d2f3b223acb0783e8f26c7c95047a797627e35979fe6da4740f",
+      "query_sha256": "56ec22d539c42275912bbaad813beb23e70b8179d3c88e8222d7c492b4d8af1f",
       "result_artifact": null,
       "scope": "preserved cells at the end of the initialisation window",
       "solver": "z3",
@@ -4801,7 +4801,7 @@
       "id": "INIT-MEM-WRITESET-COLD",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-WRITESET-COLD.rom.smt2",
-      "query_sha256": "8e8b21f65b73b71473e537a40a2ba744893c4eb2fcb3e109b0744ed92fa2a6e8",
+      "query_sha256": "633d9f207620cf7f297a7ea920795db61e45d946017ac7688779b7564800caf5",
       "result_artifact": null,
       "scope": "the cells the window's writes can reach",
       "solver": "z3",
@@ -4825,7 +4825,7 @@
       "id": "INIT-MEM-UNTOUCHED-COLD",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-UNTOUCHED-COLD.rom.smt2",
-      "query_sha256": "a07c19a886a849ff0fee902868145b4dd8e61f5cc131137d657aece22a6b67e3",
+      "query_sha256": "5cbddca8a55c6b02dcf9f0099753c77d84fcf743743af3717276e43805fcec0d",
       "result_artifact": null,
       "scope": "untouched cells, from the write log",
       "solver": "z3",
@@ -4994,7 +4994,7 @@
       "id": "INIT-MEM-DETERMINED-WARM",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-DETERMINED-WARM.rom.smt2",
-      "query_sha256": "91292c790d0f85e247aad86d1018d7c90b1603783a3ac2e0cd612854f66b3060",
+      "query_sha256": "25fbd630ebbcdec35b55af113c9ed8ea1f19ca08b61620b17965a48788875c6c",
       "result_artifact": null,
       "scope": "determined cells at the end of the initialisation window",
       "solver": "z3",
@@ -5017,7 +5017,7 @@
       "id": "INIT-MEM-PRESERVED-WARM",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-PRESERVED-WARM.rom.smt2",
-      "query_sha256": "576f7efb5231bb33e482b6291b19591104ca811df29bd84d5c357cabcec9e03f",
+      "query_sha256": "ae5c9d07ce05f58a63075e0afb82cc144e8f40899e2d03c3ac7a1a589a319cc1",
       "result_artifact": null,
       "scope": "preserved cells at the end of the initialisation window",
       "solver": "z3",
@@ -5049,7 +5049,7 @@
       "id": "INIT-MEM-WRITESET-WARM",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-WRITESET-WARM.rom.smt2",
-      "query_sha256": "3af085b818da60bca2bcdb02e70574a6c7778d7a6efdce83c0398406eb39212b",
+      "query_sha256": "b35d41f334e0b375557a6c7798a100a9fef03a2351c68ce056d184b0be22d0d4",
       "result_artifact": null,
       "scope": "the cells the window's writes can reach",
       "solver": "z3",
@@ -5074,7 +5074,7 @@
       "id": "INIT-MEM-UNTOUCHED-WARM",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-UNTOUCHED-WARM.rom.smt2",
-      "query_sha256": "5807087c3c39b1120895c723fe1853b3af9539551677e3a612172419f06054ec",
+      "query_sha256": "941fbd1bd74985cc60c0b84602d2ba3be138fda349255dea4b53af21fdc2d16d",
       "result_artifact": null,
       "scope": "untouched cells, from the write log",
       "solver": "z3",
@@ -5277,7 +5277,7 @@
       "id": "INIT-MEM-NMI-WARM-RESET",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/INIT-MEM-NMI-WARM-RESET.rom.smt2",
-      "query_sha256": "28f78b39cdb4ddc25125263d216a119a6c7cafe730b6cfabbcdfffd092e19c41",
+      "query_sha256": "7f429481698c7ea439e50f3a920e3c5166e43705c25ff9b57959e1958cc006e2",
       "result_artifact": null,
       "scope": "the gap the cold-boot assumption hides",
       "solver": "z3",
@@ -5301,7 +5301,7 @@
       "id": "INIT-MEM-WARM-DIGITS",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/INIT-MEM-WARM-DIGITS.rom.smt2",
-      "query_sha256": "4187b96037ae452b18abf41fa32cf0314dfb7843aeb6602d8f06a7a9c551e320",
+      "query_sha256": "165fbb8f0b194f81b3fdc2b16f64a4bb2150739ebe6b87351da91ab4218e59e5",
       "result_artifact": null,
       "scope": "the part of the theorem's parameter that is not free",
       "solver": "z3",
@@ -5624,7 +5624,7 @@
       "id": "INIT-MEM-DETERMINED-WARM-NEG",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/INIT-MEM-DETERMINED-WARM-NEG.rom.smt2",
-      "query_sha256": "37bef83a410da2329974b90202e8f6ff5c9f16639f90c2bf896c2e096a162804",
+      "query_sha256": "669816b5e6e7ab7577a1c2b583b36da0ab15da16c1aeac993c3794b185501842",
       "result_artifact": null,
       "scope": "negative regression test: the determined set is not everything",
       "solver": "z3",
@@ -7169,7 +7169,7 @@
         "mode": "aby",
         "one_step_bound": "0x0129",
         "query_artifact": "formal/results/queries/SEP-W-BAB5.rom.smt2",
-        "query_sha256": "e5f05191da334333b61e55cc94a0388ef25097a9446d3699bfb0daf13b965482",
+        "query_sha256": "ac175453cb93ed70ddc86f8bcd98b9474474348357a6c4661aa7e6fea2818bcb",
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
@@ -7198,7 +7198,7 @@
       "id": "SEP-W-BAB5",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/SEP-W-BAB5.rom.smt2",
-      "query_sha256": "e5f05191da334333b61e55cc94a0388ef25097a9446d3699bfb0daf13b965482",
+      "query_sha256": "ac175453cb93ed70ddc86f8bcd98b9474474348357a6c4661aa7e6fea2818bcb",
       "result_artifact": null,
       "scope": "page-one write bound for one instruction",
       "solver": "z3",
@@ -7220,7 +7220,7 @@
         "mode": "aby",
         "one_step_bound": "0x011D",
         "query_artifact": "formal/results/queries/SEP-W-BAFC.rom.smt2",
-        "query_sha256": "259975be9bb253eb0302c52cf65fcdfdfe2cc5de0c3feb5e7aab7d33e1cb908e",
+        "query_sha256": "620a8edd587089e7c2ae16b6fdefaa2b8f74d035c3e726a042347e1866aa7d5d",
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
@@ -7249,7 +7249,7 @@
       "id": "SEP-W-BAFC",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/SEP-W-BAFC.rom.smt2",
-      "query_sha256": "259975be9bb253eb0302c52cf65fcdfdfe2cc5de0c3feb5e7aab7d33e1cb908e",
+      "query_sha256": "620a8edd587089e7c2ae16b6fdefaa2b8f74d035c3e726a042347e1866aa7d5d",
       "result_artifact": null,
       "scope": "page-one write bound for one instruction",
       "solver": "z3",
@@ -7784,7 +7784,7 @@
         "mode": "aby",
         "one_step_bound": "0x0129",
         "query_artifact": "formal/results/queries/SEP-W-BB76.rom.smt2",
-        "query_sha256": "7653d07ab30a7ecce00b663c6f08be487e7f6dc5229233c5efaa14e72b16da4f",
+        "query_sha256": "ac175453cb93ed70ddc86f8bcd98b9474474348357a6c4661aa7e6fea2818bcb",
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
@@ -7813,7 +7813,7 @@
       "id": "SEP-W-BB76",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/SEP-W-BB76.rom.smt2",
-      "query_sha256": "7653d07ab30a7ecce00b663c6f08be487e7f6dc5229233c5efaa14e72b16da4f",
+      "query_sha256": "ac175453cb93ed70ddc86f8bcd98b9474474348357a6c4661aa7e6fea2818bcb",
       "result_artifact": null,
       "scope": "page-one write bound for one instruction",
       "solver": "z3",
@@ -8159,7 +8159,7 @@
         "mode": "aby",
         "one_step_bound": "0x010E",
         "query_artifact": "formal/results/queries/SEP-W-C583.rom.smt2",
-        "query_sha256": "d50e8daf9d7735881c4da19f6a0f0f5e0e23524cfa4b3e819acaa3f69be27cc7",
+        "query_sha256": "0ac14cf03e71f1836783734e86db42ee9cf1d65ef0abd8047a3199bd1155f730",
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
@@ -8188,7 +8188,7 @@
       "id": "SEP-W-C583",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/SEP-W-C583.rom.smt2",
-      "query_sha256": "d50e8daf9d7735881c4da19f6a0f0f5e0e23524cfa4b3e819acaa3f69be27cc7",
+      "query_sha256": "0ac14cf03e71f1836783734e86db42ee9cf1d65ef0abd8047a3199bd1155f730",
       "result_artifact": null,
       "scope": "page-one write bound for one instruction",
       "solver": "z3",
@@ -8990,7 +8990,7 @@
         "mode": "aby",
         "one_step_bound": "0x011D",
         "query_artifact": "formal/results/queries/SEP-W-C7C3.rom.smt2",
-        "query_sha256": "03723172246982c5a5777b37538a85542e33d5cf800edbf749dcca33d0abca5e",
+        "query_sha256": "620a8edd587089e7c2ae16b6fdefaa2b8f74d035c3e726a042347e1866aa7d5d",
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
@@ -9019,7 +9019,7 @@
       "id": "SEP-W-C7C3",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/SEP-W-C7C3.rom.smt2",
-      "query_sha256": "03723172246982c5a5777b37538a85542e33d5cf800edbf749dcca33d0abca5e",
+      "query_sha256": "620a8edd587089e7c2ae16b6fdefaa2b8f74d035c3e726a042347e1866aa7d5d",
       "result_artifact": null,
       "scope": "page-one write bound for one instruction",
       "solver": "z3",
@@ -9070,16 +9070,16 @@
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 313,
+            "bad_condition": 345,
             "page_write_bound": 26,
-            "pc_uniqueness": 747
+            "pc_uniqueness": 1196
           },
           "cross_check": "clean",
           "distinct_queries": 353,
           "distinct_rechecked": 353,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
           "query_digest": "e074851a8aadb9e815671c225f62a2211c0a5b2dc868edb6723c57d0e48e47b9",
-          "relied_on_unsat": 640,
+          "relied_on_unsat": 1089,
           "second_solver": {
             "bitwuzla": {
               "agree": 353
@@ -9088,9 +9088,9 @@
               "agree": 353
             }
           },
-          "solver_queries": 1086,
+          "solver_queries": 1567,
           "z3_no_answer": 0,
-          "z3_sat": 446
+          "z3_sat": 478
         },
         "status": "unknown"
       },
@@ -9197,7 +9197,7 @@
         "mode": "aby",
         "one_step_bound": "0x0100",
         "query_artifact": "formal/results/queries/SEP-W-CF4A.rom.smt2",
-        "query_sha256": "79f7f88be4e6ddb7c0fdef37de1e3a7c9af4299950bff1f50b4e2c4552e5e350",
+        "query_sha256": "ad430373e4dd601229c24bfde42adc80e21d73e8ba877cfed1939f6226ed20cc",
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
@@ -9226,7 +9226,7 @@
       "id": "SEP-W-CF4A",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/SEP-W-CF4A.rom.smt2",
-      "query_sha256": "79f7f88be4e6ddb7c0fdef37de1e3a7c9af4299950bff1f50b4e2c4552e5e350",
+      "query_sha256": "ad430373e4dd601229c24bfde42adc80e21d73e8ba877cfed1939f6226ed20cc",
       "result_artifact": null,
       "scope": "page-one write bound for one instruction",
       "solver": "z3",
@@ -9484,7 +9484,7 @@
         "mode": "aby",
         "one_step_bound": "0x011D",
         "query_artifact": "formal/results/queries/SEP-W-D19B.rom.smt2",
-        "query_sha256": "fe978d2afff0d72de6179078bd26dee9f3aa7367eae80dc23efa2dbdc6e674e3",
+        "query_sha256": "620a8edd587089e7c2ae16b6fdefaa2b8f74d035c3e726a042347e1866aa7d5d",
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
@@ -9513,7 +9513,7 @@
       "id": "SEP-W-D19B",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/SEP-W-D19B.rom.smt2",
-      "query_sha256": "fe978d2afff0d72de6179078bd26dee9f3aa7367eae80dc23efa2dbdc6e674e3",
+      "query_sha256": "620a8edd587089e7c2ae16b6fdefaa2b8f74d035c3e726a042347e1866aa7d5d",
       "result_artifact": null,
       "scope": "page-one write bound for one instruction",
       "solver": "z3",
@@ -10598,6 +10598,7 @@
             "bound": "0x0139",
             "cut_points": [
               "0xD45F",
+              "0xD800",
               "0xDA11"
             ],
             "failures": [
@@ -10612,7 +10613,7 @@
             ],
             "invariant": "X <= 0x29",
             "provenance": "synthesised",
-            "rounds": 2
+            "rounds": 3
           }
         ],
         "bound": null,
@@ -10629,27 +10630,27 @@
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 208,
+            "bad_condition": 291,
             "page_write_bound": 26,
-            "pc_uniqueness": 661
+            "pc_uniqueness": 1136
           },
           "cross_check": "clean",
-          "distinct_queries": 399,
-          "distinct_rechecked": 399,
+          "distinct_queries": 441,
+          "distinct_rechecked": 441,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "c0b40a147905cfd0f00f284114b122c1b165c4320021ad5fe1f92a275a51f16b",
-          "relied_on_unsat": 652,
+          "query_digest": "6fa13c9b16bd1ee4d7a324e9cf87203d76d7f90af57528da643e91b56a302bdd",
+          "relied_on_unsat": 1114,
           "second_solver": {
             "bitwuzla": {
-              "agree": 399
+              "agree": 441
             },
             "cvc5": {
-              "agree": 399
+              "agree": 441
             }
           },
-          "solver_queries": 895,
+          "solver_queries": 1453,
           "z3_no_answer": 0,
-          "z3_sat": 243
+          "z3_sat": 339
         },
         "status": "unknown"
       },
@@ -10756,10 +10757,85 @@
             ],
             "failures": [
               {
-                "cut_point": "",
-                "edge": "",
-                "from": "",
-                "part": "budget",
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD455",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC987",
+                  "0xD432",
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD453",
+                  "0xD455"
+                ]
+              },
+              {
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD469",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469"
+                ]
+              },
+              {
+                "cut_point": "0xDA11",
+                "edge": "call",
+                "from": "0xD59F",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469",
+                  "0xD45F",
+                  "0xD598",
+                  "0xD599",
+                  "0xD59A",
+                  "0xD59D",
+                  "0xD59F"
+                ]
+              },
+              {
+                "cut_point": "0xDA11",
+                "edge": "call",
+                "from": "0xD7BC",
+                "part": "invariant",
                 "reason": "time budget exhausted",
                 "suffix": []
               }
@@ -10773,6 +10849,11 @@
         "bound_offset": null,
         "cause": {
           "kind": "budget",
+          "note": "so this writer is most likely a `call` case; it is recorded as `budget` because the method did not get far enough to say so",
+          "the_slices_it_was_working_on_cross_a_call_at": [
+            "0xC987",
+            "0xD59A"
+          ],
           "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
         },
         "instruction": "STA $011E,X",
@@ -10783,27 +10864,27 @@
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 224,
+            "bad_condition": 276,
             "page_write_bound": 26,
-            "pc_uniqueness": 651
+            "pc_uniqueness": 708
           },
           "cross_check": "clean",
-          "distinct_queries": 407,
-          "distinct_rechecked": 407,
+          "distinct_queries": 450,
+          "distinct_rechecked": 450,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "34b7fcaefed67f117954ba747ec93cf079aa1a62ba12232276fd0bef703b27c8",
-          "relied_on_unsat": 643,
+          "query_digest": "42c7dadefdd5938417c603508a58df3f26a20a8e01a9b6f84908a75eee0af498",
+          "relied_on_unsat": 701,
           "second_solver": {
             "bitwuzla": {
-              "agree": 407
+              "agree": 450
             },
             "cvc5": {
-              "agree": 407
+              "agree": 450
             }
           },
-          "solver_queries": 901,
+          "solver_queries": 1010,
           "z3_no_answer": 0,
-          "z3_sat": 258
+          "z3_sat": 309
         },
         "status": "unknown"
       },
@@ -10833,10 +10914,85 @@
             ],
             "failures": [
               {
-                "cut_point": "",
-                "edge": "",
-                "from": "",
-                "part": "budget",
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD455",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC987",
+                  "0xD432",
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD453",
+                  "0xD455"
+                ]
+              },
+              {
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD469",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469"
+                ]
+              },
+              {
+                "cut_point": "0xDA11",
+                "edge": "call",
+                "from": "0xD59F",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469",
+                  "0xD45F",
+                  "0xD598",
+                  "0xD599",
+                  "0xD59A",
+                  "0xD59D",
+                  "0xD59F"
+                ]
+              },
+              {
+                "cut_point": "0xDA11",
+                "edge": "call",
+                "from": "0xD7BC",
+                "part": "invariant",
                 "reason": "time budget exhausted",
                 "suffix": []
               }
@@ -10850,6 +11006,11 @@
         "bound_offset": null,
         "cause": {
           "kind": "budget",
+          "note": "so this writer is most likely a `call` case; it is recorded as `budget` because the method did not get far enough to say so",
+          "the_slices_it_was_working_on_cross_a_call_at": [
+            "0xC987",
+            "0xD59A"
+          ],
           "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
         },
         "instruction": "STA $0117,X",
@@ -10860,27 +11021,27 @@
         "scope": "statement about the machine model in formal/model",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 224,
+            "bad_condition": 278,
             "page_write_bound": 26,
-            "pc_uniqueness": 640
+            "pc_uniqueness": 696
           },
           "cross_check": "clean",
-          "distinct_queries": 407,
-          "distinct_rechecked": 407,
+          "distinct_queries": 450,
+          "distinct_rechecked": 450,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "abf357271300896d9478738e550614ab842525634292868478d60dc91aa1b496",
-          "relied_on_unsat": 630,
+          "query_digest": "10fa1434aaddeb501655db3a95635898e895dc7d74fefdf7f0fc1c1a7c499000",
+          "relied_on_unsat": 687,
           "second_solver": {
             "bitwuzla": {
-              "agree": 407
+              "agree": 450
             },
             "cvc5": {
-              "agree": 407
+              "agree": 450
             }
           },
-          "solver_queries": 890,
+          "solver_queries": 1000,
           "z3_no_answer": 0,
-          "z3_sat": 260
+          "z3_sat": 313
         },
         "status": "unknown"
       },
@@ -12379,11 +12540,21 @@
           "0xDA1B": {
             "instruction": "STA $011E,X",
             "kind": "budget",
+            "note": "so this writer is most likely a `call` case; it is recorded as `budget` because the method did not get far enough to say so",
+            "the_slices_it_was_working_on_cross_a_call_at": [
+              "0xC987",
+              "0xD59A"
+            ],
             "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
           },
           "0xDA21": {
             "instruction": "STA $0117,X",
             "kind": "budget",
+            "note": "so this writer is most likely a `call` case; it is recorded as `budget` because the method did not get far enough to say so",
+            "the_slices_it_was_working_on_cross_a_call_at": [
+              "0xC987",
+              "0xD59A"
+            ],
             "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
           },
           "0xDAED": {
@@ -12950,7 +13121,7 @@
       "id": "SEP-RESET-NO-DRIFT",
       "independent_check": "cvc5: sat",
       "query_artifact": "formal/results/queries/SEP-RESET-NO-DRIFT.smt2",
-      "query_sha256": "351589d72653d7f58d2b5cca5ffef88822ec15a9ba7a76a70c06d9b8802eea0a",
+      "query_sha256": "f8dd10a5b28577c26908dfbcaa7714c6972fb9cdde867308bfe764984539607d",
       "result_artifact": null,
       "scope": "soundness check on A-RESET-PROLOGUE",
       "solver": "z3",
@@ -12967,7 +13138,7 @@
       "id": "SEP-RESET-DRIFT-RATE",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/SEP-RESET-DRIFT-RATE.smt2",
-      "query_sha256": "83dda6718777f3a458924550de35f3b353acfc4865b6ba73a675bdaf2bc267bb",
+      "query_sha256": "398cf816a8b57787766a19bf6d6ccffbaf8cfa7f67923433199952f0d079de87",
       "result_artifact": null,
       "scope": "the rate the drift accumulates at",
       "solver": "z3",
@@ -13156,7 +13327,7 @@
         "paths_still_open_that_took_no_nmi": 0,
         "phase": "phase 1",
         "scope": "statement about the machine model in formal/model",
-        "seconds": 224.7,
+        "seconds": 133.5,
         "slice_queries": {
           "by_kind": {
             "branch_feasibility": 14
@@ -13541,7 +13712,7 @@
         "phase": "phase 2",
         "scope": "statement about the machine model in formal/model",
         "second_nmi_not_followed": 120,
-        "seconds": 423.7,
+        "seconds": 170.3,
         "slice_queries": {
           "by_kind": {
             "branch_feasibility": 18
@@ -13705,7 +13876,7 @@
       "id": "BOUNDED-RESET",
       "independent_check": "cvc5: unsat",
       "query_artifact": "formal/results/queries/BOUNDED-RESET.rom.smt2",
-      "query_sha256": "488987041c3d9dd1970febcdaa26d667002eca467e158ac2b52f714cd4885912",
+      "query_sha256": "fa3e7608fdbd0c402dbb84187d97db78e700ccdca105f34edc462c1a0b7ea00c",
       "result_artifact": null,
       "scope": "bounded forward execution from cold boot, no invariant",
       "solver": "z3",
@@ -15002,32 +15173,32 @@
         "slice_queries": {
           "by_kind": {
             "bad_condition": 11529,
-            "pc_uniqueness": 402
+            "pc_uniqueness": 400
           },
-          "cross_check": "2 second-solver timeout(s)",
+          "cross_check": "1 second-solver timeout(s)",
           "distinct_queries": 1265,
           "distinct_rechecked": 1265,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "9545348ccabe0e2d0ac904d9bbccce492f99c21ea3d500e16ea49697dda4e62d",
+          "query_digest": "90129836299770e270ada923d35efdc4b0a795815f70e023344357b0368a1767",
           "relied_on_unsat": 10295,
           "second_solver": {
             "bitwuzla": {
               "agree": 1265
             },
             "cvc5": {
-              "agree": 1263,
-              "timeout": 2
+              "agree": 1264,
+              "timeout": 1
             }
           },
-          "solver_queries": 11931,
-          "z3_no_answer": 1,
-          "z3_sat": 1635
+          "solver_queries": 11929,
+          "z3_no_answer": 0,
+          "z3_sat": 1634
         }
       },
       "id": "STACK-PAGE-STORES",
-      "independent_check": "cvc5: agree 1263, timeout 2; bitwuzla: agree 1265",
+      "independent_check": "cvc5: agree 1264, timeout 1; bitwuzla: agree 1265",
       "query_artifact": null,
-      "query_sha256": "9545348ccabe0e2d0ac904d9bbccce492f99c21ea3d500e16ea49697dda4e62d",
+      "query_sha256": "90129836299770e270ada923d35efdc4b0a795815f70e023344357b0368a1767",
       "result_artifact": null,
       "scope": "frame condition needed by P4 and P5",
       "solver": "z3",
@@ -15182,7 +15353,7 @@
           "distinct_queries": 600,
           "distinct_rechecked": 600,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "4bc822ce99b47be69930ef4d793fd5fd6de592216a171712e20752ac431cce21",
+          "query_digest": "1e5bb33ababbc8e7502d3a18d7f73b6010c35325e4b68fff0e19e8c452ddad05",
           "relied_on_unsat": 10702,
           "second_solver": {
             "bitwuzla": {
@@ -15201,7 +15372,7 @@
       "id": "J-ASYNC",
       "independent_check": "cvc5: agree 600; bitwuzla: agree 600",
       "query_artifact": null,
-      "query_sha256": "4bc822ce99b47be69930ef4d793fd5fd6de592216a171712e20752ac431cce21",
+      "query_sha256": "1e5bb33ababbc8e7502d3a18d7f73b6010c35325e4b68fff0e19e8c452ddad05",
       "result_artifact": null,
       "scope": "invariant every slice-based result assumes",
       "solver": "z3",
@@ -15235,16 +15406,16 @@
       "status": "unknown"
     }
   ],
-  "repository_commit": "4a478bec78e862514ce61d4db20adb265f9119b7",
+  "repository_commit": "df3bffc3543dfbb6dc0aa10e87ca4c451a91f422",
   "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
   "seconds": {
-    "bounded": 654.1,
-    "dispatch": 11.7,
-    "graph_check": 60.7,
-    "init_memory": 26.0,
-    "instruction_location": 240.3,
-    "stack_separation": 486.2,
-    "state_domains": 146.7
+    "bounded": 306.5,
+    "dispatch": 8.1,
+    "graph_check": 46.7,
+    "init_memory": 20.9,
+    "instruction_location": 133.9,
+    "stack_separation": 403.8,
+    "state_domains": 114.1
   },
   "solver": {
     "cvc5": "1.4.2",

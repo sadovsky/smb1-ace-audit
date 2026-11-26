@@ -1302,7 +1302,7 @@
         "mode": "aby",
         "one_step_bound": "0x0129",
         "query_artifact": "formal/results/queries/SEP-W-BAB5.rom.smt2",
-        "query_sha256": "e5f05191da334333b61e55cc94a0388ef25097a9446d3699bfb0daf13b965482",
+        "query_sha256": "ac175453cb93ed70ddc86f8bcd98b9474474348357a6c4661aa7e6fea2818bcb",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -1338,7 +1338,7 @@
         "mode": "aby",
         "one_step_bound": "0x011D",
         "query_artifact": "formal/results/queries/SEP-W-BAFC.rom.smt2",
-        "query_sha256": "259975be9bb253eb0302c52cf65fcdfdfe2cc5de0c3feb5e7aab7d33e1cb908e",
+        "query_sha256": "620a8edd587089e7c2ae16b6fdefaa2b8f74d035c3e726a042347e1866aa7d5d",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -1743,7 +1743,7 @@
         "mode": "aby",
         "one_step_bound": "0x0129",
         "query_artifact": "formal/results/queries/SEP-W-BB76.rom.smt2",
-        "query_sha256": "7653d07ab30a7ecce00b663c6f08be487e7f6dc5229233c5efaa14e72b16da4f",
+        "query_sha256": "ac175453cb93ed70ddc86f8bcd98b9474474348357a6c4661aa7e6fea2818bcb",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -2010,7 +2010,7 @@
         "mode": "aby",
         "one_step_bound": "0x010E",
         "query_artifact": "formal/results/queries/SEP-W-C583.rom.smt2",
-        "query_sha256": "d50e8daf9d7735881c4da19f6a0f0f5e0e23524cfa4b3e819acaa3f69be27cc7",
+        "query_sha256": "0ac14cf03e71f1836783734e86db42ee9cf1d65ef0abd8047a3199bd1155f730",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -2766,7 +2766,7 @@
         "mode": "aby",
         "one_step_bound": "0x011D",
         "query_artifact": "formal/results/queries/SEP-W-C7C3.rom.smt2",
-        "query_sha256": "03723172246982c5a5777b37538a85542e33d5cf800edbf749dcca33d0abca5e",
+        "query_sha256": "620a8edd587089e7c2ae16b6fdefaa2b8f74d035c3e726a042347e1866aa7d5d",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -2830,16 +2830,16 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 313,
+            "bad_condition": 345,
             "page_write_bound": 26,
-            "pc_uniqueness": 747
+            "pc_uniqueness": 1196
           },
           "cross_check": "clean",
           "distinct_queries": 353,
           "distinct_rechecked": 353,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
           "query_digest": "e074851a8aadb9e815671c225f62a2211c0a5b2dc868edb6723c57d0e48e47b9",
-          "relied_on_unsat": 640,
+          "relied_on_unsat": 1089,
           "second_solver": {
             "bitwuzla": {
               "agree": 353
@@ -2848,9 +2848,9 @@
               "agree": 353
             }
           },
-          "solver_queries": 1086,
+          "solver_queries": 1567,
           "z3_no_answer": 0,
-          "z3_sat": 446
+          "z3_sat": 478
         },
         "status": "unknown"
       },
@@ -2928,7 +2928,7 @@
         "mode": "aby",
         "one_step_bound": "0x0100",
         "query_artifact": "formal/results/queries/SEP-W-CF4A.rom.smt2",
-        "query_sha256": "79f7f88be4e6ddb7c0fdef37de1e3a7c9af4299950bff1f50b4e2c4552e5e350",
+        "query_sha256": "ad430373e4dd601229c24bfde42adc80e21d73e8ba877cfed1939f6226ed20cc",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -3170,7 +3170,7 @@
         "mode": "aby",
         "one_step_bound": "0x011D",
         "query_artifact": "formal/results/queries/SEP-W-D19B.rom.smt2",
-        "query_sha256": "fe978d2afff0d72de6179078bd26dee9f3aa7367eae80dc23efa2dbdc6e674e3",
+        "query_sha256": "620a8edd587089e7c2ae16b6fdefaa2b8f74d035c3e726a042347e1866aa7d5d",
         "slice_queries": {
           "by_kind": {
             "page_write_bound": 8
@@ -4119,6 +4119,7 @@
             "bound": "0x0139",
             "cut_points": [
               "0xD45F",
+              "0xD800",
               "0xDA11"
             ],
             "failures": [
@@ -4133,7 +4134,7 @@
             ],
             "invariant": "X <= 0x29",
             "provenance": "synthesised",
-            "rounds": 2
+            "rounds": 3
           }
         ],
         "bound": null,
@@ -4149,27 +4150,27 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 208,
+            "bad_condition": 291,
             "page_write_bound": 26,
-            "pc_uniqueness": 661
+            "pc_uniqueness": 1136
           },
           "cross_check": "clean",
-          "distinct_queries": 399,
-          "distinct_rechecked": 399,
+          "distinct_queries": 441,
+          "distinct_rechecked": 441,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "c0b40a147905cfd0f00f284114b122c1b165c4320021ad5fe1f92a275a51f16b",
-          "relied_on_unsat": 652,
+          "query_digest": "6fa13c9b16bd1ee4d7a324e9cf87203d76d7f90af57528da643e91b56a302bdd",
+          "relied_on_unsat": 1114,
           "second_solver": {
             "bitwuzla": {
-              "agree": 399
+              "agree": 441
             },
             "cvc5": {
-              "agree": 399
+              "agree": 441
             }
           },
-          "solver_queries": 895,
+          "solver_queries": 1453,
           "z3_no_answer": 0,
-          "z3_sat": 243
+          "z3_sat": 339
         },
         "status": "unknown"
       },
@@ -4247,10 +4248,85 @@
             ],
             "failures": [
               {
-                "cut_point": "",
-                "edge": "",
-                "from": "",
-                "part": "budget",
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD455",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC987",
+                  "0xD432",
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD453",
+                  "0xD455"
+                ]
+              },
+              {
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD469",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469"
+                ]
+              },
+              {
+                "cut_point": "0xDA11",
+                "edge": "call",
+                "from": "0xD59F",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469",
+                  "0xD45F",
+                  "0xD598",
+                  "0xD599",
+                  "0xD59A",
+                  "0xD59D",
+                  "0xD59F"
+                ]
+              },
+              {
+                "cut_point": "0xDA11",
+                "edge": "call",
+                "from": "0xD7BC",
+                "part": "invariant",
                 "reason": "time budget exhausted",
                 "suffix": []
               }
@@ -4264,6 +4340,11 @@
         "bound_offset": null,
         "cause": {
           "kind": "budget",
+          "note": "so this writer is most likely a `call` case; it is recorded as `budget` because the method did not get far enough to say so",
+          "the_slices_it_was_working_on_cross_a_call_at": [
+            "0xC987",
+            "0xD59A"
+          ],
           "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
         },
         "instruction": "STA $011E,X",
@@ -4273,27 +4354,27 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 224,
+            "bad_condition": 276,
             "page_write_bound": 26,
-            "pc_uniqueness": 651
+            "pc_uniqueness": 708
           },
           "cross_check": "clean",
-          "distinct_queries": 407,
-          "distinct_rechecked": 407,
+          "distinct_queries": 450,
+          "distinct_rechecked": 450,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "34b7fcaefed67f117954ba747ec93cf079aa1a62ba12232276fd0bef703b27c8",
-          "relied_on_unsat": 643,
+          "query_digest": "42c7dadefdd5938417c603508a58df3f26a20a8e01a9b6f84908a75eee0af498",
+          "relied_on_unsat": 701,
           "second_solver": {
             "bitwuzla": {
-              "agree": 407
+              "agree": 450
             },
             "cvc5": {
-              "agree": 407
+              "agree": 450
             }
           },
-          "solver_queries": 901,
+          "solver_queries": 1010,
           "z3_no_answer": 0,
-          "z3_sat": 258
+          "z3_sat": 309
         },
         "status": "unknown"
       },
@@ -4309,10 +4390,85 @@
             ],
             "failures": [
               {
-                "cut_point": "",
-                "edge": "",
-                "from": "",
-                "part": "budget",
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD455",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xC987",
+                  "0xD432",
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD453",
+                  "0xD455"
+                ]
+              },
+              {
+                "cut_point": "0xD45F",
+                "edge": "branch",
+                "from": "0xD469",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD434",
+                  "0xD436",
+                  "0xD43B",
+                  "0xD43D",
+                  "0xD440",
+                  "0xD441",
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469"
+                ]
+              },
+              {
+                "cut_point": "0xDA11",
+                "edge": "call",
+                "from": "0xD59F",
+                "part": "invariant",
+                "reason": "still satisfiable at depth 16",
+                "suffix": [
+                  "0xD444",
+                  "0xD446",
+                  "0xD448",
+                  "0xD44D",
+                  "0xD44F",
+                  "0xD451",
+                  "0xD462",
+                  "0xD465",
+                  "0xD467",
+                  "0xD469",
+                  "0xD45F",
+                  "0xD598",
+                  "0xD599",
+                  "0xD59A",
+                  "0xD59D",
+                  "0xD59F"
+                ]
+              },
+              {
+                "cut_point": "0xDA11",
+                "edge": "call",
+                "from": "0xD7BC",
+                "part": "invariant",
                 "reason": "time budget exhausted",
                 "suffix": []
               }
@@ -4326,6 +4482,11 @@
         "bound_offset": null,
         "cause": {
           "kind": "budget",
+          "note": "so this writer is most likely a `call` case; it is recorded as `budget` because the method did not get far enough to say so",
+          "the_slices_it_was_working_on_cross_a_call_at": [
+            "0xC987",
+            "0xD59A"
+          ],
           "why": "the wall-clock budget for this writer ran out; nothing follows about the program"
         },
         "instruction": "STA $0117,X",
@@ -4335,27 +4496,27 @@
         "one_step_bound": "0x01FF",
         "slice_queries": {
           "by_kind": {
-            "bad_condition": 224,
+            "bad_condition": 278,
             "page_write_bound": 26,
-            "pc_uniqueness": 640
+            "pc_uniqueness": 696
           },
           "cross_check": "clean",
-          "distinct_queries": 407,
-          "distinct_rechecked": 407,
+          "distinct_queries": 450,
+          "distinct_rechecked": 450,
           "hash_scheme": "each query hash is the sha256 of its canonical SMT-LIB text; the digest is the sha256 of the sorted distinct hashes, one per line",
-          "query_digest": "abf357271300896d9478738e550614ab842525634292868478d60dc91aa1b496",
-          "relied_on_unsat": 630,
+          "query_digest": "10fa1434aaddeb501655db3a95635898e895dc7d74fefdf7f0fc1c1a7c499000",
+          "relied_on_unsat": 687,
           "second_solver": {
             "bitwuzla": {
-              "agree": 407
+              "agree": 450
             },
             "cvc5": {
-              "agree": 407
+              "agree": 450
             }
           },
-          "solver_queries": 890,
+          "solver_queries": 1000,
           "z3_no_answer": 0,
-          "z3_sat": 260
+          "z3_sat": 313
         },
         "status": "unknown"
       },

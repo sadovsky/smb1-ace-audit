@@ -1,12 +1,12 @@
-(declare-fun RAM () (Array (_ BitVec 11) (_ BitVec 8)))
-(assert (let ((a!1 (and true (not (= (select RAM #b11100011111) #x00)) true true true))
-      (a!2 (bvsub (ite (= (select RAM #b11100011111) #x00)
+(declare-fun v!0 () (Array (_ BitVec 11) (_ BitVec 8)))
+(assert (let ((a!1 (and true (not (= (select v!0 #b11100011111) #x00)) true true true))
+      (a!2 (bvsub (ite (= (select v!0 #b11100011111) #x00)
                        #x08
-                       (select RAM #b11100011111))
+                       (select v!0 #b11100011111))
                   #x01)))
-(let ((a!3 (=> a!1 (= (bvadd #xff (select RAM #b11100011111)) a!2)))
+(let ((a!3 (=> a!1 (= (bvadd #xff (select v!0 #b11100011111)) a!2)))
       (a!4 (=> (and true
-                    (= (select RAM #b11100011111) #x00)
+                    (= (select v!0 #b11100011111) #x00)
                     true
                     true
                     true
