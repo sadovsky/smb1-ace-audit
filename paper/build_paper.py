@@ -87,6 +87,7 @@ def build():
                "proven exclusions; Claude (Anthropic) contributed the control-flow audit, emulator "
                "experiments, the derived dispatch bounds, and this revision's decoder, control-flow "
                "graph, value-set derivation, table-boundary analysis and corrections.</font>", AUTH))
+    e.append(P("November 2026", AUTH))
     e.append(Spacer(1, 6))
     e.append(P("<b>Abstract.</b> We ask whether the NES game <i>Super Mario Bros.</i> (NTSC/World, "
                "NROM) admits arbitrary code execution (ACE) driven solely by controller input on an "
