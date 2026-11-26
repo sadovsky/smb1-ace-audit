@@ -930,9 +930,25 @@ def build():
             + manifest["solver"]["cvc5"] + ", with Bitwuzla as a third "
             "check. The Lean proof builds with no unproved steps. ")
     if replication is not None:
-        text += ("A re-run from a fresh copy in a clean environment is "
-                 "recorded in " + C("formal/results/reports/replication.json")
-                 + ". ")
+        diffs = replication["differences_from_committed_manifest"]
+        changed = [k for k, v in diffs.items()
+                   if not (v["committed"] and v["regenerated"]
+                           and v["committed"][0] == v["regenerated"][0])]
+        text += ("We re-ran everything from a fresh copy in a clean "
+                 f"environment. All {replication['obligations']} claims "
+                 "came out with "
+                 + ("the same label" if not changed else
+                    f"the same label except {len(changed)}")
+                 + ", and every saved solver question matched its recorded "
+                 "fingerprint. ")
+        if diffs and not changed:
+            text += (f"For {len(diffs)} claims, though, the <i>set</i> of "
+                     "questions asked along the way differed between the "
+                     "two runs while the answer did not. We have not "
+                     "tracked down why, and until we do, those "
+                     "claims are reproducible in outcome but not in every "
+                     "step. An earlier run showed more such differences, "
+                     "traced to a naming detail and fixed. ")
     else:
         text += ("A re-run from a fresh copy in a clean environment is "
                  "scripted but had not been carried out when this was "

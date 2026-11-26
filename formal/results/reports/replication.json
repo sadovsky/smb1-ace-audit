@@ -1,0 +1,58 @@
+{
+  "commit": "52076d783ca880eff450b875e1d1ac0a912a058f",
+  "counts": {
+    "abstract_counterexample": 68,
+    "bounded": 2,
+    "conditional": 47,
+    "observed": 1,
+    "proved": 70,
+    "refuted": 8,
+    "unknown": 15
+  },
+  "differences_from_committed_manifest": {
+    "J-ASYNC": {
+      "committed": [
+        "unknown",
+        "1e5bb33ababbc8e7502d3a18d7f73b6010c35325e4b68fff0e19e8c452ddad05"
+      ],
+      "regenerated": [
+        "unknown",
+        "b4b37e87c8756dd20b2d35e1d4dbb60982adcfd5936c2c8dafa9b888e249bd5f"
+      ]
+    },
+    "STACK-PAGE-STORES": {
+      "committed": [
+        "abstract_counterexample",
+        "90129836299770e270ada923d35efdc4b0a795815f70e023344357b0368a1767"
+      ],
+      "regenerated": [
+        "abstract_counterexample",
+        "8eac0fbfb66cc106e98ecdbbdc6171049fa9589699e609e12d10144b045f2c49"
+      ]
+    },
+    "W-071F-90DC": {
+      "committed": [
+        "abstract_counterexample",
+        "142b729f6fe862632e5628973e8db2e268afc925ed9a9b6bd49248fdff36166d"
+      ],
+      "regenerated": [
+        "abstract_counterexample",
+        "144e40dd9e4e1d476532bfe042dcd4f30b4292362e1eb80f52c79d00a7812f6b"
+      ]
+    }
+  },
+  "limits": "same machine, same operating system and same solver builds as the original run; this shows the result does not depend on untracked state, not that it is independent of the toolchain",
+  "model_validation": "vectors: 71100 compared, 0 mismatches;py65: 6040 compared, 0 mismatches;wrote /tmp/tmp.oxF3pjg3HS/repo/formal/results/reports/model_validation.json;",
+  "obligations": 211,
+  "python": "3.12.14",
+  "replicates": false,
+  "rom_sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+  "saved_query_recheck": "66 queries re-checked, 0 mismatches, 0 absent",
+  "solver": {
+    "cvc5": "1.4.2",
+    "python": "3.12.14",
+    "z3": "5.4.1"
+  },
+  "tests": "Ran 214 tests in 69.367s  OK ",
+  "what": "fresh clone of the committed HEAD, fresh virtual environment, manifest regenerated from the local image"
+}
