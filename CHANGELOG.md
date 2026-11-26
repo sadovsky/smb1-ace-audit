@@ -1,5 +1,45 @@
 # Changelog
 
+## Formal track, second pass (2026-11-25)
+
+P1 is still `unknown`. What changed is how precisely the open part is known.
+Manifest: 211 obligations (70 proved, 47 conditional, 2 bounded, 68 abstract
+counterexample, 15 unknown, 8 refuted, 1 observed).
+
+- **Model validation**: every published vector (2,370,000 instructions) and
+  5,915,520 exhaustive-per-dimension comparisons against a second
+  implementation, 0 mismatches. Recorded differences: `JAM` leaves PC in
+  place; interrupt hijacking is not expressible.
+- **Trusted base**: slice queries hashed and re-asked of cvc5 and Bitwuzla;
+  the control-flow graph's edges checked against the model (`GRAPH-EDGES`).
+- **Initial memory**: the partition of RAM at the first NMI-enabling write is
+  proved; 156 cells are never initialised, 40 survive a warm boot.
+- **Bounded**: P1 from cold boot to the first NMI-enabling write, complete for
+  that phase, and 4,000 steps beyond with one NMI.
+- **Return frames**: stack depth bounded under named premises; 37 of 71
+  non-push writers bounded; combined separation `unknown`. Refuted: the call
+  graph is acyclic; warm resets do not drift the stack pointer.
+- **Interrupt timing**: a cycle-level model derives the two NMI assumptions,
+  one part proved, two conditional (one on a program premise).
+- **Refuted in a model variant**: with NMIs allowed at any boundary, the
+  program counter leaves the graph (concrete runs; not a hardware claim).
+- **Lean**: the certificate soundness argument is mechanised for an abstract
+  machine; it showed the conditions as designed did not imply safety and
+  identified five omissions.
+- **Certificate checker and proposer**: committed as work in progress, opt-in,
+  no verdicts recorded.
+- **Observation**: two full play-throughs replayed; 98.0% of instruction
+  starts executed, all 18 dispatch sites reached, no check fired.
+- **Replication** from a fresh clone: all statuses match; three slice query
+  digests differ for a reason not yet identified.
+- **Report**: `formal/paper/smb1_formal_report.pdf`.
+
+Withdrawn or corrected along the way: saved-query hashes in `56ff998` did not
+match their manifest (fixed); the report draft said the dispatch contract
+covered the stack pointer and write set (it covers only the next fetch);
+`MA-PPU-RESET` was described as unconditional hardware behaviour (it is
+console-dependent).
+
 ## Formal track (2026-11-25)
 
 Follows `FORMAL_VERIFICATION_PLAN.md`; details and limits in `formal/README.md`.
