@@ -158,11 +158,11 @@ proves nothing.
 | M1 local lemmas | done, with negative tests |
 | M2 validated model | done on a finite sample; gaps listed above |
 | M3 first program-point invariant | not established; obligations explicit (`P6-071F-PP`, `INIT-071F`, `W-071F-*`) |
-| M4 routine contracts | in progress; a contract language and checker exist in the working tree but are not committed: the checker has known soundness gaps (`lean/FINDINGS.md`) |
+| M4 routine contracts | in progress. `verify/certificate.py` checks contracts and now implements the corrections from `lean/FINDINGS.md` (window derivation, interrupts charged to callers, post-`RTI` postcondition, vacuity guard, depth sign and capacity); not every correction has its own negative test, and the code has not been reviewed against the Lean statements line by line |
 | M5 dispatch and return | dispatch contracts proved; returns open |
-| M6 joint invariant | designed (`lean/` mechanises the soundness argument for an abstract machine); no checked certificate is recorded in the manifest. The route is opt-in (`SMB1_JOINT=1`) until the checker gaps are closed |
+| M6 joint invariant | soundness argument mechanised for an abstract machine (`lean/`). A proposer (`analysis/`) produces a trial certificate that is far from passing; no verdicts are recorded in the manifest and the route stays opt-in (`SMB1_JOINT=1`) |
 | M7 global theorem | `unknown`, with its dependency list |
-| M8 replication, M9 report | replication scripts in `replicate/`, not yet run; report draft in `paper/`; literature review in `results/reports/literature.md` |
+| M8 replication, M9 report | replicated from a fresh clone (`results/reports/replication.json`): all statuses match, three slice query digests do not; report in `paper/`; literature review in `results/reports/literature.md` |
 
 ## Running
 

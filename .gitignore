@@ -17,3 +17,6 @@ formal/results/queries/*.rom.smt2
 formal/paper/build/
 # Lean build output
 formal/lean/.lake/
+# trial certificate and its verdicts: work in progress, not a result
+formal/results/certificates/joint.json
+formal/results/reports/joint_verdicts.json
